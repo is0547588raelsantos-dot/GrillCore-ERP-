@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Relatório de Vendas - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>📈 Relatório de Vendas</h1>
+
+<br>
+
+<!-- =============================== -->
+<!-- RESUMO -->
+<!-- =============================== -->
+
+<h2>📊 Resumo</h2>
+
+<div>
+
+    <h3>💰 Faturamento Total</h3>
+
+    <h2 id="faturamento">
+        R$ 0,00
+    </h2>
+
+</div>
+
+<br>
+
+<div>
+
+    <h3>🧾 Total de Pedidos</h3>
+
+    <h2 id="pedidos">
+        0
+    </h2>
+
+</div>
+
+<br>
+
+<div>
+
+    <h3>💵 Dinheiro</h3>
+
+    <p id="totalDinheiro">
+        R$ 0,00
+    </p>
+
+</div>
+
+<div>
+
+    <h3>📱 Pix</h3>
+
+    <p id="totalPix">
+        R$ 0,00
+    </p>
+
+</div>
+
+<div>
+
+    <h3>💳 Cartão</h3>
+
+    <p id="totalCartao">
+        R$ 0,00
+    </p>
+
+</div>
+
+<br>
+
+<hr>
+
+<br>
+
+<!-- =============================== -->
+<!-- PRODUTOS MAIS VENDIDOS -->
+<!-- =============================== -->
+
+<h2>🍔 Produtos Vendidos</h2>
+
+<div id="produtosVendidos">
+
+    <p>Carregando...</p>
+
+</div>
+
+<br>
+
+<hr>
+
+<br>
+
+<!-- =============================== -->
+<!-- VOLTAR -->
+<!-- =============================== -->
+
+<a href="index.html">
+
+    <button>
+        🏠 Voltar ao Início
+    </button>
+
+</a>
+
+
+<script>
+
+// =====================================================
+// 📊 PEGAR VENDAS
+// =====================================================
+
+let vendas =
+    JSON.parse(
+        localStorage.getItem("vendas")
+    ) || [];
+
+
+// =====================================================
+// 💰 FATURAMENTO
+// =====================================================
+
+let faturamento = 0;
+
+let dinheiro = 0;
+
+let pix = 0;
+
+let cartao = 0;
+
+
+// =====================================================
+// 🍔 CONTADOR DE PRODUTOS
+// =====================================================
+
+let produtosContador = {};
+
+
+// =====================================================
+// 🔄 PROCESSAR VENDAS
+// =====================================================
+
+vendas.forEach(function(venda) {
+
+    let valor =
+        Number(venda.total) || 0;
+
+
+    faturamento += valor;
+
+
+    // ===============================
+    // FORMA DE PAGAMENTO
+    // ===============================
+
+    if (venda.pagamento === "Dinheiro") {
+
+        dinheiro += valor;
+
+    }
+
+
+    if (venda.pagamento === "Pix") {
+
+        pix += valor;
+
+    }
+
+
+    if (venda.pagamento === "Cartão") {
+
+        cartao += valor;
+
+    }
+
+
+    // ===============================
+    // PRODUTO
+    // ===============================
+
+    let nomeProduto =
+        venda.hamburguer || "Não informado";
+
+
+    if (
+        produtosContador[nomeProduto]
+    ) {
+
+        produtosContador[nomeProduto]++;
+
+    }
+    else {
+
+        produtosContador[nomeProduto] = 1;
+
+    }
+
+});
+
+
+// =====================================================
+// 📊 MOSTRAR RESUMO
+// =====================================================
+
+document.getElementById(
+    "faturamento"
+).innerText =
+    "R$ " +
+    faturamento
+        .toFixed(2)
+        .replace(".", ",");
+
+
+document.getElementById(
+    "pedidos"
+).innerText =
+    vendas.length;
+
+
+document.getElementById(
+    "totalDinheiro"
+).innerText =
+    "R$ " +
+    dinheiro
+        .toFixed(2)
+        .replace(".", ",");
+
+
+document.getElementById(
+    "totalPix"
+).innerText =
+    "R$ " +
+    pix
+        .toFixed(2)
+        .replace(".", ",");
+
+
+document.getElementById(
+    "totalCartao"
+).innerText =
+    "R$ " +
+    cartao
+        .toFixed(2)
+        .replace(".", ",");
+
+
+// =====================================================
+// 🍔 MOSTRAR PRODUTOS
+// =====================================================
+
+let lista =
+    document.getElementById(
+        "produtosVendidos"
+    );
+
+
+if (vendas.length === 0) {
+
+    lista.innerHTML =
+        "<p>📭 Nenhuma venda registrada.</p>";
+
+}
+else {
+
+    lista.innerHTML = "";
+
+
+    Object.keys(
+        produtosContador
+    )
+    .sort(function(a, b) {
+
+        return (
+            produtosContador[b] -
+            produtosContador[a]
+        );
+
+    })
+    .forEach(function(nome) {
+
+        lista.innerHTML += `
+
+        <div>
+
+            <h3>
+                🍔 ${nome}
+            </h3>
+
+            <p>
+                🧾 Quantidade vendida:
+                <strong>
+                    ${produtosContador[nome]}
+                </strong>
+            </p>
+
+            <hr>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

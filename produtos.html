@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>GrillCore ERP - Produtos</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🍔 Cadastro de Produtos</h1>
+
+    <label for="nomeProduto">
+        Nome do produto
+    </label>
+
+    <input
+        type="text"
+        id="nomeProduto"
+        placeholder="Ex: X Prensado">
+
+    <label for="precoProduto">
+        Preço
+    </label>
+
+    <input
+        type="number"
+        id="precoProduto"
+        min="0"
+        step="0.01"
+        placeholder="Ex: 30.00">
+
+    <label for="estoqueProduto">
+        Quantidade em estoque
+    </label>
+
+    <input
+        type="number"
+        id="estoqueProduto"
+        min="0"
+        value="0">
+
+    <label for="fotoProduto">
+        Foto do produto
+    </label>
+
+    <input
+        type="file"
+        id="fotoProduto"
+        accept="image/*">
+
+    <label for="ingredientes">
+        Ingredientes
+    </label>
+
+    <textarea
+        id="ingredientes"
+        rows="5"
+        placeholder="Ex: pão, hambúrguer 180g, queijo, bacon..."></textarea>
+
+    <label for="descricao">
+        Descrição
+    </label>
+
+    <textarea
+        id="descricao"
+        rows="4"
+        placeholder="Descrição do produto"></textarea>
+
+    <button onclick="salvarProduto()">
+        💾 Salvar Produto
+    </button>
+
+    <h2>
+        📦 Produtos Cadastrados
+    </h2>
+
+    <div id="listaProdutos">
+    </div>
+
+    <br>
+
+    <a href="index.html">
+
+        <button class="voltar">
+            ← Voltar
+        </button>
+
+    </a>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Clientes - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body {
+    background: #181818;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 15px;
+}
+
+h1,
+h2 {
+    color: #ff7a00;
+}
+
+.card {
+    background: #242424;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+input,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    background: #333;
+    color: white;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #aaa;
+}
+
+button {
+    width: 100%;
+    padding: 17px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    background: #ff7a00;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.salvar {
+    background: #35a85b;
+}
+
+.cancelar {
+    background: #555;
+}
+
+.voltar {
+    background: #333;
+}
+
+.editar {
+    background: #1769aa;
+}
+
+.excluir {
+    background: #b83232;
+}
+
+.cliente {
+    background: #242424;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 14px;
+    border: 1px solid #333;
+}
+
+.cliente h3 {
+    color: #ff7a00;
+    margin-top: 0;
+}
+
+.cliente-info {
+    line-height: 1.7;
+}
+
+.estatisticas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.estatistica {
+    background: #1d1d1d;
+    padding: 14px;
+    border-radius: 10px;
+}
+
+.estatistica strong {
+    display: block;
+    color: #ff7a00;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.valor {
+    color: #ff7a00;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.verde {
+    color: #35d07f !important;
+}
+
+.vermelho {
+    color: #ff5555 !important;
+}
+
+.vazio {
+    color: #aaa;
+    text-align: center;
+    padding: 25px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #555;
+    margin: 25px 0;
+}
+
+#formularioCliente {
+    display: none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>👥 Clientes</h1>
+
+<p>
+Cadastro e histórico de clientes do GrillCore ERP
+</p>
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- RESUMO -->
+<!-- ================================================= -->
+
+<h2>📊 Resumo</h2>
+
+<div class="card">
+
+<div class="estatisticas">
+
+    <div class="estatistica">
+
+        👥 Clientes cadastrados
+
+        <strong id="totalClientes">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="estatistica">
+
+        🧾 Total de pedidos
+
+        <strong id="totalPedidos">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="estatistica">
+
+        💰 Faturamento dos clientes
+
+        <strong id="faturamentoClientes">
+            R$ 0,00
+        </strong>
+
+    </div>
+
+
+    <div class="estatistica">
+
+        📈 Ticket médio
+
+        <strong id="ticketMedioClientes">
+            R$ 0,00
+        </strong>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- BOTÕES -->
+<!-- ================================================= -->
+
+<button
+    class="salvar"
+    onclick="mostrarFormulario()">
+
+➕ Novo Cliente
+
+</button>
+
+
+<button
+    class="voltar"
+    onclick="window.location.href='index.html'">
+
+🏠 Voltar ao Início
+
+</button>
+
+
+<!-- ================================================= -->
+<!-- FORMULÁRIO -->
+<!-- ================================================= -->
+
+<div
+    id="formularioCliente"
+    class="card">
+
+<h2 id="tituloFormulario">
+➕ Cadastrar Cliente
+</h2>
+
+
+<input
+    type="hidden"
+    id="clienteId">
+
+
+<label>
+👤 Nome
+</label>
+
+<input
+    type="text"
+    id="clienteNome"
+    placeholder="Nome completo">
+
+
+<label>
+📱 Telefone / WhatsApp
+</label>
+
+<input
+    type="tel"
+    id="clienteTelefone"
+    placeholder="(00) 00000-0000">
+
+
+<label>
+🏠 Endereço
+</label>
+
+<input
+    type="text"
+    id="clienteEndereco"
+    placeholder="Rua, número, bairro">
+
+
+<label>
+📝 Observações
+</label>
+
+<textarea
+    id="clienteObservacoes"
+    placeholder="Ex: sem cebola, prefere Pix, endereço dos fundos..."></textarea>
+
+
+<button
+    class="salvar"
+    onclick="salvarCliente()">
+
+💾 Salvar Cliente
+
+</button>
+
+
+<button
+    class="cancelar"
+    onclick="cancelarFormulario()">
+
+❌ Cancelar
+
+</button>
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- PESQUISA -->
+<!-- ================================================= -->
+
+<h2>🔎 Buscar Cliente</h2>
+
+<div class="card">
+
+<input
+    type="search"
+    id="buscaCliente"
+    placeholder="Digite nome ou telefone..."
+    oninput="mostrarClientes()">
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- LISTA -->
+<!-- ================================================= -->
+
+<h2>📋 Clientes cadastrados</h2>
+
+<div id="listaClientes">
+
+<p class="vazio">
+Carregando...
+</p>
+
+</div>
+
+
+<script>
+
+
+// =====================================================
+// 💾 BANCO LOCAL
+// =====================================================
+
+function pegarClientes() {
+
+    return JSON.parse(
+        localStorage.getItem("clientes")
+    ) || [];
+
+}
+
+
+function salvarClientes(clientes) {
+
+    localStorage.setItem(
+        "clientes",
+        JSON.stringify(clientes)
+    );
+
+}
+
+
+function pegarVendas() {
+
+    return JSON.parse(
+        localStorage.getItem("vendas")
+    ) || [];
+
+}
+
+
+// =====================================================
+// 💰 DINHEIRO
+// =====================================================
+
+function dinheiro(valor) {
+
+    return "R$ " +
+
+        Number(valor || 0)
+            .toFixed(2)
+            .replace(".", ",");
+
+}
+
+
+// =====================================================
+// 🆔 NOVO ID
+// =====================================================
+
+function gerarIdCliente() {
+
+    return Date.now();
+
+}
+
+
+// =====================================================
+// ➕ MOSTRAR FORMULÁRIO
+// =====================================================
+
+function mostrarFormulario() {
+
+    document.getElementById(
+        "formularioCliente"
+    ).style.display = "block";
+
+    document.getElementById(
+        "tituloFormulario"
+    ).innerText =
+        "➕ Cadastrar Cliente";
+
+    limparFormulario();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+// =====================================================
+// ❌ CANCELAR
+// =====================================================
+
+function cancelarFormulario() {
+
+    document.getElementById(
+        "formularioCliente"
+    ).style.display = "none";
+
+    limparFormulario();
+
+}
+
+
+// =====================================================
+// 🧹 LIMPAR FORMULÁRIO
+// =====================================================
+
+function limparFormulario() {
+
+    document.getElementById(
+        "clienteId"
+    ).value = "";
+
+    document.getElementById(
+        "clienteNome"
+    ).value = "";
+
+    document.getElementById(
+        "clienteTelefone"
+    ).value = "";
+
+    document.getElementById(
+        "clienteEndereco"
+    ).value = "";
+
+    document.getElementById(
+        "clienteObservacoes"
+    ).value = "";
+
+}
+
+
+// =====================================================
+// 💾 SALVAR CLIENTE
+// =====================================================
+
+function salvarCliente() {
+
+    let id =
+        document.getElementById(
+            "clienteId"
+        ).value;
+
+    let nome =
+        document.getElementById(
+            "clienteNome"
+        ).value.trim();
+
+    let telefone =
+        document.getElementById(
+            "clienteTelefone"
+        ).value.trim();
+
+    let endereco =
+        document.getElementById(
+            "clienteEndereco"
+        ).value.trim();
+
+    let observacoes =
+        document.getElementById(
+            "clienteObservacoes"
+        ).value.trim();
+
+
+    // =============================================
+    // VALIDAR
+    // =============================================
+
+    if (!nome) {
+
+        alert(
+            "⚠️ Informe o nome do cliente."
+        );
+
+        return;
+
+    }
+
+
+    let clientes =
+        pegarClientes();
+
+
+    // =============================================
+    // EDITAR
+    // =============================================
+
+    if (id) {
+
+        let indice =
+            clientes.findIndex(
+                function(cliente) {
+
+                    return Number(
+                        cliente.id
+                    ) === Number(id);
+
+                }
+            );
+
+
+        if (indice !== -1) {
+
+            clientes[indice].nome =
+                nome;
+
+            clientes[indice].telefone =
+                telefone;
+
+            clientes[indice].endereco =
+                endereco;
+
+            clientes[indice].observacoes =
+                observacoes;
+
+            clientes[indice].atualizadoEm =
+                new Date().toISOString();
+
+        }
+
+    }
+
+    // =============================================
+    // NOVO
+    // =============================================
+
+    else {
+
+        let cliente = {
+
+            id:
+                gerarIdCliente(),
+
+            nome:
+                nome,
+
+            telefone:
+                telefone,
+
+            endereco:
+                endereco,
+
+            observacoes:
+                observacoes,
+
+            criadoEm:
+                new Date().toISOString(),
+
+            atualizadoEm:
+                new Date().toISOString()
+
+        };
+
+
+        clientes.push(
+            cliente
+        );
+
+    }
+
+
+    salvarClientes(
+        clientes
+    );
+
+
+    cancelarFormulario();
+
+    mostrarClientes();
+
+    atualizarResumo();
+
+
+    alert(
+        "✅ Cliente salvo com sucesso!"
+    );
+
+}
+
+
+// =====================================================
+// ✏️ EDITAR CLIENTE
+// =====================================================
+
+function editarCliente(id) {
+
+    let clientes =
+        pegarClientes();
+
+
+    let cliente =
+        clientes.find(
+            function(item) {
+
+                return Number(
+                    item.id
+                ) === Number(id);
+
+            }
+        );
+
+
+    if (!cliente) {
+
+        alert(
+            "❌ Cliente não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "formularioCliente"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "tituloFormulario"
+    ).innerText =
+        "✏️ Editar Cliente";
+
+
+    document.getElementById(
+        "clienteId"
+    ).value =
+        cliente.id;
+
+
+    document.getElementById(
+        "clienteNome"
+    ).value =
+        cliente.nome || "";
+
+
+    document.getElementById(
+        "clienteTelefone"
+    ).value =
+        cliente.telefone || "";
+
+
+    document.getElementById(
+        "clienteEndereco"
+    ).value =
+        cliente.endereco || "";
+
+
+    document.getElementById(
+        "clienteObservacoes"
+    ).value =
+        cliente.observacoes || "";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+// =====================================================
+// 🗑️ EXCLUIR CLIENTE
+// =====================================================
+
+function excluirCliente(id) {
+
+    let clientes =
+        pegarClientes();
+
+
+    let cliente =
+        clientes.find(
+            function(item) {
+
+                return Number(
+                    item.id
+                ) === Number(id);
+
+            }
+        );
+
+
+    if (!cliente) {
+
+        return;
+
+    }
+
+
+    let confirmar =
+        confirm(
+
+            "🗑️ EXCLUIR CLIENTE?\n\n" +
+
+            "Cliente: " +
+            cliente.nome +
+
+            "\n\n" +
+
+            "O histórico de vendas não será apagado."
+
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    clientes =
+        clientes.filter(
+            function(item) {
+
+                return Number(
+                    item.id
+                ) !== Number(id);
+
+            }
+        );
+
+
+    salvarClientes(
+        clientes
+    );
+
+
+    mostrarClientes();
+
+    atualizarResumo();
+
+
+    alert(
+        "✅ Cliente excluído."
+    );
+
+}
+
+
+// =====================================================
+// 📊 ESTATÍSTICAS DO CLIENTE
+// =====================================================
+
+function estatisticasCliente(cliente) {
+
+    let vendas =
+        pegarVendas();
+
+
+    let vendasCliente =
+        vendas.filter(
+            function(venda) {
+
+                // Compatibilidade com vários formatos
+                let idVenda =
+                    Number(
+                        venda.clienteId
+                    );
+
+                let idCliente =
+                    Number(
+                        cliente.id
+                    );
+
+
+                if (
+                    idVenda &&
+                    idVenda === idCliente
+                ) {
+
+                    return true;
+
+                }
+
+
+                let nomeVenda =
+                    String(
+                        venda.cliente || ""
+                    ).trim()
+                    .toLowerCase();
+
+
+                return (
+                    nomeVenda ===
+                    String(
+                        cliente.nome || ""
+                    ).trim().toLowerCase()
+                );
+
+            }
+        );
+
+
+    let total = 0;
+
+
+    vendasCliente.forEach(
+        function(venda) {
+
+            total +=
+                Number(
+                    venda.total
+                ) || 0;
+
+        }
+    );
+
+
+    let ticket = 0;
+
+
+    if (
+        vendasCliente.length > 0
+    ) {
+
+        ticket =
+            total /
+            vendasCliente.length;
+
+    }
+
+
+    return {
+
+        pedidos:
+            vendasCliente.length,
+
+        total:
+            total,
+
+        ticket:
+            ticket
+
+    };
+
+}
+
+
+// =====================================================
+// 📋 MOSTRAR CLIENTES
+// =====================================================
+
+function mostrarClientes() {
+
+    let clientes =
+        pegarClientes();
+
+
+    let busca =
+        String(
+            document.getElementById(
+                "buscaCliente"
+            ).value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if (busca) {
+
+        clientes =
+            clientes.filter(
+                function(cliente) {
+
+                    let nome =
+                        String(
+                            cliente.nome || ""
+                        ).toLowerCase();
+
+
+                    let telefone =
+                        String(
+                            cliente.telefone || ""
+                        ).toLowerCase();
+
+
+                    return (
+                        nome.includes(busca) ||
+                        telefone.includes(busca)
+                    );
+
+                }
+            );
+
+    }
+
+
+    let lista =
+        document.getElementById(
+            "listaClientes"
+        );
+
+
+    if (
+        clientes.length === 0
+    ) {
+
+        lista.innerHTML = `
+
+            <p class="vazio">
+
+                📭 Nenhum cliente encontrado.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    clientes
+        .slice()
+        .sort(
+            function(a, b) {
+
+                return String(
+                    a.nome || ""
+                ).localeCompare(
+                    String(
+                        b.nome || ""
+                    ),
+                    "pt-BR"
+                );
+
+            }
+        )
+        .forEach(
+            function(cliente) {
+
+
+                let estatisticas =
+                    estatisticasCliente(
+                        cliente
+                    );
+
+
+                lista.innerHTML += `
+
+                    <div class="cliente">
+
+                        <h3>
+                            👤 ${cliente.nome}
+                        </h3>
+
+
+                        <div class="cliente-info">
+
+                            <p>
+                                📱 <strong>Telefone:</strong>
+                                ${cliente.telefone || "Não informado"}
+                            </p>
+
+
+                            <p>
+                                🏠 <strong>Endereço:</strong>
+                                ${cliente.endereco || "Não informado"}
+                            </p>
+
+
+                            <p>
+                                📝 <strong>Observações:</strong>
+                                ${cliente.observacoes || "Nenhuma"}
+                            </p>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <div class="estatisticas">
+
+                            <div class="estatistica">
+
+                                🧾 Pedidos
+
+                                <strong>
+                                    ${estatisticas.pedidos}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="estatistica">
+
+                                💰 Total gasto
+
+                                <strong class="verde">
+                                    ${dinheiro(
+                                        estatisticas.total
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="estatistica">
+
+                                📈 Ticket médio
+
+                                <strong>
+                                    ${dinheiro(
+                                        estatisticas.ticket
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="estatistica">
+
+                                🆔 Código
+
+                                <strong>
+                                    ${cliente.id}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="editar"
+                            onclick="editarCliente(${cliente.id})">
+
+                            ✏️ Editar Cliente
+
+                        </button>
+
+
+                        <button
+                            class="excluir"
+                            onclick="excluirCliente(${cliente.id})">
+
+                            🗑️ Excluir Cliente
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+}
+
+
+// =====================================================
+// 📊 RESUMO GERAL
+// =====================================================
+
+function atualizarResumo() {
+
+    let clientes =
+        pegarClientes();
+
+
+    let vendas =
+        pegarVendas();
+
+
+    let totalPedidos =
+        vendas.length;
+
+
+    let faturamento =
+        0;
+
+
+    vendas.forEach(
+        function(venda) {
+
+            faturamento +=
+                Number(
+                    venda.total
+                ) || 0;
+
+        }
+    );
+
+
+    let ticketMedio =
+        totalPedidos > 0
+        ? faturamento / totalPedidos
+        : 0;
+
+
+    document.getElementById(
+        "totalClientes"
+    ).innerText =
+        clientes.length;
+
+
+    document.getElementById(
+        "totalPedidos"
+    ).innerText =
+        totalPedidos;
+
+
+    document.getElementById(
+        "faturamentoClientes"
+    ).innerText =
+        dinheiro(faturamento);
+
+
+    document.getElementById(
+        "ticketMedioClientes"
+    ).innerText =
+        dinheiro(ticketMedio);
+
+}
+
+
+// =====================================================
+// 🚀 INICIAR
+// =====================================================
+
+function iniciarClientes() {
+
+    atualizarResumo();
+
+    mostrarClientes();
+
+}
+
+
+// =====================================================
+// 🔄 ATUALIZAR AO VOLTAR
+// =====================================================
+
+window.addEventListener(
+    "pageshow",
+    function() {
+
+        atualizarResumo();
+
+        mostrarClientes();
+
+    }
+);
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        iniciarClientes();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

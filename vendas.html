@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Histórico de Vendas - GrillCore ERP</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    padding: 15px;
+
+    background: #181818;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+}
+
+h1,
+h2 {
+
+    color: #ff7a00;
+
+}
+
+.topo {
+
+    background: #252525;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    border: 1px solid #333;
+
+    margin-bottom: 20px;
+
+}
+
+.filtros {
+
+    background: #252525;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    border: 1px solid #333;
+
+    margin-bottom: 20px;
+
+}
+
+select,
+input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 8px;
+
+    margin-bottom: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 17px;
+
+}
+
+.resumo {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+
+}
+
+.card {
+
+    background: #202020;
+
+    border: 1px solid #333;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    text-align: center;
+
+}
+
+.card h3 {
+
+    margin: 0 0 8px 0;
+
+    font-size: 15px;
+
+}
+
+.card p {
+
+    margin: 0;
+
+    color: #ff7a00;
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+}
+
+.pagamento {
+
+    margin-top: 20px;
+
+}
+
+button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 8px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #ff7a00;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+}
+
+button:active {
+
+    transform: scale(0.98);
+
+}
+
+.venda {
+
+    background: #252525;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+
+}
+
+.venda h3 {
+
+    margin-top: 0;
+
+    color: #ff7a00;
+
+}
+
+.venda p {
+
+    margin: 8px 0;
+
+    line-height: 1.4;
+
+}
+
+.total-venda {
+
+    color: #ff7a00;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    border-top: 1px solid #444;
+
+    padding-top: 12px;
+
+}
+
+.excluir {
+
+    background: #b3261e;
+
+}
+
+.voltar {
+
+    background: #333;
+
+    margin-top: 20px;
+
+}
+
+.vazio {
+
+    text-align: center;
+
+    color: #aaa;
+
+    padding: 30px 10px;
+
+}
+
+.verde {
+
+    color: #35d07f !important;
+
+}
+
+.azul {
+
+    color: #42a5f5 !important;
+
+}
+
+.amarelo {
+
+    color: #ffd54f !important;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     CABEÇALHO
+===================================== -->
+
+<div class="topo">
+
+<h1>
+🧾 Histórico de Vendas
+</h1>
+
+<p>
+GrillCore ERP
+</p>
+
+</div>
+
+
+<!-- =====================================
+     FILTROS
+===================================== -->
+
+<div class="filtros">
+
+<h2>
+🔎 Filtros
+</h2>
+
+
+<label>
+
+📅 Período
+
+</label>
+
+
+<select
+    id="filtroPeriodo"
+    onchange="atualizarTela()">
+
+    <option value="hoje">
+        📅 Hoje
+    </option>
+
+    <option value="7dias">
+        📆 Últimos 7 dias
+    </option>
+
+    <option value="mes">
+        🗓️ Este mês
+    </option>
+
+    <option value="tudo">
+        📊 Todo o período
+    </option>
+
+</select>
+
+
+<label>
+
+👤 Cliente
+
+</label>
+
+
+<input
+    type="text"
+    id="pesquisa"
+    placeholder="Digite o nome do cliente..."
+    oninput="atualizarTela()"
+>
+
+
+<button onclick="atualizarTela()">
+
+🔄 Atualizar Vendas
+
+</button>
+
+</div>
+
+
+<!-- =====================================
+     RESUMO
+===================================== -->
+
+<h2>
+📊 Resumo do Período
+</h2>
+
+
+<div class="resumo">
+
+
+<div class="card">
+
+<h3>
+🧾 Pedidos
+</h3>
+
+<p id="totalPedidos">
+0
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+💰 Faturamento
+</h3>
+
+<p id="faturamento">
+R$ 0,00
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+📈 Ticket Médio
+</h3>
+
+<p id="ticketMedio">
+R$ 0,00
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+📅 Hoje
+</h3>
+
+<p id="pedidosHoje">
+0
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================
+     FORMAS DE PAGAMENTO
+===================================== -->
+
+<h2>
+💳 Formas de Pagamento
+</h2>
+
+
+<div class="resumo">
+
+
+<div class="card">
+
+<h3>
+💵 Dinheiro
+</h3>
+
+<p
+    id="totalDinheiro"
+    class="verde">
+
+R$ 0,00
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+📱 Pix
+</h3>
+
+<p
+    id="totalPix"
+    class="verde">
+
+R$ 0,00
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+💳 Cartão
+</h3>
+
+<p
+    id="totalCartao"
+    class="azul">
+
+R$ 0,00
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+💰 Outras
+</h3>
+
+<p
+    id="totalOutros"
+    class="amarelo">
+
+R$ 0,00
+
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================
+     LISTA
+===================================== -->
+
+<h2>
+📋 Vendas Registradas
+</h2>
+
+
+<div id="listaVendas">
+
+<p class="vazio">
+
+Carregando vendas...
+
+</p>
+
+</div>
+
+
+<!-- =====================================
+     VOLTAR
+===================================== -->
+
+<button
+    class="voltar"
+    onclick="window.location.href='index.html'">
+
+↩️ Voltar para o Dashboard
+
+</button>
+
+
+<script>
+
+
+// =====================================================
+// 💾 PEGAR VENDAS
+// =====================================================
+
+function pegarVendas() {
+
+    return JSON.parse(
+
+        localStorage.getItem("vendas")
+
+    ) || [];
+
+}
+
+
+// =====================================================
+// 💾 PEGAR PRODUTOS
+// =====================================================
+
+function pegarProdutos() {
+
+    return JSON.parse(
+
+        localStorage.getItem("produtos")
+
+    ) || [];
+
+}
+
+
+// =====================================================
+// 💰 DINHEIRO
+// =====================================================
+
+function dinheiro(valor) {
+
+    return "R$ " +
+
+        Number(valor || 0)
+
+        .toFixed(2)
+
+        .replace(".", ",");
+
+}
+
+
+// =====================================================
+// 📅 DATA
+// =====================================================
+
+function formatarData(data) {
+
+    if (!data) {
+
+        return "Data não informada";
+
+    }
+
+
+    let dataObj = new Date(data);
+
+
+    if (isNaN(dataObj.getTime())) {
+
+        return "Data inválida";
+
+    }
+
+
+    return dataObj.toLocaleString(
+
+        "pt-BR"
+
+    );
+
+}
+
+
+// =====================================================
+// 📅 PERÍODO
+// =====================================================
+
+function dentroDoPeriodo(data) {
+
+    if (!data) {
+
+        return false;
+
+    }
+
+
+    let dataVenda =
+        new Date(data);
+
+
+    if (isNaN(dataVenda.getTime())) {
+
+        return false;
+
+    }
+
+
+    let hoje =
+        new Date();
+
+
+    let filtro =
+        document.getElementById(
+            "filtroPeriodo"
+        ).value;
+
+
+    // =========================================
+    // TODO O PERÍODO
+    // =========================================
+
+    if (filtro === "tudo") {
+
+        return true;
+
+    }
+
+
+    // =========================================
+    // HOJE
+    // =========================================
+
+    if (filtro === "hoje") {
+
+        return (
+
+            dataVenda.getDate() ===
+            hoje.getDate()
+
+            &&
+
+            dataVenda.getMonth() ===
+            hoje.getMonth()
+
+            &&
+
+            dataVenda.getFullYear() ===
+            hoje.getFullYear()
+
+        );
+
+    }
+
+
+    // =========================================
+    // ÚLTIMOS 7 DIAS
+    // =========================================
+
+    if (filtro === "7dias") {
+
+        let limite =
+            new Date();
+
+
+        limite.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        limite.setDate(
+            limite.getDate() - 6
+        );
+
+
+        return dataVenda >= limite;
+
+    }
+
+
+    // =========================================
+    // ESTE MÊS
+    // =========================================
+
+    if (filtro === "mes") {
+
+        return (
+
+            dataVenda.getMonth() ===
+            hoje.getMonth()
+
+            &&
+
+            dataVenda.getFullYear() ===
+            hoje.getFullYear()
+
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+// =====================================================
+// 📊 FILTRAR VENDAS
+// =====================================================
+
+function obterVendasFiltradas() {
+
+    let vendas =
+        pegarVendas();
+
+
+    let pesquisa =
+        document.getElementById(
+            "pesquisa"
+        ).value
+
+        .trim()
+
+        .toLowerCase();
+
+
+    vendas =
+        vendas.filter(
+
+            function(venda) {
+
+                if (
+                    !dentroDoPeriodo(
+                        venda.data
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    pesquisa === ""
+                ) {
+
+                    return true;
+
+                }
+
+
+                let cliente =
+                    String(
+                        venda.cliente || ""
+                    ).toLowerCase();
+
+
+                return cliente.includes(
+                    pesquisa
+                );
+
+            }
+
+        );
+
+
+    vendas.sort(
+
+        function(a, b) {
+
+            return Number(
+                b.id || 0
+            ) -
+
+            Number(
+                a.id || 0
+            );
+
+        }
+
+    );
+
+
+    return vendas;
+
+}
+
+
+// =====================================================
+// 📊 RESUMO
+// =====================================================
+
+function atualizarResumo() {
+
+    let vendas =
+        obterVendasFiltradas();
+
+
+    // =========================================
+    // PEDIDOS
+    // =========================================
+
+    document.getElementById(
+        "totalPedidos"
+    ).innerText =
+
+        vendas.length;
+
+
+    // =========================================
+    // FATURAMENTO
+    // =========================================
+
+    let faturamento = 0;
+
+
+    vendas.forEach(
+
+        function(venda) {
+
+            faturamento +=
+                Number(
+                    venda.total || 0
+                );
+
+        }
+
+    );
+
+
+    document.getElementById(
+        "faturamento"
+    ).innerText =
+
+        dinheiro(
+            faturamento
+        );
+
+
+    // =========================================
+    // TICKET MÉDIO
+    // =========================================
+
+    let ticket = 0;
+
+
+    if (vendas.length > 0) {
+
+        ticket =
+            faturamento /
+            vendas.length;
+
+    }
+
+
+    document.getElementById(
+        "ticketMedio"
+    ).innerText =
+
+        dinheiro(ticket);
+
+
+    // =========================================
+    // VENDAS DE HOJE
+    // =========================================
+
+    let todas =
+        pegarVendas();
+
+
+    let hoje =
+        new Date();
+
+
+    let vendasHoje =
+        todas.filter(
+
+            function(venda) {
+
+                if (!venda.data) {
+
+                    return false;
+
+                }
+
+
+                let data =
+                    new Date(
+                        venda.data
+                    );
+
+
+                return (
+
+                    data.getDate() ===
+                    hoje.getDate()
+
+                    &&
+
+                    data.getMonth() ===
+                    hoje.getMonth()
+
+                    &&
+
+                    data.getFullYear() ===
+                    hoje.getFullYear()
+
+                );
+
+            }
+
+        );
+
+
+    document.getElementById(
+        "pedidosHoje"
+    ).innerText =
+
+        vendasHoje.length;
+
+
+    // =========================================
+    // PAGAMENTOS
+    // =========================================
+
+    let dinheiroTotal = 0;
+
+    let pixTotal = 0;
+
+    let cartaoTotal = 0;
+
+    let outrosTotal = 0;
+
+
+    vendas.forEach(
+
+        function(venda) {
+
+            let valor =
+                Number(
+                    venda.total || 0
+                );
+
+
+            let pagamento =
+                String(
+                    venda.pagamento || ""
+                ).toLowerCase();
+
+
+            if (
+                pagamento ===
+                "dinheiro"
+            ) {
+
+                dinheiroTotal += valor;
+
+            }
+
+            else if (
+                pagamento ===
+                "pix"
+            ) {
+
+                pixTotal += valor;
+
+            }
+
+            else if (
+                pagamento ===
+                "cartão" ||
+
+                pagamento ===
+                "cartao"
+            ) {
+
+                cartaoTotal += valor;
+
+            }
+
+            else {
+
+                outrosTotal += valor;
+
+            }
+
+        }
+
+    );
+
+
+    document.getElementById(
+        "totalDinheiro"
+    ).innerText =
+
+        dinheiro(dinheiroTotal);
+
+
+    document.getElementById(
+        "totalPix"
+    ).innerText =
+
+        dinheiro(pixTotal);
+
+
+    document.getElementById(
+        "totalCartao"
+    ).innerText =
+
+        dinheiro(cartaoTotal);
+
+
+    document.getElementById(
+        "totalOutros"
+    ).innerText =
+
+        dinheiro(outrosTotal);
+
+}
+
+
+// =====================================================
+// 🧾 MOSTRAR VENDAS
+// =====================================================
+
+function mostrarVendas() {
+
+    let vendas =
+        obterVendasFiltradas();
+
+
+    let lista =
+        document.getElementById(
+            "listaVendas"
+        );
+
+
+    if (vendas.length === 0) {
+
+        lista.innerHTML = `
+
+        <div class="venda">
+
+            <p class="vazio">
+
+                🧾 Nenhuma venda encontrada
+                neste período.
+
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    vendas.forEach(
+
+        function(venda, indice) {
+
+
+            let numeroPedido =
+                venda.id ||
+                (indice + 1);
+
+
+            lista.innerHTML += `
+
+            <div class="venda">
+
+                <h3>
+
+                    🧾 Pedido #${numeroPedido}
+
+                </h3>
+
+
+                <p>
+
+                    📅 <strong>Data:</strong>
+
+                    ${formatarData(
+                        venda.data
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    👤 <strong>Cliente:</strong>
+
+                    ${
+                        venda.cliente ||
+                        "Não informado"
+                    }
+
+                </p>
+
+
+                <p>
+
+                    🍔 <strong>Hambúrguer:</strong>
+
+                    ${
+                        venda.hamburguer ||
+                        "Não informado"
+                    }
+
+                </p>
+
+
+                <p>
+
+                    🥤 <strong>Bebida:</strong>
+
+                    ${
+                        venda.bebida ||
+                        "Sem bebida"
+                    }
+
+                </p>
+
+
+                <p>
+
+                    🍟 <strong>Porção:</strong>
+
+                    ${
+                        venda.porcao ||
+                        "Sem porção"
+                    }
+
+                </p>
+
+
+                <p>
+
+                    💳 <strong>Pagamento:</strong>
+
+                    ${
+                        venda.pagamento ||
+                        "Não informado"
+                    }
+
+                </p>
+
+
+                <p class="total-venda">
+
+                    💰 ${dinheiro(
+                        venda.total
+                    )}
+
+                </p>
+
+
+                <button
+                    class="excluir"
+                    onclick="excluirVenda(${venda.id})">
+
+                    🗑️ Excluir Venda
+
+                </button>
+
+
+            </div>
+
+            `;
+
+        }
+
+    );
+
+}
+
+
+// =====================================================
+// 🗑️ EXCLUIR VENDA
+// =====================================================
+
+function excluirVenda(id) {
+
+    let vendas =
+        pegarVendas();
+
+
+    let venda =
+        vendas.find(
+
+            function(item) {
+
+                return Number(
+                    item.id
+                ) === Number(id);
+
+            }
+
+        );
+
+
+    if (!venda) {
+
+        alert(
+            "❌ Venda não encontrada."
+        );
+
+        return;
+
+    }
+
+
+    let confirmar =
+        confirm(
+
+            "⚠️ EXCLUIR VENDA?\n\n" +
+
+            "Cliente: " +
+
+            (
+                venda.cliente ||
+                "Não informado"
+            ) +
+
+            "\n\nHambúrguer: " +
+
+            (
+                venda.hamburguer ||
+                "Não informado"
+            ) +
+
+            "\n\nValor: " +
+
+            dinheiro(
+                venda.total
+            ) +
+
+            "\n\nO produto será devolvido ao estoque."
+
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    // =================================================
+    // DEVOLVER PRODUTO AO ESTOQUE
+    // =================================================
+
+    let produtos =
+        pegarProdutos();
+
+
+    let produto =
+        produtos.find(
+
+            function(item) {
+
+                return item.nome ===
+                       venda.hamburguer;
+
+            }
+
+        );
+
+
+    if (produto) {
+
+        produto.estoque =
+            Number(
+                produto.estoque || 0
+            ) + 1;
+
+
+        localStorage.setItem(
+
+            "produtos",
+
+            JSON.stringify(
+                produtos
+            )
+
+        );
+
+    }
+
+
+    // =================================================
+    // REMOVER VENDA
+    // =================================================
+
+    vendas =
+        vendas.filter(
+
+            function(item) {
+
+                return Number(
+                    item.id
+                ) !== Number(id);
+
+            }
+
+        );
+
+
+    localStorage.setItem(
+
+        "vendas",
+
+        JSON.stringify(
+            vendas
+        )
+
+    );
+
+
+    atualizarTela();
+
+
+    alert(
+        "✅ Venda excluída e estoque atualizado!"
+    );
+
+}
+
+
+// =====================================================
+// 🔄 ATUALIZAR TELA
+// =====================================================
+
+function atualizarTela() {
+
+    atualizarResumo();
+
+    mostrarVendas();
+
+}
+
+
+// =====================================================
+// 🚀 INICIAR
+// =====================================================
+
+window.addEventListener(
+
+    "load",
+
+    function() {
+
+        atualizarTela();
+
+    }
+
+);
+
+
+// =====================================================
+// 🔄 ATUALIZAR AO VOLTAR
+// =====================================================
+
+window.addEventListener(
+
+    "pageshow",
+
+    function() {
+
+        atualizarTela();
+
+    }
+
+);
+
+
+</script>
+
+
+</body>
+
+</html>

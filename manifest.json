@@ -1,0 +1,9 @@
+{
+  "name": "GrillCore ERP",
+  "short_name": "GrillCore",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#9b111e",
+  "icons": []
+}

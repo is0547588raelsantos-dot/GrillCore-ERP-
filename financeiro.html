@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Financeiro - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:15px;
+    background:#181818;
+    color:#fff;
+    font-family:Arial,sans-serif;
+}
+
+h1,h2{
+    color:#ff7a00;
+}
+
+hr{
+    border:0;
+    border-top:1px solid #444;
+    margin:25px 0;
+}
+
+.card{
+    background:#242424;
+    border:1px solid #333;
+    border-radius:15px;
+    padding:18px;
+    margin:15px 0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.mini{
+    background:#1d1d1d;
+    padding:15px;
+    border-radius:12px;
+}
+
+.mini strong{
+    display:block;
+    margin-top:7px;
+    color:#ff7a00;
+    font-size:21px;
+}
+
+.saldo{
+    font-size:36px;
+    font-weight:bold;
+    color:#35d07f;
+    margin-top:8px;
+}
+
+.verde{
+    color:#35d07f !important;
+}
+
+.vermelho{
+    color:#ff5555 !important;
+}
+
+select,
+button{
+    width:100%;
+    padding:15px;
+    margin:7px 0;
+    border:0;
+    border-radius:12px;
+    font-size:17px;
+}
+
+select{
+    background:#333;
+    color:white;
+}
+
+button{
+    background:#ff7a00;
+    color:white;
+    font-weight:bold;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.botaoVerde{
+    background:#35a85b;
+}
+
+.botaoCinza{
+    background:#444;
+}
+
+.venda{
+    background:#242424;
+    border:1px solid #333;
+    border-left:4px solid #ff7a00;
+    padding:17px;
+    margin:12px 0;
+    border-radius:12px;
+}
+
+.venda h3{
+    color:#ff7a00;
+    margin-top:0;
+}
+
+.venda p{
+    margin:8px 0;
+}
+
+.vazio{
+    color:#aaa;
+    text-align:center;
+    padding:20px;
+}
+
+.fechamento{
+    background:#202020;
+    border:2px solid #ff7a00;
+    padding:20px;
+    border-radius:15px;
+    margin-top:15px;
+}
+
+.aviso{
+    background:#493600;
+    border:1px solid #ff7a00;
+    padding:15px;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+.info{
+    background:#202020;
+    border:1px solid #444;
+    padding:15px;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+@media(max-width:500px){
+
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .mini strong{
+        font-size:18px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>💰 Financeiro</h1>
+
+<p>Controle financeiro do GrillCore ERP</p>
+
+<hr>
+
+<h2>📅 Período</h2>
+
+<div class="card">
+
+<select id="filtroPeriodo" onchange="atualizarFinanceiro()">
+
+<option value="hoje">
+📅 Hoje
+</option>
+
+<option value="7dias">
+📆 Últimos 7 dias
+</option>
+
+<option value="mes">
+🗓️ Este mês
+</option>
+
+<option value="tudo">
+📊 Todo o período
+</option>
+
+</select>
+
+<div id="aviso"></div>
+
+</div>
+
+
+<h2>📊 Resumo Financeiro</h2>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="mini">
+🍔 Vendas
+<strong id="faturamento">R$ 0,00</strong>
+</div>
+
+<div class="mini">
+📈 Outras entradas
+<strong id="outrasEntradas">R$ 0,00</strong>
+</div>
+
+<div class="mini">
+💰 Total de entradas
+<strong id="totalEntradas">R$ 0,00</strong>
+</div>
+
+<div class="mini">
+📉 Despesas
+<strong id="totalDespesas">R$ 0,00</strong>
+</div>
+
+</div>
+
+<hr>
+
+💵 SALDO
+
+<div id="saldo" class="saldo">
+R$ 0,00
+</div>
+
+</div>
+
+
+<h2>💳 Vendas por pagamento</h2>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="mini">
+💵 Dinheiro
+<strong id="totalDinheiro">R$ 0,00</strong>
+</div>
+
+<div class="mini">
+📱 Pix
+<strong id="totalPix">R$ 0,00</strong>
+</div>
+
+<div class="mini">
+💳 Cartão
+<strong id="totalCartao">R$ 0,00</strong>
+</div>
+
+<div class="mini">
+🧾 Outros
+<strong id="totalOutros">R$ 0,00</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<h2>🧾 Resumo dos pedidos</h2>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="mini">
+📦 Pedidos
+<strong id="quantidadePedidos">0</strong>
+</div>
+
+<div class="mini">
+📈 Ticket médio
+<strong id="ticketMedio">R$ 0,00</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<h2>📋 Movimentações</h2>
+
+<div class="card">
+
+<button onclick="window.location.href='entradas.html'">
+➕ Cadastrar Entrada
+</button>
+
+<button onclick="window.location.href='despesas.html'">
+➖ Cadastrar Despesa
+</button>
+
+<button onclick="window.location.href='vendas.html'">
+🧾 Histórico de Vendas
+</button>
+
+<button
+class="botaoCinza"
+onclick="window.location.href='fechamentos.html'">
+🔒 Histórico de Fechamentos
+</button>
+
+<button
+class="botaoCinza"
+onclick="window.location.href='index.html'">
+🏠 Voltar ao Início
+</button>
+
+</div>
+
+
+<hr>
+
+
+<h2>🔒 Fechamento de Caixa</h2>
+
+<div class="card">
+
+<p>
+O fechamento registra os valores financeiros do período selecionado.
+</p>
+
+<button
+class="botaoVerde"
+id="botaoFechar"
+onclick="fecharCaixa()">
+
+🔒 FECHAR CAIXA
+
+</button>
+
+</div>
+
+<div id="resultadoFechamento"></div>
+
+
+<hr>
+
+
+<h2>🧾 Vendas do período</h2>
+
+<div id="listaVendas">
+
+<p class="vazio">
+Carregando vendas...
+</p>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GRILLCORE ERP
+   FINANCEIRO
+===================================================== */
+
+
+/* =====================================================
+   FUNÇÕES DE LOCALSTORAGE
+===================================================== */
+
+function lerJSON(chave){
+
+    try{
+
+        const valor = localStorage.getItem(chave);
+
+        if(!valor){
+            return [];
+        }
+
+        const dados = JSON.parse(valor);
+
+        return dados;
+
+    }catch(erro){
+
+        console.log(
+            "Erro ao ler:",
+            chave,
+            erro
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function salvarJSON(chave,dados){
+
+    localStorage.setItem(
+        chave,
+        JSON.stringify(dados)
+    );
+
+}
+
+
+/* =====================================================
+   BUSCAR VENDAS
+===================================================== */
+
+function pegarVendas(){
+
+    const possiveisChaves = [
+
+        "vendas",
+
+        "pedidos",
+
+        "vendasGrillCore",
+
+        "pedidosGrillCore",
+
+        "historicoVendas",
+
+        "historicoPedidos",
+
+        "vendasERP",
+
+        "pedidosERP"
+
+    ];
+
+
+    let resultado = [];
+
+
+    possiveisChaves.forEach(function(chave){
+
+        const dados = lerJSON(chave);
+
+        if(Array.isArray(dados)){
+
+            dados.forEach(function(item){
+
+                if(item && typeof item === "object"){
+
+                    resultado.push(item);
+
+                }
+
+            });
+
+        }
+
+    });
+
+
+    /*
+       Remove possíveis duplicações.
+    */
+
+    const mapa = {};
+
+    resultado.forEach(function(venda,index){
+
+        const identificador =
+            venda.id ||
+            venda.numeroPedido ||
+            venda.codigo ||
+            ("item_"+index);
+
+        mapa[
+            String(identificador)
+        ] = venda;
+
+    });
+
+
+    return Object.values(mapa);
+
+}
+
+
+/* =====================================================
+   ENTRADAS
+===================================================== */
+
+function pegarEntradas(){
+
+    const dados =
+        lerJSON("entradas");
+
+    return Array.isArray(dados)
+        ? dados
+        : [];
+
+}
+
+
+/* =====================================================
+   DESPESAS
+===================================================== */
+
+function pegarDespesas(){
+
+    const dados =
+        lerJSON("despesas");
+
+    return Array.isArray(dados)
+        ? dados
+        : [];
+
+}
+
+
+/* =====================================================
+   FECHAMENTOS
+===================================================== */
+
+function pegarFechamentos(){
+
+    const dados =
+        lerJSON("fechamentosCaixa");
+
+    return Array.isArray(dados)
+        ? dados
+        : [];
+
+}
+
+
+/* =====================================================
+   DINHEIRO
+===================================================== */
+
+function numero(valor){
+
+    if(valor === null || valor === undefined){
+        return 0;
+    }
+
+
+    if(typeof valor === "number"){
+        return valor;
+    }
+
+
+    let texto =
+        String(valor)
+        .trim();
+
+
+    if(!texto){
+        return 0;
+    }
+
+
+    /*
+       Trata:
+
+       R$ 30,00
+       30,00
+       30.00
+       1.250,50
+    */
+
+    texto =
+        texto
+        .replace(/R\$/gi,"")
+        .replace(/\s/g,"");
+
+
+    if(
+        texto.includes(",") &&
+        texto.includes(".")
+    ){
+
+        texto =
+            texto
+            .replace(/\./g,"")
+            .replace(",",".");
+    }
+    else if(texto.includes(",")){
+
+        texto =
+            texto.replace(",",".");
+    }
+
+
+    const valorFinal =
+        parseFloat(texto);
+
+
+    return isNaN(valorFinal)
+        ? 0
+        : valorFinal;
+
+}
+
+
+function dinheiro(valor){
+
+    return Number(valor || 0)
+        .toLocaleString(
+            "pt-BR",
+            {
+                style:"currency",
+                currency:"BRL"
+            }
+        );
+
+}
+
+
+/* =====================================================
+   DATA DA VENDA
+===================================================== */
+
+function pegarData(item){
+
+    const possiveis = [
+
+        item.data,
+
+        item.dataHora,
+
+        item.dataVenda,
+
+        item.criadoEm,
+
+        item.createdAt,
+
+        item.timestamp
+
+    ];
+
+
+    for(let i=0;i<possiveis.length;i++){
+
+        if(possiveis[i]){
+
+            const data =
+                new Date(
+                    possiveis[i]
+                );
+
+
+            if(!isNaN(data.getTime())){
+
+                return data;
+
+            }
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   VALOR DA VENDA
+===================================================== */
+
+function pegarValorVenda(venda){
+
+    return numero(
+
+        venda.total ??
+        venda.valor ??
+        venda.totalPedido ??
+        venda.valorTotal ??
+        venda.preco ??
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   FORMA DE PAGAMENTO
+===================================================== */
+
+function pegarPagamento(venda){
+
+    return String(
+
+        venda.pagamento ??
+        venda.formaPagamento ??
+        venda.metodoPagamento ??
+        venda.tipoPagamento ??
+        ""
+
+    )
+    .trim()
+    .toLowerCase();
+
+}
+
+
+/* =====================================================
+   PERÍODO
+===================================================== */
+
+function dentroDoPeriodo(data){
+
+    if(!data){
+        return false;
+    }
+
+
+    const hoje =
+        new Date();
+
+
+    const filtro =
+        document
+        .getElementById(
+            "filtroPeriodo"
+        )
+        .value;
+
+
+    if(filtro === "tudo"){
+
+        return true;
+
+    }
+
+
+    const d =
+        new Date(data);
+
+
+    if(isNaN(d.getTime())){
+
+        return false;
+
+    }
+
+
+    if(filtro === "hoje"){
+
+        return (
+
+            d.getDate()
+            ===
+            hoje.getDate()
+
+            &&
+
+            d.getMonth()
+            ===
+            hoje.getMonth()
+
+            &&
+
+            d.getFullYear()
+            ===
+            hoje.getFullYear()
+
+        );
+
+    }
+
+
+    if(filtro === "7dias"){
+
+        const inicio =
+            new Date();
+
+
+        inicio.setDate(
+            hoje.getDate()-6
+        );
+
+
+        inicio.setHours(
+            0,0,0,0
+        );
+
+
+        const fim =
+            new Date();
+
+
+        fim.setHours(
+            23,59,59,999
+        );
+
+
+        return (
+            d >= inicio &&
+            d <= fim
+        );
+
+    }
+
+
+    if(filtro === "mes"){
+
+        return (
+
+            d.getMonth()
+            ===
+            hoje.getMonth()
+
+            &&
+
+            d.getFullYear()
+            ===
+            hoje.getFullYear()
+
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   CALCULAR FINANCEIRO
+===================================================== */
+
+function calcularFinanceiro(){
+
+    const todasVendas =
+        pegarVendas();
+
+
+    const vendas =
+        todasVendas.filter(
+            function(venda){
+
+                const data =
+                    pegarData(venda);
+
+                return dentroDoPeriodo(
+                    data
+                );
+
+            }
+        );
+
+
+    const entradas =
+        pegarEntradas()
+        .filter(function(entrada){
+
+            return dentroDoPeriodo(
+                pegarData(entrada)
+            );
+
+        });
+
+
+    const despesas =
+        pegarDespesas()
+        .filter(function(despesa){
+
+            return dentroDoPeriodo(
+                pegarData(despesa)
+            );
+
+        });
+
+
+    let faturamento = 0;
+
+    let dinheiroTotal = 0;
+
+    let pixTotal = 0;
+
+    let cartaoTotal = 0;
+
+    let outrosTotal = 0;
+
+
+    vendas.forEach(function(venda){
+
+        const valor =
+            pegarValorVenda(venda);
+
+
+        faturamento += valor;
+
+
+        const pagamento =
+            pegarPagamento(venda);
+
+
+        if(
+            pagamento.includes("pix")
+        ){
+
+            pixTotal += valor;
+
+        }
+
+        else if(
+            pagamento.includes("dinheiro")
+        ){
+
+            dinheiroTotal += valor;
+
+        }
+
+        else if(
+            pagamento.includes("cart")
+        ){
+
+            cartaoTotal += valor;
+
+        }
+
+        else{
+
+            outrosTotal += valor;
+
+        }
+
+    });
+
+
+    let outrasEntradas = 0;
+
+
+    entradas.forEach(
+        function(entrada){
+
+            outrasEntradas +=
+                numero(
+
+                    entrada.valor ??
+                    entrada.total ??
+                    entrada.valorTotal ??
+                    0
+
+                );
+
+        }
+    );
+
+
+    let totalDespesas = 0;
+
+
+    despesas.forEach(
+        function(despesa){
+
+            totalDespesas +=
+                numero(
+
+                    despesa.valor ??
+                    despesa.total ??
+                    despesa.valorTotal ??
+                    0
+
+                );
+
+        }
+    );
+
+
+    const totalEntradas =
+        faturamento +
+        outrasEntradas;
+
+
+    const saldo =
+        totalEntradas -
+        totalDespesas;
+
+
+    return {
+
+        vendas,
+
+        entradas,
+
+        despesas,
+
+        faturamento,
+
+        outrasEntradas,
+
+        totalEntradas,
+
+        totalDespesas,
+
+        saldo,
+
+        dinheiroTotal,
+
+        pixTotal,
+
+        cartaoTotal,
+
+        outrosTotal
+
+    };
+
+}
+
+
+/* =====================================================
+   ATUALIZAR TELA
+===================================================== */
+
+function atualizarFinanceiro(){
+
+    const dados =
+        calcularFinanceiro();
+
+
+    document
+        .getElementById(
+            "faturamento"
+        )
+        .innerText =
+        dinheiro(
+            dados.faturamento
+        );
+
+
+    document
+        .getElementById(
+            "outrasEntradas"
+        )
+        .innerText =
+        dinheiro(
+            dados.outrasEntradas
+        );
+
+
+    document
+        .getElementById(
+            "totalEntradas"
+        )
+        .innerText =
+        dinheiro(
+            dados.totalEntradas
+        );
+
+
+    document
+        .getElementById(
+            "totalDespesas"
+        )
+        .innerText =
+        dinheiro(
+            dados.totalDespesas
+        );
+
+
+    const saldo =
+        document.getElementById(
+            "saldo"
+        );
+
+
+    saldo.innerText =
+        dinheiro(
+            dados.saldo
+        );
+
+
+    saldo.classList.remove(
+        "verde",
+        "vermelho"
+    );
+
+
+    saldo.classList.add(
+
+        dados.saldo < 0
+            ? "vermelho"
+            : "verde"
+
+    );
+
+
+    document
+        .getElementById(
+            "totalDinheiro"
+        )
+        .innerText =
+        dinheiro(
+            dados.dinheiroTotal
+        );
+
+
+    document
+        .getElementById(
+            "totalPix"
+        )
+        .innerText =
+        dinheiro(
+            dados.pixTotal
+        );
+
+
+    document
+        .getElementById(
+            "totalCartao"
+        )
+        .innerText =
+        dinheiro(
+            dados.cartaoTotal
+        );
+
+
+    document
+        .getElementById(
+            "totalOutros"
+        )
+        .innerText =
+        dinheiro(
+            dados.outrosTotal
+        );
+
+
+    document
+        .getElementById(
+            "quantidadePedidos"
+        )
+        .innerText =
+        dados.vendas.length;
+
+
+    const ticket =
+        dados.vendas.length
+        ?
+        dados.faturamento /
+        dados.vendas.length
+        :
+        0;
+
+
+    document
+        .getElementById(
+            "ticketMedio"
+        )
+        .innerText =
+        dinheiro(ticket);
+
+
+    mostrarVendas(
+        dados.vendas
+    );
+
+
+    verificarFechamento();
+
+}
+
+
+/* =====================================================
+   MOSTRAR VENDAS
+===================================================== */
+
+function escapar(texto){
+
+    return String(
+        texto ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function mostrarVendas(vendas){
+
+    const lista =
+        document
+        .getElementById(
+            "listaVendas"
+        );
+
+
+    if(!vendas.length){
+
+        lista.innerHTML = `
+
+            <div class="info">
+
+                <p class="vazio">
+                    📭 Nenhuma venda encontrada neste período.
+                </p>
+
+                <p class="vazio">
+                    Se você já cadastrou um pedido,
+                    selecione <strong>Todo o período</strong>
+                    acima.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    vendas.sort(function(a,b){
+
+        const dataA =
+            pegarData(a);
+
+        const dataB =
+            pegarData(b);
+
+
+        if(!dataA && !dataB){
+            return 0;
+        }
+
+
+        if(!dataA){
+            return 1;
+        }
+
+
+        if(!dataB){
+            return -1;
+        }
+
+
+        return dataB - dataA;
+
+    });
+
+
+    lista.innerHTML = "";
+
+
+    vendas
+    .slice(0,100)
+    .forEach(function(venda,index){
+
+        const data =
+            pegarData(venda);
+
+
+        const valor =
+            pegarValorVenda(venda);
+
+
+        const pagamento =
+            venda.pagamento ??
+            venda.formaPagamento ??
+            venda.metodoPagamento ??
+            "Não informado";
+
+
+        const cliente =
+            venda.cliente ??
+            venda.nomeCliente ??
+            "Não informado";
+
+
+        const numeroPedido =
+            venda.id ??
+            venda.numeroPedido ??
+            venda.codigo ??
+            (index+1);
+
+
+        lista.innerHTML += `
+
+            <div class="venda">
+
+                <h3>
+                    🧾 Pedido #${escapar(
+                        numeroPedido
+                    )}
+                </h3>
+
+
+                <p>
+                    👤 <strong>Cliente:</strong>
+                    ${escapar(cliente)}
+                </p>
+
+
+                <p>
+                    💳 <strong>Pagamento:</strong>
+                    ${escapar(pagamento)}
+                </p>
+
+
+                <p>
+                    📅 <strong>Data:</strong>
+                    ${
+                        data
+                        ?
+                        data.toLocaleString(
+                            "pt-BR"
+                        )
+                        :
+                        "Não informada"
+                    }
+                </p>
+
+
+                <h3 class="verde">
+                    💰 ${dinheiro(valor)}
+                </h3>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   FECHAMENTO
+===================================================== */
+
+function periodoAtual(){
+
+    return document
+        .getElementById(
+            "filtroPeriodo"
+        )
+        .value;
+
+}
+
+
+function verificarFechamento(){
+
+    const hoje =
+        new Date();
+
+
+    const periodo =
+        periodoAtual();
+
+
+    const fechamentos =
+        pegarFechamentos();
+
+
+    const encontrado =
+        fechamentos.find(
+            function(fechamento){
+
+                if(
+                    fechamento.periodo
+                    !==
+                    periodo
+                ){
+
+                    return false;
+
+                }
+
+
+                const data =
+                    new Date(
+                        fechamento.data
+                    );
+
+
+                return (
+
+                    data.getDate()
+                    ===
+                    hoje.getDate()
+
+                    &&
+
+                    data.getMonth()
+                    ===
+                    hoje.getMonth()
+
+                    &&
+
+                    data.getFullYear()
+                    ===
+                    hoje.getFullYear()
+
+                );
+
+            }
+        );
+
+
+    const botao =
+        document
+        .getElementById(
+            "botaoFechar"
+        );
+
+
+    const aviso =
+        document
+        .getElementById(
+            "aviso"
+        );
+
+
+    if(encontrado){
+
+        botao.disabled =
+            true;
+
+        botao.style.opacity =
+            "0.5";
+
+        botao.innerText =
+            "🔒 CAIXA JÁ FECHADO";
+
+
+        aviso.innerHTML = `
+
+            <div class="aviso">
+
+                ⚠️ Este período já foi fechado hoje.
+
+                <br><br>
+
+                Saldo registrado:
+
+                <strong>
+                    ${dinheiro(
+                        encontrado.saldo
+                    )}
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+    else{
+
+        botao.disabled =
+            false;
+
+        botao.style.opacity =
+            "1";
+
+        botao.innerText =
+            "🔒 FECHAR CAIXA";
+
+
+        aviso.innerHTML = "";
+
+    }
+
+}
+
+
+/* =====================================================
+   FECHAR CAIXA
+===================================================== */
+
+function fecharCaixa(){
+
+    const dados =
+        calcularFinanceiro();
+
+
+    if(
+
+        !dados.vendas.length
+        &&
+        !dados.entradas.length
+        &&
+        !dados.despesas.length
+
+    ){
+
+        alert(
+
+            "📭 Não existem movimentações neste período."
+
+        );
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+
+            "🔒 CONFIRMAR FECHAMENTO\n\n" +
+
+            "Pedidos: " +
+            dados.vendas.length +
+
+            "\n\nVendas: " +
+            dinheiro(
+                dados.faturamento
+            ) +
+
+            "\nDinheiro: " +
+            dinheiro(
+                dados.dinheiroTotal
+            ) +
+
+            "\nPix: " +
+            dinheiro(
+                dados.pixTotal
+            ) +
+
+            "\nCartão: " +
+            dinheiro(
+                dados.cartaoTotal
+            ) +
+
+            "\n\nOutras entradas: " +
+            dinheiro(
+                dados.outrasEntradas
+            ) +
+
+            "\nDespesas: " +
+            dinheiro(
+                dados.totalDespesas
+            ) +
+
+            "\n\nSALDO FINAL: " +
+            dinheiro(
+                dados.saldo
+            ) +
+
+            "\n\nDeseja fechar o caixa?"
+
+        );
+
+
+    if(!confirmar){
+        return;
+    }
+
+
+    const fechamentos =
+        pegarFechamentos();
+
+
+    const fechamento = {
+
+        id:Date.now(),
+
+        data:
+            new Date()
+            .toISOString(),
+
+        periodo:
+            periodoAtual(),
+
+        pedidos:
+            dados.vendas.length,
+
+        vendas:
+            dados.faturamento,
+
+        dinheiro:
+            dados.dinheiroTotal,
+
+        pix:
+            dados.pixTotal,
+
+        cartao:
+            dados.cartaoTotal,
+
+        outrasEntradas:
+            dados.outrasEntradas,
+
+        despesas:
+            dados.totalDespesas,
+
+        totalEntradas:
+            dados.totalEntradas,
+
+        saldo:
+            dados.saldo
+
+    };
+
+
+    fechamentos.push(
+        fechamento
+    );
+
+
+    salvarJSON(
+        "fechamentosCaixa",
+        fechamentos
+    );
+
+
+    document
+        .getElementById(
+            "resultadoFechamento"
+        )
+        .innerHTML = `
+
+        <div class="fechamento">
+
+            <h2>
+                🔒 CAIXA FECHADO
+            </h2>
+
+            <hr>
+
+            <p>
+                📅 Data:
+                <strong>
+                    ${new Date(
+                        fechamento.data
+                    ).toLocaleString(
+                        "pt-BR"
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                🧾 Pedidos:
+                <strong>
+                    ${fechamento.pedidos}
+                </strong>
+            </p>
+
+            <p>
+                🍔 Vendas:
+                <strong>
+                    ${dinheiro(
+                        fechamento.vendas
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                💵 Dinheiro:
+                <strong>
+                    ${dinheiro(
+                        fechamento.dinheiro
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                📱 Pix:
+                <strong>
+                    ${dinheiro(
+                        fechamento.pix
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                💳 Cartão:
+                <strong>
+                    ${dinheiro(
+                        fechamento.cartao
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                📉 Despesas:
+                <strong>
+                    ${dinheiro(
+                        fechamento.despesas
+                    )}
+                </strong>
+            </p>
+
+            <hr>
+
+            <h2 class="${
+                fechamento.saldo < 0
+                ? "vermelho"
+                : "saldo"
+            }">
+
+                💰 SALDO:
+                ${dinheiro(
+                    fechamento.saldo
+                )}
+
+            </h2>
+
+            <p>
+                ✅ Fechamento salvo com sucesso.
+            </p>
+
+        </div>
+
+    `;
+
+
+    verificarFechamento();
+
+
+    alert(
+        "✅ Caixa fechado com sucesso!"
+    );
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        atualizarFinanceiro();
+
+    }
+);
+
+
+window.addEventListener(
+    "pageshow",
+    function(){
+
+        atualizarFinanceiro();
+
+    }
+);
+
+
+</script>
+
+</body>
+</html>

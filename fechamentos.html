@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Fechamentos - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body {
+
+    background: #181818;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    padding: 15px;
+
+}
+
+h1,
+h2 {
+
+    color: #ff7a00;
+
+}
+
+.card {
+
+    background: #242424;
+
+    padding: 20px;
+
+    margin: 15px 0;
+
+    border-radius: 15px;
+
+    border: 1px solid #333;
+
+}
+
+.fechamento {
+
+    background: #242424;
+
+    padding: 20px;
+
+    margin: 15px 0;
+
+    border-radius: 15px;
+
+    border: 1px solid #333;
+
+}
+
+.fechamento h2 {
+
+    margin-top: 0;
+
+}
+
+.valor {
+
+    color: #ff7a00;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+}
+
+.saldo {
+
+    color: #35d07f;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+}
+
+.vermelho {
+
+    color: #ff5555;
+
+}
+
+button {
+
+    width: 100%;
+
+    padding: 17px;
+
+    margin: 8px 0;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #ff7a00;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+}
+
+button:active {
+
+    transform: scale(0.98);
+
+}
+
+.voltar {
+
+    background: #333;
+
+}
+
+.excluir {
+
+    background: #b83232;
+
+}
+
+.limpar {
+
+    background: #8b2020;
+
+}
+
+.vazio {
+
+    color: #aaa;
+
+    text-align: center;
+
+    padding: 25px;
+
+}
+
+.linha {
+
+    border-top: 1px solid #444;
+
+    margin: 15px 0;
+
+}
+
+.resumo {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+}
+
+.item {
+
+    background: #1d1d1d;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+}
+
+.item strong {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #ff7a00;
+
+}
+
+.periodo {
+
+    color: #aaa;
+
+    font-size: 14px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- CABEÇALHO -->
+<!-- ================================================= -->
+
+<h1>
+🔒 Fechamentos de Caixa
+</h1>
+
+<p>
+Histórico dos caixas fechados no GrillCore ERP
+</p>
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- RESUMO -->
+<!-- ================================================= -->
+
+<h2>
+📊 Resumo do Histórico
+</h2>
+
+
+<div class="card">
+
+<div class="resumo">
+
+    <div class="item">
+
+        Total de fechamentos
+
+        <strong id="totalFechamentos">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="item">
+
+        Total de vendas
+
+        <strong id="totalVendas">
+            R$ 0,00
+        </strong>
+
+    </div>
+
+
+    <div class="item">
+
+        Total de despesas
+
+        <strong id="totalDespesas">
+            R$ 0,00
+        </strong>
+
+    </div>
+
+
+    <div class="item">
+
+        Saldo acumulado
+
+        <strong id="saldoAcumulado">
+            R$ 0,00
+        </strong>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- BOTÕES -->
+<!-- ================================================= -->
+
+<button
+    onclick="window.location.href='financeiro.html'">
+
+💰 Voltar para o Financeiro
+
+</button>
+
+
+<button
+    class="voltar"
+    onclick="window.location.href='index.html'">
+
+🏠 Voltar ao Início
+
+</button>
+
+
+<button
+    class="limpar"
+    onclick="limparHistorico()">
+
+🗑️ Limpar Histórico de Fechamentos
+
+</button>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- LISTA -->
+<!-- ================================================= -->
+
+<h2>
+📋 Histórico
+</h2>
+
+
+<div id="listaFechamentos">
+
+<p class="vazio">
+Carregando...
+</p>
+
+</div>
+
+
+<script>
+
+
+// =====================================================
+// 💰 FORMATAR DINHEIRO
+// =====================================================
+
+function dinheiro(valor) {
+
+    return "R$ " +
+
+        Number(valor || 0)
+
+        .toFixed(2)
+
+        .replace(".", ",");
+
+}
+
+
+// =====================================================
+// 📅 NOME DO PERÍODO
+// =====================================================
+
+function nomePeriodo(periodo) {
+
+    if (periodo === "hoje") {
+
+        return "📅 Hoje";
+
+    }
+
+    if (periodo === "7dias") {
+
+        return "📆 Últimos 7 dias";
+
+    }
+
+    if (periodo === "mes") {
+
+        return "🗓️ Este mês";
+
+    }
+
+    if (periodo === "tudo") {
+
+        return "📊 Todo o período";
+
+    }
+
+    return periodo || "Período não informado";
+
+}
+
+
+// =====================================================
+// 💾 PEGAR FECHAMENTOS
+// =====================================================
+
+function pegarFechamentos() {
+
+    return JSON.parse(
+
+        localStorage.getItem(
+            "fechamentosCaixa"
+        )
+
+    ) || [];
+
+}
+
+
+// =====================================================
+// 📊 ATUALIZAR RESUMO
+// =====================================================
+
+function atualizarResumo(fechamentos) {
+
+
+    let totalVendas = 0;
+
+    let totalDespesas = 0;
+
+    let saldoAcumulado = 0;
+
+
+    fechamentos.forEach(function(fechamento) {
+
+        totalVendas +=
+            Number(fechamento.vendas) || 0;
+
+
+        totalDespesas +=
+            Number(fechamento.despesas) || 0;
+
+
+        saldoAcumulado +=
+            Number(fechamento.saldo) || 0;
+
+    });
+
+
+    document.getElementById(
+        "totalFechamentos"
+    ).innerText =
+        fechamentos.length;
+
+
+    document.getElementById(
+        "totalVendas"
+    ).innerText =
+        dinheiro(totalVendas);
+
+
+    document.getElementById(
+        "totalDespesas"
+    ).innerText =
+        dinheiro(totalDespesas);
+
+
+    let saldoElemento =
+        document.getElementById(
+            "saldoAcumulado"
+        );
+
+
+    saldoElemento.innerText =
+        dinheiro(saldoAcumulado);
+
+
+    if (saldoAcumulado < 0) {
+
+        saldoElemento.classList.add(
+            "vermelho"
+        );
+
+    }
+    else {
+
+        saldoElemento.classList.remove(
+            "vermelho"
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// 📋 MOSTRAR HISTÓRICO
+// =====================================================
+
+function mostrarFechamentos() {
+
+
+    let fechamentos =
+        pegarFechamentos();
+
+
+    atualizarResumo(
+        fechamentos
+    );
+
+
+    let lista =
+        document.getElementById(
+            "listaFechamentos"
+        );
+
+
+    if (
+        fechamentos.length === 0
+    ) {
+
+        lista.innerHTML = `
+
+            <p class="vazio">
+
+                📭 Nenhum fechamento de caixa
+                registrado ainda.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    // =================================================
+    // MAIS RECENTE PRIMEIRO
+    // =================================================
+
+    fechamentos
+        .slice()
+        .sort(function(a, b) {
+
+            return Number(b.id || 0) -
+                   Number(a.id || 0);
+
+        })
+        .forEach(function(fechamento) {
+
+
+            let saldo =
+                Number(
+                    fechamento.saldo
+                ) || 0;
+
+
+            let classeSaldo =
+                saldo < 0
+                ? "vermelho"
+                : "saldo";
+
+
+            let data =
+
+                fechamento.data
+
+                ? new Date(
+                    fechamento.data
+                  ).toLocaleString(
+                    "pt-BR"
+                  )
+
+                : "Data não informada";
+
+
+            lista.innerHTML += `
+
+                <div class="fechamento">
+
+                    <h2>
+
+                        🔒 Caixa Fechado
+
+                    </h2>
+
+
+                    <p class="periodo">
+
+                        📅 ${data}
+
+                    </p>
+
+
+                    <p>
+
+                        📊 <strong>Período:</strong>
+
+                        ${nomePeriodo(
+                            fechamento.periodo
+                        )}
+
+                    </p>
+
+
+                    <div class="linha"></div>
+
+
+                    <div class="resumo">
+
+
+                        <div class="item">
+
+                            🧾 Pedidos
+
+                            <strong>
+
+                                ${Number(
+                                    fechamento.pedidos || 0
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            🍔 Vendas
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.vendas
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            💵 Dinheiro
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.dinheiro
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            📱 Pix
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.pix
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            💳 Cartão
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.cartao
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            📈 Outras entradas
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.outrasEntradas
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            📉 Despesas
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.despesas
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="item">
+
+                            💰 Total de entradas
+
+                            <strong>
+
+                                ${dinheiro(
+                                    fechamento.totalEntradas
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="linha"></div>
+
+
+                    <h2 class="${classeSaldo}">
+
+                        💰 SALDO:
+
+                        ${dinheiro(saldo)}
+
+                    </h2>
+
+
+                    <button
+                        class="excluir"
+                        onclick="excluirFechamento(${fechamento.id})">
+
+                        🗑️ Excluir este fechamento
+
+                    </button>
+
+
+                </div>
+
+            `;
+
+        });
+
+}
+
+
+// =====================================================
+// 🗑️ EXCLUIR UM FECHAMENTO
+// =====================================================
+
+function excluirFechamento(id) {
+
+
+    let confirmar =
+        confirm(
+
+            "🗑️ Excluir este fechamento?\n\n" +
+
+            "Essa ação não poderá ser desfeita."
+
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    let fechamentos =
+        pegarFechamentos();
+
+
+    fechamentos =
+        fechamentos.filter(
+            function(fechamento) {
+
+                return Number(
+                    fechamento.id
+                ) !== Number(id);
+
+            }
+        );
+
+
+    localStorage.setItem(
+
+        "fechamentosCaixa",
+
+        JSON.stringify(
+            fechamentos
+        )
+
+    );
+
+
+    mostrarFechamentos();
+
+
+    alert(
+        "✅ Fechamento excluído."
+    );
+
+}
+
+
+// =====================================================
+// 🧹 LIMPAR TODO O HISTÓRICO
+// =====================================================
+
+function limparHistorico() {
+
+
+    let fechamentos =
+        pegarFechamentos();
+
+
+    if (
+        fechamentos.length === 0
+    ) {
+
+        alert(
+            "📭 Não existe histórico para apagar."
+        );
+
+        return;
+
+    }
+
+
+    let confirmar =
+        confirm(
+
+            "⚠️ ATENÇÃO!\n\n" +
+
+            "Você está prestes a apagar " +
+
+            fechamentos.length +
+
+            " fechamento(s).\n\n" +
+
+            "Essa ação não poderá ser desfeita.\n\n" +
+
+            "Deseja continuar?"
+
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "fechamentosCaixa"
+    );
+
+
+    mostrarFechamentos();
+
+
+    alert(
+        "✅ Histórico apagado com sucesso."
+    );
+
+}
+
+
+// =====================================================
+// 🚀 INICIAR
+// =====================================================
+
+window.addEventListener(
+
+    "load",
+
+    function() {
+
+        mostrarFechamentos();
+
+    }
+
+);
+
+
+// =====================================================
+// 🔄 ATUALIZAR AO VOLTAR
+// =====================================================
+
+window.addEventListener(
+
+    "pageshow",
+
+    function() {
+
+        mostrarFechamentos();
+
+    }
+
+);
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Despesas - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body {
+    background: #181818;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 15px;
+}
+
+h1,
+h2 {
+    color: #ff7a00;
+}
+
+.card {
+    background: #242424;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 15px;
+}
+
+input,
+select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    background: #ff7a00;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.despesa {
+    background: #242424;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 12px 0;
+}
+
+.valor {
+    color: #ff7a00;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.excluir {
+    background: #b3261e;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📉 Despesas</h1>
+
+<p>Cadastro e controle de despesas</p>
+
+<hr>
+
+
+<!-- ================================= -->
+<!-- NOVA DESPESA -->
+<!-- ================================= -->
+
+<h2>➖ Nova Despesa</h2>
+
+<div class="card">
+
+<label>Descrição da despesa</label>
+
+<input
+    type="text"
+    id="descricao"
+    placeholder="Ex: Compra de carne"
+>
+
+
+<label>Valor</label>
+
+<input
+    type="number"
+    id="valor"
+    placeholder="0,00"
+    step="0.01"
+>
+
+
+<label>Categoria</label>
+
+<select id="categoria">
+
+    <option value="Ingredientes">
+        🥩 Ingredientes
+    </option>
+
+    <option value="Bebidas">
+        🥤 Bebidas
+    </option>
+
+    <option value="Embalagens">
+        📦 Embalagens
+    </option>
+
+    <option value="Aluguel">
+        🏠 Aluguel
+    </option>
+
+    <option value="Energia">
+        ⚡ Energia
+    </option>
+
+    <option value="Água">
+        💧 Água
+    </option>
+
+    <option value="Internet">
+        🌐 Internet
+    </option>
+
+    <option value="Funcionários">
+        👥 Funcionários
+    </option>
+
+    <option value="Outros">
+        📋 Outros
+    </option>
+
+</select>
+
+
+<label>Forma de pagamento</label>
+
+<select id="formaPagamento">
+
+    <option value="Dinheiro">
+        💵 Dinheiro
+    </option>
+
+    <option value="Pix">
+        📱 Pix
+    </option>
+
+    <option value="Cartão">
+        💳 Cartão
+    </option>
+
+</select>
+
+
+<button onclick="cadastrarDespesa()">
+
+    ➖ Cadastrar Despesa
+
+</button>
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================= -->
+<!-- TOTAL -->
+<!-- ================================= -->
+
+<h2>📉 Total de Despesas</h2>
+
+<div class="card">
+
+<div
+    id="total"
+    class="valor">
+
+R$ 0,00
+
+</div>
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================= -->
+<!-- HISTÓRICO -->
+<!-- ================================= -->
+
+<h2>📋 Histórico de Despesas</h2>
+
+<div id="listaDespesas">
+
+Carregando...
+
+</div>
+
+
+<hr>
+
+
+<button
+    onclick="window.location.href='financeiro.html'">
+
+    💰 Voltar ao Financeiro
+
+</button>
+
+
+<button
+    onclick="window.location.href='index.html'">
+
+    🏠 Voltar ao Início
+
+</button>
+
+
+<script>
+
+// =====================================
+// 💾 BANCO DE DESPESAS
+// =====================================
+
+let despesas =
+    JSON.parse(
+        localStorage.getItem("despesas")
+    ) || [];
+
+
+// =====================================
+// 💰 FORMATAR DINHEIRO
+// =====================================
+
+function dinheiro(valor) {
+
+    return "R$ " +
+        Number(valor || 0)
+        .toFixed(2)
+        .replace(".", ",");
+
+}
+
+
+// =====================================
+// ➖ CADASTRAR DESPESA
+// =====================================
+
+function cadastrarDespesa() {
+
+    let descricao =
+        document
+        .getElementById("descricao")
+        .value
+        .trim();
+
+
+    let valor =
+        Number(
+            document
+            .getElementById("valor")
+            .value
+        );
+
+
+    let categoria =
+        document
+        .getElementById("categoria")
+        .value;
+
+
+    let formaPagamento =
+        document
+        .getElementById("formaPagamento")
+        .value;
+
+
+    // =================================
+    // VALIDAÇÃO
+    // =================================
+
+    if (descricao === "") {
+
+        alert(
+            "⚠️ Digite uma descrição."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        isNaN(valor) ||
+        valor <= 0
+    ) {
+
+        alert(
+            "⚠️ Digite um valor válido."
+        );
+
+        return;
+
+    }
+
+
+    // =================================
+    // SALVAR
+    // =================================
+
+    despesas.push({
+
+        id:
+            Date.now(),
+
+        data:
+            new Date().toISOString(),
+
+        descricao:
+            descricao,
+
+        valor:
+            valor,
+
+        categoria:
+            categoria,
+
+        pagamento:
+            formaPagamento
+
+    });
+
+
+    localStorage.setItem(
+        "despesas",
+        JSON.stringify(despesas)
+    );
+
+
+    // =================================
+    // LIMPAR
+    // =================================
+
+    document
+    .getElementById("descricao")
+    .value = "";
+
+
+    document
+    .getElementById("valor")
+    .value = "";
+
+
+    // =================================
+    // ATUALIZAR
+    // =================================
+
+    mostrarDespesas();
+
+
+    alert(
+        "✅ Despesa cadastrada!\n\n" +
+        descricao +
+        "\n" +
+        dinheiro(valor)
+    );
+
+}
+
+
+// =====================================
+// 📋 MOSTRAR DESPESAS
+// =====================================
+
+function mostrarDespesas() {
+
+    let lista =
+        document.getElementById(
+            "listaDespesas"
+        );
+
+
+    let total = 0;
+
+
+    if (despesas.length === 0) {
+
+        lista.innerHTML =
+            "<p>📭 Nenhuma despesa cadastrada.</p>";
+
+        document.getElementById(
+            "total"
+        ).innerText =
+            "R$ 0,00";
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    despesas
+    .slice()
+    .reverse()
+    .forEach(function(
+        despesa
+    ) {
+
+        total +=
+            Number(despesa.valor) || 0;
+
+
+        let data =
+            despesa.data
+            ? new Date(
+                despesa.data
+              ).toLocaleString(
+                "pt-BR"
+              )
+            : "-";
+
+
+        lista.innerHTML += `
+
+        <div class="despesa">
+
+            <h3>
+                📉 ${despesa.descricao}
+            </h3>
+
+            <p>
+                📅 <strong>Data:</strong>
+                ${data}
+            </p>
+
+            <p>
+                📂 <strong>Categoria:</strong>
+                ${despesa.categoria || "-"}
+            </p>
+
+            <p>
+                💳 <strong>Pagamento:</strong>
+                ${despesa.pagamento || "-"}
+            </p>
+
+            <p class="valor">
+
+                ${dinheiro(despesa.valor)}
+
+            </p>
+
+            <button
+                class="excluir"
+                onclick="excluirDespesa(${despesa.id})">
+
+                🗑️ Excluir Despesa
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+
+    document.getElementById(
+        "total"
+    ).innerText =
+        dinheiro(total);
+
+}
+
+
+// =====================================
+// 🗑️ EXCLUIR DESPESA
+// =====================================
+
+function excluirDespesa(id) {
+
+    let confirmar =
+        confirm(
+            "Deseja realmente excluir esta despesa?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    despesas =
+        despesas.filter(
+            function(despesa) {
+
+                return despesa.id !== id;
+
+            }
+        );
+
+
+    localStorage.setItem(
+        "despesas",
+        JSON.stringify(despesas)
+    );
+
+
+    mostrarDespesas();
+
+
+    alert(
+        "🗑️ Despesa excluída."
+    );
+
+}
+
+
+// =====================================
+// 🚀 INICIAR
+// =====================================
+
+window.addEventListener(
+    "load",
+    function() {
+
+        mostrarDespesas();
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

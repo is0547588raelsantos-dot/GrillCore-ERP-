@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Histórico de Estoque - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body {
+    background: #181818;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 15px;
+}
+
+h1,
+h2 {
+    color: #ff7a00;
+}
+
+.card {
+
+    background: #242424;
+
+    padding: 18px;
+
+    margin: 15px 0;
+
+    border-radius: 15px;
+
+    border: 1px solid #333;
+
+}
+
+select,
+input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 17px;
+
+    margin-top: 8px;
+
+}
+
+button {
+
+    width: 100%;
+
+    padding: 16px;
+
+    margin: 8px 0;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #ff7a00;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+}
+
+button:active {
+
+    transform: scale(0.98);
+
+}
+
+.voltar {
+
+    background: #333;
+
+}
+
+.limpar {
+
+    background: #b3261e;
+
+}
+
+.movimento {
+
+    background: #242424;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin: 15px 0;
+
+}
+
+.entrada {
+
+    border-left: 5px solid #35d07f;
+
+}
+
+.saida {
+
+    border-left: 5px solid #ff5555;
+
+}
+
+.entrada-titulo {
+
+    color: #35d07f;
+
+}
+
+.saida-titulo {
+
+    color: #ff5555;
+
+}
+
+.info {
+
+    margin: 8px 0;
+
+    line-height: 1.5;
+
+}
+
+.estoque-final {
+
+    font-size: 20px;
+
+    color: #ff7a00;
+
+    font-weight: bold;
+
+}
+
+.vazio {
+
+    text-align: center;
+
+    color: #aaa;
+
+    padding: 30px 10px;
+
+}
+
+.resumo {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+
+}
+
+.resumo-card {
+
+    background: #202020;
+
+    border: 1px solid #333;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    text-align: center;
+
+}
+
+.resumo-card h3 {
+
+    margin: 0 0 8px 0;
+
+    font-size: 14px;
+
+}
+
+.resumo-card p {
+
+    margin: 0;
+
+    color: #ff7a00;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     CABEÇALHO
+===================================== -->
+
+<h1>
+📜 Histórico de Estoque
+</h1>
+
+<p>
+GrillCore ERP
+</p>
+
+
+<hr>
+
+
+<!-- =====================================
+     RESUMO
+===================================== -->
+
+<h2>
+📊 Resumo
+</h2>
+
+
+<div class="resumo">
+
+    <div class="resumo-card">
+
+        <h3>
+        📥 Entradas
+        </h3>
+
+        <p id="totalEntradas">
+        0
+        </p>
+
+    </div>
+
+
+    <div class="resumo-card">
+
+        <h3>
+        📤 Saídas
+        </h3>
+
+        <p id="totalSaidas">
+        0
+        </p>
+
+    </div>
+
+
+    <div class="resumo-card">
+
+        <h3>
+        📦 Movimentações
+        </h3>
+
+        <p id="totalMovimentos">
+        0
+        </p>
+
+    </div>
+
+
+    <div class="resumo-card">
+
+        <h3>
+        📅 Hoje
+        </h3>
+
+        <p id="movimentosHoje">
+        0
+        </p>
+
+    </div>
+
+</div>
+
+
+<hr>
+
+
+<!-- =====================================
+     FILTRO
+===================================== -->
+
+<h2>
+🔎 Filtrar Histórico
+</h2>
+
+
+<div class="card">
+
+<label>
+Produto:
+</label>
+
+
+<select id="filtroProduto"
+        onchange="mostrarHistorico()">
+
+    <option value="">
+        Todos os produtos
+    </option>
+
+</select>
+
+
+<br>
+
+
+<label>
+Pesquisar:
+</label>
+
+
+<input
+    type="text"
+    id="pesquisa"
+    placeholder="Digite o nome do produto ou motivo..."
+    oninput="mostrarHistorico()"
+>
+
+
+<button onclick="mostrarHistorico()">
+
+🔄 Atualizar Histórico
+
+</button>
+
+</div>
+
+
+<!-- =====================================
+     LISTA
+===================================== -->
+
+<h2>
+📋 Movimentações
+</h2>
+
+
+<div id="listaHistorico">
+
+<p class="vazio">
+Carregando histórico...
+</p>
+
+</div>
+
+
+<hr>
+
+
+<!-- =====================================
+     BOTÕES
+===================================== -->
+
+<button
+    class="limpar"
+    onclick="limparHistorico()">
+
+🗑️ Limpar Histórico
+
+</button>
+
+
+<button
+    class="voltar"
+    onclick="window.location.href='estoque.html'">
+
+↩️ Voltar para Estoque
+
+</button>
+
+
+<br>
+
+
+<button
+    class="voltar"
+    onclick="window.location.href='index.html'">
+
+🏠 Voltar para Dashboard
+
+</button>
+
+
+<script>
+
+
+// =====================================================
+// 📦 PEGAR HISTÓRICO
+// =====================================================
+
+function pegarHistorico() {
+
+    return JSON.parse(
+
+        localStorage.getItem(
+            "historicoEstoque"
+        )
+
+    ) || [];
+
+}
+
+
+// =====================================================
+// 💾 PEGAR PRODUTOS
+// =====================================================
+
+function pegarProdutos() {
+
+    return JSON.parse(
+
+        localStorage.getItem(
+            "produtos"
+        )
+
+    ) || [];
+
+}
+
+
+// =====================================================
+// 📅 FORMATAR DATA
+// =====================================================
+
+function formatarData(data) {
+
+    if (!data) {
+
+        return "Data não informada";
+
+    }
+
+
+    let dataObj =
+        new Date(data);
+
+
+    if (
+        isNaN(
+            dataObj.getTime()
+        )
+    ) {
+
+        return "Data inválida";
+
+    }
+
+
+    return dataObj.toLocaleString(
+        "pt-BR"
+    );
+
+}
+
+
+// =====================================================
+// 📊 ATUALIZAR RESUMO
+// =====================================================
+
+function atualizarResumo() {
+
+    let historico =
+        pegarHistorico();
+
+
+    let entradas = 0;
+
+    let saidas = 0;
+
+
+    historico.forEach(
+        function(item) {
+
+
+            if (
+                item.tipo === "entrada"
+            ) {
+
+                entradas++;
+
+            }
+
+
+            if (
+                item.tipo === "saida"
+            ) {
+
+                saidas++;
+
+            }
+
+        }
+    );
+
+
+    let hoje =
+        new Date();
+
+
+    let movimentosHoje =
+        historico.filter(
+            function(item) {
+
+
+                if (!item.data) {
+
+                    return false;
+
+                }
+
+
+                let data =
+                    new Date(
+                        item.data
+                    );
+
+
+                return (
+
+                    data.getDate() ===
+                    hoje.getDate()
+
+                    &&
+
+                    data.getMonth() ===
+                    hoje.getMonth()
+
+                    &&
+
+                    data.getFullYear() ===
+                    hoje.getFullYear()
+
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "totalEntradas"
+    ).innerText =
+        entradas;
+
+
+    document.getElementById(
+        "totalSaidas"
+    ).innerText =
+        saidas;
+
+
+    document.getElementById(
+        "totalMovimentos"
+    ).innerText =
+        historico.length;
+
+
+    document.getElementById(
+        "movimentosHoje"
+    ).innerText =
+        movimentosHoje.length;
+
+}
+
+
+// =====================================================
+// 🍔 PREENCHER FILTRO DE PRODUTOS
+// =====================================================
+
+function carregarFiltroProdutos() {
+
+    let select =
+        document.getElementById(
+            "filtroProduto"
+        );
+
+
+    if (!select) {
+
+        return;
+
+    }
+
+
+    let produtos =
+        pegarProdutos();
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Todos os produtos
+        </option>
+
+    `;
+
+
+    produtos.forEach(
+        function(produto) {
+
+
+            let option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                produto.nome;
+
+
+            option.textContent =
+                produto.nome;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// 📋 MOSTRAR HISTÓRICO
+// =====================================================
+
+function mostrarHistorico() {
+
+    let historico =
+        pegarHistorico();
+
+
+    let lista =
+        document.getElementById(
+            "listaHistorico"
+        );
+
+
+    let filtroProduto =
+        document.getElementById(
+            "filtroProduto"
+        ).value;
+
+
+    let pesquisa =
+        document.getElementById(
+            "pesquisa"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    // =============================================
+    // FILTRO PRODUTO
+    // =============================================
+
+    if (
+        filtroProduto !== ""
+    ) {
+
+        historico =
+            historico.filter(
+                function(item) {
+
+                    return (
+                        item.produto ===
+                        filtroProduto
+                    );
+
+                }
+            );
+
+    }
+
+
+    // =============================================
+    // PESQUISA
+    // =============================================
+
+    if (
+        pesquisa !== ""
+    ) {
+
+        historico =
+            historico.filter(
+                function(item) {
+
+
+                    let produto =
+                        String(
+                            item.produto || ""
+                        ).toLowerCase();
+
+
+                    let motivo =
+                        String(
+                            item.motivo || ""
+                        ).toLowerCase();
+
+
+                    return (
+
+                        produto.includes(
+                            pesquisa
+                        )
+
+                        ||
+
+                        motivo.includes(
+                            pesquisa
+                        )
+
+                    );
+
+                }
+            );
+
+    }
+
+
+    // =============================================
+    // NENHUM RESULTADO
+    // =============================================
+
+    if (
+        historico.length === 0
+    ) {
+
+        lista.innerHTML = `
+
+            <div class="movimento">
+
+                <p class="vazio">
+
+                    📭 Nenhuma movimentação encontrada.
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // =============================================
+    // MAIS RECENTES PRIMEIRO
+    // =============================================
+
+    historico.sort(
+        function(a, b) {
+
+            return Number(
+                b.id || 0
+            ) -
+            Number(
+                a.id || 0
+            );
+
+        }
+    );
+
+
+    lista.innerHTML = "";
+
+
+    // =============================================
+    // CRIAR CARDS
+    // =============================================
+
+    historico.forEach(
+        function(item) {
+
+
+            let entrada =
+                item.tipo === "entrada";
+
+
+            let classe =
+                entrada
+                ? "entrada"
+                : "saida";
+
+
+            let titulo =
+                entrada
+                ? "📥 ENTRADA DE ESTOQUE"
+                : "📤 SAÍDA DE ESTOQUE";
+
+
+            let classeTitulo =
+                entrada
+                ? "entrada-titulo"
+                : "saida-titulo";
+
+
+            let sinal =
+                entrada
+                ? "+"
+                : "-";
+
+
+            lista.innerHTML += `
+
+                <div
+                    class="movimento ${classe}"
+                >
+
+                    <h3
+                        class="${classeTitulo}"
+                    >
+
+                        ${titulo}
+
+                    </h3>
+
+
+                    <p class="info">
+
+                        📅 <strong>Data:</strong>
+
+                        ${formatarData(item.data)}
+
+                    </p>
+
+
+                    <p class="info">
+
+                        🍔 <strong>Produto:</strong>
+
+                        ${item.produto || "-"}
+
+                    </p>
+
+
+                    <p class="info">
+
+                        🔢 <strong>Quantidade:</strong>
+
+                        ${sinal}${Number(
+                            item.quantidade || 0
+                        )}
+
+                    </p>
+
+
+                    <p class="info">
+
+                        📦 <strong>Estoque antes:</strong>
+
+                        ${Number(
+                            item.estoqueAntes || 0
+                        )}
+
+                    </p>
+
+
+                    <p class="info">
+
+                        📦 <strong>Estoque depois:</strong>
+
+                        ${Number(
+                            item.estoqueDepois || 0
+                        )}
+
+                    </p>
+
+
+                    <p class="info">
+
+                        📝 <strong>Motivo:</strong>
+
+                        ${item.motivo || "-"}
+
+                    </p>
+
+
+                    <p class="estoque-final">
+
+                        📦 Estoque atual no movimento:
+
+                        ${Number(
+                            item.estoqueDepois || 0
+                        )}
+
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// 🗑️ LIMPAR HISTÓRICO
+// =====================================================
+
+function limparHistorico() {
+
+    let historico =
+        pegarHistorico();
+
+
+    if (
+        historico.length === 0
+    ) {
+
+        alert(
+            "📭 O histórico já está vazio."
+        );
+
+        return;
+
+    }
+
+
+    let confirmar =
+        confirm(
+
+            "⚠️ ATENÇÃO!\n\n" +
+
+            "Você está prestes a apagar " +
+
+            historico.length +
+
+            " movimentações de estoque.\n\n" +
+
+            "O estoque dos produtos NÃO será alterado.\n\n" +
+
+            "Deseja continuar?"
+
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "historicoEstoque"
+    );
+
+
+    atualizarResumo();
+
+    mostrarHistorico();
+
+
+    alert(
+        "✅ Histórico de estoque apagado."
+    );
+
+}
+
+
+// =====================================================
+// 🚀 INICIALIZAÇÃO
+// =====================================================
+
+window.addEventListener(
+    "load",
+    function() {
+
+        carregarFiltroProdutos();
+
+        atualizarResumo();
+
+        mostrarHistorico();
+
+    }
+);
+
+
+// =====================================================
+// 🔄 ATUALIZAR AO VOLTAR PARA A PÁGINA
+// =====================================================
+
+window.addEventListener(
+    "pageshow",
+    function() {
+
+        carregarFiltroProdutos();
+
+        atualizarResumo();
+
+        mostrarHistorico();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

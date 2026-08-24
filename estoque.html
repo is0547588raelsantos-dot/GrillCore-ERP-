@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Estoque - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    background:#181818;
+    color:white;
+    font-family:Arial,sans-serif;
+    padding:15px;
+}
+
+h1,h2{
+    color:#ff7a00;
+}
+
+.card,
+.produto{
+    background:#242424;
+    padding:20px;
+    margin:15px 0;
+    border-radius:15px;
+    border:1px solid #333;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+button{
+    width:100%;
+    padding:16px;
+    margin:8px 0;
+    border:none;
+    border-radius:12px;
+    background:#ff7a00;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.btn-verde{
+    background:#35a85b;
+}
+
+.btn-vermelho{
+    background:#b83232;
+}
+
+.btn-cinza{
+    background:#444;
+}
+
+.btn-azul{
+    background:#2764a5;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.mini{
+    background:#1d1d1d;
+    padding:12px;
+    border-radius:10px;
+}
+
+.mini strong{
+    display:block;
+    color:#ff7a00;
+    font-size:20px;
+    margin-top:5px;
+}
+
+.produto h3{
+    color:#ff7a00;
+    font-size:22px;
+}
+
+.quantidade{
+    font-size:30px;
+    font-weight:bold;
+    color:#35d07f;
+}
+
+.baixo{
+    border:2px solid #ff5555;
+}
+
+.alerta{
+    background:#4a1f1f;
+    border:1px solid #ff5555;
+    color:#ffaaaa;
+    padding:15px;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+.sucesso{
+    background:#164d2d;
+    border:1px solid #35d07f;
+    padding:15px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.vazio{
+    text-align:center;
+    color:#aaa;
+    padding:25px;
+}
+
+.totalEstoque{
+    color:#35d07f;
+    font-size:30px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<h1>📦 Estoque</h1>
+
+<p>
+Controle de mercadorias do GrillCore ERP
+</p>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- RESUMO -->
+<!-- ================================================= -->
+
+<h2>📊 Resumo do Estoque</h2>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="mini">
+
+📦 Mercadorias
+
+<strong id="totalProdutos">
+0
+</strong>
+
+</div>
+
+
+<div class="mini">
+
+⚠️ Estoque baixo
+
+<strong id="produtosBaixos">
+0
+</strong>
+
+</div>
+
+
+<div class="mini">
+
+📊 Quantidade total
+
+<strong id="quantidadeTotal">
+0
+</strong>
+
+</div>
+
+
+<div class="mini">
+
+💰 Valor do estoque
+
+<strong id="valorEstoque">
+R$ 0,00
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- CADASTRO -->
+<!-- ================================================= -->
+
+<h2>➕ Cadastrar Mercadoria</h2>
+
+<div class="card">
+
+
+<label>
+📦 Mercadoria
+</label>
+
+<input
+    type="text"
+    id="mercadoria"
+    placeholder="Nome da mercadoria">
+
+
+<label>
+🚚 Fornecedor
+</label>
+
+<input
+    type="text"
+    id="fornecedor"
+    placeholder="Nome do fornecedor">
+
+
+<label>
+🏷️ Categoria
+</label>
+
+<select id="categoria">
+
+<option value="">
+Selecione
+</option>
+
+<option value="Carnes">
+🥩 Carnes
+</option>
+
+<option value="Frios">
+🧀 Frios
+</option>
+
+<option value="Bebidas">
+🥤 Bebidas
+</option>
+
+<option value="Pães">
+🍞 Pães
+</option>
+
+<option value="Molhos">
+🥫 Molhos
+</option>
+
+<option value="Embalagens">
+📦 Embalagens
+</option>
+
+<option value="Hortifruti">
+🥬 Hortifruti
+</option>
+
+<option value="Limpeza">
+🧹 Limpeza
+</option>
+
+<option value="Outros">
+📦 Outros
+</option>
+
+</select>
+
+
+<label>
+🔢 Quantidade
+</label>
+
+<input
+    type="number"
+    id="quantidade"
+    min="0"
+    step="0.01"
+    placeholder="Ex.: 10">
+
+
+<label>
+⚖️ Unidade
+</label>
+
+<select id="unidade">
+
+<option value="un">
+Unidade
+</option>
+
+<option value="kg">
+Kg
+</option>
+
+<option value="g">
+Grama
+</option>
+
+<option value="L">
+Litro
+</option>
+
+<option value="ml">
+Ml
+</option>
+
+<option value="cx">
+Caixa
+</option>
+
+<option value="pct">
+Pacote
+</option>
+
+</select>
+
+
+<label>
+💰 Custo unitário
+</label>
+
+<input
+    type="number"
+    id="custo"
+    min="0"
+    step="0.01"
+    placeholder="R$ 0,00">
+
+
+<label>
+💵 Preço de venda
+</label>
+
+<input
+    type="number"
+    id="precoVenda"
+    min="0"
+    step="0.01"
+    placeholder="R$ 0,00">
+
+
+<label>
+⚠️ Estoque mínimo
+</label>
+
+<input
+    type="number"
+    id="estoqueMinimo"
+    min="0"
+    step="0.01"
+    placeholder="Ex.: 5">
+
+
+<button
+    onclick="salvarMercadoria()">
+
+📦 SALVAR MERCADORIA
+
+</button>
+
+
+<button
+    class="btn-cinza"
+    onclick="limparFormulario()">
+
+🧹 LIMPAR
+
+</button>
+
+
+<div id="mensagem"></div>
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- PESQUISA -->
+<!-- ================================================= -->
+
+<h2>🔎 Consultar Estoque</h2>
+
+<div class="card">
+
+<input
+    type="text"
+    id="pesquisa"
+    placeholder="Digite mercadoria, fornecedor ou categoria..."
+    oninput="mostrarEstoque()">
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- LISTA -->
+<!-- ================================================= -->
+
+<h2>📋 Mercadorias</h2>
+
+<div id="listaEstoque">
+
+<p class="vazio">
+Carregando estoque...
+</p>
+
+</div>
+
+
+<hr>
+
+
+<button
+    class="btn-verde"
+    onclick="window.location.href='compras.html'">
+
+🛒 Registrar Compra
+
+</button>
+
+
+<button
+    class="btn-cinza"
+    onclick="window.location.href='index.html'">
+
+🏠 Voltar ao Início
+
+</button>
+
+
+<script>
+
+
+// =====================================================
+// 💾 BANCO LOCAL
+// =====================================================
+
+function ler(chave){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(chave)
+        ) || [];
+
+    }
+
+    catch(e){
+
+        return [];
+
+    }
+
+}
+
+
+function salvar(chave,dados){
+
+    localStorage.setItem(
+        chave,
+        JSON.stringify(dados)
+    );
+
+}
+
+
+function pegarEstoque(){
+
+    return ler("estoque");
+
+}
+
+
+// =====================================================
+// 💰 DINHEIRO
+// =====================================================
+
+function dinheiro(valor){
+
+    return "R$ " +
+
+        Number(valor || 0)
+        .toFixed(2)
+        .replace(".",",");
+
+}
+
+
+// =====================================================
+// 🧹 LIMPAR
+// =====================================================
+
+function limparFormulario(){
+
+    document.getElementById(
+        "mercadoria"
+    ).value = "";
+
+    document.getElementById(
+        "fornecedor"
+    ).value = "";
+
+    document.getElementById(
+        "categoria"
+    ).value = "";
+
+    document.getElementById(
+        "quantidade"
+    ).value = "";
+
+    document.getElementById(
+        "unidade"
+    ).value = "un";
+
+    document.getElementById(
+        "custo"
+    ).value = "";
+
+    document.getElementById(
+        "precoVenda"
+    ).value = "";
+
+    document.getElementById(
+        "estoqueMinimo"
+    ).value = "";
+
+}
+
+
+// =====================================================
+// 📦 SALVAR MERCADORIA
+// =====================================================
+
+function salvarMercadoria(){
+
+    const mercadoria =
+        document.getElementById(
+            "mercadoria"
+        ).value.trim();
+
+
+    const fornecedor =
+        document.getElementById(
+            "fornecedor"
+        ).value.trim();
+
+
+    const categoria =
+        document.getElementById(
+            "categoria"
+        ).value;
+
+
+    const quantidade =
+        Number(
+            document.getElementById(
+                "quantidade"
+            ).value
+        );
+
+
+    const unidade =
+        document.getElementById(
+            "unidade"
+        ).value;
+
+
+    const custo =
+        Number(
+            document.getElementById(
+                "custo"
+            ).value
+        ) || 0;
+
+
+    const precoVenda =
+        Number(
+            document.getElementById(
+                "precoVenda"
+            ).value
+        ) || 0;
+
+
+    const estoqueMinimo =
+        Number(
+            document.getElementById(
+                "estoqueMinimo"
+            ).value
+        ) || 0;
+
+
+    if(!mercadoria){
+
+        alert(
+            "⚠️ Digite o nome da mercadoria."
+        );
+
+        return;
+
+    }
+
+
+    if(!fornecedor){
+
+        alert(
+            "⚠️ Digite o fornecedor."
+        );
+
+        return;
+
+    }
+
+
+    if(isNaN(quantidade) || quantidade < 0){
+
+        alert(
+            "⚠️ Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    let estoque =
+        pegarEstoque();
+
+
+    // =================================================
+    // VERIFICAR DUPLICADO
+    // =================================================
+
+    const nomeBusca =
+        mercadoria
+        .toLowerCase()
+        .trim();
+
+
+    const existe =
+        estoque.find(
+            function(item){
+
+                return String(
+                    item.mercadoria || ""
+                )
+                .toLowerCase()
+                .trim()
+                ===
+                nomeBusca;
+
+            }
+        );
+
+
+    if(existe){
+
+        const confirmar =
+            confirm(
+                "⚠️ Esta mercadoria já existe no estoque.\n\n"+
+                "Deseja somar a quantidade informada ao estoque existente?"
+            );
+
+
+        if(!confirmar){
+
+            return;
+
+        }
+
+
+        existe.quantidade =
+            Number(
+                existe.quantidade || 0
+            )
+            +
+            quantidade;
+
+
+        existe.fornecedor =
+            fornecedor;
+
+
+        existe.categoria =
+            categoria;
+
+
+        existe.unidade =
+            unidade;
+
+
+        existe.custo =
+            custo;
+
+
+        existe.precoVenda =
+            precoVenda;
+
+
+        existe.estoqueMinimo =
+            estoqueMinimo;
+
+
+        existe.atualizadoEm =
+            new Date().toISOString();
+
+
+        salvar(
+            "estoque",
+            estoque
+        );
+
+
+        document.getElementById(
+            "mensagem"
+        ).innerHTML = `
+
+            <div class="sucesso">
+
+                ✅ Estoque atualizado!
+
+                <br><br>
+
+                📦 ${mercadoria}
+
+                <br>
+
+                ➕ Quantidade adicionada:
+                ${quantidade}
+                ${unidade}
+
+            </div>
+
+        `;
+
+
+        limparFormulario();
+
+        atualizarTudo();
+
+        return;
+
+    }
+
+
+    // =================================================
+    // NOVA MERCADORIA
+    // =================================================
+
+    const produto = {
+
+        id:
+            Date.now(),
+
+        mercadoria:
+            mercadoria,
+
+        fornecedor:
+            fornecedor,
+
+        categoria:
+            categoria,
+
+        quantidade:
+            quantidade,
+
+        unidade:
+            unidade,
+
+        custo:
+            custo,
+
+        precoVenda:
+            precoVenda,
+
+        estoqueMinimo:
+            estoqueMinimo,
+
+        criadoEm:
+            new Date().toISOString(),
+
+        atualizadoEm:
+            new Date().toISOString()
+
+    };
+
+
+    estoque.push(
+        produto
+    );
+
+
+    salvar(
+        "estoque",
+        estoque
+    );
+
+
+    document.getElementById(
+        "mensagem"
+    ).innerHTML = `
+
+        <div class="sucesso">
+
+            ✅ Mercadoria cadastrada!
+
+            <br><br>
+
+            📦 ${mercadoria}
+
+            <br>
+
+            🚚 Fornecedor:
+            ${fornecedor}
+
+        </div>
+
+    `;
+
+
+    limparFormulario();
+
+    atualizarTudo();
+
+}
+
+
+// =====================================================
+// ✏️ EDITAR
+// =====================================================
+
+function editarMercadoria(id){
+
+    let estoque =
+        pegarEstoque();
+
+
+    const produto =
+        estoque.find(
+            function(item){
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if(!produto){
+
+        alert(
+            "❌ Mercadoria não encontrada."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "mercadoria"
+    ).value =
+        produto.mercadoria || "";
+
+
+    document.getElementById(
+        "fornecedor"
+    ).value =
+        produto.fornecedor || "";
+
+
+    document.getElementById(
+        "categoria"
+    ).value =
+        produto.categoria || "";
+
+
+    document.getElementById(
+        "quantidade"
+    ).value =
+        produto.quantidade || 0;
+
+
+    document.getElementById(
+        "unidade"
+    ).value =
+        produto.unidade || "un";
+
+
+    document.getElementById(
+        "custo"
+    ).value =
+        produto.custo || 0;
+
+
+    document.getElementById(
+        "precoVenda"
+    ).value =
+        produto.precoVenda || 0;
+
+
+    document.getElementById(
+        "estoqueMinimo"
+    ).value =
+        produto.estoqueMinimo || 0;
+
+
+    // remover produto para salvar novamente
+
+    estoque =
+        estoque.filter(
+            function(item){
+
+                return item.id !== id;
+
+            }
+        );
+
+
+    salvar(
+        "estoque",
+        estoque
+    );
+
+
+    document.getElementById(
+        "mensagem"
+    ).innerHTML = `
+
+        <div class="aviso">
+
+            ✏️ Mercadoria carregada para edição.
+
+            <br><br>
+
+            Depois de conferir os dados,
+            clique em <strong>
+            SALVAR MERCADORIA
+            </strong>.
+
+        </div>
+
+    `;
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    atualizarTudo();
+
+}
+
+
+// =====================================================
+// 🗑️ EXCLUIR
+// =====================================================
+
+function excluirMercadoria(id){
+
+    let estoque =
+        pegarEstoque();
+
+
+    const produto =
+        estoque.find(
+            function(item){
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if(!produto){
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "⚠️ EXCLUIR MERCADORIA?\n\n"+
+            "Mercadoria: "+
+            produto.mercadoria+
+            "\n"+
+            "Fornecedor: "+
+            (produto.fornecedor || "-")+
+            "\n\n"+
+            "Esta ação removerá o produto do estoque."
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    estoque =
+        estoque.filter(
+            function(item){
+
+                return item.id !== id;
+
+            }
+        );
+
+
+    salvar(
+        "estoque",
+        estoque
+    );
+
+
+    atualizarTudo();
+
+}
+
+
+// =====================================================
+// ➕ ENTRADA
+// =====================================================
+
+function adicionarEntrada(id){
+
+    alterarQuantidade(
+        id,
+        "entrada"
+    );
+
+}
+
+
+// =====================================================
+// ➖ SAÍDA
+// =====================================================
+
+function adicionarSaida(id){
+
+    alterarQuantidade(
+        id,
+        "saida"
+    );
+
+}
+
+
+// =====================================================
+// 🔢 ALTERAR QUANTIDADE
+// =====================================================
+
+function alterarQuantidade(
+    id,
+    tipo
+){
+
+    let estoque =
+        pegarEstoque();
+
+
+    const produto =
+        estoque.find(
+            function(item){
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if(!produto){
+
+        return;
+
+    }
+
+
+    const texto =
+        tipo === "entrada"
+        ?
+        "Quantidade de entrada:"
+        :
+        "Quantidade de saída:";
+
+
+    const valor =
+        prompt(
+            texto+
+            "\n\n"+
+            produto.mercadoria
+        );
+
+
+    if(valor === null){
+
+        return;
+
+    }
+
+
+    const quantidade =
+        Number(valor);
+
+
+    if(
+        isNaN(quantidade)
+        ||
+        quantidade <= 0
+    ){
+
+        alert(
+            "⚠️ Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        tipo === "saida"
+        &&
+        quantidade >
+        Number(
+            produto.quantidade || 0
+        )
+    ){
+
+        alert(
+            "❌ Estoque insuficiente."
+        );
+
+        return;
+
+    }
+
+
+    if(tipo === "entrada"){
+
+        produto.quantidade =
+            Number(
+                produto.quantidade || 0
+            )
+            +
+            quantidade;
+
+    }
+    else{
+
+        produto.quantidade =
+            Number(
+                produto.quantidade || 0
+            )
+            -
+            quantidade;
+
+    }
+
+
+    produto.atualizadoEm =
+        new Date().toISOString();
+
+
+    salvar(
+        "estoque",
+        estoque
+    );
+
+
+    atualizarTudo();
+
+
+    alert(
+        tipo === "entrada"
+        ?
+        "✅ Entrada adicionada ao estoque."
+        :
+        "✅ Saída registrada no estoque."
+    );
+
+}
+
+
+// =====================================================
+// 🧾 ESCAPAR
+// =====================================================
+
+function escapar(texto){
+
+    return String(
+        texto ?? ""
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+// =====================================================
+// 📋 MOSTRAR ESTOQUE
+// =====================================================
+
+function mostrarEstoque(){
+
+    const lista =
+        document.getElementById(
+            "listaEstoque"
+        );
+
+
+    const pesquisa =
+        document.getElementById(
+            "pesquisa"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    let estoque =
+        pegarEstoque();
+
+
+    if(pesquisa){
+
+        estoque =
+            estoque.filter(
+                function(item){
+
+                    return (
+
+                        String(
+                            item.mercadoria || ""
+                        )
+                        .toLowerCase()
+                        .includes(pesquisa)
+
+                        ||
+
+                        String(
+                            item.fornecedor || ""
+                        )
+                        .toLowerCase()
+                        .includes(pesquisa)
+
+                        ||
+
+                        String(
+                            item.categoria || ""
+                        )
+                        .toLowerCase()
+                        .includes(pesquisa)
+
+                    );
+
+                }
+            );
+
+    }
+
+
+    if(!estoque.length){
+
+        lista.innerHTML = `
+
+            <div class="card">
+
+                <p class="vazio">
+
+                    📭 Nenhuma mercadoria encontrada.
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    estoque
+    .slice()
+    .sort(
+        function(a,b){
+
+            return String(
+                a.mercadoria || ""
+            )
+            .localeCompare(
+                String(
+                    b.mercadoria || ""
+                ),
+                "pt-BR"
+            );
+
+        }
+    )
+    .forEach(
+        function(produto){
+
+            const quantidade =
+                Number(
+                    produto.quantidade || 0
+                );
+
+
+            const minimo =
+                Number(
+                    produto.estoqueMinimo || 0
+                );
+
+
+            const estoqueBaixo =
+                quantidade <= minimo;
+
+
+            const valorEstoque =
+                quantidade *
+                Number(
+                    produto.custo || 0
+                );
+
+
+            lista.innerHTML += `
+
+                <div class="produto
+                    ${estoqueBaixo
+                        ? "baixo"
+                        : ""}">
+
+                    <h3>
+
+                        📦 ${escapar(
+                            produto.mercadoria
+                        )}
+
+                    </h3>
+
+
+                    <p>
+
+                        🚚 <strong>
+                        Fornecedor:
+                        </strong>
+
+                        ${escapar(
+                            produto.fornecedor
+                            || "Não informado"
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        🏷️ <strong>
+                        Categoria:
+                        </strong>
+
+                        ${escapar(
+                            produto.categoria
+                            || "-"
+                        )}
+
+                    </p>
+
+
+                    <div class="grid">
+
+
+                        <div class="mini">
+
+                            🔢 Quantidade
+
+                            <strong
+                                class="quantidade">
+
+                                ${quantidade}
+                                ${escapar(
+                                    produto.unidade
+                                    || "un"
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="mini">
+
+                            ⚠️ Mínimo
+
+                            <strong>
+
+                                ${minimo}
+                                ${escapar(
+                                    produto.unidade
+                                    || "un"
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="mini">
+
+                            💰 Custo
+
+                            <strong>
+
+                                ${dinheiro(
+                                    produto.custo
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="mini">
+
+                            💵 Venda
+
+                            <strong>
+
+                                ${dinheiro(
+                                    produto.precoVenda
+                                )}
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    ${
+                        estoqueBaixo
+                        ?
+                        `
+                        <div class="alerta">
+
+                            ⚠️ <strong>
+                            ESTOQUE BAIXO
+                            </strong>
+
+                            <br><br>
+
+                            A quantidade está
+                            no limite mínimo
+                            ou abaixo dele.
+
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <p>
+
+                        💰 <strong>
+                        Valor em estoque:
+                        </strong>
+
+                        <span
+                            class="totalEstoque">
+
+                            ${dinheiro(
+                                valorEstoque
+                            )}
+
+                        </span>
+
+                    </p>
+
+
+                    <button
+                        class="btn-verde"
+                        onclick="adicionarEntrada(${produto.id})">
+
+                        ➕ Entrada
+
+                    </button>
+
+
+                    <button
+                        class="btn-azul"
+                        onclick="adicionarSaida(${produto.id})">
+
+                        ➖ Saída
+
+                    </button>
+
+
+                    <button
+                        onclick="editarMercadoria(${produto.id})">
+
+                        ✏️ Editar
+
+                    </button>
+
+
+                    <button
+                        class="btn-vermelho"
+                        onclick="excluirMercadoria(${produto.id})">
+
+                        🗑️ Excluir
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// 📊 RESUMO
+// =====================================================
+
+function atualizarResumo(){
+
+    const estoque =
+        pegarEstoque();
+
+
+    let quantidadeTotal = 0;
+
+    let produtosBaixos = 0;
+
+    let valorEstoque = 0;
+
+
+    estoque.forEach(
+        function(produto){
+
+            const quantidade =
+                Number(
+                    produto.quantidade || 0
+                );
+
+
+            const minimo =
+                Number(
+                    produto.estoqueMinimo || 0
+                );
+
+
+            quantidadeTotal +=
+                quantidade;
+
+
+            valorEstoque +=
+                quantidade *
+                Number(
+                    produto.custo || 0
+                );
+
+
+            if(
+                quantidade <= minimo
+            ){
+
+                produtosBaixos++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "totalProdutos"
+    ).innerText =
+        estoque.length;
+
+
+    document.getElementById(
+        "produtosBaixos"
+    ).innerText =
+        produtosBaixos;
+
+
+    document.getElementById(
+        "quantidadeTotal"
+    ).innerText =
+        quantidadeTotal;
+
+
+    document.getElementById(
+        "valorEstoque"
+    ).innerText =
+        dinheiro(
+            valorEstoque
+        );
+
+}
+
+
+// =====================================================
+// 🔄 ATUALIZAR TUDO
+// =====================================================
+
+function atualizarTudo(){
+
+    atualizarResumo();
+
+    mostrarEstoque();
+
+}
+
+
+// =====================================================
+// 🚀 INICIAR
+// =====================================================
+
+window.addEventListener(
+    "load",
+    atualizarTudo
+);
+
+
+window.addEventListener(
+    "pageshow",
+    atualizarTudo
+);
+
+
+</script>
+
+</body>
+
+</html>

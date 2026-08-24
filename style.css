@@ -1,0 +1,739 @@
+/* =====================================================
+   GRILLCORE ERP
+   ESTILO PRINCIPAL
+   PRETO + VERMELHO + DOURADO
+===================================================== */
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    background:
+        radial-gradient(
+            circle at top,
+            #250006 0%,
+            #100002 38%,
+            #080808 80%
+        );
+
+    color:#fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:hidden;
+}
+
+/* =====================================================
+   CORES
+===================================================== */
+
+:root{
+
+    --vermelho:#9b111e;
+    --vermelho-escuro:#650711;
+    --vermelho-claro:#c91425;
+
+    --dourado:#d4af37;
+    --dourado-claro:#f3d66b;
+    --dourado-escuro:#9f7d18;
+
+    --preto:#080808;
+
+    --card:#160406;
+    --card-2:#22070a;
+
+    --borda:#c99b20;
+
+}
+
+/* =====================================================
+   TÍTULOS
+===================================================== */
+
+h1{
+    color:var(--dourado-claro);
+
+    font-size:32px;
+
+    text-align:center;
+
+    margin:
+        0 0 25px;
+}
+
+h2{
+    color:var(--dourado-claro);
+}
+
+h3{
+    color:var(--dourado-claro);
+}
+
+p{
+    color:#cccccc;
+    font-size:18px;
+}
+
+/* =====================================================
+   LINKS
+===================================================== */
+
+a{
+    text-decoration:none;
+    color:var(--dourado);
+}
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    background:
+        linear-gradient(
+            145deg,
+            #1d0508,
+            #100002
+        );
+
+    padding:30px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    width:calc(100% - 24px);
+
+    max-width:900px;
+
+    margin:20px auto;
+
+    border:
+        1px solid var(--borda);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.5),
+
+        inset 0 1px 0
+        rgba(255,255,255,.04);
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:14px;
+
+    margin-top:6px;
+
+    background:#f4f4f4;
+
+    color:#111;
+
+    border:
+        2px solid transparent;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    outline:none;
+
+    font-family:inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:
+        var(--dourado);
+
+    box-shadow:
+        0 0 10px
+        rgba(212,175,55,.18);
+}
+
+textarea{
+    resize:vertical;
+}
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:5px;
+
+    color:var(--dourado);
+
+    font-weight:bold;
+
+    font-size:17px;
+
+    text-align:left;
+
+    width:100%;
+
+    max-width:500px;
+
+    margin-left:auto;
+
+    margin-right:auto;
+}
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+button{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:15px 25px;
+
+    margin-top:10px;
+
+    border:
+        1px solid var(--dourado);
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #b31324,
+            #650711
+        );
+
+    color:var(--dourado-claro);
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.35),
+
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+
+    transition:
+        transform .15s,
+        background .15s,
+        box-shadow .15s;
+}
+
+button:hover{
+
+    background:
+        linear-gradient(
+            145deg,
+            #d0182a,
+            #790812
+        );
+
+    box-shadow:
+        0 7px 20px
+        rgba(179,0,0,.35);
+}
+
+button:active{
+
+    transform:
+        scale(.97);
+}
+
+/* =====================================================
+   BOTÕES ESPECIAIS
+===================================================== */
+
+.whatsapp{
+
+    background:
+        #168c4d;
+
+    color:#fff;
+
+    border-color:#35d07f;
+}
+
+.voltar{
+
+    background:
+        linear-gradient(
+            145deg,
+            #333,
+            #181818
+        );
+
+    color:var(--dourado-claro);
+}
+
+/* =====================================================
+   DASHBOARD MENU
+===================================================== */
+
+.menu-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:14px;
+
+    width:100%;
+}
+
+/* =====================================================
+   MENU CARDS
+===================================================== */
+
+.menu-card{
+
+    width:100%;
+
+    min-height:130px;
+
+    border:
+        1px solid var(--dourado);
+
+    border-radius:20px;
+
+    padding:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #c00000,
+            #850000
+        );
+
+    color:var(--dourado);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.4),
+
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+
+    transition:
+        transform .15s,
+        filter .15s;
+}
+
+.menu-card:active{
+
+    transform:
+        scale(.96);
+
+    filter:
+        brightness(.9);
+}
+
+/* =====================================================
+   ÍCONES
+===================================================== */
+
+.menu-icone{
+
+    font-size:38px;
+}
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+.resumo-card{
+
+    background:
+        linear-gradient(
+            145deg,
+            #242424,
+            #181818
+        );
+
+    border:
+        1px solid #444;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.25);
+}
+
+.resumo-titulo{
+
+    color:#999;
+
+    font-size:13px;
+}
+
+.resumo-valor{
+
+    color:var(--dourado);
+
+    font-size:23px;
+
+    font-weight:bold;
+
+    margin-top:6px;
+}
+
+/* =====================================================
+   TÍTULOS DE SEÇÃO
+===================================================== */
+
+.titulo-secao{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin:
+        28px 0 12px;
+}
+
+.titulo-secao h2{
+
+    margin:0;
+
+    color:var(--dourado);
+
+    font-size:20px;
+}
+
+.linha{
+
+    height:1px;
+
+    flex:1;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--dourado),
+            transparent
+        );
+}
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-card{
+
+    background:
+        linear-gradient(
+            145deg,
+            #280207,
+            #120002
+        );
+
+    border:
+        1px solid var(--borda);
+
+    border-radius:18px;
+
+    padding:18px;
+}
+
+.status-linha{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding:12px 0;
+
+    border-bottom:
+        1px solid #303030;
+}
+
+.status-linha:last-child{
+
+    border-bottom:none;
+}
+
+.status-nome{
+
+    color:#aaa;
+}
+
+.status-valor{
+
+    font-weight:bold;
+
+    color:var(--dourado-claro);
+}
+
+/* =====================================================
+   ESTOQUE
+===================================================== */
+
+.estoque-alerta{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a0000,
+            #280000
+        );
+
+    border:
+        1px solid var(--vermelho);
+
+    border-radius:18px;
+
+    padding:18px;
+}
+
+.estoque-normal{
+
+    background:
+        linear-gradient(
+            135deg,
+            #173525,
+            #0d2418
+        );
+
+    border:
+        1px solid #26754b;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    color:#35d07f;
+}
+
+.produto-alerta{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.produto-alerta:last-child{
+
+    border-bottom:none;
+}
+
+.produto-alerta-nome{
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.produto-alerta-qtd{
+
+    color:var(--dourado);
+
+    font-weight:bold;
+
+    white-space:nowrap;
+}
+
+/* =====================================================
+   VENDAS
+===================================================== */
+
+.vendas-card{
+
+    background:
+        linear-gradient(
+            145deg,
+            #280207,
+            #120002
+        );
+
+    border:
+        1px solid var(--borda);
+
+    border-radius:18px;
+
+    padding:15px;
+}
+
+.venda{
+
+    padding:13px 2px;
+
+    border-bottom:
+        1px solid #303030;
+}
+
+.venda:last-child{
+
+    border-bottom:none;
+}
+
+.venda-topo{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.venda-produto{
+
+    font-weight:bold;
+
+    color:#fff;
+}
+
+.venda-total{
+
+    color:var(--dourado);
+
+    font-weight:bold;
+
+    white-space:nowrap;
+}
+
+.venda-info{
+
+    color:#888;
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+.rodape{
+
+    text-align:center;
+
+    color:#555;
+
+    font-size:12px;
+
+    padding:
+        30px 10px 10px;
+}
+
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
+
+@media(min-width:600px){
+
+    .menu-grid{
+
+        grid-template-columns:
+            repeat(4,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:380px){
+
+    .container{
+
+        padding:
+            18px 12px;
+    }
+
+    .menu-grid{
+
+        gap:9px;
+    }
+
+    .menu-card{
+
+        min-height:110px;
+
+        border-radius:16px;
+
+        font-size:15px;
+    }
+
+    .menu-icone{
+
+        font-size:32px;
+    }
+
+    .resumo-card{
+
+        padding:13px;
+    }
+
+    .resumo-valor{
+
+        font-size:19px;
+    }
+
+}

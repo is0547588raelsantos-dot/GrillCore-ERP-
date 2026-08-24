@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Rocha Forte</title>
+
+<style>
+
+/* ==============================
+   CONFIGURAÇÃO
+============================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f4f4;
+    color:#222;
+    padding-bottom:90px;
+}
+
+
+/* ==============================
+   TOPO
+============================== */
+
+.topo{
+
+    background:#111;
+
+    color:white;
+
+    padding:18px;
+
+}
+
+.topo-conteudo{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+.logo{
+
+    font-size:21px;
+
+    font-weight:bold;
+
+}
+
+.logo span{
+
+    color:#e50914;
+
+}
+
+.aberto{
+
+    background:#198754;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+}
+
+
+/* ==============================
+   BANNER
+============================== */
+
+.banner{
+
+    margin:15px;
+
+    padding:25px 20px;
+
+    min-height:190px;
+
+    border-radius:20px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #111,
+        #333
+    );
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.banner h1{
+
+    font-size:28px;
+
+    line-height:1.1;
+
+    margin-bottom:10px;
+
+}
+
+.banner p{
+
+    color:#ddd;
+
+    font-size:14px;
+
+    margin-bottom:18px;
+
+}
+
+.botao-cardapio{
+
+    border:none;
+
+    background:#e50914;
+
+    color:white;
+
+    font-weight:bold;
+
+    font-size:15px;
+
+    padding:12px 18px;
+
+    border-radius:9px;
+
+    width:max-content;
+
+}
+
+
+/* ==============================
+   CATEGORIAS
+============================== */
+
+.titulo{
+
+    font-size:22px;
+
+    padding:5px 15px 12px;
+
+}
+
+.categorias{
+
+    display:flex;
+
+    gap:10px;
+
+    overflow-x:auto;
+
+    padding:0 15px 18px;
+
+}
+
+.categorias::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+.categoria{
+
+    flex-shrink:0;
+
+    background:white;
+
+    border:none;
+
+    padding:11px 17px;
+
+    border-radius:25px;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,.08);
+
+}
+
+.categoria.ativa{
+
+    background:#e50914;
+
+    color:white;
+
+}
+
+
+/* ==============================
+   DESTAQUES
+============================== */
+
+.destaques{
+
+    padding:0 15px;
+
+}
+
+.produto{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:15px;
+
+    margin-bottom:14px;
+
+    display:flex;
+
+    gap:14px;
+
+    box-shadow:
+        0 2px 10px
+        rgba(0,0,0,.06);
+
+}
+
+.produto-imagem{
+
+    width:100px;
+
+    height:100px;
+
+    border-radius:12px;
+
+    background:#222;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:42px;
+
+    flex-shrink:0;
+
+}
+
+.produto-info{
+
+    flex:1;
+
+}
+
+.produto-info h3{
+
+    font-size:17px;
+
+    margin-bottom:6px;
+
+}
+
+.produto-info p{
+
+    font-size:12px;
+
+    color:#777;
+
+    line-height:1.4;
+
+    margin-bottom:9px;
+
+}
+
+.preco{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+
+/* ==============================
+   CARRINHO
+============================== */
+
+.carrinho{
+
+    position:fixed;
+
+    bottom:15px;
+
+    left:15px;
+
+    right:15px;
+
+    background:#111;
+
+    color:white;
+
+    border-radius:16px;
+
+    padding:14px 18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.25);
+
+}
+
+.carrinho-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.carrinho-info small{
+
+    color:#aaa;
+
+}
+
+.carrinho-total{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+.botao-carrinho{
+
+    border:none;
+
+    background:#e50914;
+
+    color:white;
+
+    padding:11px 16px;
+
+    border-radius:9px;
+
+    font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==============================
+     TOPO
+============================== -->
+
+<header class="topo">
+
+    <div class="topo-conteudo">
+
+        <div class="logo">
+
+            ROCHA
+            <span>FORTE</span>
+
+        </div>
+
+        <div class="aberto">
+
+            ● Aberto
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==============================
+     BANNER
+============================== -->
+
+<section class="banner">
+
+    <h1>
+
+        Seu hambúrguer
+        <br>
+        do seu jeito! 🍔
+
+    </h1>
+
+    <p>
+
+        Hambúrguer artesanal,
+        porções caprichadas
+        e muito sabor.
+
+    </p>
+
+    <button
+        class="botao-cardapio"
+        onclick="mostrarCardapio()">
+
+        Ver cardápio
+
+    </button>
+
+</section>
+
+
+<!-- ==============================
+     CATEGORIAS
+============================== -->
+
+<h2 class="titulo">
+
+    O que você quer hoje?
+
+</h2>
+
+
+<div class="categorias">
+
+    <button class="categoria ativa">
+
+        🍔 Hambúrgueres
+
+    </button>
+
+    <button class="categoria">
+
+        🍟 Porções
+
+    </button>
+
+    <button class="categoria">
+
+        🥤 Bebidas
+
+    </button>
+
+    <button class="categoria">
+
+        🔥 Combos
+
+    </button>
+
+</div>
+
+
+<!-- ==============================
+     DESTAQUES
+============================== -->
+
+<section
+    class="destaques"
+    id="cardapio">
+
+    <h2 class="titulo">
+
+        🔥 Mais pedidos
+
+    </h2>
+
+
+    <div class="produto">
+
+        <div class="produto-imagem">
+
+            🍔
+
+        </div>
+
+        <div class="produto-info">
+
+            <h3>
+
+                X Prensado
+
+            </h3>
+
+            <p>
+
+                Hambúrguer artesanal
+                com queijo e ingredientes
+                selecionados.
+
+            </p>
+
+            <div class="preco">
+
+                R$ 30,00
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="produto">
+
+        <div class="produto-imagem">
+
+            🍔
+
+        </div>
+
+        <div class="produto-info">
+
+            <h3>
+
+                Carga Pesada
+
+            </h3>
+
+            <p>
+
+                Um hambúrguer grande,
+                recheado e preparado
+                para matar a fome.
+
+            </p>
+
+            <div class="preco">
+
+                R$ 38,00
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="produto">
+
+        <div class="produto-imagem">
+
+            🍍
+
+        </div>
+
+        <div class="produto-info">
+
+            <h3>
+
+                Rocha Tropical
+
+            </h3>
+
+            <p>
+
+                Hambúrguer artesanal
+                com uma combinação
+                tropical especial.
+
+            </p>
+
+            <div class="preco">
+
+                R$ 36,00
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==============================
+     CARRINHO
+============================== -->
+
+<div class="carrinho">
+
+    <div class="carrinho-info">
+
+        <small>
+
+            Seu pedido
+
+        </small>
+
+        <span class="carrinho-total">
+
+            R$ 0,00
+
+        </span>
+
+    </div>
+
+    <button class="botao-carrinho">
+
+        🛒 Carrinho
+
+    </button>
+
+</div>
+
+
+<script>
+
+function mostrarCardapio(){
+
+    document
+    .getElementById("cardapio")
+    .scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

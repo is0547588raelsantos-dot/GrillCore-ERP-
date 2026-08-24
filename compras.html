@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Compras - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    background:#181818;
+    color:white;
+    font-family:Arial,sans-serif;
+    padding:15px;
+}
+
+h1,h2{
+    color:#ff7a00;
+}
+
+.card{
+    background:#242424;
+    padding:20px;
+    margin:15px 0;
+    border-radius:15px;
+    border:1px solid #333;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    box-sizing:border-box;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-size:17px;
+    background:white;
+    color:#111;
+}
+
+button{
+    width:100%;
+    padding:17px;
+    margin:8px 0;
+    border:none;
+    border-radius:12px;
+    background:#ff7a00;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.voltar{
+    background:#333;
+}
+
+.excluir{
+    background:#b52b2b;
+}
+
+.compra{
+    background:#202020;
+    padding:18px;
+    margin:12px 0;
+    border-radius:12px;
+    border:1px solid #444;
+}
+
+.compra h3{
+    color:#ff7a00;
+}
+
+.valor{
+    color:#35d07f;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.vazio{
+    color:#aaa;
+    text-align:center;
+    padding:20px;
+}
+
+.aviso{
+    padding:15px;
+    border-radius:12px;
+    margin:10px 0;
+    background:#4a3500;
+    border:1px solid #ff7a00;
+}
+
+.sucesso{
+    padding:15px;
+    border-radius:12px;
+    margin:10px 0;
+    background:#123d25;
+    border:1px solid #35d07f;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+@media(max-width:500px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>🛒 Compras</h1>
+
+<p>
+Controle de compras e entrada de mercadorias
+</p>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- CADASTRAR COMPRA -->
+<!-- ================================================= -->
+
+<h2>➕ Registrar Compra</h2>
+
+
+<div class="card">
+
+
+<label for="fornecedor">
+🏢 Fornecedor
+</label>
+
+<input
+    type="text"
+    id="fornecedor"
+    placeholder="Digite o nome do fornecedor"
+    autocomplete="off"
+>
+
+
+<label for="mercadoria">
+📦 Mercadoria
+</label>
+
+<input
+    type="text"
+    id="mercadoria"
+    placeholder="Ex: Carne, queijo, bacon..."
+    autocomplete="off"
+>
+
+
+<div class="grid">
+
+<div>
+
+<label for="quantidade">
+🔢 Quantidade
+</label>
+
+<input
+    type="number"
+    id="quantidade"
+    placeholder="0"
+    min="0"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label for="unidade">
+📏 Unidade
+</label>
+
+<select id="unidade">
+
+<option value="un">Unidade</option>
+<option value="kg">Kg</option>
+<option value="g">Gramas</option>
+<option value="l">Litros</option>
+<option value="ml">Mililitros</option>
+<option value="cx">Caixa</option>
+<option value="pct">Pacote</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<label for="valorCompra">
+💰 Valor total da compra
+</label>
+
+<input
+    type="number"
+    id="valorCompra"
+    placeholder="0,00"
+    min="0"
+    step="0.01"
+>
+
+
+<label for="pagamento">
+💳 Forma de pagamento
+</label>
+
+<select id="pagamento">
+
+<option value="Dinheiro">
+💵 Dinheiro
+</option>
+
+<option value="Pix">
+📱 Pix
+</option>
+
+<option value="Cartão">
+💳 Cartão
+</option>
+
+<option value="Boleto">
+🧾 Boleto
+</option>
+
+<option value="Prazo">
+📅 A prazo
+</option>
+
+</select>
+
+
+<label for="dataCompra">
+📅 Data da compra
+</label>
+
+<input
+    type="date"
+    id="dataCompra"
+>
+
+
+<label for="observacao">
+📝 Observação
+</label>
+
+<input
+    type="text"
+    id="observacao"
+    placeholder="Opcional"
+>
+
+
+<div id="mensagem"></div>
+
+
+<button
+    onclick="registrarCompra()">
+
+    🛒 REGISTRAR COMPRA
+
+</button>
+
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- RESUMO -->
+<!-- ================================================= -->
+
+<h2>📊 Resumo</h2>
+
+
+<div class="card">
+
+<p>
+🧾 Compras registradas:
+</p>
+
+<div
+    id="quantidadeCompras"
+    class="valor">
+
+0
+
+</div>
+
+
+<hr>
+
+
+<p>
+💰 Total comprado:
+</p>
+
+<div
+    id="totalComprado"
+    class="valor">
+
+R$ 0,00
+
+</div>
+
+</div>
+
+
+<hr>
+
+
+<!-- ================================================= -->
+<!-- HISTÓRICO -->
+<!-- ================================================= -->
+
+<h2>📋 Histórico de Compras</h2>
+
+
+<div
+    id="listaCompras">
+
+<p class="vazio">
+Carregando...
+</p>
+
+</div>
+
+
+<hr>
+
+
+<button
+    onclick="window.location.href='estoque.html'">
+
+📦 VER ESTOQUE
+
+</button>
+
+
+<button
+    onclick="window.location.href='financeiro.html'">
+
+💰 VER FINANCEIRO
+
+</button>
+
+
+<button
+    class="voltar"
+    onclick="window.location.href='index.html'">
+
+🏠 VOLTAR AO INÍCIO
+
+</button>
+
+
+<script>
+
+
+// =====================================================
+// 💾 FUNÇÕES DE DADOS
+// =====================================================
+
+function ler(chave){
+
+    try{
+
+        const dados =
+            localStorage.getItem(chave);
+
+        if(!dados){
+            return [];
+        }
+
+        return JSON.parse(dados) || [];
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao ler:",
+            chave,
+            erro
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function salvar(chave,dados){
+
+    localStorage.setItem(
+        chave,
+        JSON.stringify(dados)
+    );
+
+}
+
+
+function dinheiro(valor){
+
+    return "R$ " +
+
+        Number(valor || 0)
+        .toFixed(2)
+        .replace(".",",");
+
+}
+
+
+// =====================================================
+// 📅 DATA DE HOJE
+// =====================================================
+
+function colocarDataHoje(){
+
+    const campo =
+        document.getElementById(
+            "dataCompra"
+        );
+
+    if(campo.value){
+        return;
+    }
+
+    const hoje =
+        new Date();
+
+    const ano =
+        hoje.getFullYear();
+
+    const mes =
+        String(
+            hoje.getMonth()+1
+        ).padStart(2,"0");
+
+    const dia =
+        String(
+            hoje.getDate()
+        ).padStart(2,"0");
+
+    campo.value =
+        ano+"-"+mes+"-"+dia;
+
+}
+
+
+// =====================================================
+// 🧹 LIMPAR FORMULÁRIO
+// =====================================================
+
+function limparFormulario(){
+
+    document.getElementById(
+        "fornecedor"
+    ).value="";
+
+    document.getElementById(
+        "mercadoria"
+    ).value="";
+
+    document.getElementById(
+        "quantidade"
+    ).value="";
+
+    document.getElementById(
+        "valorCompra"
+    ).value="";
+
+    document.getElementById(
+        "observacao"
+    ).value="";
+
+    document.getElementById(
+        "pagamento"
+    ).value="Dinheiro";
+
+    colocarDataHoje();
+
+}
+
+
+// =====================================================
+// 📦 ATUALIZAR ESTOQUE
+// =====================================================
+
+function adicionarAoEstoque(compra){
+
+    let estoque =
+        ler("estoque");
+
+
+    // Se não existir estoque,
+    // cria uma lista nova.
+
+    if(!Array.isArray(estoque)){
+        estoque=[];
+    }
+
+
+    const nomeCompra =
+        String(
+            compra.mercadoria || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if(!nomeCompra){
+        return;
+    }
+
+
+    // Procurar mercadoria existente
+
+    let produto =
+        estoque.find(function(item){
+
+            const nome =
+                String(
+                    item.nome ||
+                    item.mercadoria ||
+                    item.produto ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+            return nome === nomeCompra;
+
+        });
+
+
+    // =================================================
+    // PRODUTO JÁ EXISTE
+    // =================================================
+
+    if(produto){
+
+        let quantidadeAtual =
+            Number(
+                produto.quantidade ||
+                produto.estoque ||
+                0
+            );
+
+
+        let quantidadeCompra =
+            Number(
+                compra.quantidade
+            ) || 0;
+
+
+        produto.quantidade =
+            quantidadeAtual +
+            quantidadeCompra;
+
+
+        // Mantém compatibilidade
+
+        produto.estoque =
+            produto.quantidade;
+
+
+        produto.unidade =
+            compra.unidade ||
+            produto.unidade ||
+            "un";
+
+
+        produto.ultimoFornecedor =
+            compra.fornecedor;
+
+
+        produto.ultimaCompra =
+            compra.data;
+
+
+        produto.valorUltimaCompra =
+            Number(
+                compra.valor
+            ) || 0;
+
+    }
+
+
+    // =================================================
+    // PRODUTO NOVO
+    // =================================================
+
+    else{
+
+        estoque.push({
+
+            id:
+                Date.now(),
+
+            nome:
+                compra.mercadoria,
+
+            mercadoria:
+                compra.mercadoria,
+
+            quantidade:
+                Number(
+                    compra.quantidade
+                ) || 0,
+
+            estoque:
+                Number(
+                    compra.quantidade
+                ) || 0,
+
+            unidade:
+                compra.unidade,
+
+            fornecedor:
+                compra.fornecedor,
+
+            ultimoFornecedor:
+                compra.fornecedor,
+
+            ultimaCompra:
+                compra.data,
+
+            valorUltimaCompra:
+                Number(
+                    compra.valor
+                ) || 0
+
+        });
+
+    }
+
+
+    salvar(
+        "estoque",
+        estoque
+    );
+
+}
+
+
+// =====================================================
+// 💰 REGISTRAR DESPESA NO FINANCEIRO
+// =====================================================
+
+function registrarDespesaFinanceira(compra){
+
+    let despesas =
+        ler("despesas");
+
+
+    if(!Array.isArray(despesas)){
+        despesas=[];
+    }
+
+
+    despesas.push({
+
+        id:
+            Date.now()+1,
+
+        data:
+            new Date(
+                compra.data+"T12:00:00"
+            ).toISOString(),
+
+        descricao:
+            "Compra de mercadoria - " +
+            compra.mercadoria,
+
+        categoria:
+            "Compras / Mercadorias",
+
+        fornecedor:
+            compra.fornecedor,
+
+        valor:
+            Number(
+                compra.valor
+            ) || 0,
+
+        pagamento:
+            compra.pagamento,
+
+        observacao:
+            compra.observacao || ""
+
+    });
+
+
+    salvar(
+        "despesas",
+        despesas
+    );
+
+}
+
+
+// =====================================================
+// 🧾 REGISTRAR COMPRA
+// =====================================================
+
+function registrarCompra(){
+
+    const fornecedor =
+        document.getElementById(
+            "fornecedor"
+        ).value.trim();
+
+
+    const mercadoria =
+        document.getElementById(
+            "mercadoria"
+        ).value.trim();
+
+
+    const quantidade =
+        Number(
+            document.getElementById(
+                "quantidade"
+            ).value
+        );
+
+
+    const unidade =
+        document.getElementById(
+            "unidade"
+        ).value;
+
+
+    const valor =
+        Number(
+            document.getElementById(
+                "valorCompra"
+            ).value
+        );
+
+
+    const pagamento =
+        document.getElementById(
+            "pagamento"
+        ).value;
+
+
+    const data =
+        document.getElementById(
+            "dataCompra"
+        ).value;
+
+
+    const observacao =
+        document.getElementById(
+            "observacao"
+        ).value.trim();
+
+
+    const mensagem =
+        document.getElementById(
+            "mensagem"
+        );
+
+
+    // =================================================
+    // VALIDAÇÕES
+    // =================================================
+
+    if(!fornecedor){
+
+        mensagem.innerHTML = `
+            <div class="aviso">
+                ⚠️ Digite o fornecedor.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(!mercadoria){
+
+        mensagem.innerHTML = `
+            <div class="aviso">
+                ⚠️ Digite a mercadoria.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(
+        !quantidade ||
+        quantidade <= 0
+    ){
+
+        mensagem.innerHTML = `
+            <div class="aviso">
+                ⚠️ Informe uma quantidade válida.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(
+        isNaN(valor) ||
+        valor <= 0
+    ){
+
+        mensagem.innerHTML = `
+            <div class="aviso">
+                ⚠️ Informe o valor da compra.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(!data){
+
+        mensagem.innerHTML = `
+            <div class="aviso">
+                ⚠️ Informe a data da compra.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    // =================================================
+    // OBJETO DA COMPRA
+    // =================================================
+
+    const compra = {
+
+        id:
+            Date.now(),
+
+        fornecedor:
+            fornecedor,
+
+        mercadoria:
+            mercadoria,
+
+        quantidade:
+            quantidade,
+
+        unidade:
+            unidade,
+
+        valor:
+            valor,
+
+        pagamento:
+            pagamento,
+
+        data:
+            data,
+
+        observacao:
+            observacao
+
+    };
+
+
+    // =================================================
+    // CONFIRMAR
+    // =================================================
+
+    const confirmar =
+        confirm(
+
+            "🛒 CONFIRMAR COMPRA?\n\n" +
+
+            "🏢 Fornecedor: " +
+            fornecedor +
+
+            "\n\n" +
+
+            "📦 Mercadoria: " +
+            mercadoria +
+
+            "\n" +
+
+            "🔢 Quantidade: " +
+            quantidade +
+            " " +
+            unidade +
+
+            "\n\n" +
+
+            "💰 Valor: " +
+            dinheiro(valor) +
+
+            "\n" +
+
+            "💳 Pagamento: " +
+            pagamento +
+
+            "\n\n" +
+
+            "📦 A quantidade será adicionada ao estoque." +
+
+            "\n💰 O valor será lançado no financeiro." +
+
+            "\n\n" +
+
+            "Deseja registrar esta compra?"
+
+        );
+
+
+    if(!confirmar){
+        return;
+    }
+
+
+    // =================================================
+    // SALVAR COMPRA
+    // =================================================
+
+    let compras =
+        ler("compras");
+
+
+    if(!Array.isArray(compras)){
+        compras=[];
+    }
+
+
+    compras.push(
+        compra
+    );
+
+
+    salvar(
+        "compras",
+        compras
+    );
+
+
+    // =================================================
+    // 📦 ESTOQUE
+    // =================================================
+
+    adicionarAoEstoque(
+        compra
+    );
+
+
+    // =================================================
+    // 💰 FINANCEIRO
+    // =================================================
+
+    registrarDespesaFinanceira(
+        compra
+    );
+
+
+    // =================================================
+    // MENSAGEM
+    // =================================================
+
+    mensagem.innerHTML = `
+
+        <div class="sucesso">
+
+            ✅ <strong>COMPRA REGISTRADA!</strong>
+
+            <br><br>
+
+            🏢 Fornecedor:
+            ${escapar(fornecedor)}
+
+            <br>
+
+            📦 Mercadoria:
+            ${escapar(mercadoria)}
+
+            <br>
+
+            🔢 Quantidade:
+            ${quantidade}
+            ${unidade}
+
+            <br>
+
+            💰 Valor:
+            ${dinheiro(valor)}
+
+            <br><br>
+
+            📦 Estoque atualizado.
+
+            <br>
+
+            💰 Financeiro atualizado.
+
+        </div>
+
+    `;
+
+
+    // =================================================
+    // ATUALIZAR TELA
+    // =================================================
+
+    atualizarResumo();
+
+    mostrarCompras();
+
+
+    // =================================================
+    // LIMPAR
+    // =================================================
+
+    document.getElementById(
+        "fornecedor"
+    ).value = "";
+
+    document.getElementById(
+        "mercadoria"
+    ).value = "";
+
+    document.getElementById(
+        "quantidade"
+    ).value = "";
+
+    document.getElementById(
+        "valorCompra"
+    ).value = "";
+
+    document.getElementById(
+        "observacao"
+    ).value = "";
+
+
+    colocarDataHoje();
+
+
+    alert(
+        "✅ COMPRA REGISTRADA COM SUCESSO!\n\n" +
+
+        "📦 Estoque atualizado.\n" +
+
+        "💰 Financeiro atualizado."
+    );
+
+}
+
+
+// =====================================================
+// 🔒 ESCAPAR TEXTO
+// =====================================================
+
+function escapar(texto){
+
+    return String(
+        texto ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+// =====================================================
+// 📊 RESUMO
+// =====================================================
+
+function atualizarResumo(){
+
+    const compras =
+        ler("compras");
+
+
+    let total = 0;
+
+
+    compras.forEach(
+        function(compra){
+
+            total +=
+                Number(
+                    compra.valor
+                ) || 0;
+
+        }
+    );
+
+
+    document.getElementById(
+        "quantidadeCompras"
+    ).innerText =
+        compras.length;
+
+
+    document.getElementById(
+        "totalComprado"
+    ).innerText =
+        dinheiro(total);
+
+}
+
+
+// =====================================================
+// 📋 HISTÓRICO
+// =====================================================
+
+function mostrarCompras(){
+
+    const lista =
+        document.getElementById(
+            "listaCompras"
+        );
+
+
+    const compras =
+        ler("compras");
+
+
+    if(
+        !compras.length
+    ){
+
+        lista.innerHTML = `
+
+            <p class="vazio">
+
+                📭 Nenhuma compra registrada.
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    compras
+        .slice()
+        .reverse()
+        .forEach(
+            function(compra){
+
+                lista.innerHTML += `
+
+                    <div class="compra">
+
+                        <h3>
+
+                            🛒 Compra #${escapar(
+                                compra.id
+                            )}
+
+                        </h3>
+
+
+                        <p>
+
+                            📅 <strong>Data:</strong>
+
+                            ${compra.data
+                                ? new Date(
+                                    compra.data+
+                                    "T12:00:00"
+                                  )
+                                  .toLocaleDateString(
+                                    "pt-BR"
+                                  )
+                                : "-"
+                            }
+
+                        </p>
+
+
+                        <p>
+
+                            🏢 <strong>Fornecedor:</strong>
+
+                            ${escapar(
+                                compra.fornecedor
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            📦 <strong>Mercadoria:</strong>
+
+                            ${escapar(
+                                compra.mercadoria
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            🔢 <strong>Quantidade:</strong>
+
+                            ${compra.quantidade}
+                            ${escapar(
+                                compra.unidade
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            💳 <strong>Pagamento:</strong>
+
+                            ${escapar(
+                                compra.pagamento
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            📝 <strong>Observação:</strong>
+
+                            ${escapar(
+                                compra.observacao ||
+                                "Nenhuma"
+                            )}
+
+                        </p>
+
+
+                        <h3 class="valor">
+
+                            💰 ${dinheiro(
+                                compra.valor
+                            )}
+
+                        </h3>
+
+
+                        <button
+                            class="excluir"
+                            onclick="excluirCompra(${compra.id})">
+
+                            🗑️ EXCLUIR COMPRA
+
+                        </button>
+
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+}
+
+
+// =====================================================
+// 🗑️ EXCLUIR COMPRA
+// =====================================================
+
+function excluirCompra(id){
+
+    const confirmar =
+        confirm(
+
+            "⚠️ EXCLUIR COMPRA?\n\n" +
+
+            "A compra será removida do histórico.\n\n" +
+
+            "IMPORTANTE: o estoque e a despesa financeira " +
+
+            "já lançados não serão revertidos automaticamente.\n\n" +
+
+            "Deseja continuar?"
+
+        );
+
+
+    if(!confirmar){
+        return;
+    }
+
+
+    let compras =
+        ler("compras");
+
+
+    compras =
+        compras.filter(
+            function(compra){
+
+                return Number(
+                    compra.id
+                ) !== Number(id);
+
+            }
+        );
+
+
+    salvar(
+        "compras",
+        compras
+    );
+
+
+    atualizarResumo();
+
+    mostrarCompras();
+
+
+    alert(
+        "🗑️ Compra removida do histórico."
+    );
+
+}
+
+
+// =====================================================
+// 🚀 INICIAR
+// =====================================================
+
+window.addEventListener(
+    "load",
+    function(){
+
+        colocarDataHoje();
+
+        atualizarResumo();
+
+        mostrarCompras();
+
+    }
+);
+
+
+window.addEventListener(
+    "pageshow",
+    function(){
+
+        atualizarResumo();
+
+        mostrarCompras();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

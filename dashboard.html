@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard - GrillCore ERP</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>📊 Dashboard</h1>
+
+<h2>💰 Vendas</h2>
+
+<p id="totalVendas">
+Total vendido: R$ 0,00
+</p>
+
+<p id="quantidadePedidos">
+Pedidos realizados: 0
+</p>
+
+<h2>🍔 Produtos</h2>
+
+<p id="quantidadeProdutos">
+Produtos cadastrados: 0
+</p>
+
+<h2>📦 Estoque</h2>
+
+<p id="totalEstoque">
+Itens em estoque: 0
+</p>
+
+<h2>⚠️ Estoque Baixo</h2>
+
+<div id="estoqueBaixo">
+</div>
+
+<br><br>
+
+<a href="index.html">
+<button>Voltar</button>
+</a>
+
+<script src="script.js"></script>
+
+<script>
+
+function carregarDashboard() {
+
+    let vendas =
+        JSON.parse(localStorage.getItem("vendas")) || [];
+
+    let produtos =
+        JSON.parse(localStorage.getItem("produtos")) || [];
+
+
+    // TOTAL DE VENDAS
+
+    let totalVendas = 0;
+
+    vendas.forEach(function(venda) {
+
+        totalVendas += Number(venda.total) || 0;
+
+    });
+
+
+    document.getElementById("totalVendas").innerText =
+        "Total vendido: R$ " +
+        totalVendas.toFixed(2);
+
+
+    // QUANTIDADE DE PEDIDOS
+
+    document.getElementById("quantidadePedidos").innerText =
+        "Pedidos realizados: " +
+        vendas.length;
+
+
+    // PRODUTOS
+
+    document.getElementById("quantidadeProdutos").innerText =
+        "Produtos cadastrados: " +
+        produtos.length;
+
+
+    // ESTOQUE
+
+    let totalEstoque = 0;
+
+    produtos.forEach(function(produto) {
+
+        totalEstoque +=
+            Number(produto.estoque) || 0;
+
+    });
+
+
+    document.getElementById("totalEstoque").innerText =
+        "Itens em estoque: " +
+        totalEstoque;
+
+
+    // ESTOQUE BAIXO
+
+    let lista = "";
+
+    produtos.forEach(function(produto) {
+
+        let estoque =
+            Number(produto.estoque) || 0;
+
+        if (estoque <= 3) {
+
+            lista +=
+                "<p>⚠️ " +
+                produto.nome +
+                " — " +
+                estoque +
+                " unidades</p>";
+
+        }
+
+    });
+
+
+    if (lista === "") {
+
+        lista =
+            "<p>✅ Nenhum produto com estoque baixo.</p>";
+
+    }
+
+
+    document.getElementById("estoqueBaixo").innerHTML =
+        lista;
+
+}
+
+
+// CARREGAR
+
+carregarDashboard();
+
+</script>
+
+</body>
+</html>

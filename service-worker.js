@@ -1,4 +1,4 @@
-const CACHE_NAME = "grillcore-erp-v1";
+const CACHE_NAME = "grillcore-v2";
 
 const ARQUIVOS = [
     "./",

@@ -8,7 +8,7 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Novo Pedido - GrillCore ERP</title>
+<title>GrillCore ERP - Novo Pedido</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -24,21 +24,29 @@
     --dourado-claro: #f4d76b;
 
     --preto: #0d0d0d;
-    --preto-card: #171717;
-    --preto-input: #222222;
+    --card: #171717;
+    --input: #222222;
 
     --branco: #ffffff;
+    --cinza: #aaaaaa;
 
 }
+
 
 * {
+
     box-sizing: border-box;
+
 }
+
 
 body {
 
     margin: 0;
-    padding: 18px;
+
+    padding: 15px;
+
+    min-height: 100vh;
 
     background:
         radial-gradient(
@@ -55,40 +63,42 @@ body {
         Helvetica,
         sans-serif;
 
-    min-height: 100vh;
-
 }
 
 
-/* ================================
-   TOPO
-================================ */
+.container {
+
+    max-width: 700px;
+
+    margin: auto;
+
+}
+
 
 .topo {
 
     text-align: center;
 
-    padding:
-        12px
-        5px
-        22px;
+    padding: 10px 0 25px;
 
 }
 
+
 .logo {
 
-    width: 72px;
-    height: 72px;
+    width: 75px;
 
-    margin:
-        0 auto 12px;
+    height: 75px;
 
-    border-radius: 50%;
+    margin: auto;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
+
+    border-radius: 50%;
 
     background:
         linear-gradient(
@@ -97,40 +107,41 @@ body {
             var(--dourado)
         );
 
-    font-size: 36px;
+    font-size: 38px;
+
+    box-shadow:
+        0 0 25px
+        rgba(212,175,55,.3);
 
 }
 
+
 h1 {
-
-    margin: 5px 0;
-
-    font-size: 30px;
 
     color:
         var(--dourado-claro);
 
+    margin:
+        12px 0 5px;
+
 }
+
 
 .subtitulo {
 
-    margin: 5px 0 0;
-
-    color: #bdbdbd;
-
-    font-size: 15px;
+    color:
+        #aaa;
 
 }
 
-.linha-dourada {
 
-    width: 90px;
+.linha {
+
+    width: 100px;
 
     height: 3px;
 
-    margin: 15px auto 0;
-
-    border-radius: 10px;
+    margin: 15px auto;
 
     background:
         linear-gradient(
@@ -143,29 +154,27 @@ h1 {
 }
 
 
-/* ================================
-   CARD
-================================ */
-
 .card {
-
-    max-width: 650px;
-
-    margin: 0 auto 18px;
-
-    padding: 22px;
 
     background:
         linear-gradient(
             145deg,
             #1d1d1d,
-            #111111
+            #111
         );
 
     border:
-        1px solid #343434;
+        1px solid
+        #333;
 
-    border-radius: 18px;
+    border-radius:
+        18px;
+
+    padding:
+        20px;
+
+    margin-bottom:
+        18px;
 
     box-shadow:
         0 10px 30px
@@ -173,7 +182,8 @@ h1 {
 
 }
 
-.titulo-card {
+
+.titulo {
 
     display: flex;
 
@@ -181,20 +191,22 @@ h1 {
 
     gap: 10px;
 
-    padding-bottom: 15px;
+    padding-bottom:
+        15px;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        10px;
 
     border-bottom:
-        1px solid #333;
+        1px solid
+        #333;
 
 }
 
-.titulo-card h2 {
+
+.titulo h2 {
 
     margin: 0;
-
-    font-size: 20px;
 
     color:
         var(--dourado);
@@ -202,25 +214,18 @@ h1 {
 }
 
 
-/* ================================
-   CAMPOS
-================================ */
-
 label {
 
     display: block;
 
-    margin-top: 17px;
+    margin-top: 18px;
 
     margin-bottom: 7px;
 
     font-weight: bold;
 
-    color: #eeeeee;
-
-    font-size: 15px;
-
 }
+
 
 input,
 select {
@@ -232,18 +237,20 @@ select {
     border-radius: 11px;
 
     border:
-        1px solid #3a3a3a;
+        1px solid
+        #3a3a3a;
 
     background:
-        var(--preto-input);
+        var(--input);
 
     color: white;
 
-    font-size: 17px;
+    font-size: 16px;
 
     outline: none;
 
 }
+
 
 input:focus,
 select:focus {
@@ -254,127 +261,41 @@ select:focus {
 }
 
 
-/* ================================
-   CARRINHO
-================================ */
-
-.carrinho {
-
-    max-width: 650px;
-
-    margin:
-        0 auto 18px;
-
-    padding: 20px;
+select option {
 
     background:
-        #151515;
-
-    border:
-        1px solid #333;
-
-    border-radius: 18px;
+        #202020;
 
 }
 
-.carrinho h2 {
 
-    margin-top: 0;
+.cliente-automatico {
 
-    color:
+    border:
+        2px solid
         var(--dourado);
 
 }
 
-.item-carrinho {
-
-    padding: 14px 0;
-
-    border-bottom:
-        1px solid #333;
-
-}
-
-.item-nome {
-
-    font-weight: bold;
-
-    font-size: 17px;
-
-}
-
-.item-info {
-
-    color: #aaa;
-
-    margin-top: 5px;
-
-}
-
-.item-botoes {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    margin-top: 10px;
-
-}
-
-.item-botoes button {
-
-    width: auto;
-
-    margin: 0;
-
-    padding:
-        8px 13px;
-
-    font-size: 15px;
-
-}
-
-.btn-menos,
-.btn-mais {
-
-    background:
-        #292929;
-
-    border:
-        1px solid #444;
-
-}
-
-.btn-remover {
-
-    background:
-        #750000;
-
-}
-
-
-/* ================================
-   TOTAL
-================================ */
 
 .total {
 
-    max-width: 650px;
+    padding:
+        22px;
 
-    margin: 18px auto;
+    margin-bottom:
+        18px;
 
-    padding: 22px;
+    text-align:
+        center;
 
-    text-align: center;
-
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     background:
         linear-gradient(
             145deg,
-            #230000,
+            #250000,
             #110000
         );
 
@@ -384,39 +305,34 @@ select:focus {
 
 }
 
+
 .total-titulo {
 
-    color: #ddd;
+    color:
+        #ccc;
 
-    font-size: 16px;
-
-    margin-bottom: 8px;
+    font-size:
+        15px;
 
 }
 
+
 #total {
+
+    margin-top:
+        8px;
 
     color:
         var(--dourado-claro);
 
-    font-size: 38px;
+    font-size:
+        38px;
 
-    font-weight: bold;
-
-}
-
-
-/* ================================
-   BOTÕES
-================================ */
-
-.botoes {
-
-    max-width: 650px;
-
-    margin: 0 auto;
+    font-weight:
+        bold;
 
 }
+
 
 button {
 
@@ -430,13 +346,16 @@ button {
 
     border-radius: 12px;
 
+    color: white;
+
     font-size: 17px;
 
     font-weight: bold;
 
-    color: white;
+    cursor: pointer;
 
 }
+
 
 .finalizar {
 
@@ -449,6 +368,7 @@ button {
 
 }
 
+
 .whatsapp {
 
     background:
@@ -460,42 +380,44 @@ button {
 
 }
 
+
 .voltar {
 
     background:
         #292929;
 
     border:
-        1px solid #444;
+        1px solid
+        #444;
 
 }
 
 
-/* ================================
-   INFORMAÇÕES
-================================ */
-
 .info {
 
-    margin-top: 20px;
+    margin-top:
+        20px;
 
-    padding: 15px;
+    padding:
+        14px;
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 
     background:
         #101010;
 
-    border:
-        1px solid #303030;
+    color:
+        #999;
 
-    color: #aaa;
+    line-height:
+        1.7;
 
-    line-height: 1.7;
-
-    font-size: 14px;
+    font-size:
+        13px;
 
 }
+
 
 .info strong {
 
@@ -505,27 +427,62 @@ button {
 }
 
 
-/* ================================
-   RESPONSIVO
-================================ */
+.rodape {
+
+    text-align:
+        center;
+
+    color:
+        #666;
+
+    font-size:
+        12px;
+
+    padding:
+        15px 0 25px;
+
+}
+
+
+.rodape span {
+
+    color:
+        var(--dourado);
+
+}
+
 
 @media (max-width: 480px) {
 
     body {
-        padding: 12px;
+
+        padding:
+            10px;
+
     }
 
-    .card,
-    .carrinho {
-        padding: 17px;
+
+    .card {
+
+        padding:
+            17px;
+
     }
+
 
     h1 {
-        font-size: 26px;
+
+        font-size:
+            26px;
+
     }
 
+
     #total {
-        font-size: 34px;
+
+        font-size:
+            34px;
+
     }
 
 }
@@ -538,6 +495,13 @@ button {
 <body>
 
 
+<div class="container">
+
+
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
+
 <header class="topo">
 
     <div class="logo">
@@ -548,31 +512,35 @@ button {
         GrillCore ERP
     </h1>
 
-    <p class="subtitulo">
+    <div class="subtitulo">
         Novo Pedido
-    </p>
+    </div>
 
-    <div class="linha-dourada"></div>
+    <div class="linha"></div>
 
 </header>
 
 
 
-<!-- =========================================
-     DADOS DO PEDIDO
-========================================= -->
+<!-- =====================================================
+     PEDIDO
+===================================================== -->
 
 <div class="card">
 
-    <div class="titulo-card">
 
-        <span>🧾</span>
+    <div class="titulo">
+
+        <span>
+            🧾
+        </span>
 
         <h2>
             Dados do Pedido
         </h2>
 
     </div>
+
 
 
     <!-- CLIENTE -->
@@ -589,6 +557,7 @@ button {
     >
 
 
+
     <!-- HAMBÚRGUER -->
 
     <label for="hamburguer">
@@ -597,13 +566,14 @@ button {
 
     <select
         id="hamburguer"
-        onchange="adicionarProdutoPedido('hamburguer')">
+        onchange="calcularTotal()">
 
         <option value="">
-            Selecione um hambúrguer
+            Carregando hambúrgueres...
         </option>
 
     </select>
+
 
 
     <!-- PORÇÃO -->
@@ -614,13 +584,14 @@ button {
 
     <select
         id="porcao"
-        onchange="adicionarProdutoPedido('porcao')">
+        onchange="calcularTotal()">
 
         <option value="">
-            Selecione uma porção
+            Carregando porções...
         </option>
 
     </select>
+
 
 
     <!-- BEBIDA -->
@@ -631,13 +602,14 @@ button {
 
     <select
         id="bebida"
-        onchange="adicionarProdutoPedido('bebida')">
+        onchange="calcularTotal()">
 
         <option value="">
-            Selecione uma bebida
+            Carregando bebidas...
         </option>
 
     </select>
+
 
 
     <!-- PAGAMENTO -->
@@ -649,7 +621,7 @@ button {
     <select id="pagamento">
 
         <option value="">
-            Selecione a forma de pagamento
+            Selecione o pagamento
         </option>
 
         <option value="Pix">
@@ -667,63 +639,49 @@ button {
     </select>
 
 
+
+    <!-- INFORMAÇÕES -->
+
     <div class="info">
 
         <strong>
-            💡 Como funciona:
+            💡 Pedido inteligente
         </strong>
 
         <br>
 
-        🍔 Escolha um hambúrguer
+        🍔 Os hambúrgueres vêm dos produtos cadastrados.
 
         <br>
 
-        🍟 Escolha uma porção
+        🍟 As porções vêm dos produtos cadastrados.
 
         <br>
 
-        🥤 Escolha uma bebida
+        🥤 As bebidas vêm dos produtos cadastrados.
 
         <br>
 
-        ➕ Os produtos são adicionados automaticamente ao pedido
+        📦 O estoque é baixado automaticamente.
 
         <br>
 
-        💰 O total é calculado automaticamente
+        💰 A venda entra no financeiro.
+
+        <br>
+
+        📋 O cliente é atualizado automaticamente.
 
     </div>
+
 
 </div>
 
 
 
-<!-- =========================================
-     CARRINHO
-========================================= -->
-
-<div class="carrinho">
-
-    <h2>
-        🛒 Itens do Pedido
-    </h2>
-
-    <div id="listaCarrinho">
-
-        <p style="color:#888;">
-            Nenhum produto adicionado.
-        </p>
-
-    </div>
-
-</div>
-
-
-
-<!-- =========================================
+<!-- =====================================================
      TOTAL
-========================================= -->
+===================================================== -->
 
 <div class="total">
 
@@ -739,41 +697,41 @@ button {
 
 
 
-<!-- =========================================
+<!-- =====================================================
      BOTÕES
-========================================= -->
+===================================================== -->
 
-<div class="botoes">
+<button
+    class="finalizar"
+    onclick="finalizarPedido()">
 
-    <button
-        class="finalizar"
-        onclick="finalizarPedido()">
+    ✅ FINALIZAR PEDIDO
 
-        ✅ FINALIZAR PEDIDO
-
-    </button>
+</button>
 
 
-    <button
-        class="whatsapp"
-        onclick="enviarPedidoWhatsAppNovo()">
+<button
+    class="whatsapp"
+    onclick="enviarPedidoWhatsAppNovo()">
 
-        📱 ENVIAR PELO WHATSAPP
+    📱 ENVIAR PELO WHATSAPP
 
-    </button>
-
-
-    <button
-        class="voltar"
-        onclick="window.location.href='index.html'">
-
-        ↩️ VOLTAR AO INÍCIO
-
-    </button>
-
-</div>
+</button>
 
 
+<button
+    class="voltar"
+    onclick="window.location.href='index.html'">
+
+    ↩️ VOLTAR AO INÍCIO
+
+</button>
+
+
+
+<!-- =====================================================
+     RODAPÉ
+===================================================== -->
 
 <div class="rodape">
 
@@ -788,6 +746,13 @@ button {
 </div>
 
 
+</div>
+
+
+
+<!-- =====================================================
+     SCRIPT
+===================================================== -->
 
 <script src="script.js"></script>
 
@@ -798,6 +763,49 @@ window.addEventListener(
     "load",
     function() {
 
+        const clientePedido =
+            localStorage.getItem(
+                "clientePedido"
+            );
+
+
+        if (clientePedido) {
+
+            const campo =
+                document.getElementById(
+                    "cliente"
+                );
+
+
+            if (campo) {
+
+                campo.value =
+                    clientePedido;
+
+                campo.classList.add(
+                    "cliente-automatico"
+                );
+
+            }
+
+
+            localStorage.removeItem(
+                "clientePedido"
+            );
+
+        }
+
+
+        if (
+            typeof atualizarSistema ===
+            "function"
+        ) {
+
+            atualizarSistema();
+
+        }
+
+
         if (
             typeof atualizarListaProdutos ===
             "function"
@@ -807,16 +815,31 @@ window.addEventListener(
 
         }
 
+
         if (
-            typeof atualizarCarrinho ===
+            typeof atualizarListaPorcoes ===
             "function"
         ) {
 
-            atualizarCarrinho();
+            atualizarListaPorcoes();
 
         }
 
+
+        if (
+            typeof atualizarListaBebidas ===
+            "function"
+        ) {
+
+            atualizarListaBebidas();
+
+        }
+
+
+        calcularTotal();
+
     }
+
 );
 
 </script>

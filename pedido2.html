@@ -38,13 +38,9 @@
 
 }
 
-
 * {
-
     box-sizing: border-box;
-
 }
-
 
 body {
 
@@ -320,6 +316,18 @@ select option {
     box-shadow:
         0 0 15px
         rgba(212,175,55,.18);
+
+}
+
+
+/* =====================================================
+   CAMPOS DE COMPATIBILIDADE
+   Ficam invisíveis para não quebrar o script.js
+===================================================== */
+
+.compatibilidade {
+
+    display: none !important;
 
 }
 
@@ -704,62 +712,22 @@ button:active {
     </select>
 
 
-    <!-- BEBIDA -->
+    <!-- =================================================
+         COMPATIBILIDADE COM SCRIPT.JS
+         NÃO APARECE NA TELA
+    ================================================== -->
 
-    <label for="bebida">
-        🥤 Bebida
-    </label>
+    <div class="compatibilidade">
 
-    <select
-        id="bebida"
-        onchange="calcularTotal()">
+        <select id="bebida">
+            <option value="">Sem bebida</option>
+        </select>
 
-        <option value="">
-            Sem bebida
-        </option>
+        <select id="porcao">
+            <option value="">Sem porção</option>
+        </select>
 
-        <option value="Coca-Cola">
-            Coca-Cola — R$ 8,00
-        </option>
-
-        <option value="Guaraná">
-            Guaraná — R$ 7,00
-        </option>
-
-        <option value="Água">
-            Água — R$ 4,00
-        </option>
-
-        <option value="Suco">
-            Suco — R$ 10,00
-        </option>
-
-    </select>
-
-
-    <!-- PORÇÃO -->
-
-    <label for="porcao">
-        🍟 Porção
-    </label>
-
-    <select
-        id="porcao"
-        onchange="calcularTotal()">
-
-        <option value="">
-            Sem porção
-        </option>
-
-        <option value="Batata Frita">
-            Batata Frita — R$ 15,00
-        </option>
-
-        <option value="Onion Rings">
-            Onion Rings — R$ 18,00
-        </option>
-
-    </select>
+    </div>
 
 
     <!-- PAGAMENTO -->
@@ -985,4 +953,4 @@ window.addEventListener(
 
 </body>
 
-</html>
+      </html

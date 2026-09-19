@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<script>
+if(localStorage.getItem("grillcore_login") !== "true"){
+    window.location.replace("login.html");
+}
+</script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#ff7300">
+
+<meta name="description"
+      content="GrillCore ERP — Sistema profissional de gestão para hamburguerias">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="tema-laranja.css">
+
+<title>GrillCore ERP — Dashboard</title>
+
+<style>
+
+:root{
+    --laranja:#ff7300;
+    --laranja2:#ff9800;
+    --laranja3:#ff4d00;
+
+    --preto:#050505;
+    --preto2:#0b0b0b;
+    --painel:#101010;
+    --card:#151515;
+
+    --branco:#ffffff;
+    --cinza:#a9a9a9;
+
+    --verde:#35d07f;
+    --vermelho:#ff4d4d;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    background:
+        radial-gradient(
+            circle at top,
+            #241000 0%,
+            #0d0805 35%,
+            #050505 75%
+        );
+
+    color:var(--branco);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height:100vh;
+
+}
+
+.dashboard-container{
+
+    width:100%;
+    max-width:1250px;
+    margin:0 auto;
+    padding:24px 18px 50px;
+
+}
+
+.dashboard-header{
+
+    text-align:center;
+    padding:18px 10px 28px;
+
+}
+
+.dashboard-logo{
+
+    width:78px;
+    height:78px;
+
+    margin:0 auto 12px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:42px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffb300,
+            #ff7300,
+            #d83b00
+        );
+
+    border:3px solid #ffb300;
+
+    box-shadow:
+        0 0 25px rgba(255,115,0,.45),
+        inset 0 2px 5px rgba(255,255,255,.35);
+
+}
+
+.dashboard-header h1{
+
+    font-size:clamp(30px,6vw,48px);
+
+    font-weight:900;
+
+    letter-spacing:-1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffb300,
+            #ff7300,
+            #ffd166
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+}
+
+.dashboard-header p{
+
+    margin-top:8px;
+    color:#bdbdbd;
+    font-size:clamp(15px,3vw,19px);
+
+}
+
+.header-line{
+
+    width:110px;
+    height:4px;
+    margin:20px auto 0;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--laranja),
+            transparent
+        );
+
+}
+
+.usuario-card{
+
+    width:100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #0b0b0b
+        );
+
+    border:1px solid rgba(255,115,0,.35);
+
+    border-radius:20px;
+
+    padding:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:22px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.35);
+
+}
+
+.usuario-info{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+}
+
+.usuario-avatar{
+
+    width:58px;
+    height:58px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff5c00
+        );
+
+    border:2px solid #ffb300;
+
+    box-shadow:
+        0 0 18px rgba(255,115,0,.35);
+
+}
+
+.usuario-label{
+
+    color:#888;
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:1.5px;
+
+}
+
+.usuario-nome{
+
+    color:#fff;
+    font-size:23px;
+    font-weight:900;
+    margin-top:3px;
+
+}
+
+.status-online{
+
+    padding:10px 15px;
+
+    border-radius:30px;
+
+    color:var(--verde);
+
+    background:rgba(53,208,127,.08);
+
+    border:1px solid rgba(53,208,127,.35);
+
+    font-size:14px;
+    font-weight:bold;
+
+    white-space:nowrap;
+
+}
+
+.boas-vindas{
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #251000,
+            #120a05,
+            #090909
+        );
+
+    border:1px solid rgba(255,115,0,.45);
+
+    border-radius:22px;
+
+    padding:25px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.4);
+
+}
+
+.boas-vindas::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-70px;
+    top:-80px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,115,0,.25),
+            transparent 70%
+        );
+
+}
+
+.boas-conteudo{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    position:relative;
+    z-index:2;
+
+}
+
+.boas-icone{
+
+    width:70px;
+    height:70px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:38px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffb300,
+            #ff7300
+        );
+
+    border:3px solid #ffd166;
+
+    box-shadow:
+        0 0 25px rgba(255,115,0,.4);
+
+}
+
+.boas-vindas h2{
+
+    font-size:clamp(22px,5vw,31px);
+    font-weight:900;
+
+}
+
+.boas-vindas p{
+
+    margin-top:6px;
+    color:#bdbdbd;
+    font-size:16px;
+
+}
+
+.section-title{
+
+    text-align:center;
+    margin:32px 0 16px;
+
+}
+
+.section-title h2{
+
+    font-size:25px;
+    font-weight:900;
+    color:#fff;
+
+}
+
+.section-title h2 span{
+
+    color:var(--laranja);
+
+}
+
+.section-title p{
+
+    color:#888;
+    font-size:13px;
+    margin-top:5px;
+
+}
+
+.resumo-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:15px;
+
+}
+
+.resumo-card{
+
+    position:relative;
+    overflow:hidden;
+
+    min-height:155px;
+
+    padding:22px 18px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800 0%,
+            #ff7300 55%,
+            #f04d00 100%
+        );
+
+    border:1px solid rgba(255,255,255,.22);
+
+    box-shadow:
+        0 12px 28px rgba(255,115,0,.20),
+        inset 0 1px 0 rgba(255,255,255,.3);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.resumo-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 18px 38px rgba(255,115,0,.3);
+
+}
+
+.resumo-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    right:-35px;
+    bottom:-40px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.10);
+
+}
+
+.resumo-topo{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+}
+
+.resumo-icone{
+
+    font-size:30px;
+
+}
+
+.olho-btn{
+
+    width:42px;
+    height:42px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,.35);
+
+    background:
+        rgba(0,0,0,.20);
+
+    color:#fff;
+
+    font-size:21px;
+
+    cursor:pointer;
+
+}
+
+.resumo-label{
+
+    display:block;
+
+    margin-top:18px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+
+    opacity:.9;
+
+}
+
+
+/* =====================================================
+   🔢 NÚMEROS DO RESUMO
+   SOMENTE OS NÚMEROS FORAM REDUZIDOS
+===================================================== */
+
+.resumo-numero{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:100%;
+    max-width:100%;
+
+    min-width:0;
+
+    margin:8px auto 0;
+
+    padding:0;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    font-size:24px !important;
+
+    line-height:1.05;
+
+    font-weight:900;
+
+    letter-spacing:-.5px;
+
+    font-variant-numeric:tabular-nums;
+
+    box-sizing:border-box;
+
+}
+
+
+/* Produtos e Clientes */
+
+.resumo-card:nth-child(1) .resumo-numero,
+.resumo-card:nth-child(2) .resumo-numero{
+
+    font-size:29px !important;
+
+}
+
+
+/* Vendas e Entradas */
+
+.resumo-card:nth-child(3) .resumo-numero,
+.resumo-card:nth-child(4) .resumo-numero{
+
+    font-size:20px !important;
+
+    letter-spacing:-.5px;
+
+}
+
+
+/* =====================================================
+   ACESSO RÁPIDO
+===================================================== */
+
+.acesso-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:15px;
+
+}
+
+.acesso-card{
+
+    position:relative;
+
+    min-height:130px;
+
+    padding:20px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #181818,
+            #0c0c0c
+        );
+
+    border:1px solid #292929;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    gap:9px;
+
+    overflow:hidden;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.acesso-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4d00,
+            #ff9800,
+            #ff4d00
+        );
+
+}
+
+.acesso-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:
+        rgba(255,115,0,.7);
+
+    box-shadow:
+        0 12px 30px rgba(255,115,0,.15);
+
+}
+
+.acesso-icone{
+
+    width:58px;
+    height:58px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    font-size:31px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff5c00
+        );
+
+    box-shadow:
+        0 6px 18px rgba(255,115,0,.25);
+
+}
+
+.acesso-nome{
+
+    font-size:16px;
+    font-weight:900;
+
+}
+
+.acesso-descricao{
+
+    color:#888;
+    font-size:11px;
+
+}
+
+.sair-card{
+
+    border-color:
+        rgba(255,77,77,.25);
+
+}
+
+.sair-card::before{
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3b3b,
+            #ff7373,
+            #ff3b3b
+        );
+
+}
+
+.sair-card .acesso-icone{
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff5555,
+            #b50000
+        );
+
+}
+
+.dashboard-footer{
+
+    text-align:center;
+
+    margin-top:35px;
+
+    padding-top:20px;
+
+    border-top:1px solid #222;
+
+    color:#666;
+
+    font-size:12px;
+
+}
+
+.dashboard-footer strong{
+
+    color:var(--laranja);
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:950px){
+
+    .resumo-grid{
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+    }
+
+    .acesso-grid{
+
+        grid-template-columns:
+            repeat(3,minmax(0,1fr));
+
+    }
+
+    .resumo-card:nth-child(1) .resumo-numero,
+    .resumo-card:nth-child(2) .resumo-numero{
+
+        font-size:28px !important;
+
+    }
+
+    .resumo-card:nth-child(3) .resumo-numero,
+    .resumo-card:nth-child(4) .resumo-numero{
+
+        font-size:20px !important;
+
+    }
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media(max-width:650px){
+
+    .dashboard-container{
+
+        padding:
+            15px
+            12px
+            35px;
+
+    }
+
+    .dashboard-header{
+
+        padding-top:10px;
+
+    }
+
+    .dashboard-logo{
+
+        width:68px;
+        height:68px;
+
+        font-size:35px;
+
+    }
+
+    .usuario-card{
+
+        padding:14px;
+
+    }
+
+    .status-online{
+
+        padding:
+            8px 10px;
+
+        font-size:12px;
+
+    }
+
+    .usuario-avatar{
+
+        width:50px;
+        height:50px;
+
+        font-size:26px;
+
+    }
+
+    .usuario-nome{
+
+        font-size:19px;
+
+    }
+
+    .boas-vindas{
+
+        padding:20px;
+
+    }
+
+    .boas-conteudo{
+
+        align-items:flex-start;
+
+    }
+
+    .boas-icone{
+
+        width:58px;
+        height:58px;
+
+        font-size:31px;
+
+    }
+
+    .resumo-grid{
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:10px;
+
+    }
+
+    .resumo-card{
+
+        min-height:140px;
+
+        padding:16px 13px;
+
+    }
+
+    .resumo-numero{
+
+        width:100%;
+
+        max-width:100%;
+
+        min-width:0;
+
+        margin-left:auto;
+        margin-right:auto;
+
+        justify-content:center;
+
+        text-align:center;
+
+        overflow:hidden;
+
+        white-space:nowrap;
+
+    }
+
+
+    /* Produtos */
+
+    .resumo-card:nth-child(1) .resumo-numero,
+    .resumo-card:nth-child(2) .resumo-numero{
+
+        font-size:27px !important;
+
+        line-height:1;
+
+    }
+
+
+    /* Vendas */
+
+    .resumo-card:nth-child(3) .resumo-numero,
+    .resumo-card:nth-child(4) .resumo-numero{
+
+        font-size:17px !important;
+
+        line-height:1;
+
+        letter-spacing:-.4px;
+
+    }
+
+
+    .acesso-grid{
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:10px;
+
+    }
+
+    .acesso-card{
+
+        min-height:125px;
+
+        padding:15px 8px;
+
+    }
+
+    .acesso-icone{
+
+        width:50px;
+        height:50px;
+
+        font-size:27px;
+
+    }
+
+}
+
+
+/* =====================================================
+   CELULARES PEQUENOS
+===================================================== */
+
+@media(max-width:380px){
+
+    .status-online{
+
+        display:none;
+
+    }
+
+    .resumo-card{
+
+        min-height:130px;
+
+        padding-left:9px;
+        padding-right:9px;
+
+    }
+
+
+    .resumo-card:nth-child(1) .resumo-numero,
+    .resumo-card:nth-child(2) .resumo-numero{
+
+        font-size:25px !important;
+
+    }
+
+
+    .resumo-card:nth-child(3) .resumo-numero,
+    .resumo-card:nth-child(4) .resumo-numero{
+
+        font-size:15px !important;
+
+        letter-spacing:-.3px;
+
+    }
+
+
+    .acesso-nome{
+
+        font-size:14px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+
+<header class="dashboard-header">
+
+<div class="dashboard-logo">
+    🍔
+</div>
+
+<h1>
+    GrillCore ERP
+</h1>
+
+<p>
+    Sistema profissional de gestão para sua hamburgueria
+</p>
+
+<div class="header-line"></div>
+
+</header>
+
+
+<section class="usuario-card">
+
+<div class="usuario-info">
+
+    <div class="usuario-avatar">
+        👤
+    </div>
+
+    <div>
+
+        <div class="usuario-label">
+            USUÁRIO CONECTADO
+        </div>
+
+        <div
+            class="usuario-nome"
+            id="usuarioLogado"
+        >
+            admin
+        </div>
+
+    </div>
+
+</div>
+
+<div class="status-online">
+    🟢 Sistema online
+</div>
+
+</section>
+
+
+<section class="boas-vindas">
+
+<div class="boas-conteudo">
+
+    <div class="boas-icone">
+        🍔
+    </div>
+
+    <div>
+
+        <h2 id="mensagemBoasVindas">
+            Bem-vindo, admin!
+        </h2>
+
+        <p>
+            Aqui está o resumo do seu negócio.
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<div class="section-title">
+
+<h2>
+    📊 <span>Resumo</span> do Sistema
+</h2>
+
+<p>
+    Visão geral dos seus dados no GrillCore
+</p>
+
+</div>
+
+
+<section class="resumo-grid">
+
+
+<div class="resumo-card">
+
+    <div class="resumo-topo">
+
+        <div class="resumo-icone">
+            🍔
+        </div>
+
+        <button
+            class="olho-btn"
+            onclick="alternarValores()"
+            id="botaoOlho"
+            title="Mostrar ou ocultar valores"
+        >
+            👁️
+        </button>
+
+    </div>
+
+    <span class="resumo-label">
+        Produtos
+    </span>
+
+    <strong
+        class="resumo-numero"
+        id="totalProdutos"
+    >
+        0
+    </strong>
+
+</div>
+
+
+<div class="resumo-card">
+
+    <div class="resumo-topo">
+
+        <div class="resumo-icone">
+            👥
+        </div>
+
+    </div>
+
+    <span class="resumo-label">
+        Clientes
+    </span>
+
+    <strong
+        class="resumo-numero"
+        id="totalClientes"
+    >
+        0
+    </strong>
+
+</div>
+
+
+<div class="resumo-card">
+
+    <div class="resumo-topo">
+
+        <div class="resumo-icone">
+            💰
+        </div>
+
+    </div>
+
+    <span class="resumo-label">
+        Vendas
+    </span>
+
+    <strong
+        class="resumo-numero"
+        id="totalVendas"
+    >
+        R$ 0,00
+    </strong>
+
+</div>
+
+
+<div class="resumo-card">
+
+    <div class="resumo-topo">
+
+        <div class="resumo-icone">
+            📈
+        </div>
+
+    </div>
+
+    <span class="resumo-label">
+        Entradas
+    </span>
+
+    <strong
+        class="resumo-numero"
+        id="totalEntradas"
+    >
+        R$ 0,00
+    </strong>
+
+</div>
+
+
+</section>
+
+
+<div class="section-title">
+
+<h2>
+    ⚡ <span>Acesso</span> Rápido
+</h2>
+
+<p>
+    Acesse rapidamente as principais áreas do sistema
+</p>
+
+</div>
+
+
+<section class="acesso-grid">
+
+
+<a
+    href="pedido2.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        🛒
+    </div>
+
+    <div class="acesso-nome">
+        Novo Pedido
+    </div>
+
+    <div class="acesso-descricao">
+        Registrar venda
+    </div>
+
+</a>
+
+
+<a
+    href="produtos.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        🍔
+    </div>
+
+    <div class="acesso-nome">
+        Produtos
+    </div>
+
+    <div class="acesso-descricao">
+        Gerenciar produtos
+    </div>
+
+</a>
+
+
+<a
+    href="clientes.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        👥
+    </div>
+
+    <div class="acesso-nome">
+        Clientes
+    </div>
+
+    <div class="acesso-descricao">
+        Cadastro de clientes
+    </div>
+
+</a>
+
+
+<a
+    href="estoque.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        📦
+    </div>
+
+    <div class="acesso-nome">
+        Estoque
+    </div>
+
+    <div class="acesso-descricao">
+        Controle de estoque
+    </div>
+
+</a>
+
+
+<a
+    href="financeiro.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        💰
+    </div>
+
+    <div class="acesso-nome">
+        Financeiro
+    </div>
+
+    <div class="acesso-descricao">
+        Controle financeiro
+    </div>
+
+</a>
+
+
+<a
+    href="compras.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        🛍️
+    </div>
+
+    <div class="acesso-nome">
+        Compras
+    </div>
+
+    <div class="acesso-descricao">
+        Registrar compras
+    </div>
+
+</a>
+
+
+<a
+    href="historico-estoque.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        📋
+    </div>
+
+    <div class="acesso-nome">
+        Histórico
+    </div>
+
+    <div class="acesso-descricao">
+        Movimentações
+    </div>
+
+</a>
+
+
+<a
+    href="backup.html"
+    class="acesso-card"
+>
+
+    <div class="acesso-icone">
+        💾
+    </div>
+
+    <div class="acesso-nome">
+        Backup
+    </div>
+
+    <div class="acesso-descricao">
+        Segurança dos dados
+    </div>
+
+</a>
+
+
+<button
+    class="acesso-card sair-card"
+    onclick="sairDoSistema()"
+>
+
+    <div class="acesso-icone">
+        🚪
+    </div>
+
+    <div class="acesso-nome">
+        Sair do sistema
+    </div>
+
+    <div class="acesso-descricao">
+        Encerrar sessão
+    </div>
+
+</button>
+
+
+</section>
+
+
+<footer class="dashboard-footer">
+
+<strong>GrillCore ERP</strong>
+
+<br>
+
+Sistema profissional de gestão para hamburguerias
+
+<br><br>
+
+Versão Premium
+
+</footer>
+
+
+</div>
+
+
+<script src="script.js"></script>
+  <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(function (registro) {
+                console.log(
+                    "GrillCore: Service Worker registrado.",
+                    registro.scope
+                );
+            })
+            .catch(function (erro) {
+                console.error(
+                    "GrillCore: erro ao registrar Service Worker.",
+                    erro
+                );
+            });
+    });
+}
+    
+  </script>
+
+
+
+
+
+function atualizarUsuarioDashboard(){
+
+    const usuario =
+        localStorage.getItem(
+            "grillcore_usuario"
+        )
+        ||
+        "admin";
+
+
+    const elemento =
+        document.getElementById(
+            "usuarioLogado"
+        );
+
+
+    if(elemento){
+
+        elemento.textContent =
+            usuario;
+
+    }
+
+
+    const mensagem =
+        document.getElementById(
+            "mensagemBoasVindas"
+        );
+
+
+    if(mensagem){
+
+        mensagem.textContent =
+            "Bem-vindo, " +
+            usuario +
+            "!";
+
+    }
+
+}
+
+
+
+function atualizarResumoDashboard(){
+
+    const produtos =
+        typeof lerProdutos === "function"
+            ? lerProdutos()
+            : [];
+
+
+    const clientes =
+        typeof lerClientes === "function"
+            ? lerClientes()
+            : [];
+
+
+    const vendas =
+        typeof lerVendas === "function"
+            ? lerVendas()
+            : [];
+
+
+    const entradas =
+        typeof lerEntradas === "function"
+            ? lerEntradas()
+            : [];
+
+
+    const produtosEl =
+        document.getElementById(
+            "totalProdutos"
+        );
+
+
+    const clientesEl =
+        document.getElementById(
+            "totalClientes"
+        );
+
+
+    const vendasEl =
+        document.getElementById(
+            "totalVendas"
+        );
+
+
+    const entradasEl =
+        document.getElementById(
+            "totalEntradas"
+        );
+
+
+    if(produtosEl){
+
+        produtosEl.textContent =
+            produtos.length;
+
+    }
+
+
+    if(clientesEl){
+
+        clientesEl.textContent =
+            clientes.length;
+
+    }
+
+
+    let totalVendas = 0;
+
+
+    vendas.forEach(
+        function(venda){
+
+            const status =
+                String(
+                    venda.status || ""
+                )
+                .toLowerCase();
+
+
+            if(
+                status === "cancelada" ||
+                status === "cancelado"
+            ){
+
+                return;
+
+            }
+
+
+            totalVendas +=
+                typeof valorNumerico === "function"
+                    ? valorNumerico(venda.total)
+                    : Number(venda.total) || 0;
+
+        }
+    );
+
+
+    let totalEntradas = 0;
+
+
+    entradas.forEach(
+        function(entrada){
+
+            const status =
+                String(
+                    entrada.status || ""
+                )
+                .toLowerCase();
+
+
+            if(
+                status === "cancelada" ||
+                status === "cancelado"
+            ){
+
+                return;
+
+            }
+
+
+            totalEntradas +=
+                typeof valorNumerico === "function"
+                    ? valorNumerico(entrada.valor)
+                    : Number(entrada.valor) || 0;
+
+        }
+    );
+
+
+    if(vendasEl){
+
+        vendasEl.textContent =
+            typeof dinheiro === "function"
+                ? dinheiro(totalVendas)
+                : totalVendas.toLocaleString(
+                    "pt-BR",
+                    {
+                        style:"currency",
+                        currency:"BRL"
+                    }
+                );
+
+    }
+
+
+    if(entradasEl){
+
+        entradasEl.textContent =
+            typeof dinheiro === "function"
+                ? dinheiro(totalEntradas)
+                : totalEntradas.toLocaleString(
+                    "pt-BR",
+                    {
+                        style:"currency",
+                        currency:"BRL"
+                    }
+                );
+
+    }
+
+}
+
+
+
+let valoresOcultos =
+    localStorage.getItem(
+        "grillcore_dashboard_valores_ocultos"
+    ) === "true";
+
+
+
+function aplicarOcultacao(){
+
+    const produtos =
+        document.getElementById(
+            "totalProdutos"
+        );
+
+
+    const clientes =
+        document.getElementById(
+            "totalClientes"
+        );
+
+
+    const vendas =
+        document.getElementById(
+            "totalVendas"
+        );
+
+
+    const entradas =
+        document.getElementById(
+            "totalEntradas"
+        );
+
+
+    if(!produtos){
+
+        return;
+
+    }
+
+
+    if(valoresOcultos){
+
+        produtos.textContent =
+            "•••";
+
+
+        clientes.textContent =
+            "•••";
+
+
+        vendas.textContent =
+            "R$ •••";
+
+
+        entradas.textContent =
+            "R$ •••";
+
+    }
+    else{
+
+        atualizarResumoDashboard();
+
+    }
+
+
+    const botao =
+        document.getElementById(
+            "botaoOlho"
+        );
+
+
+    if(botao){
+
+        botao.textContent =
+            valoresOcultos
+                ? "😎"
+                : "👁️";
+
+    }
+
+}
+
+
+
+function alternarValores(){
+
+    valoresOcultos =
+        !valoresOcultos;
+
+
+    localStorage.setItem(
+        "grillcore_dashboard_valores_ocultos",
+        valoresOcultos
+            ? "true"
+            : "false"
+    );
+
+
+    aplicarOcultacao();
+
+}
+
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        atualizarUsuarioDashboard();
+
+        atualizarResumoDashboard();
+
+        aplicarOcultacao();
+
+    }
+);
+
+
+
+window.addEventListener(
+    "storage",
+    function(){
+
+        atualizarUsuarioDashboard();
+
+
+        if(!valoresOcultos){
+
+            atualizarResumoDashboard();
+
+        }
+
+    }
+);
+
+
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            atualizarUsuarioDashboard();
+
+
+            if(!valoresOcultos){
+
+                atualizarResumoDashboard();
+
+            }
+
+        }
+
+    }
+);
+
+</scrip>
+
+</body>
+
+</html>

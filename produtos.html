@@ -1,402 +1,2821 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR"><head><script>
+if(localStorage.getItem("grillcore_login") !== "true"){
+    window.location.replace("login.html");
+}
+</script><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
+«»
 
-<meta charset="UTF-8">
+<meta
+name="theme-color"
+content="#ff7300"
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+«»
 
-<title>GrillCore ERP - Produtos</title>
+<meta
+name="apple-mobile-web-app-capable"
+content="yes"
 
-<link rel="stylesheet" href="style.css">
+«»
 
-<style>
+<meta
+name="apple-mobile-web-app-status-bar-style"
+content="black-translucent"
 
-body {
-    padding: 15px;
+«»
+
+<meta
+name="apple-mobile-web-app-title"
+content="GrillCore"
+
+«»
+
+<link
+    rel="manifest"
+    href="manifest.json"
+><link
+    rel="stylesheet"
+    href="style.css"
+><link
+    rel="stylesheet"
+    href="tema-laranja.css"
+><title>Produtos — GrillCore ERP</title><style>
+
+/* =====================================================
+   GRILLCORE ERP
+   PRODUTOS — PREMIUM LARANJA
+===================================================== */
+
+.produtos-page{
+    width:100%;
+    max-width:1250px;
+    margin:0 auto;
 }
 
-.container {
-    max-width: 650px;
-    margin: 0 auto;
+.produtos-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 25px;
+.produtos-header-left{
+    display:flex;
+    align-items:center;
+    gap:13px;
 }
 
-label {
-    display: block;
-    margin-top: 16px;
-    margin-bottom: 7px;
-    font-weight: bold;
+.produtos-header-icon{
+    width:52px;
+    height:52px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff7300,
+            #b94700
+        );
+
+    border:1px solid #ff9a3d;
+
+    box-shadow:
+        0 0 18px rgba(255,115,0,.22);
 }
 
-input,
-select,
-textarea {
+.produtos-header h2{
+    margin:0;
+    color:#fff;
+    font-size:23px;
+    font-weight:900;
+}
 
-    width: 100%;
+.produtos-header p{
+    margin:4px 0 0;
+    color:#999;
+    font-size:12px;
+}
 
-    padding: 13px;
+.produtos-contador{
+    padding:10px 14px;
+    border-radius:11px;
+    background:#111;
+    border:1px solid rgba(255,115,0,.35);
+    color:#ff9a3d;
+    font-size:12px;
+    font-weight:800;
+}
 
-    border-radius: 10px;
 
-    border: 1px solid #444;
+/* =====================================================
+   GRID PRINCIPAL
+===================================================== */
 
-    background: #222;
+.produtos-grid{
+    display:grid;
+    grid-template-columns:
+        minmax(320px,.75fr)
+        minmax(0,1.35fr);
 
-    color: white;
+    gap:16px;
+    align-items:start;
+}
 
-    font-size: 16px;
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.produtos-card{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,20,20,.98),
+            rgba(7,7,7,.98)
+        );
+
+    border:1px solid rgba(255,115,0,.28);
+    border-radius:18px;
+    padding:17px;
+
+    box-shadow:
+        0 12px 32px rgba(0,0,0,.28);
+
+    margin-bottom:16px;
+}
+
+.produtos-card:last-child{
+    margin-bottom:0;
+}
+
+.produtos-card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.produtos-card-title-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.produtos-card-icon{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #241105,
+            #0c0805
+        );
+
+    border:1px solid rgba(255,115,0,.45);
+
+    font-size:17px;
+}
+
+.produtos-card-title h3{
+    margin:0;
+    color:#fff;
+    font-size:15px;
+    font-weight:900;
+}
+
+.produtos-card-title span{
+    display:block;
+    margin-top:3px;
+    color:#777;
+    font-size:10px;
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:12px;
+}
+
+.form-group{
+    min-width:0;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+
+    color:#cfcfcf;
+    font-size:10px;
+    font-weight:800;
+
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+    box-sizing:border-box;
+
+    border:1px solid #333;
+    background:#090909;
+    color:#fff;
+
+    border-radius:10px;
+    padding:11px 12px;
+
+    outline:none;
+
+    font-family:inherit;
+    font-size:13px;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    border-color:#ff7300;
+
+    box-shadow:
+        0 0 0 2px rgba(255,115,0,.10);
+
+    background:#101010;
+}
+
+.form-group textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+.form-group select option{
+    background:#111;
+    color:#fff;
+}
+
+.form-ajuda{
+    display:block;
+    margin-top:5px;
+    color:#666;
+    font-size:9px;
+    line-height:1.4;
+}
+
+
+/* =====================================================
+   FOTO
+===================================================== */
+
+.foto-area{
+    display:grid;
+    grid-template-columns:95px minmax(0,1fr);
+    gap:12px;
+    align-items:center;
+}
+
+.foto-preview{
+    width:95px;
+    height:95px;
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #090909
+        );
+
+    border:1px solid #333;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    color:#666;
+    font-size:30px;
+}
+
+.foto-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+
+/* =====================================================
+   TAMANHO
+===================================================== */
+
+.tamanho-box{
+    position:relative;
+}
+
+.tamanho-badge{
+    position:absolute;
+    right:8px;
+    top:31px;
+
+    padding:4px 7px;
+
+    border-radius:7px;
+
+    background:rgba(255,115,0,.12);
+    border:1px solid rgba(255,115,0,.25);
+
+    color:#ff9a3d;
+    font-size:9px;
+    font-weight:800;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+.acoes-form{
+    display:grid;
+    grid-template-columns:
+        1fr 1.4fr;
+
+    gap:9px;
+    margin-top:15px;
+}
+
+.btn{
+    min-height:43px;
+
+    border-radius:10px;
+    padding:10px 14px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-size:11px;
+    font-weight:900;
+
+    transition:
+        transform .15s,
+        filter .15s,
+        box-shadow .15s;
+}
+
+.btn:active{
+    transform:scale(.98);
+}
+
+.btn-primary{
+    background:
+        linear-gradient(
+            135deg,
+            #ff7300,
+            #c94e00
+        );
+
+    color:#fff;
+
+    border:1px solid #ff9a3d;
+
+    box-shadow:
+        0 6px 18px rgba(255,115,0,.18);
+}
+
+.btn-primary:hover{
+    filter:brightness(1.10);
+}
+
+.btn-secondary{
+    background:#151515;
+    color:#ddd;
+    border:1px solid #383838;
+}
+
+.btn-danger{
+    background:#230a05;
+    color:#ff8b72;
+    border:1px solid #6b2414;
+}
+
+.btn-full{
+    width:100%;
+}
+
+
+/* =====================================================
+   BUSCA
+===================================================== */
+
+.busca-produtos{
+    position:relative;
+    margin-bottom:14px;
+}
+
+.busca-produtos input{
+    width:100%;
+    box-sizing:border-box;
+
+    min-height:44px;
+
+    padding:
+        10px
+        13px
+        10px
+        40px;
+
+    border-radius:11px;
+
+    background:#090909;
+    border:1px solid #333;
+
+    color:#fff;
+
+    outline:none;
+
+    font-family:inherit;
+    font-size:13px;
+}
+
+.busca-produtos input:focus{
+    border-color:#ff7300;
+
+    box-shadow:
+        0 0 0 2px rgba(255,115,0,.09);
+}
+
+.busca-icone{
+    position:absolute;
+    left:13px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#ff7300;
+    font-size:17px;
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+.filtros-produtos{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+}
+
+.filtro-produto{
+    min-height:34px;
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    border:1px solid #303030;
+    background:#101010;
+
+    color:#999;
+
+    font-family:inherit;
+    font-size:10px;
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.filtro-produto.ativo{
+    background:
+        linear-gradient(
+            135deg,
+            #ff7300,
+            #c94e00
+        );
+
+    color:#fff;
+    border-color:#ff9a3d;
+}
+
+
+/* =====================================================
+   LISTA
+===================================================== */
+
+.lista-produtos{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:10px;
+}
+
+.produto-card{
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #090909
+        );
+
+    border:1px solid #292929;
+    border-radius:14px;
+
+    padding:11px;
+
+    transition:
+        transform .18s,
+        border-color .18s,
+        box-shadow .18s;
+}
+
+.produto-card:hover{
+    transform:translateY(-2px);
+
+    border-color:
+        rgba(255,115,0,.45);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.25);
+}
+
+.produto-topo{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.produto-foto{
+    width:66px;
+    height:66px;
+    flex:0 0 66px;
+
+    border-radius:11px;
+
+    background:#0b0b0b;
+    border:1px solid #303030;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    color:#555;
+    font-size:24px;
+}
+
+.produto-foto img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.produto-dados{
+    min-width:0;
+    flex:1;
+}
+
+.produto-nome{
+    color:#fff;
+
+    font-size:13px;
+    font-weight:900;
+
+    line-height:1.25;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+}
+
+.produto-categoria{
+    display:inline-flex;
+
+    margin-top:5px;
+
+    padding:3px 7px;
+
+    border-radius:7px;
+
+    background:
+        rgba(255,115,0,.10);
+
+    border:1px solid
+        rgba(255,115,0,.25);
+
+    color:#ff9a3d;
+
+    font-size:8px;
+    font-weight:900;
+
+    text-transform:uppercase;
+}
+
+.produto-tamanho{
+    display:inline-flex;
+
+    margin-top:5px;
+    margin-left:3px;
+
+    padding:3px 7px;
+
+    border-radius:7px;
+
+    background:#191919;
+    border:1px solid #353535;
+
+    color:#bbb;
+
+    font-size:8px;
+    font-weight:800;
+}
+
+.produto-preco{
+    margin-top:8px;
+
+    color:#35d07f;
+
+    font-size:15px;
+    font-weight:900;
+}
+
+.produto-estoque{
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:9px;
+}
+
+.produto-estoque strong{
+    color:#fff;
+}
+
+.produto-ingredientes{
+    margin-top:9px;
+
+    padding-top:8px;
+
+    border-top:1px solid #242424;
+
+    color:#999;
+
+    font-size:9px;
+    line-height:1.45;
+
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.produto-acoes{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:7px;
+
+    margin-top:10px;
+}
+
+.btn-produto{
+    min-height:34px;
+
+    border-radius:8px;
+
+    font-family:inherit;
+    font-size:9px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.btn-editar{
+    background:#17120c;
+    color:#ffad5c;
+    border:1px solid #63370e;
+}
+
+.btn-excluir{
+    background:#1b0805;
+    color:#ff7860;
+    border:1px solid #5f1c10;
+}
+
+
+/* =====================================================
+   ESTADOS
+===================================================== */
+
+.lista-vazia{
+    grid-column:1 / -1;
+
+    padding:35px 18px;
+
+    text-align:center;
+
+    border:1px dashed #383838;
+    border-radius:14px;
+
+    background:#090909;
+
+    color:#777;
+
+    font-size:12px;
+    line-height:1.6;
+}
+
+.lista-vazia strong{
+    display:block;
+    margin-bottom:4px;
+
+    color:#aaa;
+    font-size:14px;
+}
+
+.alerta-produto{
+    display:none;
+
+    margin-bottom:13px;
+
+    padding:11px 12px;
+
+    border-radius:10px;
+
+    background:#270b05;
+    border:1px solid #6b2515;
+
+    color:#ff927a;
+
+    font-size:11px;
+    line-height:1.45;
+}
+
+.alerta-produto.visivel{
+    display:block;
+}
+
+.sucesso-produto{
+    display:none;
+
+    margin-bottom:13px;
+
+    padding:11px 12px;
+
+    border-radius:10px;
+
+    background:#082117;
+    border:1px solid #17633d;
+
+    color:#55e39a;
+
+    font-size:11px;
+    line-height:1.45;
+}
+
+.sucesso-produto.visivel{
+    display:block;
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:1000px){
+
+    .produtos-grid{
+        grid-template-columns:1fr;
+    }
 
 }
 
-textarea {
-    resize: vertical;
-}
+@media(max-width:650px){
 
-button {
+    .produtos-header{
+        align-items:flex-start;
+    }
 
-    width: 100%;
+    .produtos-header h2{
+        font-size:20px;
+    }
 
-    padding: 15px;
+    .produtos-header-icon{
+        width:47px;
+        height:47px;
+        font-size:24px;
+    }
 
-    margin-top: 18px;
+    .produtos-contador{
+        width:100%;
+        text-align:center;
+        box-sizing:border-box;
+    }
 
-    border: none;
+    .form-grid{
+        grid-template-columns:1fr;
+    }
 
-    border-radius: 10px;
+    .form-group.full{
+        grid-column:auto;
+    }
 
-    font-size: 16px;
-
-    font-weight: bold;
-
-}
-
-.lista-produto {
-
-    background: #191919;
-
-    border: 1px solid #333;
-
-    border-radius: 14px;
-
-    padding: 16px;
-
-    margin-top: 15px;
-
-}
-
-.lista-produto h3 {
-
-    margin-top: 0;
-
-    color: #f4d76b;
+    .lista-produtos{
+        grid-template-columns:1fr;
+    }
 
 }
 
-.categoria-produto {
+@media(max-width:430px){
 
-    display: inline-block;
+    .produtos-card{
+        padding:13px;
+        border-radius:15px;
+    }
 
-    padding: 5px 9px;
+    .foto-area{
+        grid-template-columns:80px minmax(0,1fr);
+    }
 
-    border-radius: 20px;
+    .foto-preview{
+        width:80px;
+        height:80px;
+    }
 
-    background: #333;
-
-    color: #f4d76b;
-
-    font-size: 12px;
-
-    margin-bottom: 8px;
-
-}
-
-.produto-foto {
-
-    width: 100%;
-
-    max-height: 220px;
-
-    object-fit: cover;
-
-    border-radius: 10px;
-
-    margin-top: 10px;
+    .acoes-form{
+        grid-template-columns:1fr;
+    }
 
 }
 
-.btn-excluir {
-
-    background: #750000;
-
-    color: white;
-
-}
-
-.btn-editar {
-
-    background: #444;
-
-    color: white;
-
-}
-
-.info-categoria {
-
-    margin-top: 10px;
-
-    padding: 12px;
-
-    background: #101010;
-
-    border: 1px solid #333;
-
-    border-radius: 10px;
-
-    color: #aaa;
-
-    line-height: 1.6;
-
-    font-size: 14px;
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-<div class="container">
-
+</style></head><body><div class="gc-fundo"></div><div class="gc-app"><aside class="gc-sidebar"><div class="gc-brand"><div class="gc-brand-logo">
+    🍔
+</div>
 
 <h1>
-    🍔 GrillCore ERP
+    GrillCore
 </h1>
 
-<h2>
-    📦 Cadastro de Produtos
-</h2>
+<span>
+    ERP • Gestão para Hamburguerias
+</span>
 
-
-<!-- =========================================
-     NOME
-========================================= -->
-
-<label for="nomeProduto">
-    Nome do produto
-</label>
-
-<input
-    type="text"
-    id="nomeProduto"
-    placeholder="Ex: X Prensado">
-
-
-<!-- =========================================
-     CATEGORIA
-========================================= -->
-
-<label for="categoriaProduto">
-    Categoria do produto
-</label>
-
-<select id="categoriaProduto">
-
-    <option value="">
-        Selecione a categoria
-    </option>
-
-    <option value="hamburguer">
-        🍔 Hambúrguer
-    </option>
-
-    <option value="porcao">
-        🍟 Porção
-    </option>
-
-    <option value="bebida">
-        🥤 Bebida
-    </option>
-
-</select>
-
-
-<div class="info-categoria">
-
-    💡 <strong>Importante:</strong>
-
-    <br>
-
-    🍔 Hambúrguer → aparece em Hambúrguer no Novo Pedido.
-
-    <br>
-
-    🍟 Porção → aparece em Porção no Novo Pedido.
-
-    <br>
-
-    🥤 Bebida → aparece em Bebida no Novo Pedido.
-
-</div>
-
-
-<!-- =========================================
-     PREÇO
-========================================= -->
-
-<label for="precoProduto">
-    💰 Preço
-</label>
-
-<input
-    type="number"
-    id="precoProduto"
-    min="0"
-    step="0.01"
-    placeholder="Ex: 30.00">
-
-
-<!-- =========================================
-     ESTOQUE
-========================================= -->
-
-<label for="estoqueProduto">
-    📦 Quantidade em estoque
-</label>
-
-<input
-    type="number"
-    id="estoqueProduto"
-    min="0"
-    value="0">
-
-
-<!-- =========================================
-     FOTO
-========================================= -->
-
-<label for="fotoProduto">
-    📷 Foto do produto
-</label>
-
-<input
-    type="file"
-    id="fotoProduto"
-    accept="image/*">
-
-
-<!-- =========================================
-     INGREDIENTES
-========================================= -->
-
-<label for="ingredientes">
-    🥬 Ingredientes
-</label>
-
-<textarea
-    id="ingredientes"
-    rows="5"
-    placeholder="Ex: pão, hambúrguer 180g, queijo, bacon..."></textarea>
-
-
-<!-- =========================================
-     DESCRIÇÃO
-========================================= -->
-
-<label for="descricao">
-    📝 Descrição
-</label>
-
-<textarea
-    id="descricao"
-    rows="4"
-    placeholder="Descrição do produto"></textarea>
-
-
-<!-- =========================================
-     BOTÃO
-========================================= -->
-
-<button
-    onclick="salvarProduto()">
-
-    💾 SALVAR PRODUTO
-
-</button>
-
-
-<h2>
-    📋 Produtos Cadastrados
-</h2>
-
-
-<div id="listaProdutos">
-
-</div>
-
-
-<br>
-
-
-<a href="index.html">
-
-    <button class="voltar">
-
-        ← Voltar ao início
-
-    </button>
-
+</div><nav class="gc-menu"><a href="index.html">
+    <span class="icone">🏠</span>
+    <span>Dashboard</span>
 </a>
 
+<a href="pedido2.html">
+    <span class="icone">🛒</span>
+    <span>Novo Pedido</span>
+</a>
+
+<a
+    href="produtos.html"
+    class="ativo"
+>
+    <span class="icone">🍔</span>
+    <span>Produtos</span>
+</a>
+
+<a href="clientes.html">
+    <span class="icone">👥</span>
+    <span>Clientes</span>
+</a>
+
+<a href="estoque.html">
+    <span class="icone">📦</span>
+    <span>Estoque</span>
+</a>
+
+<a href="financeiro.html">
+    <span class="icone">💰</span>
+    <span>Financeiro</span>
+</a>
+
+<a href="compras.html">
+    <span class="icone">🛍️</span>
+    <span>Compras</span>
+</a>
+
+<a href="historico.html">
+    <span class="icone">📋</span>
+    <span>Histórico</span>
+</a>
+
+<a href="backup.html">
+    <span class="icone">💾</span>
+    <span>Backup</span>
+</a>
+
+<a
+    href="#"
+    class="gc-sair"
+    onclick="sairDoSistema(); return false;"
+>
+    <span class="icone">🚪</span>
+    <span>Sair do sistema</span>
+</a>
+
+</nav></aside><main class="gc-main"><div class="produtos-page"><header class="produtos-header"><div class="produtos-header-left">
+
+    <div class="produtos-header-icon">
+        🍔
+    </div>
+
+    <div>
+
+        <h2>
+            Produtos
+        </h2>
+
+        <p>
+            Cadastre e gerencie os produtos do seu cardápio.
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    class="produtos-contador"
+    id="contadorProdutos"
+>
+    0 produtos cadastrados
+</div>
+
+</header><div
+    id="alertaProduto"
+    class="alerta-produto"
+></div><div
+    id="sucessoProduto"
+    class="sucesso-produto"
+></div><div class="produtos-grid"><!-- =================================================
+     CADASTRO
+================================================= --><div><section class="produtos-card"><div class="produtos-card-title"><div class="produtos-card-title-left">
+
+    <div class="produtos-card-icon">
+        ➕
+    </div>
+
+    <div>
+
+        <h3 id="tituloFormulario">
+            Novo produto
+        </h3>
+
+        <span>
+            Cadastre um item para aparecer no sistema.
+        </span>
+
+    </div>
+
+</div>
+
+</div><form
+    id="formProduto"
+    onsubmit="salvarProduto(event)"
+><div class="form-grid"><div class="form-group full">
+
+    <label for="nomeProduto">
+        Nome do produto
+    </label>
+
+    <input
+        type="text"
+        id="nomeProduto"
+        placeholder="Ex.: X Prensado"
+        autocomplete="off"
+        required
+    >
 
 </div>
 
 
-<script src="script.js"></script>
+<div class="form-group">
+
+    <label for="categoriaProduto">
+        Categoria
+    </label>
+
+    <select
+        id="categoriaProduto"
+        required
+    >
+
+        <option value="">
+            Selecione
+        </option>
+
+        <option value="hamburguer">
+            🍔 Hambúrguer
+        </option>
+
+        <option value="porcao">
+            🍟 Porção
+        </option>
+
+        <option value="bebida">
+            🥤 Bebida
+        </option>
+
+        <option value="outro">
+            📦 Outro
+        </option>
+
+    </select>
+
+</div>
 
 
-<script>
+<div class="form-group">
 
-/* =========================================
-   CARREGAR PRODUTOS AO ABRIR
-========================================= */
+    <label for="precoProduto">
+        Preço
+    </label>
 
-window.addEventListener(
-    "load",
-    function() {
+    <input
+        type="number"
+        id="precoProduto"
+        min="0"
+        step="0.01"
+        placeholder="0,00"
+        inputmode="decimal"
+        required
+    >
 
-        if (
-            typeof carregarProdutos ===
-            "function"
-        ) {
+</div>
 
-            carregarProdutos();
+
+<div
+    class="form-group tamanho-box"
+    id="grupoTamanho"
+>
+
+    <label for="tamanhoProduto">
+        Tamanho / Volume
+    </label>
+
+    <input
+        type="text"
+        id="tamanhoProduto"
+        placeholder="Ex.: 500 g ou 600 ml"
+        autocomplete="off"
+    >
+
+    <span class="tamanho-badge">
+        opcional
+    </span>
+
+    <small class="form-ajuda">
+        Para porções e bebidas, informe o tamanho ou volume.
+        Ex.: 250 g, 500 g, 750 g, 1 kg, 350 ml, 600 ml, 1 L, 2 L.
+    </small>
+
+</div>
+
+
+<div class="form-group">
+
+    <label for="estoqueProduto">
+        Estoque inicial
+    </label>
+
+    <input
+        type="number"
+        id="estoqueProduto"
+        min="0"
+        step="1"
+        value="0"
+        inputmode="numeric"
+    >
+
+    <small class="form-ajuda">
+        Informe a quantidade disponível.
+    </small>
+
+</div>
+
+
+<div class="form-group full">
+
+    <label>
+        Foto do produto
+    </label>
+
+    <div class="foto-area">
+
+        <div
+            class="foto-preview"
+            id="fotoPreview"
+        >
+            🍔
+        </div>
+
+        <div>
+
+            <input
+                type="file"
+                id="fotoProduto"
+                accept="image/*"
+            >
+
+            <small class="form-ajuda">
+                A imagem será salva no navegador junto com o produto.
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="form-group full">
+
+    <label for="ingredientesProduto">
+        Ingredientes
+    </label>
+
+    <textarea
+        id="ingredientesProduto"
+        placeholder="Ex.: pão, hambúrguer, queijo, bacon, molho..."
+    ></textarea>
+
+</div>
+
+
+<div class="form-group full">
+
+    <label for="descricaoProduto">
+        Descrição
+    </label>
+
+    <textarea
+        id="descricaoProduto"
+        placeholder="Descrição comercial do produto..."
+    ></textarea>
+
+</div>
+
+</div><div class="acoes-form"><button
+    type="button"
+    class="btn btn-secondary"
+    onclick="limparFormularioProduto()"
+>
+    🗑️ Limpar
+</button>
+
+<button
+    type="submit"
+    class="btn btn-primary"
+    id="btnSalvarProduto"
+>
+    💾 Salvar produto
+</button>
+
+</div></form></section></div><!-- =================================================
+     LISTAGEM
+================================================= --><div><section class="produtos-card"><div class="produtos-card-title"><div class="produtos-card-title-left">
+
+    <div class="produtos-card-icon">
+        📋
+    </div>
+
+    <div>
+
+        <h3>
+            Produtos cadastrados
+        </h3>
+
+        <span>
+            Itens disponíveis no seu catálogo.
+        </span>
+
+    </div>
+
+</div>
+
+</div><div class="busca-produtos"><span class="busca-icone">
+    🔎
+</span>
+
+<input
+    type="search"
+    id="buscaProduto"
+    placeholder="Buscar por nome, categoria ou tamanho..."
+    autocomplete="off"
+>
+
+</div><div
+    class="filtros-produtos"
+    id="filtrosProdutos"
+><button
+    type="button"
+    class="filtro-produto ativo"
+    data-filtro="todos"
+    onclick="selecionarFiltro('todos')"
+>
+    Todos
+</button>
+
+<button
+    type="button"
+    class="filtro-produto"
+    data-filtro="hamburguer"
+    onclick="selecionarFiltro('hamburguer')"
+>
+    🍔 Hambúrguer
+</button>
+
+<button
+    type="button"
+    class="filtro-produto"
+    data-filtro="porcao"
+    onclick="selecionarFiltro('porcao')"
+>
+    🍟 Porções
+</button>
+
+<button
+    type="button"
+    class="filtro-produto"
+    data-filtro="bebida"
+    onclick="selecionarFiltro('bebida')"
+>
+    🥤 Bebidas
+</button>
+
+<button
+    type="button"
+    class="filtro-produto"
+    data-filtro="outro"
+    onclick="selecionarFiltro('outro')"
+>
+    📦 Outros
+</button>
+
+</div><div
+    id="listaProdutos"
+    class="lista-produtos"
+><div class="lista-vazia">
+
+    <strong>
+        🍔 Nenhum produto cadastrado
+    </strong>
+
+    Cadastre seu primeiro produto usando o formulário.
+
+</div>
+
+</div></section></div></div></div></main></div><script src="script.js"></script><script>
+
+/* =====================================================
+   GRILLCORE ERP
+   PRODUTOS — MOTOR
+===================================================== */
+
+let produtos = [];
+
+let produtoEditandoId = null;
+
+let filtroAtual = "todos";
+
+let fotoAtualBase64 = "";
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const formProduto =
+    document.getElementById("formProduto");
+
+const nomeProduto =
+    document.getElementById("nomeProduto");
+
+const categoriaProduto =
+    document.getElementById("categoriaProduto");
+
+const precoProduto =
+    document.getElementById("precoProduto");
+
+const tamanhoProduto =
+    document.getElementById("tamanhoProduto");
+
+const estoqueProduto =
+    document.getElementById("estoqueProduto");
+
+const fotoProduto =
+    document.getElementById("fotoProduto");
+
+const fotoPreview =
+    document.getElementById("fotoPreview");
+
+const ingredientesProduto =
+    document.getElementById("ingredientesProduto");
+
+const descricaoProduto =
+    document.getElementById("descricaoProduto");
+
+const listaProdutos =
+    document.getElementById("listaProdutos");
+
+const buscaProduto =
+    document.getElementById("buscaProduto");
+
+const contadorProdutos =
+    document.getElementById("contadorProdutos");
+
+const alertaProduto =
+    document.getElementById("alertaProduto");
+
+const sucessoProduto =
+    document.getElementById("sucessoProduto");
+
+const tituloFormulario =
+    document.getElementById("tituloFormulario");
+
+const btnSalvarProduto =
+    document.getElementById("btnSalvarProduto");
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+function lerProdutosStorage(){
+
+    try{
+
+        const dados =
+            localStorage.getItem("produtos");
+
+        if(!dados){
+            return [];
+        }
+
+        const lista =
+            JSON.parse(dados);
+
+        return Array.isArray(lista)
+            ? lista
+            : [];
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao ler produtos:",
+            erro
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function salvarProdutosStorage(){
+
+    localStorage.setItem(
+        "produtos",
+        JSON.stringify(produtos)
+    );
+
+}
+
+
+/* =====================================================
+   ID
+===================================================== */
+
+function gerarIdProduto(){
+
+    return (
+        Date.now().toString(36)
+        +
+        Math.random()
+            .toString(36)
+            .substring(2,8)
+    );
+
+}
+
+
+/* =====================================================
+   DINHEIRO
+===================================================== */
+
+function formatarDinheiro(valor){
+
+    return (
+        Number(valor) || 0
+    ).toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CATEGORIA
+===================================================== */
+
+function nomeCategoria(categoria){
+
+    const mapa = {
+
+        hamburguer:"Hambúrguer",
+        porcao:"Porção",
+        bebida:"Bebida",
+        outro:"Outro"
+
+    };
+
+    return mapa[
+        String(categoria || "").toLowerCase()
+    ] || "Outro";
+
+}
+
+
+function emojiCategoria(categoria){
+
+    const mapa = {
+
+        hamburguer:"🍔",
+        porcao:"🍟",
+        bebida:"🥤",
+        outro:"📦"
+
+    };
+
+    return mapa[
+        String(categoria || "").toLowerCase()
+    ] || "📦";
+
+}
+
+
+/* =====================================================
+   ALERTAS
+===================================================== */
+
+function mostrarAlertaProduto(mensagem){
+
+    sucessoProduto.classList.remove(
+        "visivel"
+    );
+
+    alertaProduto.textContent =
+        mensagem;
+
+    alertaProduto.classList.add(
+        "visivel"
+    );
+
+}
+
+
+function mostrarSucessoProduto(mensagem){
+
+    alertaProduto.classList.remove(
+        "visivel"
+    );
+
+    sucessoProduto.textContent =
+        mensagem;
+
+    sucessoProduto.classList.add(
+        "visivel"
+    );
+
+}
+
+
+function limparAlertasProduto(){
+
+    alertaProduto.classList.remove(
+        "visivel"
+    );
+
+    sucessoProduto.classList.remove(
+        "visivel"
+    );
+
+}
+
+
+/* =====================================================
+   TAMANHO / VOLUME
+===================================================== */
+
+function atualizarCampoTamanho(){
+
+    const categoria =
+        categoriaProduto.value;
+
+    const obrigatorio =
+        categoria === "porcao"
+        ||
+        categoria === "bebida";
+
+    const badge =
+        document.querySelector(
+            ".tamanho-badge"
+        );
+
+    if(obrigatorio){
+
+        tamanhoProduto.required = true;
+
+        tamanhoProduto.placeholder =
+            categoria === "porcao"
+            ? "Ex.: 250 g, 500 g, 750 g, 1 kg"
+            : "Ex.: 350 ml, 600 ml, 1 L, 2 L";
+
+        if(badge){
+
+            badge.textContent =
+                "obrigatório";
 
         }
 
-        else if (
-            typeof atualizarListaProdutos ===
-            "function"
-        ) {
+    }
+    else{
 
-            atualizarListaProdutos();
+        tamanhoProduto.required = false;
+
+        tamanhoProduto.placeholder =
+            "Ex.: tamanho ou volume";
+
+        if(badge){
+
+            badge.textContent =
+                "opcional";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   FOTO
+===================================================== */
+
+fotoProduto.addEventListener(
+    "change",
+    function(){
+
+        const arquivo =
+            this.files &&
+            this.files[0];
+
+        if(!arquivo){
+
+            return;
+
+        }
+
+        if(!arquivo.type.startsWith("image/")){
+
+            mostrarAlertaProduto(
+                "Selecione um arquivo de imagem válido."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+        const leitor =
+            new FileReader();
+
+        leitor.onload =
+            function(event){
+
+                fotoAtualBase64 =
+                    event.target.result;
+
+                fotoPreview.innerHTML =
+                    `
+                    <img
+                        src="${fotoAtualBase64}"
+                        alt="Prévia do produto"
+                    >
+                    `;
+
+            };
+
+        leitor.readAsDataURL(
+            arquivo
+        );
+
+    }
+);
+
+
+/* =====================================================
+   DUPLICIDADE
+===================================================== */
+
+function produtoDuplicado(
+    nome,
+    categoria,
+    tamanho,
+    idIgnorar
+){
+
+    const nomeNormalizado =
+        String(nome || "")
+            .trim()
+            .toLowerCase();
+
+    const categoriaNormalizada =
+        String(categoria || "outro")
+            .trim()
+            .toLowerCase();
+
+    const tamanhoNormalizado =
+        String(tamanho || "")
+            .trim()
+            .toLowerCase();
+
+    return produtos.some(
+        function(produto){
+
+            if(
+                idIgnorar
+                &&
+                String(produto.id)
+                ===
+                String(idIgnorar)
+            ){
+
+                return false;
+
+            }
+
+            return (
+
+                String(produto.nome || "")
+                    .trim()
+                    .toLowerCase()
+                ===
+                nomeNormalizado
+
+                &&
+
+                String(produto.categoria || "outro")
+                    .trim()
+                    .toLowerCase()
+                ===
+                categoriaNormalizada
+
+                &&
+
+                String(produto.tamanho || "")
+                    .trim()
+                    .toLowerCase()
+                ===
+                tamanhoNormalizado
+
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SALVAR
+===================================================== */
+
+function salvarProduto(event){
+
+    event.preventDefault();
+
+    limparAlertasProduto();
+
+    const nome =
+        nomeProduto.value.trim();
+
+    const categoria =
+        categoriaProduto.value;
+
+    const preco =
+        Number(
+            String(
+                precoProduto.value
+            ).replace(",", ".")
+        );
+
+    const tamanho =
+        tamanhoProduto.value.trim();
+
+    const estoque =
+        parseInt(
+            estoqueProduto.value,
+            10
+        );
+
+    const ingredientes =
+        ingredientesProduto.value.trim();
+
+    const descricao =
+        descricaoProduto.value.trim();
+
+
+    /* ================================================
+       VALIDAÇÕES
+    ================================================= */
+
+    if(!nome){
+
+        mostrarAlertaProduto(
+            "Informe o nome do produto."
+        );
+
+        nomeProduto.focus();
+
+        return;
+
+    }
+
+
+    if(!categoria){
+
+        mostrarAlertaProduto(
+            "Selecione uma categoria."
+        );
+
+        categoriaProduto.focus();
+
+        return;
+
+    }
+
+
+    if(
+        !Number.isFinite(preco)
+        ||
+        preco < 0
+    ){
+
+        mostrarAlertaProduto(
+            "Informe um preço válido."
+        );
+
+        precoProduto.focus();
+
+        return;
+
+    }
+
+
+    if(
+        categoria === "porcao"
+        ||
+        categoria === "bebida"
+    ){
+
+        if(!tamanho){
+
+            mostrarAlertaProduto(
+                "Informe o tamanho ou volume do produto."
+            );
+
+            tamanhoProduto.focus();
+
+            return;
+
+        }
+
+    }
+
+
+    const estoqueFinal =
+        Number.isFinite(estoque)
+        &&
+        estoque >= 0
+        ? estoque
+        : 0;
+
+
+    /* ================================================
+       DUPLICIDADE
+    ================================================= */
+
+    if(
+        produtoDuplicado(
+            nome,
+            categoria,
+            tamanho,
+            produtoEditandoId
+        )
+    ){
+
+        mostrarAlertaProduto(
+            "Já existe um produto com o mesmo nome, categoria e tamanho/volume."
+        );
+
+        return;
+
+    }
+
+
+    /* ================================================
+       PRODUTO
+    ================================================= */
+
+    if(produtoEditandoId){
+
+        const indice =
+            produtos.findIndex(
+                function(produto){
+
+                    return String(
+                        produto.id
+                    )
+                    ===
+                    String(
+                        produtoEditandoId
+                    );
+
+                }
+            );
+
+        if(indice === -1){
+
+            mostrarAlertaProduto(
+                "O produto que você está editando não foi encontrado."
+            );
+
+            return;
+
+        }
+
+
+        const produtoAnterior =
+            produtos[indice];
+
+
+        produtos[indice] = {
+
+            ...produtoAnterior,
+
+            nome:
+                nome,
+
+            categoria:
+                categoria,
+
+            preco:
+                preco,
+
+            tamanho:
+                tamanho,
+
+            estoque:
+                estoqueFinal,
+
+            ingredientes:
+                ingredientes,
+
+            descricao:
+                descricao,
+
+            foto:
+                fotoAtualBase64
+                ||
+                produtoAnterior.foto
+                ||
+                "",
+
+            atualizadoEm:
+                new Date().toISOString()
+
+        };
+
+
+        salvarProdutosStorage();
+
+        mostrarSucessoProduto(
+            "Produto atualizado com sucesso!"
+        );
+
+    }
+    else{
+
+        const novoProduto = {
+
+            id:
+                gerarIdProduto(),
+
+            nome:
+                nome,
+
+            categoria:
+                categoria,
+
+            preco:
+                preco,
+
+            tamanho:
+                tamanho,
+
+            estoque:
+                estoqueFinal,
+
+            ingredientes:
+                ingredientes,
+
+            descricao:
+                descricao,
+
+            foto:
+                fotoAtualBase64
+                ||
+                "",
+
+            criadoEm:
+                new Date().toISOString(),
+
+            atualizadoEm:
+                new Date().toISOString()
+
+        };
+
+
+        produtos.unshift(
+            novoProduto
+        );
+
+        salvarProdutosStorage();
+
+        mostrarSucessoProduto(
+            "Produto cadastrado com sucesso!"
+        );
+
+    }
+
+
+    renderizarProdutos();
+
+    limparFormularioProduto(
+        false
+    );
+
+}
+
+
+/* =====================================================
+   RENDERIZAR
+===================================================== */
+
+function renderizarProdutos(){
+
+    const busca =
+        buscaProduto.value
+            .trim()
+            .toLowerCase();
+
+
+    const filtrados =
+        produtos.filter(
+            function(produto){
+
+                const categoria =
+                    String(
+                        produto.categoria
+                        ||
+                        "outro"
+                    ).toLowerCase();
+
+                if(
+                    filtroAtual !== "todos"
+                    &&
+                    categoria !== filtroAtual
+                ){
+
+                    return false;
+
+                }
+
+
+                if(!busca){
+
+                    return true;
+
+                }
+
+
+                const textoBusca =
+                    [
+
+                        produto.nome,
+                        produto.tamanho,
+                        produto.categoria,
+                        produto.ingredientes,
+                        produto.descricao
+
+                    ]
+                    .join(" ")
+                    .toLowerCase();
+
+
+                return textoBusca.includes(
+                    busca
+                );
+
+            }
+        );
+
+
+    atualizarContador();
+
+
+    if(
+        filtrados.length === 0
+    ){
+
+        listaProdutos.innerHTML = `
+
+            <div class="lista-vazia">
+
+                <strong>
+                    ${
+                        produtos.length === 0
+                        ? "🍔 Nenhum produto cadastrado"
+                        : "🔎 Nenhum produto encontrado"
+                    }
+                </strong>
+
+                ${
+                    produtos.length === 0
+                    ? "Cadastre seu primeiro produto usando o formulário."
+                    : "Tente outro nome, categoria ou tamanho."
+                }
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    listaProdutos.innerHTML =
+        filtrados
+            .map(
+                criarCardProduto
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+function criarCardProduto(
+    produto
+){
+
+    const foto =
+        produto.foto
+        ? `
+            <img
+                src="${produto.foto}"
+                alt="${escaparTexto(produto.nome)}"
+            >
+        `
+        :
+        emojiCategoria(
+            produto.categoria
+        );
+
+
+    const tamanho =
+        String(
+            produto.tamanho || ""
+        ).trim();
+
+
+    const ingredientes =
+        String(
+            produto.ingredientes
+            ||
+            produto.descricao
+            ||
+            "Sem ingredientes ou descrição cadastrados."
+        );
+
+
+    const estoque =
+        Number(
+            produto.estoque
+        )
+        ||
+        0;
+
+
+    return `
+
+        <article class="produto-card">
+
+            <div class="produto-topo">
+
+                <div class="produto-foto">
+
+                    ${foto}
+
+                </div>
+
+
+                <div class="produto-dados">
+
+                    <div class="produto-nome">
+
+                        ${escaparTexto(
+                            produto.nome
+                        )}
+
+                    </div>
+
+
+                    <span class="produto-categoria">
+
+                        ${emojiCategoria(
+                            produto.categoria
+                        )}
+
+                        ${nomeCategoria(
+                            produto.categoria
+                        )}
+
+                    </span>
+
+
+                    ${
+                        tamanho
+                        ?
+                        `
+                        <span class="produto-tamanho">
+
+                            ${escaparTexto(
+                                tamanho
+                            )}
+
+                        </span>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <div class="produto-preco">
+
+                        ${formatarDinheiro(
+                            produto.preco
+                        )}
+
+                    </div>
+
+
+                    <div class="produto-estoque">
+
+                        Estoque:
+
+                        <strong>
+                            ${estoque}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="produto-ingredientes">
+
+                ${escaparTexto(
+                    ingredientes
+                )}
+
+            </div>
+
+
+            <div class="produto-acoes">
+
+                <button
+                    type="button"
+                    class="btn-produto btn-editar"
+                    onclick="editarProduto('${String(produto.id).replace(/'/g,"\\'")}')"
+                >
+                    ✏️ Editar
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-produto btn-excluir"
+                    onclick="excluirProduto('${String(produto.id).replace(/'/g,"\\'")}')"
+                >
+                    🗑️ Excluir
+                </button>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =====================================================
+   ESCAPAR
+===================================================== */
+
+function escaparTexto(texto){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        texto == null
+        ? ""
+        :
+        String(texto);
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   EDITAR
+===================================================== */
+
+function editarProduto(id){
+
+    const produto =
+        produtos.find(
+            function(item){
+
+                return String(
+                    item.id
+                )
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(!produto){
+
+        mostrarAlertaProduto(
+            "Produto não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    produtoEditandoId =
+        produto.id;
+
+
+    nomeProduto.value =
+        produto.nome
+        ||
+        "";
+
+
+    categoriaProduto.value =
+        produto.categoria
+        ||
+        "outro";
+
+
+    precoProduto.value =
+        Number(
+            produto.preco
+        )
+        .toFixed(2);
+
+
+    tamanhoProduto.value =
+        produto.tamanho
+        ||
+        "";
+
+
+    estoqueProduto.value =
+        Number(
+            produto.estoque
+        )
+        ||
+        0;
+
+
+    ingredientesProduto.value =
+        produto.ingredientes
+        ||
+        "";
+
+
+    descricaoProduto.value =
+        produto.descricao
+        ||
+        "";
+
+
+    fotoAtualBase64 =
+        produto.foto
+        ||
+        "";
+
+
+    if(fotoAtualBase64){
+
+        fotoPreview.innerHTML =
+            `
+            <img
+                src="${fotoAtualBase64}"
+                alt="Foto do produto"
+            >
+            `;
+
+    }
+    else{
+
+        fotoPreview.textContent =
+            emojiCategoria(
+                produto.categoria
+            );
+
+    }
+
+
+    tituloFormulario.textContent =
+        "Editar produto";
+
+
+    btnSalvarProduto.innerHTML =
+        "💾 Atualizar produto";
+
+
+    atualizarCampoTamanho();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    nomeProduto.focus();
+
+}
+
+
+/* =====================================================
+   EXCLUIR
+===================================================== */
+
+function excluirProduto(id){
+
+    const produto =
+        produtos.find(
+            function(item){
+
+                return String(
+                    item.id
+                )
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(!produto){
+
+        mostrarAlertaProduto(
+            "Produto não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir o produto \"" +
+            produto.nome +
+            "\"?"
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    produtos =
+        produtos.filter(
+            function(item){
+
+                return String(
+                    item.id
+                )
+                !==
+                String(id);
+
+            }
+        );
+
+
+    salvarProdutosStorage();
+
+
+    if(
+        String(produtoEditandoId)
+        ===
+        String(id)
+    ){
+
+        limparFormularioProduto(
+            false
+        );
+
+    }
+
+
+    renderizarProdutos();
+
+
+    mostrarSucessoProduto(
+        "Produto excluído com sucesso."
+    );
+
+}
+
+
+/* =====================================================
+   LIMPAR FORMULÁRIO
+===================================================== */
+
+function limparFormularioProduto(
+    confirmar = true
+){
+
+    if(confirmar){
+
+        const existeConteudo =
+            nomeProduto.value.trim()
+            ||
+            categoriaProduto.value
+            ||
+            precoProduto.value
+            ||
+            tamanhoProduto.value.trim()
+            ||
+            ingredientesProduto.value.trim()
+            ||
+            descricaoProduto.value.trim()
+            ||
+            produtoEditandoId;
+
+
+        if(existeConteudo){
+
+            const ok =
+                confirm(
+                    "Deseja limpar o formulário?"
+                );
+
+            if(!ok){
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    produtoEditandoId =
+        null;
+
+
+    fotoAtualBase64 =
+        "";
+
+
+    formProduto.reset();
+
+
+    estoqueProduto.value =
+        "0";
+
+
+    fotoPreview.textContent =
+        "🍔";
+
+
+    tituloFormulario.textContent =
+        "Novo produto";
+
+
+    btnSalvarProduto.innerHTML =
+        "💾 Salvar produto";
+
+
+    atualizarCampoTamanho();
+
+}
+
+
+/* =====================================================
+   FILTRO
+===================================================== */
+
+function selecionarFiltro(
+    filtro
+){
+
+    filtroAtual =
+        filtro;
+
+
+    document
+        .querySelectorAll(
+            ".filtro-produto"
+        )
+        .forEach(
+            function(botao){
+
+                botao.classList.toggle(
+                    "ativo",
+                    botao.dataset.filtro
+                    ===
+                    filtro
+                );
+
+            }
+        );
+
+
+    renderizarProdutos();
+
+}
+
+
+/* =====================================================
+   CONTADOR
+===================================================== */
+
+function atualizarContador(){
+
+    const quantidade =
+        produtos.length;
+
+
+    contadorProdutos.textContent =
+        quantidade
+        +
+        (
+            quantidade === 1
+            ? " produto cadastrado"
+            : " produtos cadastrados"
+        );
+
+}
+
+
+/* =====================================================
+   EVENTOS
+===================================================== */
+
+categoriaProduto.addEventListener(
+    "change",
+    atualizarCampoTamanho
+);
+
+
+buscaProduto.addEventListener(
+    "input",
+    renderizarProdutos
+);
+
+
+/* =====================================================
+   CORREÇÃO DOS CAMPOS NUMÉRICOS
+   Permite apagar o valor temporariamente.
+===================================================== */
+
+[precoProduto, estoqueProduto]
+.forEach(
+    function(input){
+
+        input.addEventListener(
+            "input",
+            function(){
+
+                if(
+                    this.value === ""
+                ){
+
+                    return;
+
+                }
+
+
+                if(
+                    Number(this.value) < 0
+                ){
+
+                    this.value = "0";
+
+                }
+
+            }
+        );
+
+
+        input.addEventListener(
+            "blur",
+            function(){
+
+                if(
+                    this.value.trim() === ""
+                ){
+
+                    this.value =
+                        this === estoqueProduto
+                        ? "0"
+                        : "0.00";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+function inicializarProdutos(){
+
+    produtos =
+        lerProdutosStorage();
+
+
+    atualizarCampoTamanho();
+
+
+    renderizarProdutos();
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    inicializarProdutos
+);
+
+
+/* =====================================================
+   ATUALIZAÇÃO ENTRE TELAS
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key === "produtos"
+        ){
+
+            produtos =
+                lerProdutosStorage();
+
+            renderizarProdutos();
 
         }
 
     }
 );
 
-</script>
+
+/* =====================================================
+   PROTEÇÃO AO VOLTAR
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    function(){
+
+        if(
+            localStorage.getItem(
+                "grillcore_login"
+            )
+            !==
+            "true"
+        ){
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
 
 
-</body>
+        produtos =
+            lerProdutosStorage();
 
-          </html>
+        renderizarProdutos();
+
+    }
+);
+
+</script></body></html>

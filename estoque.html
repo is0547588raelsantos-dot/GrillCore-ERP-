@@ -3,487 +3,2266 @@
 
 <head>
 
+<script>
+if (localStorage.getItem("grillcore_login") !== "true") {
+    window.location.replace("login.html");
+}
+</script>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Estoque - GrillCore ERP</title>
+<meta name="theme-color"
+      content="#080808">
+
+<meta name="description"
+      content="Controle profissional de estoque — GrillCore ERP">
+
+<title>Estoque — GrillCore ERP</title>
+
+<link rel="manifest" href="manifest.json">
 
 <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="tema-laranja.css">
 
 <style>
 
-body{
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
-    padding:15px;
-}
+/* =====================================================
+   🍔 GRILLCORE ERP
+   ESTOQUE
+   PADRÃO PREMIUM OFICIAL
+   PRETO + VERMELHO + DOURADO
+===================================================== */
 
-h1,h2{
-    color:#ff7a00;
-}
-
-.card,
-.produto{
-    background:#242424;
-    padding:20px;
-    margin:15px 0;
-    border-radius:15px;
-    border:1px solid #333;
-}
-
-label{
-    display:block;
-    margin-top:12px;
-    margin-bottom:5px;
-    font-weight:bold;
-}
-
-input,
-select{
-    width:100%;
+*{
     box-sizing:border-box;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    font-size:17px;
-    margin-bottom:5px;
 }
 
-button{
+html,
+body{
+    margin:0;
+    padding:0;
     width:100%;
-    padding:16px;
-    margin:8px 0;
-    border:none;
-    border-radius:12px;
-    background:#ff7a00;
-    color:white;
+    min-height:100%;
+}
+
+body{
+
+    background:
+        radial-gradient(
+            circle at top,
+            #280006 0%,
+            #120002 38%,
+            #080808 78%
+        );
+
+    color:#fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:hidden;
+}
+
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.topo{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    width:100%;
+
+    padding:13px 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #080808,
+            #1b0306
+        );
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.65);
+
+    box-shadow:
+        0 8px 28px
+        rgba(0,0,0,.65);
+}
+
+
+.topo-conteudo{
+
+    width:100%;
+
+    max-width:780px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+}
+
+
+.logo-area{
+
+    min-width:0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+}
+
+
+.logo{
+
+    width:48px;
+    height:48px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f3d66b,
+            #d4af37
+        );
+
+    border:
+        1px solid
+        #f3d66b;
+
+    font-size:25px;
+
+    box-shadow:
+        0 0 22px
+        rgba(212,175,55,.24);
+}
+
+
+.logo-texto{
+
+    min-width:0;
+}
+
+
+.logo-texto h1{
+
+    margin:0;
+
+    color:#f3d66b;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    letter-spacing:.3px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+.logo-texto span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#999;
+
+    font-size:11px;
+
+    line-height:1.3;
+
+    overflow-wrap:anywhere;
+}
+
+
+.botao-voltar{
+
+    width:46px;
+    height:46px;
+
+    flex-shrink:0;
+
+    margin:0;
+    padding:0;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        #d4af37;
+
+    background:
+        linear-gradient(
+            145deg,
+            #a20e1b,
+            #62050d
+        );
+
+    color:#f3d66b;
+
+    font-size:23px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.35);
+}
+
+
+.botao-voltar:active{
+
+    transform:scale(.94);
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    width:100%;
+
+    max-width:780px;
+
+    margin:auto;
+
+    padding:
+        24px 12px 45px;
+}
+
+
+/* =====================================================
+   TÍTULO
+===================================================== */
+
+.titulo-pagina{
+
+    text-align:center;
+
+    margin:
+        4px 0 24px;
+}
+
+
+.titulo-pagina h2{
+
+    margin:0;
+
+    color:#f3d66b;
+
+    font-size:29px;
+
+    font-weight:900;
+
+    letter-spacing:.2px;
+
+    overflow-wrap:anywhere;
+}
+
+
+.titulo-pagina p{
+
+    margin:
+        7px 0 0;
+
+    color:#999;
+
+    font-size:14px;
+
+    line-height:1.45;
+
+    overflow-wrap:anywhere;
+}
+
+
+.linha{
+
+    width:110px;
+
+    height:2px;
+
+    margin:
+        14px auto 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            transparent
+        );
+}
+
+
+/* =====================================================
+   TÍTULOS DE SEÇÃO
+===================================================== */
+
+.secao-titulo{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    margin:
+        25px 0 12px;
+
+    color:#f3d66b;
+
     font-size:18px;
-    font-weight:bold;
+
+    font-weight:900;
+
+    text-align:center;
+
+    overflow-wrap:anywhere;
 }
 
-button:active{
-    transform:scale(.98);
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+    width:100%;
+
+    padding:17px;
+
+    margin-bottom:14px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(29,5,8,.97),
+            rgba(12,1,2,.98)
+        );
+
+    box-shadow:
+        0 12px 32px
+        rgba(0,0,0,.48),
+
+        inset 0 1px 0
+        rgba(255,255,255,.035);
 }
 
-.btn-verde{
-    background:#35a85b;
-}
 
-.btn-vermelho{
-    background:#b83232;
-}
+/* =====================================================
+   RESUMO
+===================================================== */
 
-.btn-cinza{
-    background:#444;
-}
+.resumo-grid{
 
-.btn-azul{
-    background:#2764a5;
-}
-
-.grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
     gap:10px;
 }
 
-.mini{
-    background:#1d1d1d;
-    padding:12px;
-    border-radius:10px;
+
+.resumo-card{
+
+    min-width:0;
+
+    min-height:105px;
+
+    padding:13px 9px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    border:
+        1px solid
+        rgba(212,175,55,.48);
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c0508,
+            #0e0102
+        );
+
+    overflow:hidden;
 }
 
-.mini strong{
-    display:block;
-    color:#ff7a00;
+
+.resumo-icone{
+
     font-size:20px;
+
+    margin-bottom:5px;
+}
+
+
+.resumo-label{
+
+    color:#aaa;
+
+    font-size:11px;
+
+    line-height:1.3;
+
+    overflow-wrap:anywhere;
+}
+
+
+.resumo-valor{
+
     margin-top:5px;
+
+    color:#f3d66b;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    line-height:1.2;
+
+    word-break:break-word;
+
+    overflow-wrap:anywhere;
 }
 
-.produto h3{
-    color:#ff7a00;
-    font-size:22px;
+
+.resumo-alerta .resumo-valor{
+
+    color:#ff7777;
 }
 
-.quantidade{
-    font-size:30px;
-    font-weight:bold;
+
+.resumo-sucesso .resumo-valor{
+
     color:#35d07f;
 }
 
-.baixo{
-    border:2px solid #ff5555;
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+.form-bloco{
+
+    margin-bottom:19px;
+
+    padding-bottom:4px;
 }
 
-.alerta{
-    background:#4a1f1f;
-    border:1px solid #ff5555;
-    color:#ffaaaa;
-    padding:15px;
-    border-radius:12px;
-    margin-top:10px;
+
+.form-bloco-titulo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-bottom:9px;
+
+    padding-bottom:8px;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.13);
+
+    color:#ddd;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:.45px;
 }
+
+
+label{
+
+    display:block;
+
+    margin:
+        12px 0 6px;
+
+    color:#ddd;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    overflow-wrap:anywhere;
+}
+
+
+input,
+select{
+
+    width:100%;
+
+    min-height:50px;
+
+    padding:
+        13px 14px;
+
+    border:
+        1px solid
+        #403335;
+
+    border-radius:13px;
+
+    background:
+        #151011;
+
+    color:#fff;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+}
+
+
+input::placeholder{
+
+    color:#6f6f6f;
+}
+
+
+input:focus,
+select:focus{
+
+    border-color:#d4af37;
+
+    background:#190f10;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,.08);
+}
+
+
+select option{
+
+    background:#151011;
+
+    color:#fff;
+}
+
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:0 10px;
+}
+
+
+.campo-completo{
+
+    grid-column:
+        1 / -1;
+}
+
+
+/* =====================================================
+   DICA DO CAMPO
+===================================================== */
+
+.campo-dica{
+
+    margin:
+        6px 2px 0;
+
+    color:#777;
+
+    font-size:10px;
+
+    line-height:1.4;
+
+    overflow-wrap:anywhere;
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+button{
+
+    width:100%;
+
+    min-height:51px;
+
+    padding:
+        13px 14px;
+
+    margin:
+        6px 0;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        #d4af37;
+
+    background:
+        linear-gradient(
+            135deg,
+            #b91525,
+            #650711
+        );
+
+    color:#f3d66b;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    letter-spacing:.15px;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        filter .15s ease,
+        opacity .15s ease;
+}
+
+
+button:hover{
+
+    filter:brightness(1.08);
+}
+
+
+button:active{
+
+    transform:scale(.975);
+}
+
+
+button:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+}
+
+
+.btn-verde{
+
+    background:
+        linear-gradient(
+            135deg,
+            #168f4d,
+            #075c2f
+        );
+
+    border-color:#35d07f;
+
+    color:#fff;
+}
+
+
+.btn-vermelho{
+
+    background:
+        linear-gradient(
+            135deg,
+            #b32626,
+            #650909
+        );
+
+    border-color:#ff5555;
+
+    color:#fff;
+}
+
+
+.btn-cinza{
+
+    background:
+        linear-gradient(
+            135deg,
+            #242424,
+            #111
+        );
+
+    border-color:#555;
+
+    color:#ddd;
+}
+
+
+.btn-azul{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2764a5,
+            #123b69
+        );
+
+    border-color:#42a5f5;
+
+    color:#fff;
+}
+
+
+.btn-edicao{
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e701b,
+            #4f3b08
+        );
+
+    border-color:#f3d66b;
+
+    color:#fff;
+}
+
+
+/* =====================================================
+   PESQUISA
+===================================================== */
+
+.pesquisa-wrapper{
+
+    position:relative;
+}
+
+
+.pesquisa-icone{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size:18px;
+
+    pointer-events:none;
+}
+
+
+#pesquisa{
+
+    padding-left:43px;
+}
+
+
+.filtros-topo{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:10px;
+
+    color:#777;
+
+    font-size:11px;
+
+    line-height:1.4;
+}
+
+
+.filtros-topo strong{
+
+    color:#d4af37;
+}
+
+
+/* =====================================================
+   STATUS / MENSAGENS
+===================================================== */
+
+.sucesso,
+.info,
+.alerta{
+
+    margin-top:13px;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    text-align:center;
+
+    line-height:1.5;
+
+    overflow-wrap:anywhere;
+}
+
 
 .sucesso{
-    background:#164d2d;
-    border:1px solid #35d07f;
-    padding:15px;
-    border-radius:10px;
-    margin-top:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #164d2d,
+            #092619
+        );
+
+    border:
+        1px solid
+        #35d07f;
+
+    color:#d7ffe6;
 }
+
+
+.info{
+
+    background:
+        linear-gradient(
+            145deg,
+            #182a3d,
+            #0b1723
+        );
+
+    border:
+        1px solid
+        #42a5f5;
+
+    color:#cfe8ff;
+}
+
+
+.alerta{
+
+    background:
+        linear-gradient(
+            145deg,
+            #4b1115,
+            #270609
+        );
+
+    border:
+        1px solid
+        #ff5555;
+
+    color:#ffb0b0;
+}
+
+
+/* =====================================================
+   MERCADORIA
+===================================================== */
+
+.produto{
+
+    position:relative;
+
+    width:100%;
+
+    padding:17px;
+
+    margin-bottom:14px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c0508,
+            #100101
+        );
+
+    box-shadow:
+        0 10px 28px
+        rgba(0,0,0,.45),
+
+        inset 0 1px 0
+        rgba(255,255,255,.03);
+}
+
+
+.produto.baixo{
+
+    border:
+        1px solid
+        #ff5555;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.45),
+
+        0 0 18px
+        rgba(255,85,85,.07);
+}
+
+
+.produto-cabecalho{
+
+    padding-bottom:13px;
+
+    margin-bottom:13px;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.16);
+}
+
+
+.produto h3{
+
+    margin:0;
+
+    color:#f3d66b;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    line-height:1.3;
+
+    text-align:center;
+
+    overflow-wrap:anywhere;
+}
+
+
+.produto-subtitulo{
+
+    margin-top:7px;
+
+    color:#888;
+
+    font-size:11px;
+
+    line-height:1.5;
+
+    text-align:center;
+
+    overflow-wrap:anywhere;
+}
+
+
+.produto p{
+
+    margin:
+        9px 0;
+
+    color:#ccc;
+
+    line-height:1.45;
+
+    font-size:13px;
+
+    overflow-wrap:anywhere;
+}
+
+
+.produto p strong{
+
+    color:#ddd;
+}
+
+
+/* =====================================================
+   BADGES
+===================================================== */
+
+.badges{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+
+    margin-top:9px;
+}
+
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:26px;
+
+    padding:
+        5px 9px;
+
+    border-radius:20px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.3);
+
+    background:
+        rgba(212,175,55,.06);
+
+    color:#bbb;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    text-align:center;
+}
+
+
+.badge-alerta{
+
+    border-color:#ff5555;
+
+    background:
+        rgba(255,85,85,.08);
+
+    color:#ff8888;
+}
+
+
+.badge-ok{
+
+    border-color:#35d07f;
+
+    background:
+        rgba(53,208,127,.07);
+
+    color:#72e5a1;
+}
+
+
+/* =====================================================
+   DADOS
+===================================================== */
+
+.dados-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:9px;
+
+    margin:
+        14px 0;
+}
+
+
+.dado{
+
+    min-width:0;
+
+    padding:12px 8px;
+
+    text-align:center;
+
+    border:
+        1px solid
+        rgba(212,175,55,.25);
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #191010,
+            #0d0909
+        );
+
+    overflow:hidden;
+}
+
+
+.dado-label{
+
+    display:block;
+
+    color:#888;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+
+    line-height:1.3;
+}
+
+
+.dado-valor{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#f3d66b;
+
+    font-size:17px;
+
+    font-weight:900;
+
+    line-height:1.25;
+
+    word-break:break-word;
+
+    overflow-wrap:anywhere;
+}
+
+
+.dado-valor.verde{
+
+    color:#35d07f;
+}
+
+
+.dado-valor.vermelho{
+
+    color:#ff6666;
+}
+
+
+/* =====================================================
+   ALERTA DE ESTOQUE BAIXO
+===================================================== */
+
+.alerta-estoque{
+
+    margin:
+        13px 0;
+
+    padding:14px;
+
+    border:
+        1px solid
+        #ff5555;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #4b1115,
+            #270609
+        );
+
+    color:#ffb0b0;
+
+    text-align:center;
+
+    line-height:1.5;
+
+    font-size:13px;
+
+    overflow-wrap:anywhere;
+}
+
+
+/* =====================================================
+   VALOR TOTAL
+===================================================== */
+
+.valor-total{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin:
+        13px 0;
+
+    padding:
+        12px 13px;
+
+    border-radius:13px;
+
+    background:
+        rgba(212,175,55,.05);
+
+    border:
+        1px solid
+        rgba(212,175,55,.18);
+}
+
+
+.valor-total span:first-child{
+
+    color:#aaa;
+
+    font-size:12px;
+
+    line-height:1.4;
+}
+
+
+.valor-total strong{
+
+    color:#35d07f;
+
+    font-size:18px;
+
+    text-align:right;
+
+    word-break:break-word;
+}
+
+
+/* =====================================================
+   MARGEM
+===================================================== */
+
+.margem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin:
+        10px 0;
+
+    padding:
+        8px 0;
+
+    font-size:12px;
+}
+
+
+.margem span{
+
+    color:#999;
+}
+
+
+.margem strong{
+
+    font-size:14px;
+}
+
+
+.margem.positiva strong{
+
+    color:#35d07f;
+}
+
+
+.margem.negativa strong{
+
+    color:#ff5555;
+}
+
+
+/* =====================================================
+   AÇÕES
+===================================================== */
+
+.acoes{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:7px;
+
+    margin-top:13px;
+}
+
+
+.acoes button{
+
+    margin:0;
+
+    min-height:47px;
+
+    font-size:12px;
+}
+
+
+/* =====================================================
+   VAZIO
+===================================================== */
 
 .vazio{
+
+    padding:
+        28px 12px;
+
+    margin:0;
+
+    color:#777;
+
     text-align:center;
-    color:#aaa;
-    padding:25px;
+
+    line-height:1.6;
+
+    overflow-wrap:anywhere;
 }
 
-.totalEstoque{
-    color:#35d07f;
-    font-size:30px;
-    font-weight:bold;
+
+.vazio strong{
+
+    color:#d4af37;
+}
+
+
+/* =====================================================
+   DIVISOR
+===================================================== */
+
+.divisor{
+
+    border:0;
+
+    border-top:
+        1px solid
+        rgba(212,175,55,.18);
+
+    margin:
+        27px 0 18px;
+}
+
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+.rodape{
+
+    padding:
+        25px 10px 8px;
+
+    color:#666;
+
+    font-size:11px;
+
+    line-height:1.6;
+
+    text-align:center;
+}
+
+
+.rodape strong{
+
+    color:#d4af37;
+}
+
+
+/* =====================================================
+   TEXTO
+===================================================== */
+
+h1,
+h2,
+h3,
+p,
+strong,
+label,
+button,
+span{
+
+    overflow-wrap:anywhere;
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:520px){
+
+    .container{
+
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+}
+
+
+@media(max-width:380px){
+
+    .logo{
+
+        width:44px;
+        height:44px;
+
+        border-radius:13px;
+
+        font-size:23px;
+    }
+
+
+    .logo-texto h1{
+
+        font-size:18px;
+    }
+
+
+    .logo-texto span{
+
+        font-size:10px;
+    }
+
+
+    .titulo-pagina h2{
+
+        font-size:26px;
+    }
+
+
+    .resumo-card{
+
+        min-height:98px;
+    }
+
+
+    .resumo-valor{
+
+        font-size:17px;
+    }
+
+
+    .acoes{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .produto{
+
+        padding:14px;
+    }
+
+
+    .valor-total{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+
+    .valor-total strong{
+
+        width:100%;
+
+        text-align:left;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 
-<h1>📦 Estoque</h1>
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
 
-<p>
-Controle de mercadorias do GrillCore ERP
-</p>
+<header class="topo">
 
+    <div class="topo-conteudo">
 
-<hr>
+        <div class="logo-area">
 
+            <div class="logo">
+                🍔
+            </div>
 
-<!-- ================================================= -->
-<!-- RESUMO -->
-<!-- ================================================= -->
+            <div class="logo-texto">
 
-<h2>📊 Resumo do Estoque</h2>
+                <h1>
+                    GrillCore ERP
+                </h1>
 
-<div class="card">
+                <span>
+                    Controle profissional da sua operação
+                </span>
 
-<div class="grid">
+            </div>
 
-<div class="mini">
+        </div>
 
-📦 Mercadorias
 
-<strong id="totalProdutos">
-0
-</strong>
+        <button
+            type="button"
+            class="botao-voltar"
+            aria-label="Voltar ao dashboard"
+            onclick="window.location.href='index.html'">
 
-</div>
+            ←
 
+        </button>
 
-<div class="mini">
+    </div>
 
-⚠️ Estoque baixo
+</header>
 
-<strong id="produtosBaixos">
-0
-</strong>
 
-</div>
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
 
+<main class="container">
 
-<div class="mini">
 
-📊 Quantidade total
+    <!-- =================================================
+         TÍTULO
+    ================================================= -->
 
-<strong id="quantidadeTotal">
-0
-</strong>
+    <div class="titulo-pagina">
 
-</div>
+        <h2>
+            📦 Estoque
+        </h2>
 
+        <p>
+            Controle profissional de mercadorias, custos e movimentações
+        </p>
 
-<div class="mini">
+        <div class="linha"></div>
 
-💰 Valor do estoque
+    </div>
 
-<strong id="valorEstoque">
-R$ 0,00
-</strong>
 
-</div>
+    <!-- =================================================
+         RESUMO
+    ================================================= -->
 
-</div>
+    <div class="secao-titulo">
 
-</div>
+        📊 Resumo do estoque
 
+    </div>
 
-<hr>
 
+    <section class="card">
 
-<!-- ================================================= -->
-<!-- CADASTRO -->
-<!-- ================================================= -->
+        <div class="resumo-grid">
 
-<h2>➕ Cadastrar Mercadoria</h2>
 
-<div class="card">
+            <div class="resumo-card">
 
+                <div class="resumo-icone">
+                    📦
+                </div>
 
-<label>
-📦 Mercadoria
-</label>
+                <div class="resumo-label">
+                    Mercadorias
+                </div>
 
-<input
-    type="text"
-    id="mercadoria"
-    placeholder="Nome da mercadoria">
+                <div
+                    class="resumo-valor"
+                    id="totalProdutos">
 
+                    0
 
-<label>
-🚚 Fornecedor
-</label>
+                </div>
 
-<input
-    type="text"
-    id="fornecedor"
-    placeholder="Nome do fornecedor">
+            </div>
 
 
-<label>
-🏷️ Categoria
-</label>
+            <div class="resumo-card resumo-alerta">
 
-<select id="categoria">
+                <div class="resumo-icone">
+                    ⚠️
+                </div>
 
-<option value="">
-Selecione
-</option>
+                <div class="resumo-label">
+                    Estoque baixo
+                </div>
 
-<option value="Carnes">
-🥩 Carnes
-</option>
+                <div
+                    class="resumo-valor"
+                    id="produtosBaixos">
 
-<option value="Frios">
-🧀 Frios
-</option>
+                    0
 
-<option value="Bebidas">
-🥤 Bebidas
-</option>
+                </div>
 
-<option value="Pães">
-🍞 Pães
-</option>
+            </div>
 
-<option value="Molhos">
-🥫 Molhos
-</option>
 
-<option value="Embalagens">
-📦 Embalagens
-</option>
+            <div class="resumo-card resumo-sucesso">
 
-<option value="Hortifruti">
-🥬 Hortifruti
-</option>
+                <div class="resumo-icone">
+                    🔢
+                </div>
 
-<option value="Limpeza">
-🧹 Limpeza
-</option>
+                <div class="resumo-label">
+                    Quantidade total
+                </div>
 
-<option value="Outros">
-📦 Outros
-</option>
+                <div
+                    class="resumo-valor"
+                    id="quantidadeTotal">
 
-</select>
+                    0
 
+                </div>
 
-<label>
-🔢 Quantidade
-</label>
+            </div>
 
-<input
-    type="number"
-    id="quantidade"
-    min="0"
-    step="0.01"
-    placeholder="Ex.: 10">
 
+            <div class="resumo-card">
 
-<label>
-⚖️ Unidade
-</label>
+                <div class="resumo-icone">
+                    💰
+                </div>
 
-<select id="unidade">
+                <div class="resumo-label">
+                    Valor do estoque
+                </div>
 
-<option value="un">
-Unidade
-</option>
+                <div
+                    class="resumo-valor"
+                    id="valorEstoque">
 
-<option value="kg">
-Kg
-</option>
+                    R$ 0,00
 
-<option value="g">
-Grama
-</option>
+                </div>
 
-<option value="L">
-Litro
-</option>
+            </div>
 
-<option value="ml">
-Ml
-</option>
 
-<option value="cx">
-Caixa
-</option>
+        </div>
 
-<option value="pct">
-Pacote
-</option>
+    </section>
 
-</select>
 
+    <!-- =================================================
+         CADASTRO / EDIÇÃO
+    ================================================= -->
 
-<label>
-💰 Custo unitário
-</label>
+    <div
+        class="secao-titulo"
+        id="tituloFormulario">
 
-<input
-    type="number"
-    id="custo"
-    min="0"
-    step="0.01"
-    placeholder="R$ 0,00">
+        ➕ Cadastrar mercadoria
 
+    </div>
 
-<label>
-💵 Preço de venda
-</label>
 
-<input
-    type="number"
-    id="precoVenda"
-    min="0"
-    step="0.01"
-    placeholder="R$ 0,00">
+    <section class="card">
 
 
-<label>
-⚠️ Estoque mínimo
-</label>
+        <input
+            type="hidden"
+            id="idEdicao"
+            value="">
 
-<input
-    type="number"
-    id="estoqueMinimo"
-    min="0"
-    step="0.01"
-    placeholder="Ex.: 5">
 
+        <!-- =================================================
+             INFORMAÇÕES
+        ================================================= -->
 
-<button
-    onclick="salvarMercadoria()">
+        <div class="form-bloco">
 
-📦 SALVAR MERCADORIA
+            <div class="form-bloco-titulo">
 
-</button>
+                📦 Informações da mercadoria
 
+            </div>
 
-<button
-    class="btn-cinza"
-    onclick="limparFormulario()">
 
-🧹 LIMPAR
+            <div class="form-grid">
 
-</button>
 
+                <div class="campo-completo">
 
-<div id="mensagem"></div>
+                    <label for="mercadoria">
+                        Mercadoria
+                    </label>
 
-</div>
+                    <input
+                        type="text"
+                        id="mercadoria"
+                        placeholder="Ex.: Carne bovina 180g"
+                        autocomplete="off">
 
+                    <div class="campo-dica">
 
-<hr>
+                        Nome utilizado para localizar a mercadoria
+                        no estoque e no histórico.
 
+                    </div>
 
-<!-- ================================================= -->
-<!-- PESQUISA -->
-<!-- ================================================= -->
+                </div>
 
-<h2>🔎 Consultar Estoque</h2>
 
-<div class="card">
+                <div class="campo-completo">
 
-<input
-    type="text"
-    id="pesquisa"
-    placeholder="Digite mercadoria, fornecedor ou categoria..."
-    oninput="mostrarEstoque()">
+                    <label for="fornecedor">
+                        🚚 Fornecedor
+                    </label>
 
-</div>
+                    <input
+                        type="text"
+                        id="fornecedor"
+                        list="listaFornecedores"
+                        placeholder="Nome do fornecedor"
+                        autocomplete="off">
 
+                    <datalist id="listaFornecedores"></datalist>
 
-<!-- ================================================= -->
-<!-- LISTA -->
-<!-- ================================================= -->
+                    <div class="campo-dica">
 
-<h2>📋 Mercadorias</h2>
+                        Você pode selecionar um fornecedor já cadastrado
+                        ou digitar um novo.
 
-<div id="listaEstoque">
+                    </div>
 
-<p class="vazio">
-Carregando estoque...
-</p>
+                </div>
 
-</div>
 
+                <div class="campo-completo">
 
-<hr>
+                    <label for="categoria">
+                        🏷️ Categoria
+                    </label>
 
+                    <select id="categoria">
 
-<button
-    class="btn-verde"
-    onclick="window.location.href='compras.html'">
+                        <option value="">
+                            Selecione a categoria
+                        </option>
 
-🛒 Registrar Compra
+                        <option value="Carnes">
+                            🥩 Carnes
+                        </option>
 
-</button>
+                        <option value="Frios">
+                            🧀 Frios
+                        </option>
 
+                        <option value="Bebidas">
+                            🥤 Bebidas
+                        </option>
 
-<button
-    class="btn-cinza"
-    onclick="window.location.href='index.html'">
+                        <option value="Pães">
+                            🍞 Pães
+                        </option>
 
-🏠 Voltar ao Início
+                        <option value="Molhos">
+                            🥫 Molhos
+                        </option>
 
-</button>
+                        <option value="Embalagens">
+                            📦 Embalagens
+                        </option>
+
+                        <option value="Hortifruti">
+                            🥬 Hortifruti
+                        </option>
+
+                        <option value="Limpeza">
+                            🧹 Limpeza
+                        </option>
+
+                        <option value="Outros">
+                            📦 Outros
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             QUANTIDADE
+        ================================================= -->
+
+        <div class="form-bloco">
+
+            <div class="form-bloco-titulo">
+
+                🔢 Controle de quantidade
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label for="quantidade">
+                        Quantidade
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantidade"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                        placeholder="Ex.: 10">
+
+                </div>
+
+
+                <div>
+
+                    <label for="unidade">
+                        Unidade
+                    </label>
+
+                    <select id="unidade">
+
+                        <option value="un">
+                            Unidade
+                        </option>
+
+                        <option value="kg">
+                            Kg
+                        </option>
+
+                        <option value="g">
+                            Grama
+                        </option>
+
+                        <option value="L">
+                            Litro
+                        </option>
+
+                        <option value="ml">
+                            Ml
+                        </option>
+
+                        <option value="cx">
+                            Caixa
+                        </option>
+
+                        <option value="pct">
+                            Pacote
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo-completo">
+
+                    <label for="estoqueMinimo">
+                        ⚠️ Estoque mínimo
+                    </label>
+
+                    <input
+                        type="number"
+                        id="estoqueMinimo"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                        placeholder="Ex.: 5">
+
+                    <div class="campo-dica">
+
+                        Quando a quantidade ficar igual ou abaixo
+                        deste valor, o GrillCore exibirá um alerta.
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             VALORES
+        ================================================= -->
+
+        <div class="form-bloco">
+
+            <div class="form-bloco-titulo">
+
+                💰 Valores e margem
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label for="custo">
+                        Custo unitário
+                    </label>
+
+                    <input
+                        type="number"
+                        id="custo"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                        placeholder="0,00">
+
+                </div>
+
+
+                <div>
+
+                    <label for="precoVenda">
+                        Preço de venda
+                    </label>
+
+                    <input
+                        type="number"
+                        id="precoVenda"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                        placeholder="0,00">
+
+                </div>
+
+
+                <div class="campo-completo">
+
+                    <div class="campo-dica">
+
+                        A margem apresentada no cadastro é calculada
+                        automaticamente com base no custo e preço de venda.
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             BOTÕES
+        ================================================= -->
+
+        <button
+            type="button"
+            id="btnSalvar"
+            onclick="salvarMercadoria()">
+
+            📦 SALVAR MERCADORIA
+
+        </button>
+
+
+        <button
+            type="button"
+            id="btnCancelarEdicao"
+            class="btn-cinza"
+            onclick="cancelarEdicao()"
+            style="display:none;">
+
+            ❌ CANCELAR EDIÇÃO
+
+        </button>
+
+
+        <button
+            type="button"
+            class="btn-cinza"
+            onclick="limparFormulario()">
+
+            🧹 LIMPAR FORMULÁRIO
+
+        </button>
+
+
+        <div id="mensagem"></div>
+
+    </section>
+
+
+    <!-- =================================================
+         PESQUISA
+    ================================================= -->
+
+    <div class="secao-titulo">
+
+        🔎 Consultar estoque
+
+    </div>
+
+
+    <section class="card">
+
+        <div class="pesquisa-wrapper">
+
+            <span class="pesquisa-icone">
+                🔎
+            </span>
+
+            <input
+                type="search"
+                id="pesquisa"
+                placeholder="Mercadoria, fornecedor ou categoria..."
+                autocomplete="off"
+                oninput="mostrarEstoque()">
+
+        </div>
+
+
+        <div class="filtros-topo">
+
+            <span>
+                Consulta em tempo real
+            </span>
+
+            <span>
+                <strong id="contadorPesquisa">
+                    0
+                </strong>
+                mercadoria(s)
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LISTA
+    ================================================= -->
+
+    <div class="secao-titulo">
+
+        📋 Mercadorias cadastradas
+
+    </div>
+
+
+    <div id="listaEstoque">
+
+        <section class="card">
+
+            <p class="vazio">
+                Carregando estoque...
+            </p>
+
+        </section>
+
+    </div>
+
+
+    <hr class="divisor">
+
+
+    <!-- =================================================
+         NAVEGAÇÃO
+    ================================================= -->
+
+    <button
+        type="button"
+        class="btn-verde"
+        onclick="window.location.href='compras.html'">
+
+        🛒 REGISTRAR COMPRA
+
+    </button>
+
+
+    <button
+        type="button"
+        class="btn-cinza"
+        onclick="window.location.href='historico-estoque.html'">
+
+        📜 HISTÓRICO DE MOVIMENTAÇÕES
+
+    </button>
+
+
+    <button
+        type="button"
+        class="btn-cinza"
+        onclick="window.location.href='index.html'">
+
+        🏠 VOLTAR AO INÍCIO
+
+    </button>
+
+
+    <!-- =================================================
+         RODAPÉ
+    ================================================= -->
+
+    <footer class="rodape">
+
+        🍔
+
+        <strong>
+            GrillCore ERP
+        </strong>
+
+        <br>
+
+        Controle inteligente de estoque
+
+    </footer>
+
+
+</main>
 
 
 <script>
 
+/* =====================================================
+   🍔 GRILLCORE ERP
+   ESTOQUE — VERSÃO PREMIUM INTEGRADA
+===================================================== */
 
-// =====================================================
-// 💾 BANCO LOCAL
-// =====================================================
+
+/* =====================================================
+   CONFIGURAÇÕES
+===================================================== */
+
+const CHAVE_ESTOQUE =
+    "estoque";
+
+const CHAVE_MOVIMENTACOES =
+    "historicoEstoque";
+
+const CHAVE_FORNECEDORES =
+    "fornecedores";
+
+
+let modoEdicao = false;
+
+
+/* =====================================================
+   💾 LOCALSTORAGE
+===================================================== */
 
 function ler(chave){
 
     try{
 
-        return JSON.parse(
-            localStorage.getItem(chave)
-        ) || [];
+        const dados =
+            localStorage.getItem(chave);
+
+        if(!dados){
+
+            return [];
+
+        }
+
+        const convertido =
+            JSON.parse(dados);
+
+        return Array.isArray(convertido)
+            ? convertido
+            : [];
 
     }
+    catch(erro){
 
-    catch(e){
+        console.error(
+            "Erro ao ler LocalStorage:",
+            chave,
+            erro
+        );
 
         return [];
 
@@ -494,39 +2273,272 @@ function ler(chave){
 
 function salvar(chave,dados){
 
-    localStorage.setItem(
-        chave,
-        JSON.stringify(dados)
-    );
+    try{
+
+        localStorage.setItem(
+            chave,
+            JSON.stringify(dados)
+        );
+
+        return true;
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao salvar LocalStorage:",
+            chave,
+            erro
+        );
+
+        alert(
+            "❌ Não foi possível salvar os dados."
+        );
+
+        return false;
+
+    }
 
 }
 
 
 function pegarEstoque(){
 
-    return ler("estoque");
+    return ler(
+        CHAVE_ESTOQUE
+    );
 
 }
 
 
-// =====================================================
-// 💰 DINHEIRO
-// =====================================================
+/* =====================================================
+   💰 DINHEIRO
+===================================================== */
 
 function dinheiro(valor){
 
-    return "R$ " +
+    const numeroValor =
+        numero(valor);
 
-        Number(valor || 0)
-        .toFixed(2)
-        .replace(".",",");
+    return numeroValor.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
 
 }
 
 
-// =====================================================
-// 🧹 LIMPAR
-// =====================================================
+/* =====================================================
+   🔢 NÚMERO
+===================================================== */
+
+function numero(valor){
+
+    if(
+        typeof valor === "number"
+    ){
+
+        return Number.isFinite(valor)
+            ? valor
+            : 0;
+
+    }
+
+
+    if(
+        typeof valor === "string"
+    ){
+
+        let texto =
+            valor
+            .trim()
+            .replace(/R\$/gi,"")
+            .replace(/\s/g,"");
+
+
+        /*
+         * Aceita:
+         * 30
+         * 30,50
+         * 30.50
+         * 1.250,50
+         */
+
+        if(
+            texto.includes(",")
+        ){
+
+            texto =
+                texto
+                .replace(/\./g,"")
+                .replace(",",".");
+        }
+
+
+        const resultado =
+            Number(texto);
+
+
+        return Number.isFinite(resultado)
+            ? resultado
+            : 0;
+
+    }
+
+
+    const resultado =
+        Number(valor);
+
+
+    return Number.isFinite(resultado)
+        ? resultado
+        : 0;
+
+}
+
+
+/* =====================================================
+   🧾 ESCAPAR HTML
+===================================================== */
+
+function escapar(texto){
+
+    return String(
+        texto ?? ""
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   🆔 GERAR ID
+===================================================== */
+
+function gerarID(){
+
+    if(
+        typeof window.gerarID === "function"
+        &&
+        window.gerarID !== gerarID
+    ){
+
+        try{
+
+            return window.gerarID();
+
+        }
+        catch(e){}
+
+    }
+
+
+    return Date.now()
+        .toString()
+        +
+        Math.floor(
+            Math.random() * 10000
+        ).toString();
+
+}
+
+
+/* =====================================================
+   📅 DATA
+===================================================== */
+
+function dataAgora(){
+
+    return new Date().toISOString();
+
+}
+
+
+/* =====================================================
+   📦 FORNECEDORES
+===================================================== */
+
+function atualizarListaFornecedores(){
+
+    const lista =
+        document.getElementById(
+            "listaFornecedores"
+        );
+
+
+    if(!lista){
+
+        return;
+
+    }
+
+
+    const fornecedores =
+        ler(
+            CHAVE_FORNECEDORES
+        );
+
+
+    const nomes =
+        fornecedores
+        .map(function(item){
+
+            return String(
+                item.empresa
+                ||
+                item.nome
+                ||
+                ""
+            ).trim();
+
+        })
+        .filter(Boolean)
+        .filter(function(nome,index,array){
+
+            return array
+                .findIndex(function(item){
+
+                    return item.toLowerCase()
+                        ===
+                        nome.toLowerCase();
+
+                })
+                ===
+                index;
+
+        })
+        .sort(function(a,b){
+
+            return a.localeCompare(
+                b,
+                "pt-BR"
+            );
+
+        });
+
+
+    lista.innerHTML =
+        nomes.map(function(nome){
+
+            return `
+                <option value="${escapar(nome)}"></option>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   🧹 LIMPAR FORMULÁRIO
+===================================================== */
 
 function limparFormulario(){
 
@@ -534,40 +2546,231 @@ function limparFormulario(){
         "mercadoria"
     ).value = "";
 
+
     document.getElementById(
         "fornecedor"
     ).value = "";
+
 
     document.getElementById(
         "categoria"
     ).value = "";
 
+
     document.getElementById(
         "quantidade"
     ).value = "";
+
 
     document.getElementById(
         "unidade"
     ).value = "un";
 
+
     document.getElementById(
         "custo"
     ).value = "";
+
 
     document.getElementById(
         "precoVenda"
     ).value = "";
 
+
     document.getElementById(
         "estoqueMinimo"
     ).value = "";
 
+
+    document.getElementById(
+        "idEdicao"
+    ).value = "";
+
+
+    modoEdicao = false;
+
+
+    atualizarEstadoFormulario();
+
 }
 
 
-// =====================================================
-// 📦 SALVAR MERCADORIA
-// =====================================================
+/* =====================================================
+   ❌ CANCELAR EDIÇÃO
+===================================================== */
+
+function cancelarEdicao(){
+
+    limparFormulario();
+
+
+    document.getElementById(
+        "mensagem"
+    ).innerHTML = `
+
+        <div class="info">
+
+            ✏️ <strong>Edição cancelada.</strong>
+
+            <br>
+
+            Nenhum dado do estoque foi alterado.
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   🎛️ ESTADO DO FORMULÁRIO
+===================================================== */
+
+function atualizarEstadoFormulario(){
+
+    const titulo =
+        document.getElementById(
+            "tituloFormulario"
+        );
+
+
+    const botao =
+        document.getElementById(
+            "btnSalvar"
+        );
+
+
+    const cancelar =
+        document.getElementById(
+            "btnCancelarEdicao"
+        );
+
+
+    if(modoEdicao){
+
+        titulo.innerText =
+            "✏️ Editar mercadoria";
+
+
+        botao.innerText =
+            "💾 ATUALIZAR MERCADORIA";
+
+
+        botao.classList.add(
+            "btn-edicao"
+        );
+
+
+        cancelar.style.display =
+            "block";
+
+    }
+    else{
+
+        titulo.innerText =
+            "➕ Cadastrar mercadoria";
+
+
+        botao.innerText =
+            "📦 SALVAR MERCADORIA";
+
+
+        botao.classList.remove(
+            "btn-edicao"
+        );
+
+
+        cancelar.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   📋 REGISTRAR MOVIMENTAÇÃO
+===================================================== */
+
+function registrarMovimentacao(
+    tipo,
+    produto,
+    quantidade,
+    observacao
+){
+
+    const historico =
+        ler(
+            CHAVE_MOVIMENTACOES
+        );
+
+
+    const agora =
+        dataAgora();
+
+
+    historico.push({
+
+        id:
+            gerarID(),
+
+        tipo:
+            tipo,
+
+        estoqueId:
+            produto.id,
+
+        mercadoria:
+            produto.mercadoria || "",
+
+        produto:
+            produto.mercadoria || "",
+
+        quantidade:
+            numero(quantidade),
+
+        unidade:
+            produto.unidade || "un",
+
+        fornecedor:
+            produto.fornecedor || "",
+
+        categoria:
+            produto.categoria || "",
+
+        custo:
+            numero(produto.custo),
+
+        observacao:
+            observacao || "",
+
+        motivo:
+            observacao || "",
+
+        data:
+            agora,
+
+        dataHora:
+            agora,
+
+        criadoEm:
+            agora
+
+    });
+
+
+    salvar(
+        CHAVE_MOVIMENTACOES,
+        historico
+    );
+
+}
+
+
+/* =====================================================
+   📦 SALVAR / ATUALIZAR MERCADORIA
+===================================================== */
 
 function salvarMercadoria(){
 
@@ -589,12 +2792,10 @@ function salvarMercadoria(){
         ).value;
 
 
-    const quantidade =
-        Number(
-            document.getElementById(
-                "quantidade"
-            ).value
-        );
+    const quantidadeCampo =
+        document.getElementById(
+            "quantidade"
+        ).value;
 
 
     const unidade =
@@ -603,35 +2804,67 @@ function salvarMercadoria(){
         ).value;
 
 
+    const custoCampo =
+        document.getElementById(
+            "custo"
+        ).value;
+
+
+    const precoVendaCampo =
+        document.getElementById(
+            "precoVenda"
+        ).value;
+
+
+    const estoqueMinimoCampo =
+        document.getElementById(
+            "estoqueMinimo"
+        ).value;
+
+
+    const quantidade =
+        numero(
+            quantidadeCampo
+        );
+
+
     const custo =
-        Number(
-            document.getElementById(
-                "custo"
-            ).value
-        ) || 0;
+        numero(
+            custoCampo
+        );
 
 
     const precoVenda =
-        Number(
-            document.getElementById(
-                "precoVenda"
-            ).value
-        ) || 0;
+        numero(
+            precoVendaCampo
+        );
 
 
     const estoqueMinimo =
-        Number(
-            document.getElementById(
-                "estoqueMinimo"
-            ).value
-        ) || 0;
+        numero(
+            estoqueMinimoCampo
+        );
 
+
+    const idEdicao =
+        document.getElementById(
+            "idEdicao"
+        ).value;
+
+
+    /* =================================================
+       VALIDAÇÕES
+    ================================================= */
 
     if(!mercadoria){
 
         alert(
             "⚠️ Digite o nome da mercadoria."
         );
+
+        document.getElementById(
+            "mercadoria"
+        ).focus();
 
         return;
 
@@ -641,19 +2874,111 @@ function salvarMercadoria(){
     if(!fornecedor){
 
         alert(
-            "⚠️ Digite o fornecedor."
+            "⚠️ Informe o fornecedor."
         );
+
+        document.getElementById(
+            "fornecedor"
+        ).focus();
 
         return;
 
     }
 
 
-    if(isNaN(quantidade) || quantidade < 0){
+    if(!categoria){
+
+        alert(
+            "⚠️ Selecione uma categoria."
+        );
+
+        document.getElementById(
+            "categoria"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(
+        quantidadeCampo === ""
+        ||
+        !Number.isFinite(quantidade)
+        ||
+        quantidade < 0
+    ){
 
         alert(
             "⚠️ Digite uma quantidade válida."
         );
+
+        document.getElementById(
+            "quantidade"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(
+        custoCampo === ""
+        ||
+        !Number.isFinite(custo)
+        ||
+        custo < 0
+    ){
+
+        alert(
+            "⚠️ Digite um custo válido."
+        );
+
+        document.getElementById(
+            "custo"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(
+        precoVendaCampo === ""
+        ||
+        !Number.isFinite(precoVenda)
+        ||
+        precoVenda < 0
+    ){
+
+        alert(
+            "⚠️ Digite um preço de venda válido."
+        );
+
+        document.getElementById(
+            "precoVenda"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(
+        estoqueMinimoCampo === ""
+        ||
+        !Number.isFinite(estoqueMinimo)
+        ||
+        estoqueMinimo < 0
+    ){
+
+        alert(
+            "⚠️ Digite um estoque mínimo válido."
+        );
+
+        document.getElementById(
+            "estoqueMinimo"
+        ).focus();
 
         return;
 
@@ -664,88 +2989,163 @@ function salvarMercadoria(){
         pegarEstoque();
 
 
-    // =================================================
-    // VERIFICAR DUPLICADO
-    // =================================================
+    /* =================================================
+       ✏️ EDIÇÃO
+    ================================================= */
 
-    const nomeBusca =
-        mercadoria
-        .toLowerCase()
-        .trim();
+    if(
+        modoEdicao
+        &&
+        idEdicao
+    ){
 
+        const indice =
+            estoque.findIndex(
+                function(item){
 
-    const existe =
-        estoque.find(
-            function(item){
+                    return String(item.id)
+                        ===
+                        String(idEdicao);
 
-                return String(
-                    item.mercadoria || ""
-                )
-                .toLowerCase()
-                .trim()
-                ===
-                nomeBusca;
-
-            }
-        );
-
-
-    if(existe){
-
-        const confirmar =
-            confirm(
-                "⚠️ Esta mercadoria já existe no estoque.\n\n"+
-                "Deseja somar a quantidade informada ao estoque existente?"
+                }
             );
 
 
-        if(!confirmar){
+        if(indice === -1){
+
+            alert(
+                "❌ A mercadoria não foi encontrada."
+            );
+
+            limparFormulario();
+
+            atualizarTudo();
 
             return;
 
         }
 
 
-        existe.quantidade =
-            Number(
-                existe.quantidade || 0
+        const atual =
+            estoque[indice];
+
+
+        const nomeDuplicado =
+            estoque.some(
+                function(item){
+
+                    return (
+
+                        String(item.id)
+                        !==
+                        String(idEdicao)
+
+                    )
+                    &&
+                    String(
+                        item.mercadoria || ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    ===
+                    mercadoria
+                    .trim()
+                    .toLowerCase();
+
+                }
+            );
+
+
+        if(nomeDuplicado){
+
+            alert(
+                "⚠️ Já existe outra mercadoria com este nome."
+            );
+
+            return;
+
+        }
+
+
+        const quantidadeAnterior =
+            numero(
+                atual.quantidade
+            );
+
+
+        estoque[indice] = {
+
+            ...atual,
+
+            mercadoria:
+                mercadoria,
+
+            fornecedor:
+                fornecedor,
+
+            categoria:
+                categoria,
+
+            quantidade:
+                quantidade,
+
+            unidade:
+                unidade,
+
+            custo:
+                custo,
+
+            precoVenda:
+                precoVenda,
+
+            estoqueMinimo:
+                estoqueMinimo,
+
+            atualizadoEm:
+                dataAgora()
+
+        };
+
+
+        if(
+            !salvar(
+                CHAVE_ESTOQUE,
+                estoque
             )
-            +
-            quantidade;
+        ){
+
+            return;
+
+        }
 
 
-        existe.fornecedor =
-            fornecedor;
+        const diferenca =
+            quantidade -
+            quantidadeAnterior;
 
 
-        existe.categoria =
-            categoria;
+        if(diferenca > 0){
+
+            registrarMovimentacao(
+                "ajuste_entrada",
+                estoque[indice],
+                diferenca,
+                "Ajuste de estoque realizado pela edição da mercadoria."
+            );
+
+        }
 
 
-        existe.unidade =
-            unidade;
+        if(diferenca < 0){
 
+            registrarMovimentacao(
+                "ajuste_saida",
+                estoque[indice],
+                Math.abs(diferenca),
+                "Ajuste de estoque realizado pela edição da mercadoria."
+            );
 
-        existe.custo =
-            custo;
-
-
-        existe.precoVenda =
-            precoVenda;
-
-
-        existe.estoqueMinimo =
-            estoqueMinimo;
-
-
-        existe.atualizadoEm =
-            new Date().toISOString();
-
-
-        salvar(
-            "estoque",
-            estoque
-        );
+        }
 
 
         document.getElementById(
@@ -754,17 +3154,19 @@ function salvarMercadoria(){
 
             <div class="sucesso">
 
-                ✅ Estoque atualizado!
+                ✅ <strong>Mercadoria atualizada com sucesso!</strong>
 
                 <br><br>
 
-                📦 ${mercadoria}
+                📦 ${escapar(mercadoria)}
 
                 <br>
 
-                ➕ Quantidade adicionada:
-                ${quantidade}
-                ${unidade}
+                Estoque atual:
+                <strong>
+                    ${quantidade}
+                    ${escapar(unidade)}
+                </strong>
 
             </div>
 
@@ -780,14 +3182,181 @@ function salvarMercadoria(){
     }
 
 
-    // =================================================
-    // NOVA MERCADORIA
-    // =================================================
+    /* =================================================
+       🔎 VERIFICAR MERCADORIA EXISTENTE
+    ================================================= */
+
+    const nomeBusca =
+        mercadoria
+        .toLowerCase()
+        .trim();
+
+
+    const indiceExistente =
+        estoque.findIndex(
+            function(item){
+
+                return String(
+                    item.mercadoria || ""
+                )
+                .toLowerCase()
+                .trim()
+                ===
+                nomeBusca;
+
+            }
+        );
+
+
+    if(indiceExistente !== -1){
+
+        const existente =
+            estoque[indiceExistente];
+
+
+        const confirmar =
+            confirm(
+
+                "⚠️ ESTA MERCADORIA JÁ EXISTE\n\n" +
+
+                "Mercadoria: " +
+                existente.mercadoria +
+
+                "\n" +
+
+                "Estoque atual: " +
+                numero(existente.quantidade) +
+                " " +
+                (existente.unidade || "un") +
+
+                "\n\n" +
+
+                "Deseja SOMAR a quantidade informada ao estoque?"
+
+            );
+
+
+        if(!confirmar){
+
+            return;
+
+        }
+
+
+        const quantidadeAnterior =
+            numero(
+                existente.quantidade
+            );
+
+
+        existente.quantidade =
+            quantidadeAnterior
+            +
+            quantidade;
+
+
+        existente.fornecedor =
+            fornecedor;
+
+
+        existente.categoria =
+            categoria;
+
+
+        existente.unidade =
+            unidade;
+
+
+        existente.custo =
+            custo;
+
+
+        existente.precoVenda =
+            precoVenda;
+
+
+        existente.estoqueMinimo =
+            estoqueMinimo;
+
+
+        existente.atualizadoEm =
+            dataAgora();
+
+
+        if(
+            !salvar(
+                CHAVE_ESTOQUE,
+                estoque
+            )
+        ){
+
+            return;
+
+        }
+
+
+        registrarMovimentacao(
+            "entrada",
+            existente,
+            quantidade,
+            "Quantidade adicionada ao estoque existente."
+        );
+
+
+        document.getElementById(
+            "mensagem"
+        ).innerHTML = `
+
+            <div class="sucesso">
+
+                ✅ <strong>Estoque atualizado!</strong>
+
+                <br><br>
+
+                📦 ${escapar(mercadoria)}
+
+                <br>
+
+                Quantidade adicionada:
+                <strong>
+                    +${quantidade}
+                    ${escapar(unidade)}
+                </strong>
+
+                <br>
+
+                Novo estoque:
+                <strong>
+                    ${numero(existente.quantidade)}
+                    ${escapar(unidade)}
+                </strong>
+
+            </div>
+
+        `;
+
+
+        limparFormulario();
+
+        atualizarTudo();
+
+        return;
+
+    }
+
+
+    /* =================================================
+       🆕 NOVA MERCADORIA
+    ================================================= */
+
+    const agora =
+        dataAgora();
+
 
     const produto = {
 
         id:
-            Date.now(),
+            gerarID(),
 
         mercadoria:
             mercadoria,
@@ -814,10 +3383,10 @@ function salvarMercadoria(){
             estoqueMinimo,
 
         criadoEm:
-            new Date().toISOString(),
+            agora,
 
         atualizadoEm:
-            new Date().toISOString()
+            agora
 
     };
 
@@ -827,9 +3396,23 @@ function salvarMercadoria(){
     );
 
 
-    salvar(
-        "estoque",
-        estoque
+    if(
+        !salvar(
+            CHAVE_ESTOQUE,
+            estoque
+        )
+    ){
+
+        return;
+
+    }
+
+
+    registrarMovimentacao(
+        "cadastro",
+        produto,
+        quantidade,
+        "Mercadoria cadastrada no estoque."
     );
 
 
@@ -839,16 +3422,23 @@ function salvarMercadoria(){
 
         <div class="sucesso">
 
-            ✅ Mercadoria cadastrada!
+            ✅ <strong>Mercadoria cadastrada com sucesso!</strong>
 
             <br><br>
 
-            📦 ${mercadoria}
+            📦 ${escapar(mercadoria)}
 
             <br>
 
-            🚚 Fornecedor:
-            ${fornecedor}
+            🚚 ${escapar(fornecedor)}
+
+            <br>
+
+            Estoque inicial:
+            <strong>
+                ${quantidade}
+                ${escapar(unidade)}
+            </strong>
 
         </div>
 
@@ -862,13 +3452,13 @@ function salvarMercadoria(){
 }
 
 
-// =====================================================
-// ✏️ EDITAR
-// =====================================================
+/* =====================================================
+   ✏️ EDITAR MERCADORIA
+===================================================== */
 
 function editarMercadoria(id){
 
-    let estoque =
+    const estoque =
         pegarEstoque();
 
 
@@ -876,7 +3466,9 @@ function editarMercadoria(id){
         estoque.find(
             function(item){
 
-                return item.id === id;
+                return String(item.id)
+                    ===
+                    String(id);
 
             }
         );
@@ -891,6 +3483,12 @@ function editarMercadoria(id){
         return;
 
     }
+
+
+    document.getElementById(
+        "idEdicao"
+    ).value =
+        produto.id;
 
 
     document.getElementById(
@@ -914,7 +3512,9 @@ function editarMercadoria(id){
     document.getElementById(
         "quantidade"
     ).value =
-        produto.quantidade || 0;
+        numero(
+            produto.quantidade
+        );
 
 
     document.getElementById(
@@ -926,53 +3526,49 @@ function editarMercadoria(id){
     document.getElementById(
         "custo"
     ).value =
-        produto.custo || 0;
+        numero(
+            produto.custo
+        );
 
 
     document.getElementById(
         "precoVenda"
     ).value =
-        produto.precoVenda || 0;
+        numero(
+            produto.precoVenda
+        );
 
 
     document.getElementById(
         "estoqueMinimo"
     ).value =
-        produto.estoqueMinimo || 0;
-
-
-    // remover produto para salvar novamente
-
-    estoque =
-        estoque.filter(
-            function(item){
-
-                return item.id !== id;
-
-            }
+        numero(
+            produto.estoqueMinimo
         );
 
 
-    salvar(
-        "estoque",
-        estoque
-    );
+    modoEdicao = true;
+
+
+    atualizarEstadoFormulario();
 
 
     document.getElementById(
         "mensagem"
     ).innerHTML = `
 
-        <div class="aviso">
+        <div class="info">
 
-            ✏️ Mercadoria carregada para edição.
+            ✏️ <strong>Editando mercadoria</strong>
 
             <br><br>
 
-            Depois de conferir os dados,
-            clique em <strong>
-            SALVAR MERCADORIA
-            </strong>.
+            📦 ${escapar(produto.mercadoria)}
+
+            <br><br>
+
+            Altere os dados e clique em
+            <strong>ATUALIZAR MERCADORIA</strong>.
 
         </div>
 
@@ -980,19 +3576,31 @@ function editarMercadoria(id){
 
 
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 
-    atualizarTudo();
+    setTimeout(
+        function(){
+
+            document.getElementById(
+                "mercadoria"
+            ).focus();
+
+        },
+        350
+    );
 
 }
 
 
-// =====================================================
-// 🗑️ EXCLUIR
-// =====================================================
+/* =====================================================
+   🗑️ EXCLUIR MERCADORIA
+===================================================== */
 
 function excluirMercadoria(id){
 
@@ -1004,7 +3612,9 @@ function excluirMercadoria(id){
         estoque.find(
             function(item){
 
-                return item.id === id;
+                return String(item.id)
+                    ===
+                    String(id);
 
             }
         );
@@ -1012,21 +3622,49 @@ function excluirMercadoria(id){
 
     if(!produto){
 
+        alert(
+            "❌ Mercadoria não encontrada."
+        );
+
         return;
 
     }
 
 
+    const quantidadeAtual =
+        numero(
+            produto.quantidade
+        );
+
+
     const confirmar =
         confirm(
-            "⚠️ EXCLUIR MERCADORIA?\n\n"+
-            "Mercadoria: "+
-            produto.mercadoria+
-            "\n"+
-            "Fornecedor: "+
-            (produto.fornecedor || "-")+
-            "\n\n"+
-            "Esta ação removerá o produto do estoque."
+
+            "⚠️ EXCLUIR MERCADORIA?\n\n" +
+
+            "Mercadoria: " +
+            produto.mercadoria +
+
+            "\n\n" +
+
+            "Fornecedor: " +
+            (produto.fornecedor || "-") +
+
+            "\n" +
+
+            "Quantidade atual: " +
+            quantidadeAtual +
+            " " +
+            (produto.unidade || "un") +
+
+            "\n\n" +
+
+            "A mercadoria será removida da lista atual do estoque.\n" +
+
+            "O histórico de movimentações será preservado.\n\n" +
+
+            "Deseja continuar?"
+
         );
 
 
@@ -1041,26 +3679,82 @@ function excluirMercadoria(id){
         estoque.filter(
             function(item){
 
-                return item.id !== id;
+                return String(item.id)
+                    !==
+                    String(id);
 
             }
         );
 
 
-    salvar(
-        "estoque",
-        estoque
+    if(
+        !salvar(
+            CHAVE_ESTOQUE,
+            estoque
+        )
+    ){
+
+        return;
+
+    }
+
+
+    registrarMovimentacao(
+        "exclusao",
+        produto,
+        quantidadeAtual,
+        "Mercadoria excluída do estoque."
     );
+
+
+    if(
+        modoEdicao
+        &&
+        String(
+            document.getElementById(
+                "idEdicao"
+            ).value
+        )
+        ===
+        String(id)
+    ){
+
+        limparFormulario();
+
+    }
 
 
     atualizarTudo();
 
+
+    document.getElementById(
+        "mensagem"
+    ).innerHTML = `
+
+        <div class="sucesso">
+
+            🗑️ <strong>Mercadoria excluída.</strong>
+
+            <br><br>
+
+            📦 ${escapar(
+                produto.mercadoria
+            )}
+
+            <br><br>
+
+            O histórico de movimentações foi preservado.
+
+        </div>
+
+    `;
+
 }
 
 
-// =====================================================
-// ➕ ENTRADA
-// =====================================================
+/* =====================================================
+   ➕ ENTRADA
+===================================================== */
 
 function adicionarEntrada(id){
 
@@ -1072,9 +3766,9 @@ function adicionarEntrada(id){
 }
 
 
-// =====================================================
-// ➖ SAÍDA
-// =====================================================
+/* =====================================================
+   ➖ SAÍDA
+===================================================== */
 
 function adicionarSaida(id){
 
@@ -1086,34 +3780,54 @@ function adicionarSaida(id){
 }
 
 
-// =====================================================
-// 🔢 ALTERAR QUANTIDADE
-// =====================================================
+/* =====================================================
+   🔢 ALTERAR QUANTIDADE
+===================================================== */
 
 function alterarQuantidade(
     id,
     tipo
 ){
 
-    let estoque =
+    const estoque =
         pegarEstoque();
 
 
-    const produto =
-        estoque.find(
+    const indice =
+        estoque.findIndex(
             function(item){
 
-                return item.id === id;
+                return String(item.id)
+                    ===
+                    String(id);
 
             }
         );
 
 
-    if(!produto){
+    if(indice === -1){
+
+        alert(
+            "❌ Mercadoria não encontrada."
+        );
 
         return;
 
     }
+
+
+    const produto =
+        estoque[indice];
+
+
+    const quantidadeAtual =
+        numero(
+            produto.quantidade
+        );
+
+
+    const unidade =
+        produto.unidade || "un";
 
 
     const texto =
@@ -1126,9 +3840,29 @@ function alterarQuantidade(
 
     const valor =
         prompt(
-            texto+
-            "\n\n"+
-            produto.mercadoria
+
+            texto +
+
+            "\n\n" +
+
+            produto.mercadoria +
+
+            "\n\n" +
+
+            "Estoque atual: " +
+
+            quantidadeAtual +
+
+            " " +
+
+            unidade +
+
+            "\n\n" +
+
+            "Unidade: " +
+
+            unidade
+
         );
 
 
@@ -1140,17 +3874,17 @@ function alterarQuantidade(
 
 
     const quantidade =
-        Number(valor);
+        numero(valor);
 
 
     if(
-        isNaN(quantidade)
+        !Number.isFinite(quantidade)
         ||
         quantidade <= 0
     ){
 
         alert(
-            "⚠️ Digite uma quantidade válida."
+            "⚠️ Digite uma quantidade válida maior que zero."
         );
 
         return;
@@ -1162,13 +3896,36 @@ function alterarQuantidade(
         tipo === "saida"
         &&
         quantidade >
-        Number(
-            produto.quantidade || 0
-        )
+        quantidadeAtual
     ){
 
         alert(
-            "❌ Estoque insuficiente."
+
+            "❌ ESTOQUE INSUFICIENTE\n\n" +
+
+            "Mercadoria: " +
+            produto.mercadoria +
+
+            "\n\n" +
+
+            "Disponível: " +
+
+            quantidadeAtual +
+
+            " " +
+
+            unidade +
+
+            "\n" +
+
+            "Solicitado: " +
+
+            quantidade +
+
+            " " +
+
+            unidade
+
         );
 
         return;
@@ -1179,9 +3936,7 @@ function alterarQuantidade(
     if(tipo === "entrada"){
 
         produto.quantidade =
-            Number(
-                produto.quantidade || 0
-            )
+            quantidadeAtual
             +
             quantidade;
 
@@ -1189,9 +3944,7 @@ function alterarQuantidade(
     else{
 
         produto.quantidade =
-            Number(
-                produto.quantidade || 0
-            )
+            quantidadeAtual
             -
             quantidade;
 
@@ -1199,50 +3952,80 @@ function alterarQuantidade(
 
 
     produto.atualizadoEm =
-        new Date().toISOString();
+        dataAgora();
 
 
-    salvar(
-        "estoque",
-        estoque
+    if(
+        !salvar(
+            CHAVE_ESTOQUE,
+            estoque
+        )
+    ){
+
+        return;
+
+    }
+
+
+    registrarMovimentacao(
+        tipo,
+        produto,
+        quantidade,
+        tipo === "entrada"
+        ?
+        "Entrada manual de estoque."
+        :
+        "Saída manual de estoque."
     );
 
 
     atualizarTudo();
 
 
-    alert(
-        tipo === "entrada"
-        ?
-        "✅ Entrada adicionada ao estoque."
-        :
-        "✅ Saída registrada no estoque."
-    );
+    document.getElementById(
+        "mensagem"
+    ).innerHTML = `
+
+        <div class="sucesso">
+
+            ${
+                tipo === "entrada"
+                ?
+                "➕ <strong>Entrada registrada!</strong>"
+                :
+                "➖ <strong>Saída registrada!</strong>"
+            }
+
+            <br><br>
+
+            📦 ${escapar(produto.mercadoria)}
+
+            <br>
+
+            Movimentação:
+            <strong>
+                ${quantidade}
+                ${escapar(unidade)}
+            </strong>
+
+            <br>
+
+            Estoque atual:
+            <strong>
+                ${numero(produto.quantidade)}
+                ${escapar(unidade)}
+            </strong>
+
+        </div>
+
+    `;
 
 }
 
 
-// =====================================================
-// 🧾 ESCAPAR
-// =====================================================
-
-function escapar(texto){
-
-    return String(
-        texto ?? ""
-    )
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-// =====================================================
-// 📋 MOSTRAR ESTOQUE
-// =====================================================
+/* =====================================================
+   📋 MOSTRAR ESTOQUE
+===================================================== */
 
 function mostrarEstoque(){
 
@@ -1252,13 +4035,20 @@ function mostrarEstoque(){
         );
 
 
-    const pesquisa =
+    const campoPesquisa =
         document.getElementById(
             "pesquisa"
-        )
-        .value
-        .trim()
-        .toLowerCase();
+        );
+
+
+    const pesquisa =
+        campoPesquisa
+        ?
+        campoPesquisa.value
+            .trim()
+            .toLowerCase()
+        :
+        "";
 
 
     let estoque =
@@ -1303,19 +4093,49 @@ function mostrarEstoque(){
     }
 
 
+    const contador =
+        document.getElementById(
+            "contadorPesquisa"
+        );
+
+
+    if(contador){
+
+        contador.innerText =
+            estoque.length;
+
+    }
+
+
     if(!estoque.length){
 
         lista.innerHTML = `
 
-            <div class="card">
+            <section class="card">
 
                 <p class="vazio">
 
-                    📭 Nenhuma mercadoria encontrada.
+                    ${
+                        pesquisa
+                        ?
+                        "🔎 Nenhuma mercadoria corresponde à pesquisa."
+                        :
+                        "📭 Nenhuma mercadoria cadastrada no estoque."
+                    }
+
+                    <br><br>
+
+                    ${
+                        !pesquisa
+                        ?
+                        "<strong>Cadastre sua primeira mercadoria acima.</strong>"
+                        :
+                        ""
+                    }
 
                 </p>
 
-            </div>
+            </section>
 
         `;
 
@@ -1348,14 +4168,26 @@ function mostrarEstoque(){
         function(produto){
 
             const quantidade =
-                Number(
-                    produto.quantidade || 0
+                numero(
+                    produto.quantidade
                 );
 
 
             const minimo =
-                Number(
-                    produto.estoqueMinimo || 0
+                numero(
+                    produto.estoqueMinimo
+                );
+
+
+            const custo =
+                numero(
+                    produto.custo
+                );
+
+
+            const venda =
+                numero(
+                    produto.precoVenda
                 );
 
 
@@ -1365,119 +4197,189 @@ function mostrarEstoque(){
 
             const valorEstoque =
                 quantidade *
-                Number(
-                    produto.custo || 0
+                custo;
+
+
+            const margem =
+                venda -
+                custo;
+
+
+            const percentualMargem =
+                venda > 0
+                ?
+                (
+                    margem /
+                    venda
+                )
+                *
+                100
+                :
+                0;
+
+
+            const unidade =
+                produto.unidade || "un";
+
+
+            const idSeguro =
+                String(
+                    produto.id
+                )
+                .replace(
+                    /\\/g,
+                    "\\\\"
+                )
+                .replace(
+                    /'/g,
+                    "\\'"
                 );
 
 
             lista.innerHTML += `
 
-                <div class="produto
+                <article
+                    class="produto
                     ${estoqueBaixo
                         ? "baixo"
                         : ""}">
 
-                    <h3>
 
-                        📦 ${escapar(
-                            produto.mercadoria
-                        )}
+                    <!-- =================================
+                         CABEÇALHO
+                    ================================== -->
 
-                    </h3>
+                    <div class="produto-cabecalho">
 
+                        <h3>
 
-                    <p>
+                            📦
+                            ${escapar(
+                                produto.mercadoria
+                            )}
 
-                        🚚 <strong>
-                        Fornecedor:
-                        </strong>
-
-                        ${escapar(
-                            produto.fornecedor
-                            || "Não informado"
-                        )}
-
-                    </p>
+                        </h3>
 
 
-                    <p>
+                        <div class="produto-subtitulo">
 
-                        🏷️ <strong>
-                        Categoria:
-                        </strong>
+                            ${escapar(
+                                produto.categoria
+                                || "Sem categoria"
+                            )}
 
-                        ${escapar(
-                            produto.categoria
-                            || "-"
-                        )}
+                            •
 
-                    </p>
+                            ${escapar(
+                                produto.fornecedor
+                                || "Fornecedor não informado"
+                            )}
+
+                        </div>
 
 
-                    <div class="grid">
+                        <div class="badges">
+
+                            ${
+                                estoqueBaixo
+                                ?
+
+                                `
+                                <span class="badge badge-alerta">
+                                    ⚠️ ESTOQUE BAIXO
+                                </span>
+                                `
+
+                                :
+
+                                `
+                                <span class="badge badge-ok">
+                                    ✓ ESTOQUE NORMAL
+                                </span>
+                                `
+                            }
 
 
-                        <div class="mini">
+                            <span class="badge">
 
-                            🔢 Quantidade
+                                ${escapar(unidade)}
 
-                            <strong
-                                class="quantidade">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         DADOS
+                    ================================== -->
+
+                    <div class="dados-grid">
+
+
+                        <div class="dado">
+
+                            <span class="dado-label">
+                                Quantidade atual
+                            </span>
+
+                            <span
+                                class="dado-valor
+                                ${estoqueBaixo
+                                    ? "vermelho"
+                                    : "verde"}">
 
                                 ${quantidade}
-                                ${escapar(
-                                    produto.unidade
-                                    || "un"
-                                )}
+                                ${escapar(unidade)}
 
-                            </strong>
+                            </span>
 
                         </div>
 
 
-                        <div class="mini">
+                        <div class="dado">
 
-                            ⚠️ Mínimo
+                            <span class="dado-label">
+                                Estoque mínimo
+                            </span>
 
-                            <strong>
+                            <span class="dado-valor">
 
                                 ${minimo}
-                                ${escapar(
-                                    produto.unidade
-                                    || "un"
-                                )}
+                                ${escapar(unidade)}
 
-                            </strong>
+                            </span>
 
                         </div>
 
 
-                        <div class="mini">
+                        <div class="dado">
 
-                            💰 Custo
+                            <span class="dado-label">
+                                Custo unitário
+                            </span>
 
-                            <strong>
+                            <span class="dado-valor">
 
-                                ${dinheiro(
-                                    produto.custo
-                                )}
+                                ${dinheiro(custo)}
 
-                            </strong>
+                            </span>
 
                         </div>
 
 
-                        <div class="mini">
+                        <div class="dado">
 
-                            💵 Venda
+                            <span class="dado-label">
+                                Preço de venda
+                            </span>
 
-                            <strong>
+                            <span class="dado-valor">
 
-                                ${dinheiro(
-                                    produto.precoVenda
-                                )}
+                                ${dinheiro(venda)}
 
-                            </strong>
+                            </span>
 
                         </div>
 
@@ -1485,82 +4387,172 @@ function mostrarEstoque(){
                     </div>
 
 
+                    <!-- =================================
+                         ALERTA
+                    ================================== -->
+
                     ${
                         estoqueBaixo
                         ?
                         `
-                        <div class="alerta">
 
-                            ⚠️ <strong>
-                            ESTOQUE BAIXO
+                        <div class="alerta-estoque">
+
+                            ⚠️
+
+                            <strong>
+                                ATENÇÃO: ESTOQUE BAIXO
                             </strong>
 
                             <br><br>
 
-                            A quantidade está
-                            no limite mínimo
-                            ou abaixo dele.
+                            O estoque atual está
+                            no limite mínimo ou abaixo dele.
+
+                            <br><br>
+
+                            Atual:
+
+                            <strong>
+                                ${quantidade}
+                                ${escapar(unidade)}
+                            </strong>
+
+                            &nbsp;|&nbsp;
+
+                            Mínimo:
+
+                            <strong>
+                                ${minimo}
+                                ${escapar(unidade)}
+                            </strong>
 
                         </div>
+
                         `
                         :
                         ""
                     }
 
 
-                    <p>
+                    <!-- =================================
+                         VALOR DO ESTOQUE
+                    ================================== -->
 
-                        💰 <strong>
-                        Valor em estoque:
-                        </strong>
+                    <div class="valor-total">
 
-                        <span
-                            class="totalEstoque">
+                        <span>
+                            💰 Valor investido nesta mercadoria
+                        </span>
 
+                        <strong>
                             ${dinheiro(
                                 valorEstoque
                             )}
+                        </strong>
 
-                        </span>
-
-                    </p>
-
-
-                    <button
-                        class="btn-verde"
-                        onclick="adicionarEntrada(${produto.id})">
-
-                        ➕ Entrada
-
-                    </button>
+                    </div>
 
 
-                    <button
-                        class="btn-azul"
-                        onclick="adicionarSaida(${produto.id})">
+                    <!-- =================================
+                         MARGEM
+                    ================================== -->
 
-                        ➖ Saída
+                    ${
+                        venda > 0
+                        ?
 
-                    </button>
+                        `
+
+                        <div class="margem
+                            ${
+                                margem >= 0
+                                ? "positiva"
+                                : "negativa"
+                            }">
+
+                            <span>
+                                📈 Margem por unidade
+                            </span>
+
+                            <strong>
+
+                                ${dinheiro(margem)}
+
+                                ${
+                                    Number.isFinite(
+                                        percentualMargem
+                                    )
+                                    ?
+                                    `
+                                    (${percentualMargem.toFixed(1)}%)
+                                    `
+                                    :
+                                    ""
+                                }
+
+                            </strong>
+
+                        </div>
+
+                        `
+
+                        :
+
+                        ""
+                    }
 
 
-                    <button
-                        onclick="editarMercadoria(${produto.id})">
+                    <!-- =================================
+                         AÇÕES
+                    ================================== -->
 
-                        ✏️ Editar
-
-                    </button>
+                    <div class="acoes">
 
 
-                    <button
-                        class="btn-vermelho"
-                        onclick="excluirMercadoria(${produto.id})">
+                        <button
+                            type="button"
+                            class="btn-verde"
+                            onclick="adicionarEntrada('${idSeguro}')">
 
-                        🗑️ Excluir
+                            ➕ Entrada
 
-                    </button>
+                        </button>
 
-                </div>
+
+                        <button
+                            type="button"
+                            class="btn-azul"
+                            onclick="adicionarSaida('${idSeguro}')">
+
+                            ➖ Saída
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            onclick="editarMercadoria('${idSeguro}')">
+
+                            ✏️ Editar
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn-vermelho"
+                            onclick="excluirMercadoria('${idSeguro}')">
+
+                            🗑️ Excluir
+
+                        </button>
+
+
+                    </div>
+
+
+                </article>
 
             `;
 
@@ -1570,9 +4562,9 @@ function mostrarEstoque(){
 }
 
 
-// =====================================================
-// 📊 RESUMO
-// =====================================================
+/* =====================================================
+   📊 ATUALIZAR RESUMO
+===================================================== */
 
 function atualizarResumo(){
 
@@ -1580,25 +4572,36 @@ function atualizarResumo(){
         pegarEstoque();
 
 
-    let quantidadeTotal = 0;
+    let quantidadeTotal =
+        0;
 
-    let produtosBaixos = 0;
 
-    let valorEstoque = 0;
+    let produtosBaixos =
+        0;
+
+
+    let valorEstoque =
+        0;
 
 
     estoque.forEach(
         function(produto){
 
             const quantidade =
-                Number(
-                    produto.quantidade || 0
+                numero(
+                    produto.quantidade
                 );
 
 
             const minimo =
-                Number(
-                    produto.estoqueMinimo || 0
+                numero(
+                    produto.estoqueMinimo
+                );
+
+
+            const custo =
+                numero(
+                    produto.custo
                 );
 
 
@@ -1608,9 +4611,7 @@ function atualizarResumo(){
 
             valorEstoque +=
                 quantidade *
-                Number(
-                    produto.custo || 0
-                );
+                custo;
 
 
             if(
@@ -1640,7 +4641,12 @@ function atualizarResumo(){
     document.getElementById(
         "quantidadeTotal"
     ).innerText =
-        quantidadeTotal;
+        quantidadeTotal.toLocaleString(
+            "pt-BR",
+            {
+                maximumFractionDigits:2
+            }
+        );
 
 
     document.getElementById(
@@ -1653,9 +4659,9 @@ function atualizarResumo(){
 }
 
 
-// =====================================================
-// 🔄 ATUALIZAR TUDO
-// =====================================================
+/* =====================================================
+   🔄 ATUALIZAR TUDO
+===================================================== */
 
 function atualizarTudo(){
 
@@ -1663,26 +4669,130 @@ function atualizarTudo(){
 
     mostrarEstoque();
 
+    atualizarEstadoFormulario();
+
+    atualizarListaFornecedores();
+
 }
 
 
-// =====================================================
-// 🚀 INICIAR
-// =====================================================
+/* =====================================================
+   🔄 SINCRONIZAÇÃO ENTRE ABAS
+===================================================== */
 
 window.addEventListener(
-    "load",
-    atualizarTudo
+    "storage",
+    function(event){
+
+        if(
+            event.key === CHAVE_ESTOQUE
+            ||
+            event.key === CHAVE_MOVIMENTACOES
+            ||
+            event.key === CHAVE_FORNECEDORES
+        ){
+
+            atualizarTudo();
+
+        }
+
+    }
 );
 
+
+/* =====================================================
+   👁️ PÁGINA VOLTOU AO FOCO
+===================================================== */
 
 window.addEventListener(
     "pageshow",
-    atualizarTudo
+    function(){
+
+        atualizarTudo();
+
+    }
 );
 
 
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState
+            ===
+            "visible"
+        ){
+
+            atualizarTudo();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   🚀 INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        atualizarTudo();
+
+    }
+);
+
+
+/* =====================================================
+   ⌨️ ENTER NO FORMULÁRIO
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key !== "Enter"
+        ){
+
+            return;
+
+        }
+
+
+        const elemento =
+            event.target;
+
+
+        if(
+            elemento.tagName === "INPUT"
+            ||
+            elemento.tagName === "SELECT"
+        ){
+
+            if(
+                elemento.id === "pesquisa"
+            ){
+
+                return;
+
+            }
+
+
+            event.preventDefault();
+
+            salvarMercadoria();
+
+        }
+
+    }
+);
+
 </script>
+
 
 </body>
 

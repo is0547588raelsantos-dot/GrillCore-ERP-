@@ -3,137 +3,351 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <!-- =====================================================
+         🔐 PROTEÇÃO DE ACESSO
+    ====================================================== -->
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <script>
 
-<title>Fornecedores - GrillCore ERP</title>
+        if (
+            localStorage.getItem("grillcore_login") !== "true"
+        ) {
 
-<link rel="stylesheet" href="style.css">
+            window.location.replace("login.html");
 
-<style>
+        }
 
-body {
-    background: #181818;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 15px;
-}
+    </script>
 
-h1,
-h2 {
-    color: #ff7a00;
-}
 
-.card {
-    background: #242424;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 15px;
-    border: 1px solid #333;
-}
+    <meta charset="UTF-8">
 
-input,
-textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px;
-    margin: 7px 0 15px 0;
-    border: none;
-    border-radius: 10px;
-    font-size: 17px;
-    background: #fff;
-    color: #111;
-}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
 
-label {
-    display: block;
-    color: #ddd;
-    font-weight: bold;
-    margin-top: 8px;
-}
+    <title>Fornecedores — GrillCore ERP</title>
 
-button {
-    width: 100%;
-    padding: 17px;
-    margin: 7px 0;
-    border: none;
-    border-radius: 12px;
-    background: #ff7a00;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-}
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-button:active {
-    transform: scale(.98);
-}
 
-.btn-secundario {
-    background: #444;
-}
+    <!-- =====================================================
+         🎨 AJUSTES ESPECÍFICOS
+    ====================================================== -->
 
-.btn-excluir {
-    background: #b52b2b;
-}
+    <style>
 
-.btn-editar {
-    background: #2868a8;
-}
+        .fornecedor {
 
-.fornecedor {
-    background: #1d1d1d;
-    border: 1px solid #444;
-    border-radius: 12px;
-    padding: 18px;
-    margin: 12px 0;
-}
+            position: relative;
 
-.fornecedor h3 {
-    color: #ff7a00;
-    margin-top: 0;
-}
+            overflow: hidden;
 
-.info {
-    color: #ccc;
-    margin: 7px 0;
-}
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                );
 
-.vazio {
-    text-align: center;
-    color: #999;
-    padding: 25px;
-}
+            border:
+                1px solid rgba(212,175,55,.20);
 
-.pesquisa {
-    background: #202020;
-    border: 1px solid #444;
-    color: white;
-}
+            border-radius: 15px;
 
-.alerta {
-    background: #4a3500;
-    border: 1px solid #ff7a00;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
+            padding: 18px;
 
-.sucesso {
-    background: #123d25;
-    border: 1px solid #35d07f;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
+            margin: 14px 0;
 
-</style>
+        }
+
+
+        .fornecedor::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--dourado),
+                    transparent
+                );
+
+            opacity: .55;
+
+        }
+
+
+        .fornecedor h3 {
+
+            color: var(--dourado2);
+
+            margin-top: 0;
+
+            margin-bottom: 15px;
+
+            font-size: 18px;
+
+        }
+
+
+        .info-fornecedor {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+
+            margin-top: 10px;
+
+        }
+
+
+        .info-box-fornecedor {
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            border-radius: 10px;
+
+            padding: 11px;
+
+        }
+
+
+        .info-box-fornecedor small {
+
+            display: block;
+
+            color: var(--cinza);
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .info-box-fornecedor strong {
+
+            color: var(--branco);
+
+            font-size: 14px;
+
+            word-break: break-word;
+
+        }
+
+
+        .acoes-fornecedor {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+
+            margin-top: 16px;
+
+        }
+
+
+        .acoes-fornecedor button {
+
+            margin: 0;
+
+        }
+
+
+        .btn-editar-fornecedor {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8e701b,
+                    #d4af37
+                );
+
+            color: #080808;
+
+        }
+
+
+        .btn-excluir-fornecedor {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #650711,
+                    #9b111e
+                );
+
+            color: white;
+
+        }
+
+
+        .contador-fornecedores {
+
+            color: var(--cinza);
+
+            font-size: 13px;
+
+            text-align: right;
+
+            margin-top: 10px;
+
+        }
+
+
+        .modo-edicao {
+
+            border:
+                1px solid var(--dourado);
+
+            background:
+                rgba(212,175,55,.06);
+
+        }
+
+
+        .modo-edicao-indicador {
+
+            display: none;
+
+            padding: 12px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(212,175,55,.08);
+
+            border:
+                1px solid rgba(212,175,55,.30);
+
+            color: var(--dourado2);
+
+            font-weight: bold;
+
+        }
+
+
+        .modo-edicao .modo-edicao-indicador {
+
+            display: block;
+
+        }
+
+
+        .mensagem {
+
+            padding: 13px 15px;
+
+            margin: 12px 0;
+
+            border-radius: 11px;
+
+            font-weight: bold;
+
+        }
+
+
+        .mensagem.sucesso {
+
+            background:
+                rgba(53,208,127,.08);
+
+            border:
+                1px solid rgba(53,208,127,.30);
+
+            color: var(--verde);
+
+        }
+
+
+        .mensagem.alerta {
+
+            background:
+                rgba(212,175,55,.08);
+
+            border:
+                1px solid rgba(212,175,55,.30);
+
+            color: var(--dourado2);
+
+        }
+
+
+        .vazio-fornecedores {
+
+            text-align: center;
+
+            padding: 35px 15px;
+
+            color: var(--cinza);
+
+        }
+
+
+        .vazio-fornecedores .icone {
+
+            font-size: 42px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .info-fornecedor {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 430px) {
+
+            .acoes-fornecedor {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -141,196 +355,389 @@ button:active {
 <body>
 
 
-<h1>🏢 Fornecedores</h1>
-
-<p>
-Cadastro e gerenciamento de fornecedores
-do GrillCore ERP.
-</p>
+<div class="container">
 
 
-<div id="mensagem"></div>
+    <!-- =====================================================
+         🏆 CABEÇALHO
+    ====================================================== -->
+
+    <header class="premium-header">
+
+        <div class="premium-logo">
+
+            🍔
+
+        </div>
+
+        <h1>
+
+            GrillCore ERP
+
+        </h1>
+
+        <p>
+
+            Gestão de Fornecedores
+
+        </p>
+
+    </header>
 
 
-<hr>
+    <!-- =====================================================
+         🏢 TÍTULO
+    ====================================================== -->
+
+    <section class="card">
+
+        <h2 class="secao-titulo">
+
+            🏢 Fornecedores
+
+        </h2>
+
+        <p>
+
+            Cadastre e gerencie os fornecedores
+            utilizados nas compras da hamburgueria.
+
+        </p>
+
+    </section>
 
 
-<!-- ================================================= -->
-<!-- CADASTRO -->
-<!-- ================================================= -->
+    <!-- =====================================================
+         💬 MENSAGEM
+    ====================================================== -->
 
-<h2>➕ Cadastrar Fornecedor</h2>
-
-
-<div class="card">
-
-<label>
-🏢 Nome da empresa / fornecedor
-</label>
-
-<input
-    type="text"
-    id="nomeFornecedor"
-    placeholder="Ex: Distribuidora Neusa">
+    <div id="mensagem"></div>
 
 
-<label>
-👤 Nome do responsável
-</label>
+    <!-- =====================================================
+         ➕ CADASTRO / EDIÇÃO
+    ====================================================== -->
 
-<input
-    type="text"
-    id="responsavel"
-    placeholder="Ex: João">
+    <section
+        class="card"
+        id="cardFormulario"
+    >
 
+        <h2 class="secao-titulo">
 
-<label>
-📱 Telefone / WhatsApp
-</label>
+            ➕ Cadastrar Fornecedor
 
-<input
-    type="tel"
-    id="telefone"
-    placeholder="Ex: (44) 99999-9999">
+        </h2>
 
 
-<label>
-📧 E-mail
-</label>
+        <div class="modo-edicao-indicador">
 
-<input
-    type="email"
-    id="email"
-    placeholder="Ex: contato@empresa.com">
+            ✏️ Editando fornecedor.
+            Altere os dados e clique em
+            <strong>ATUALIZAR FORNECEDOR</strong>.
 
-
-<label>
-📍 Endereço
-</label>
-
-<input
-    type="text"
-    id="endereco"
-    placeholder="Rua, número, cidade">
+        </div>
 
 
-<label>
-📝 Observações
-</label>
+        <label for="nomeFornecedor">
 
-<textarea
-    id="observacoes"
-    placeholder="Informações importantes sobre o fornecedor..."></textarea>
+            🏢 Nome da empresa / fornecedor
 
+        </label>
 
-<button
-    onclick="salvarFornecedor()">
-
-💾 SALVAR FORNECEDOR
-
-</button>
+        <input
+            type="text"
+            id="nomeFornecedor"
+            placeholder="Ex: Distribuidora Neusa"
+            autocomplete="organization"
+        >
 
 
-<button
-    class="btn-secundario"
-    onclick="limparFormulario()">
+        <label for="responsavel">
 
-🧹 LIMPAR
+            👤 Nome do responsável
 
-</button>
+        </label>
+
+        <input
+            type="text"
+            id="responsavel"
+            placeholder="Ex: João"
+            autocomplete="name"
+        >
+
+
+        <label for="telefone">
+
+            📱 Telefone / WhatsApp
+
+        </label>
+
+        <input
+            type="tel"
+            id="telefone"
+            placeholder="Ex: (44) 99999-9999"
+            autocomplete="tel"
+        >
+
+
+        <label for="email">
+
+            📧 E-mail
+
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Ex: contato@empresa.com"
+            autocomplete="email"
+        >
+
+
+        <label for="endereco">
+
+            📍 Endereço
+
+        </label>
+
+        <input
+            type="text"
+            id="endereco"
+            placeholder="Rua, número, cidade"
+            autocomplete="street-address"
+        >
+
+
+        <label for="observacoes">
+
+            📝 Observações
+
+        </label>
+
+        <textarea
+            id="observacoes"
+            placeholder="Informações importantes sobre o fornecedor..."
+        ></textarea>
+
+
+        <button
+            id="btnSalvarFornecedor"
+            class="salvar"
+            onclick="salvarFornecedor()"
+        >
+
+            💾 SALVAR FORNECEDOR
+
+        </button>
+
+
+        <button
+            class="btn-cinza"
+            onclick="limparFormulario()"
+        >
+
+            🧹 LIMPAR FORMULÁRIO
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         🔎 PESQUISA
+    ====================================================== -->
+
+    <section class="card">
+
+        <h2 class="secao-titulo">
+
+            🔎 Pesquisar Fornecedores
+
+        </h2>
+
+
+        <label for="pesquisaFornecedor">
+
+            Pesquisa
+
+        </label>
+
+        <input
+            type="search"
+            id="pesquisaFornecedor"
+            placeholder="Nome, responsável, telefone ou e-mail..."
+            oninput="mostrarFornecedores()"
+        >
+
+
+        <div
+            class="contador-fornecedores"
+            id="contadorFornecedores"
+        >
+
+            0 fornecedores
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         📋 LISTA
+    ====================================================== -->
+
+    <section>
+
+        <h2 class="secao-titulo">
+
+            📋 Fornecedores Cadastrados
+
+        </h2>
+
+
+        <div id="listaFornecedores">
+
+            <div class="card vazio-fornecedores">
+
+                <div class="icone">
+
+                    ⏳
+
+                </div>
+
+                Carregando fornecedores...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         🔗 NAVEGAÇÃO
+    ====================================================== -->
+
+    <section class="card">
+
+        <h2 class="secao-titulo">
+
+            🔗 Acesso Rápido
+
+        </h2>
+
+
+        <button
+            class="btn-verde"
+            onclick="window.location.href='compras.html'"
+        >
+
+            🛒 Ir para Compras
+
+        </button>
+
+
+        <button
+            class="btn-cinza"
+            onclick="window.location.href='estoque.html'"
+        >
+
+            📦 Ir para Estoque
+
+        </button>
+
+
+        <button
+            class="btn-cinza"
+            onclick="window.location.href='index.html'"
+        >
+
+            🏠 Voltar ao Dashboard
+
+        </button>
+
+    </section>
+
 
 </div>
 
 
-<hr>
+<!-- =====================================================
+     📚 SCRIPT CENTRAL
+====================================================== -->
 
-
-<!-- ================================================= -->
-<!-- PESQUISA -->
-<!-- ================================================= -->
-
-<h2>🔎 Pesquisar</h2>
-
-
-<div class="card">
-
-<input
-    type="text"
-    id="pesquisaFornecedor"
-    class="pesquisa"
-    placeholder="Digite o nome do fornecedor..."
-    oninput="mostrarFornecedores()">
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- LISTA -->
-<!-- ================================================= -->
-
-<h2>📋 Fornecedores cadastrados</h2>
-
-
-<div
-    id="listaFornecedores">
-
-</div>
-
-
-<hr>
-
-
-<button
-    class="btn-secundario"
-    onclick="window.location.href='compras.html'">
-
-🛒 Ir para Compras
-
-</button>
-
-
-<button
-    class="btn-secundario"
-    onclick="window.location.href='estoque.html'">
-
-📦 Ir para Estoque
-
-</button>
-
-
-<button
-    class="btn-secundario"
-    onclick="window.location.href='index.html'">
-
-🏠 Voltar ao Início
-
-</button>
+<script src="script.js"></script>
 
 
 <script>
 
 
-// =====================================================
-// 💾 LOCAL STORAGE
-// =====================================================
+/* =====================================================
+   🔑 CHAVE
+===================================================== */
 
 const CHAVE_FORNECEDORES =
     "fornecedores";
 
 
+/* =====================================================
+   ✏️ CONTROLE DE EDIÇÃO
+===================================================== */
+
+let fornecedorEmEdicao = null;
+
+
+/* =====================================================
+   💾 LER FORNECEDORES
+===================================================== */
+
 function pegarFornecedores() {
 
     try {
 
-        return JSON.parse(
+        if (
+            typeof lerFornecedores === "function"
+        ) {
+
+            const fornecedores =
+                lerFornecedores();
+
+            return Array.isArray(fornecedores)
+                ? fornecedores
+                : [];
+
+        }
+
+
+        const dados =
             localStorage.getItem(
                 CHAVE_FORNECEDORES
-            )
-        ) || [];
+            );
+
+
+        if (!dados) {
+
+            return [];
+
+        }
+
+
+        const fornecedores =
+            JSON.parse(dados);
+
+
+        return Array.isArray(fornecedores)
+            ? fornecedores
+            : [];
 
     }
-
     catch (erro) {
+
+        console.error(
+            "Erro ao carregar fornecedores:",
+            erro
+        );
 
         return [];
 
@@ -339,26 +746,126 @@ function pegarFornecedores() {
 }
 
 
+/* =====================================================
+   💾 SALVAR FORNECEDORES
+===================================================== */
+
 function salvarListaFornecedores(
     fornecedores
 ) {
 
-    localStorage.setItem(
+    try {
 
-        CHAVE_FORNECEDORES,
+        if (
+            typeof salvarFornecedores === "function"
+        ) {
 
-        JSON.stringify(
-            fornecedores
-        )
+            return salvarFornecedores(
+                fornecedores
+            );
 
+        }
+
+
+        localStorage.setItem(
+            CHAVE_FORNECEDORES,
+            JSON.stringify(
+                fornecedores
+            )
+        );
+
+
+        return true;
+
+    }
+    catch (erro) {
+
+        console.error(
+            "Erro ao salvar fornecedores:",
+            erro
+        );
+
+        alert(
+            "❌ Não foi possível salvar os fornecedores."
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   🆔 GERAR ID
+===================================================== */
+
+function gerarIdFornecedor() {
+
+    if (
+        typeof gerarID === "function"
+    ) {
+
+        return gerarID();
+
+    }
+
+
+    return (
+        Date.now().toString(36) +
+        Math.random()
+            .toString(36)
+            .slice(2, 8)
     );
 
 }
 
 
-// =====================================================
-// 💰 MENSAGEM
-// =====================================================
+/* =====================================================
+   🛡️ ESCAPAR TEXTO
+===================================================== */
+
+function escaparFornecedor(texto) {
+
+    if (
+        typeof escapar === "function"
+    ) {
+
+        return escapar(
+            String(texto ?? "")
+        );
+
+    }
+
+
+    return String(texto ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   💬 MENSAGEM
+===================================================== */
 
 function mostrarMensagem(
     texto,
@@ -371,114 +878,269 @@ function mostrarMensagem(
         );
 
 
+    if (!elemento) {
+
+        return;
+
+    }
+
+
     elemento.innerHTML = `
 
-        <div class="${tipo}">
+        <div class="mensagem ${tipo}">
 
-            ${texto}
+            ${escaparFornecedor(texto)}
 
         </div>
 
     `;
 
 
-    setTimeout(
-        function() {
-
-            elemento.innerHTML = "";
-
-        },
-        3000
+    clearTimeout(
+        window.timerMensagemFornecedor
     );
+
+
+    window.timerMensagemFornecedor =
+        setTimeout(
+            function() {
+
+                elemento.innerHTML = "";
+
+            },
+            3500
+        );
 
 }
 
 
-// =====================================================
-// 🧹 LIMPAR
-// =====================================================
+/* =====================================================
+   🧹 LIMPAR FORMULÁRIO
+===================================================== */
 
-function limparFormulario() {
+function limparFormulario(
+    mostrarAviso = false
+) {
 
     document.getElementById(
         "nomeFornecedor"
     ).value = "";
 
+
     document.getElementById(
         "responsavel"
     ).value = "";
+
 
     document.getElementById(
         "telefone"
     ).value = "";
 
+
     document.getElementById(
         "email"
     ).value = "";
+
 
     document.getElementById(
         "endereco"
     ).value = "";
 
+
     document.getElementById(
         "observacoes"
     ).value = "";
 
+
+    fornecedorEmEdicao = null;
+
+
+    atualizarModoFormulario();
+
+
+    if (mostrarAviso) {
+
+        mostrarMensagem(
+            "🧹 Formulário limpo.",
+            "alerta"
+        );
+
+    }
+
 }
 
 
-// =====================================================
-// 💾 SALVAR
-// =====================================================
+/* =====================================================
+   🎨 ATUALIZAR MODO DO FORMULÁRIO
+===================================================== */
+
+function atualizarModoFormulario() {
+
+    const card =
+        document.getElementById(
+            "cardFormulario"
+        );
+
+
+    const titulo =
+        card?.querySelector(
+            ".secao-titulo"
+        );
+
+
+    const botao =
+        document.getElementById(
+            "btnSalvarFornecedor"
+        );
+
+
+    if (!card || !titulo || !botao) {
+
+        return;
+
+    }
+
+
+    if (
+        fornecedorEmEdicao !== null
+    ) {
+
+        card.classList.add(
+            "modo-edicao"
+        );
+
+
+        titulo.textContent =
+            "✏️ Editar Fornecedor";
+
+
+        botao.textContent =
+            "💾 ATUALIZAR FORNECEDOR";
+
+    }
+    else {
+
+        card.classList.remove(
+            "modo-edicao"
+        );
+
+
+        titulo.textContent =
+            "➕ Cadastrar Fornecedor";
+
+
+        botao.textContent =
+            "💾 SALVAR FORNECEDOR";
+
+    }
+
+}
+
+
+/* =====================================================
+   🔎 NORMALIZAR TEXTO
+===================================================== */
+
+function normalizarTextoFornecedor(
+    texto
+) {
+
+    return String(
+        texto ?? ""
+    )
+    .trim()
+    .toLowerCase();
+
+}
+
+
+/* =====================================================
+   💾 SALVAR / ATUALIZAR
+===================================================== */
 
 function salvarFornecedor() {
-
 
     const nome =
         document.getElementById(
             "nomeFornecedor"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
     const responsavel =
         document.getElementById(
             "responsavel"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
     const telefone =
         document.getElementById(
             "telefone"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
     const email =
         document.getElementById(
             "email"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
     const endereco =
         document.getElementById(
             "endereco"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
     const observacoes =
         document.getElementById(
             "observacoes"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
-    // =================================================
-    // VALIDAÇÃO
-    // =================================================
+    /* =================================================
+       VALIDAÇÃO
+    ================================================== */
 
     if (!nome) {
 
         alert(
             "⚠️ Digite o nome do fornecedor."
         );
+
+        document.getElementById(
+            "nomeFornecedor"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if (
+        email &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            email
+        )
+    ) {
+
+        alert(
+            "⚠️ Informe um e-mail válido."
+        );
+
+        document.getElementById(
+            "email"
+        ).focus();
 
         return;
 
@@ -489,28 +1151,47 @@ function salvarFornecedor() {
         pegarFornecedores();
 
 
-    // =================================================
-    // VERIFICAR DUPLICADO
-    // =================================================
+    /* =================================================
+       🔎 VERIFICAR DUPLICIDADE
+    ================================================== */
+
+    const nomeNormalizado =
+        normalizarTextoFornecedor(
+            nome
+        );
+
 
     const duplicado =
-        fornecedores.some(
+        fornecedores.find(
             function(fornecedor) {
 
-                return (
-
-                    String(
+                const mesmoFornecedor =
+                    normalizarTextoFornecedor(
                         fornecedor.nome
-                    )
-                    .toLowerCase()
-                    .trim()
+                    ) ===
+                    nomeNormalizado;
 
-                    ===
 
-                    nome
-                    .toLowerCase()
-                    .trim()
+                if (!mesmoFornecedor) {
 
+                    return false;
+
+                }
+
+
+                if (
+                    fornecedorEmEdicao === null
+                ) {
+
+                    return true;
+
+                }
+
+
+                return String(
+                    fornecedor.id
+                ) !== String(
+                    fornecedorEmEdicao
                 );
 
             }
@@ -520,7 +1201,7 @@ function salvarFornecedor() {
     if (duplicado) {
 
         alert(
-            "⚠️ Este fornecedor já está cadastrado."
+            "⚠️ Já existe um fornecedor cadastrado com esse nome."
         );
 
         return;
@@ -528,14 +1209,116 @@ function salvarFornecedor() {
     }
 
 
-    // =================================================
-    // NOVO FORNECEDOR
-    // =================================================
+    const agora =
+        new Date().toISOString();
+
+
+    /* =================================================
+       ✏️ ATUALIZAÇÃO
+    ================================================== */
+
+    if (
+        fornecedorEmEdicao !== null
+    ) {
+
+        const indice =
+            fornecedores.findIndex(
+                function(fornecedor) {
+
+                    return String(
+                        fornecedor.id
+                    ) === String(
+                        fornecedorEmEdicao
+                    );
+
+                }
+            );
+
+
+        if (
+            indice === -1
+        ) {
+
+            alert(
+                "❌ O fornecedor que estava sendo editado não foi encontrado."
+            );
+
+            limparFormulario();
+
+            mostrarFornecedores();
+
+            return;
+
+        }
+
+
+        const antigo =
+            fornecedores[indice];
+
+
+        fornecedores[indice] = {
+
+            ...antigo,
+
+            nome:
+                nome,
+
+            responsavel:
+                responsavel,
+
+            telefone:
+                telefone,
+
+            email:
+                email,
+
+            endereco:
+                endereco,
+
+            observacoes:
+                observacoes,
+
+            atualizadoEm:
+                agora
+
+        };
+
+
+        if (
+            !salvarListaFornecedores(
+                fornecedores
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        limparFormulario();
+
+
+        mostrarFornecedores();
+
+
+        mostrarMensagem(
+            "✅ Fornecedor atualizado com sucesso!"
+        );
+
+
+        return;
+
+    }
+
+
+    /* =================================================
+       ➕ NOVO FORNECEDOR
+    ================================================== */
 
     const fornecedor = {
 
         id:
-            Date.now(),
+            gerarIdFornecedor(),
 
         nome:
             nome,
@@ -556,7 +1339,13 @@ function salvarFornecedor() {
             observacoes,
 
         dataCadastro:
-            new Date().toISOString()
+            agora,
+
+        criadoEm:
+            agora,
+
+        atualizadoEm:
+            agora
 
     };
 
@@ -566,9 +1355,15 @@ function salvarFornecedor() {
     );
 
 
-    salvarListaFornecedores(
-        fornecedores
-    );
+    if (
+        !salvarListaFornecedores(
+            fornecedores
+        )
+    ) {
+
+        return;
+
+    }
 
 
     limparFormulario();
@@ -584,12 +1379,11 @@ function salvarFornecedor() {
 }
 
 
-// =====================================================
-// 📋 MOSTRAR FORNECEDORES
-// =====================================================
+/* =====================================================
+   📋 MOSTRAR FORNECEDORES
+===================================================== */
 
 function mostrarFornecedores() {
-
 
     const lista =
         document.getElementById(
@@ -597,22 +1391,34 @@ function mostrarFornecedores() {
         );
 
 
-    const pesquisa =
+    if (!lista) {
+
+        return;
+
+    }
+
+
+    const campoPesquisa =
         document.getElementById(
             "pesquisaFornecedor"
-        )
-        .value
-        .toLowerCase()
-        .trim();
+        );
+
+
+    const pesquisa =
+        normalizarTextoFornecedor(
+            campoPesquisa
+                ? campoPesquisa.value
+                : ""
+        );
 
 
     let fornecedores =
         pegarFornecedores();
 
 
-    // =================================================
-    // FILTRO
-    // =================================================
+    /* =================================================
+       🔎 FILTRO
+    ================================================== */
 
     if (pesquisa) {
 
@@ -620,36 +1426,36 @@ function mostrarFornecedores() {
             fornecedores.filter(
                 function(fornecedor) {
 
-                    return (
+                    const texto =
+                        [
 
-                        String(
-                            fornecedor.nome || ""
-                        )
-                        .toLowerCase()
-                        .includes(
-                            pesquisa
-                        )
+                            fornecedor.nome,
 
-                        ||
+                            fornecedor.responsavel,
 
-                        String(
-                            fornecedor.responsavel || ""
-                        )
-                        .toLowerCase()
-                        .includes(
-                            pesquisa
-                        )
+                            fornecedor.telefone,
 
-                        ||
+                            fornecedor.email,
 
-                        String(
-                            fornecedor.telefone || ""
-                        )
-                        .toLowerCase()
-                        .includes(
-                            pesquisa
-                        )
+                            fornecedor.endereco,
 
+                            fornecedor.observacoes
+
+                        ]
+                        .map(
+                            function(valor) {
+
+                                return normalizarTextoFornecedor(
+                                    valor
+                                );
+
+                            }
+                        )
+                        .join(" ");
+
+
+                    return texto.includes(
+                        pesquisa
                     );
 
                 }
@@ -658,9 +1464,29 @@ function mostrarFornecedores() {
     }
 
 
-    // =================================================
-    // VAZIO
-    // =================================================
+    /* =================================================
+       🔢 CONTADOR
+    ================================================== */
+
+    const contador =
+        document.getElementById(
+            "contadorFornecedores"
+        );
+
+
+    if (contador) {
+
+        contador.textContent =
+            fornecedores.length === 1
+                ? "1 fornecedor encontrado."
+                : `${fornecedores.length} fornecedores encontrados.`;
+
+    }
+
+
+    /* =================================================
+       📭 VAZIO
+    ================================================== */
 
     if (
         fornecedores.length === 0
@@ -668,12 +1494,27 @@ function mostrarFornecedores() {
 
         lista.innerHTML = `
 
-            <div class="card">
+            <div class="card vazio-fornecedores">
 
-                <p class="vazio">
+                <div class="icone">
 
-                    📭 Nenhum fornecedor
-                    encontrado.
+                    📭
+
+                </div>
+
+                <strong>
+
+                    Nenhum fornecedor encontrado.
+
+                </strong>
+
+                <p style="margin-top:8px;">
+
+                    ${
+                        pesquisa
+                            ? "Tente outra pesquisa."
+                            : "Cadastre seu primeiro fornecedor acima."
+                    }
 
                 </p>
 
@@ -686,180 +1527,217 @@ function mostrarFornecedores() {
     }
 
 
+    /* =================================================
+       ↕️ ORDENAÇÃO
+    ================================================== */
+
+    fornecedores =
+        fornecedores
+            .slice()
+            .sort(
+                function(a, b) {
+
+                    return String(
+                        a.nome || ""
+                    )
+                    .localeCompare(
+                        String(
+                            b.nome || ""
+                        ),
+                        "pt-BR",
+                        {
+                            sensitivity:
+                                "base"
+                        }
+                    );
+
+                }
+            );
+
+
     lista.innerHTML = "";
 
 
-    // =================================================
-    // LISTAGEM
-    // =================================================
+    /* =================================================
+       🏢 CARDS
+    ================================================== */
 
-    fornecedores
-        .slice()
-        .sort(
-            function(a, b) {
+    fornecedores.forEach(
+        function(fornecedor) {
 
-                return String(
-                    a.nome || ""
-                )
-                .localeCompare(
-                    String(
-                        b.nome || ""
-                    ),
-                    "pt-BR"
+
+            const nome =
+                escaparFornecedor(
+                    fornecedor.nome ||
+                    "Fornecedor sem nome"
                 );
 
-            }
-        )
-        .forEach(
-            function(fornecedor) {
+
+            const responsavel =
+                escaparFornecedor(
+                    fornecedor.responsavel ||
+                    "-"
+                );
 
 
-                lista.innerHTML += `
-
-                    <div
-                        class="fornecedor">
-
-                        <h3>
-
-                            🏢
-                            ${escapar(
-                                fornecedor.nome
-                            )}
-
-                        </h3>
+            const telefone =
+                escaparFornecedor(
+                    fornecedor.telefone ||
+                    "-"
+                );
 
 
-                        ${
-                            fornecedor.responsavel
+            const email =
+                escaparFornecedor(
+                    fornecedor.email ||
+                    "-"
+                );
+
+
+            const endereco =
+                escaparFornecedor(
+                    fornecedor.endereco ||
+                    "-"
+                );
+
+
+            const observacoes =
+                escaparFornecedor(
+                    fornecedor.observacoes ||
+                    "-"
+                );
+
+
+            const id =
+                escaparFornecedor(
+                    fornecedor.id
+                );
+
+
+            lista.innerHTML += `
+
+                <article class="fornecedor">
+
+
+                    <h3>
+
+                        🏢 ${nome}
+
+                    </h3>
+
+
+                    <div class="info-fornecedor">
+
+
+                        <div class="info-box-fornecedor">
+
+                            <small>
+
+                                👤 Responsável
+
+                            </small>
+
+                            <strong>
+
+                                ${responsavel}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-box-fornecedor">
+
+                            <small>
+
+                                📱 Telefone / WhatsApp
+
+                            </small>
+
+                            <strong>
+
+                                ${telefone}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-box-fornecedor">
+
+                            <small>
+
+                                📧 E-mail
+
+                            </small>
+
+                            <strong>
+
+                                ${email}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-box-fornecedor">
+
+                            <small>
+
+                                📍 Endereço
+
+                            </small>
+
+                            <strong>
+
+                                ${endereco}
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    ${
+                        fornecedor.observacoes
                             ?
 
                             `
-                            <p class="info">
+                            <div
+                                class="info-box-fornecedor"
+                                style="margin-top:10px;"
+                            >
 
-                                👤
+                                <small>
+
+                                    📝 Observações
+
+                                </small>
+
                                 <strong>
-                                    Responsável:
+
+                                    ${observacoes}
+
                                 </strong>
 
-                                ${escapar(
-                                    fornecedor.responsavel
-                                )}
-
-                            </p>
+                            </div>
                             `
 
                             :
 
                             ""
-                        }
+                    }
 
 
-                        ${
-                            fornecedor.telefone
-                            ?
-
-                            `
-                            <p class="info">
-
-                                📱
-                                <strong>
-                                    Telefone:
-                                </strong>
-
-                                ${escapar(
-                                    fornecedor.telefone
-                                )}
-
-                            </p>
-                            `
-
-                            :
-
-                            ""
-                        }
-
-
-                        ${
-                            fornecedor.email
-                            ?
-
-                            `
-                            <p class="info">
-
-                                📧
-                                <strong>
-                                    E-mail:
-                                </strong>
-
-                                ${escapar(
-                                    fornecedor.email
-                                )}
-
-                            </p>
-                            `
-
-                            :
-
-                            ""
-                        }
-
-
-                        ${
-                            fornecedor.endereco
-                            ?
-
-                            `
-                            <p class="info">
-
-                                📍
-                                <strong>
-                                    Endereço:
-                                </strong>
-
-                                ${escapar(
-                                    fornecedor.endereco
-                                )}
-
-                            </p>
-                            `
-
-                            :
-
-                            ""
-                        }
-
-
-                        ${
-                            fornecedor.observacoes
-                            ?
-
-                            `
-                            <p class="info">
-
-                                📝
-                                <strong>
-                                    Observações:
-                                </strong>
-
-                                ${escapar(
-                                    fornecedor.observacoes
-                                )}
-
-                            </p>
-                            `
-
-                            :
-
-                            ""
-                        }
-
-
-                        <hr>
+                    <div class="acoes-fornecedor">
 
 
                         <button
-                            class="btn-editar"
-                            onclick="editarFornecedor(${fornecedor.id})">
+                            class="btn-editar-fornecedor"
+                            onclick="editarFornecedor(${JSON.stringify(String(fornecedor.id))})"
+                        >
 
                             ✏️ EDITAR
 
@@ -867,29 +1745,33 @@ function mostrarFornecedores() {
 
 
                         <button
-                            class="btn-excluir"
-                            onclick="excluirFornecedor(${fornecedor.id})">
+                            class="btn-excluir-fornecedor"
+                            onclick="excluirFornecedor(${JSON.stringify(String(fornecedor.id))})"
+                        >
 
                             🗑️ EXCLUIR
 
                         </button>
 
+
                     </div>
 
-                `;
 
-            }
-        );
+                </article>
+
+            `;
+
+        }
+    );
 
 }
 
 
-// =====================================================
-// ✏️ EDITAR
-// =====================================================
+/* =====================================================
+   ✏️ EDITAR FORNECEDOR
+===================================================== */
 
 function editarFornecedor(id) {
-
 
     const fornecedores =
         pegarFornecedores();
@@ -897,11 +1779,11 @@ function editarFornecedor(id) {
 
     const fornecedor =
         fornecedores.find(
-            function(f) {
+            function(item) {
 
-                return Number(
-                    f.id
-                ) === Number(id);
+                return String(
+                    item.id
+                ) === String(id);
 
             }
         );
@@ -916,6 +1798,10 @@ function editarFornecedor(id) {
         return;
 
     }
+
+
+    fornecedorEmEdicao =
+        fornecedor.id;
 
 
     document.getElementById(
@@ -954,28 +1840,7 @@ function editarFornecedor(id) {
         fornecedor.observacoes || "";
 
 
-    // =================================================
-    // REMOVER O ANTIGO
-    // =================================================
-
-    const novaLista =
-        fornecedores.filter(
-            function(f) {
-
-                return Number(
-                    f.id
-                ) !== Number(id);
-
-            }
-        );
-
-
-    salvarListaFornecedores(
-        novaLista
-    );
-
-
-    mostrarFornecedores();
+    atualizarModoFormulario();
 
 
     window.scrollTo({
@@ -987,19 +1852,35 @@ function editarFornecedor(id) {
     });
 
 
+    document.getElementById(
+        "nomeFornecedor"
+    ).focus();
+
+
     mostrarMensagem(
-        "✏️ Dados carregados para edição. Salve novamente para atualizar."
+        "✏️ Dados carregados para edição.",
+        "alerta"
     );
 
 }
 
 
-// =====================================================
-// 🗑️ EXCLUIR
-// =====================================================
+/* =====================================================
+   ❌ CANCELAR EDIÇÃO
+===================================================== */
+
+function cancelarEdicao() {
+
+    limparFormulario();
+
+}
+
+
+/* =====================================================
+   🗑️ EXCLUIR FORNECEDOR
+===================================================== */
 
 function excluirFornecedor(id) {
-
 
     const fornecedores =
         pegarFornecedores();
@@ -1007,17 +1888,21 @@ function excluirFornecedor(id) {
 
     const fornecedor =
         fornecedores.find(
-            function(f) {
+            function(item) {
 
-                return Number(
-                    f.id
-                ) === Number(id);
+                return String(
+                    item.id
+                ) === String(id);
 
             }
         );
 
 
     if (!fornecedor) {
+
+        alert(
+            "❌ Fornecedor não encontrado."
+        );
 
         return;
 
@@ -1034,7 +1919,10 @@ function excluirFornecedor(id) {
 
             "\n\n" +
 
-            "Essa ação removerá o fornecedor do cadastro.\n\n" +
+            "O fornecedor será removido do cadastro.\n\n" +
+
+            "Os registros históricos de compras já realizados " +
+            "não serão apagados.\n\n" +
 
             "Deseja realmente excluir?"
 
@@ -1050,77 +1938,115 @@ function excluirFornecedor(id) {
 
     const novaLista =
         fornecedores.filter(
-            function(f) {
+            function(item) {
 
-                return Number(
-                    f.id
-                ) !== Number(id);
+                return String(
+                    item.id
+                ) !== String(id);
 
             }
         );
 
 
-    salvarListaFornecedores(
-        novaLista
-    );
+    if (
+        !salvarListaFornecedores(
+            novaLista
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        fornecedorEmEdicao !== null &&
+        String(fornecedorEmEdicao) === String(id)
+    ) {
+
+        limparFormulario();
+
+    }
 
 
     mostrarFornecedores();
 
 
     mostrarMensagem(
-        "🗑️ Fornecedor excluído."
+        "🗑️ Fornecedor excluído do cadastro."
     );
 
 }
 
 
-// =====================================================
-// 🛡️ SEGURANÇA
-// =====================================================
+/* =====================================================
+   ⌨️ ENTER PARA SALVAR
+===================================================== */
 
-function escapar(texto) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    return String(
-        texto ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+        if (
+            event.key !== "Enter"
+        ) {
 
-}
+            return;
+
+        }
 
 
-// =====================================================
-// 🚀 INICIAR
-// =====================================================
+        if (
+            event.target.tagName === "TEXTAREA"
+        ) {
 
-window.addEventListener(
-    "load",
+            return;
+
+        }
+
+
+        const formulario =
+            document.getElementById(
+                "cardFormulario"
+            );
+
+
+        if (
+            formulario &&
+            formulario.contains(
+                event.target
+            )
+        ) {
+
+            event.preventDefault();
+
+            salvarFornecedor();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   🚀 INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
     function() {
+
+        atualizarModoFormulario();
 
         mostrarFornecedores();
 
     }
 );
 
+
+/* =====================================================
+   🔄 QUANDO VOLTAR PARA A PÁGINA
+===================================================== */
 
 window.addEventListener(
     "pageshow",
@@ -1132,7 +2058,36 @@ window.addEventListener(
 );
 
 
+/* =====================================================
+   💾 SINCRONIZAÇÃO COM OUTRAS PÁGINAS
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key === CHAVE_FORNECEDORES
+        ) {
+
+            mostrarFornecedores();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   🌐 INTEGRAÇÃO GRILLCORE
+===================================================== */
+
+window.mostrarFornecedoresPagina =
+    mostrarFornecedores;
+
+
 </script>
+
 
 </body>
 

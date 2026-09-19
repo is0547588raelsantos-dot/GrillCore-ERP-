@@ -2,1430 +2,4446 @@
 <html lang="pt-BR">
 
 <head>
-<meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <!-- =====================================================
+         PROTEÇÃO DE LOGIN
+    ====================================================== -->
+    <script>
+        if (localStorage.getItem("grillcore_login") !== "true") {
+            window.location.replace("login.html");
+        }
+    </script>
 
-<title>Compras - GrillCore ERP</title>
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="style.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<style>
+    <meta name="theme-color"
+          content="#ff7300">
 
-body{
-    background:#181818;
-    color:white;
-    font-family:Arial,sans-serif;
-    padding:15px;
-}
+    <meta name="description"
+          content="Controle profissional de compras, fornecedores, estoque e despesas — GrillCore ERP">
 
-h1,h2{
-    color:#ff7a00;
-}
+    <title>Compras — GrillCore ERP</title>
 
-.card{
-    background:#242424;
-    padding:20px;
-    margin:15px 0;
-    border-radius:15px;
-    border:1px solid #333;
-}
+    <link rel="manifest"
+          href="manifest.json">
 
-label{
-    display:block;
-    margin-top:15px;
-    margin-bottom:6px;
-    font-weight:bold;
-}
+    <link rel="stylesheet"
+          href="style.css">
 
-input,
-select{
-    width:100%;
-    box-sizing:border-box;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    font-size:17px;
-    background:white;
-    color:#111;
-}
+    <link rel="stylesheet"
+          href="tema-laranja.css">
 
-button{
-    width:100%;
-    padding:17px;
-    margin:8px 0;
-    border:none;
-    border-radius:12px;
-    background:#ff7a00;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-}
 
-button:active{
-    transform:scale(.98);
-}
+    <!-- =====================================================
+         ESTILO EXCLUSIVO — COMPRAS
+         PADRÃO GRILLCORE
+         PRETO + LARANJA
+    ====================================================== -->
 
-.voltar{
-    background:#333;
-}
+    <style>
 
-.excluir{
-    background:#b52b2b;
-}
+        /* =================================================
+           BASE
+        ================================================= */
 
-.compra{
-    background:#202020;
-    padding:18px;
-    margin:12px 0;
-    border-radius:12px;
-    border:1px solid #444;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-.compra h3{
-    color:#ff7a00;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(255,115,0,.12),
+                    transparent 34%
+                ),
+                #050505;
+            color: #ffffff;
+        }
 
-.valor{
-    color:#35d07f;
-    font-size:25px;
-    font-weight:bold;
-}
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
 
-.vazio{
-    color:#aaa;
-    text-align:center;
-    padding:20px;
-}
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
 
-.aviso{
-    padding:15px;
-    border-radius:12px;
-    margin:10px 0;
-    background:#4a3500;
-    border:1px solid #ff7a00;
-}
 
-.sucesso{
-    padding:15px;
-    border-radius:12px;
-    margin:10px 0;
-    background:#123d25;
-    border:1px solid #35d07f;
-}
+        /* =================================================
+           CONTAINER
+        ================================================= */
 
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
+        .compras-page {
+            width: 100%;
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 22px 18px 50px;
+        }
 
-@media(max-width:500px){
-    .grid{
-        grid-template-columns:1fr;
-    }
-}
 
-</style>
+        /* =================================================
+           CABEÇALHO
+        ================================================= */
+
+        .compras-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .compras-header .icone {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            font-size: 34px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ff9a3d,
+                    #ff7300 50%,
+                    #b94700
+                );
+
+            box-shadow:
+                0 0 25px rgba(255,115,0,.22),
+                inset 0 1px 0 rgba(255,255,255,.18);
+
+            border: 1px solid rgba(255,154,61,.65);
+        }
+
+        .compras-header h1 {
+            margin: 0;
+
+            color: #ff8a1f;
+
+            font-size: clamp(28px, 5vw, 42px);
+
+            font-weight: 900;
+
+            letter-spacing: -.8px;
+
+            text-shadow:
+                0 0 18px rgba(255,115,0,.22);
+        }
+
+        .compras-header p {
+            margin: 7px 0 0;
+
+            color: #a7a7a7;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================================
+           CARD PRINCIPAL DO FORMULÁRIO
+        ================================================= */
+
+        .compra-form-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #171717,
+                    #0d0d0d
+                );
+
+            border: 1px solid rgba(255,115,0,.34);
+
+            border-radius: 22px;
+
+            padding: 22px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 16px 40px rgba(0,0,0,.35),
+                inset 0 1px 0 rgba(255,255,255,.035);
+        }
+
+
+        /* =================================================
+           TÍTULO DAS SEÇÕES
+        ================================================= */
+
+        .form-titulo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin: 0 0 18px;
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: 850;
+        }
+
+        .form-titulo .numero {
+
+            width: 34px;
+            height: 34px;
+
+            min-width: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ff8a1f,
+                    #ff7300
+                );
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 5px 18px rgba(255,115,0,.22);
+        }
+
+
+        /* =================================================
+           SEÇÕES
+        ================================================= */
+
+        .form-secao {
+            padding: 0 0 22px;
+            margin-bottom: 22px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .form-secao:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+
+        /* =================================================
+           GRIDS
+        ================================================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 16px;
+        }
+
+        .form-grid-3 {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 16px;
+        }
+
+
+        /* =================================================
+           CAMPOS
+        ================================================= */
+
+        .campo {
+            min-width: 0;
+        }
+
+        .campo label {
+            display: block;
+
+            margin: 0 0 7px;
+
+            color: #c7c7c7;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+
+            width: 100%;
+
+            min-width: 0;
+
+            border: 1px solid rgba(255,255,255,.10);
+
+            border-radius: 12px;
+
+            background: #090909;
+
+            color: #ffffff;
+
+            padding: 13px 14px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
+        }
+
+        .campo input::placeholder,
+        .campo textarea::placeholder {
+            color: #666;
+        }
+
+        .campo input:hover,
+        .campo select:hover,
+        .campo textarea:hover {
+            border-color:
+                rgba(255,115,0,.32);
+        }
+
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+
+            border-color: #ff7300;
+
+            background: #0c0c0c;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255,115,0,.11),
+                0 0 18px
+                rgba(255,115,0,.08);
+        }
+
+        .campo textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        .campo select {
+            cursor: pointer;
+        }
+
+        .campo select option {
+            background: #101010;
+            color: #ffffff;
+        }
+
+
+        /* =================================================
+           VALOR EM DESTAQUE
+        ================================================= */
+
+        .valor-destaque input {
+
+            color: #ff9a3d !important;
+
+            font-weight: 900;
+
+            font-size: 18px;
+
+            border-color:
+                rgba(255,115,0,.30);
+        }
+
+
+        /* =================================================
+           MENSAGENS
+        ================================================= */
+
+        #mensagem {
+            margin-top: 16px;
+        }
+
+        .sucesso,
+        .aviso,
+        .erro {
+
+            padding: 13px 15px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            line-height: 1.45;
+
+            font-weight: 650;
+        }
+
+        .sucesso {
+            background:
+                rgba(53,208,127,.10);
+
+            border:
+                1px solid rgba(53,208,127,.35);
+
+            color: #61e49a;
+        }
+
+        .aviso {
+            background:
+                rgba(242,201,76,.10);
+
+            border:
+                1px solid rgba(242,201,76,.35);
+
+            color: #f2c94c;
+        }
+
+        .erro {
+            background:
+                rgba(255,85,85,.10);
+
+            border:
+                1px solid rgba(255,85,85,.35);
+
+            color: #ff7373;
+        }
+
+
+        /* =================================================
+           AÇÕES
+        ================================================= */
+
+        .acoes-compra {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 20px;
+        }
+
+        .acoes-compra button {
+
+            min-height: 48px;
+
+            border-radius: 13px;
+
+            padding: 12px 20px;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 850;
+
+            transition:
+                transform .18s ease,
+                box-shadow .18s ease,
+                filter .18s ease;
+        }
+
+        .acoes-compra button:hover {
+
+            transform: translateY(-2px);
+
+            filter: brightness(1.06);
+        }
+
+        .acoes-compra button:active {
+
+            transform: translateY(0);
+
+        }
+
+        .btn-registrar {
+
+            flex: 1;
+
+            min-width: 210px;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a1f,
+                    #ff7300 55%,
+                    #d95700
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(255,115,0,.20);
+        }
+
+        .btn-limpar {
+
+            background: #151515;
+
+            border:
+                1px solid
+                rgba(255,255,255,.10) !important;
+
+            color: #cfcfcf;
+        }
+
+        .btn-limpar:hover {
+
+            border-color:
+                rgba(255,115,0,.35) !important;
+
+            color: #ffffff;
+        }
+
+
+        /* =================================================
+           RESUMO
+        ================================================= */
+
+        .resumo-compras {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .resumo-card {
+
+            min-width: 0;
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #171717,
+                    #0d0d0d
+                );
+
+            border:
+                1px solid
+                rgba(255,115,0,.28);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,.30);
+        }
+
+        .resumo-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #b94700,
+                    #ff7300,
+                    #ff9a3d
+                );
+        }
+
+        .resumo-card .icone-resumo {
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+        }
+
+        .resumo-card .rotulo {
+
+            color: #999;
+
+            font-size: 12px;
+
+            font-weight: 750;
+
+            text-transform: uppercase;
+
+            letter-spacing: .5px;
+
+            margin-bottom: 7px;
+        }
+
+        .resumo-card .numero {
+
+            max-width: 100%;
+
+            color: #ff8a1f;
+
+            font-size:
+                clamp(22px, 4vw, 31px);
+
+            line-height: 1.05;
+
+            letter-spacing: -.5px;
+
+            font-weight: 950;
+
+            font-variant-numeric:
+                tabular-nums;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .resumo-card.verde .numero {
+            color: #35d07f;
+        }
+
+
+        /* =================================================
+           HISTÓRICO
+        ================================================= */
+
+        .historico-painel {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #141414,
+                    #0b0b0b
+                );
+
+            border:
+                1px solid
+                rgba(255,115,0,.25);
+
+            border-radius: 22px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 16px 40px rgba(0,0,0,.30);
+        }
+
+        .historico-cabecalho {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .historico-cabecalho h2 {
+
+            margin: 0;
+
+            color: #ffffff;
+
+            font-size: 21px;
+
+            font-weight: 900;
+        }
+
+        .historico-cabecalho h2 span {
+            color: #ff7300;
+        }
+
+
+        /* =================================================
+           FILTROS
+        ================================================= */
+
+        .filtros {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.5fr)
+                minmax(150px, 1fr)
+                minmax(150px, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+
+            padding: 12px;
+
+            border-radius: 15px;
+
+            background: #090909;
+
+            border:
+                1px solid
+                rgba(255,115,0,.18);
+        }
+
+        .filtros input,
+        .filtros select {
+
+            width: 100%;
+
+            min-width: 0;
+
+            padding: 11px 12px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background: #131313;
+
+            color: #ffffff;
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+        .filtros input:focus,
+        .filtros select:focus {
+
+            border-color: #ff7300;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255,115,0,.08);
+        }
+
+
+        /* =================================================
+           LISTA DE COMPRAS
+        ================================================= */
+
+        #listaCompras {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+
+        /* =================================================
+           CARD DE COMPRA
+        ================================================= */
+
+        .compra {
+
+            min-width: 0;
+
+            padding: 17px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #181818,
+                    #101010
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            transition:
+                border-color .2s ease,
+                transform .2s ease,
+                background .2s ease;
+        }
+
+        .compra:hover {
+
+            transform: translateY(-1px);
+
+            border-color:
+                rgba(255,115,0,.35);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1b1b1b,
+                    #101010
+                );
+        }
+
+        .compra.cancelada {
+
+            opacity: .72;
+
+            border-color:
+                rgba(255,85,85,.25);
+        }
+
+
+        /* =================================================
+           TOPO DO CARD
+        ================================================= */
+
+        .compra-topo {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 14px;
+
+            margin-bottom: 13px;
+        }
+
+        .compra-produto {
+
+            min-width: 0;
+        }
+
+        .compra-produto h3 {
+
+            margin: 0 0 5px;
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: 850;
+
+            overflow-wrap: anywhere;
+        }
+
+        .compra-fornecedor {
+
+            color: #999;
+
+            font-size: 12px;
+        }
+
+        .compra-fornecedor strong {
+            color: #ff8a1f;
+        }
+
+
+        /* =================================================
+           STATUS
+        ================================================= */
+
+        .status {
+
+            flex-shrink: 0;
+
+            padding: 6px 10px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            letter-spacing: .4px;
+        }
+
+        .status.registrada {
+
+            color: #35d07f;
+
+            background:
+                rgba(53,208,127,.10);
+
+            border:
+                1px solid
+                rgba(53,208,127,.25);
+        }
+
+        .status.cancelada {
+
+            color: #ff7373;
+
+            background:
+                rgba(255,85,85,.10);
+
+            border:
+                1px solid
+                rgba(255,85,85,.25);
+        }
+
+
+        /* =================================================
+           DETALHES
+        ================================================= */
+
+        .compra-detalhes {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 10px;
+
+            padding-top: 13px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.06);
+        }
+
+        .detalhe {
+
+            min-width: 0;
+        }
+
+        .detalhe span {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #777;
+
+            font-size: 11px;
+        }
+
+        .detalhe strong {
+
+            display: block;
+
+            color: #e5e5e5;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =================================================
+           VALOR
+        ================================================= */
+
+        .compra-valor {
+
+            text-align: right;
+        }
+
+        .compra-valor .valor {
+
+            display: block;
+
+            max-width: 100%;
+
+            color: #35d07f;
+
+            font-size:
+                clamp(18px, 3.5vw, 23px);
+
+            line-height: 1.05;
+
+            font-weight: 950;
+
+            font-variant-numeric:
+                tabular-nums;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        /* =================================================
+           RODAPÉ DO CARD
+        ================================================= */
+
+        .compra-rodape {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-top: 14px;
+
+            padding-top: 12px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.05);
+        }
+
+        .compra-observacao {
+
+            min-width: 0;
+
+            color: #777;
+
+            font-size: 12px;
+
+            line-height: 1.45;
+
+            overflow-wrap: anywhere;
+        }
+
+        .btn-cancelar-compra {
+
+            flex-shrink: 0;
+
+            border: 1px solid
+                rgba(255,85,85,.28);
+
+            border-radius: 10px;
+
+            padding: 8px 12px;
+
+            background:
+                rgba(255,85,85,.07);
+
+            color: #ff7373;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .18s ease;
+        }
+
+        .btn-cancelar-compra:hover {
+
+            background:
+                rgba(255,85,85,.14);
+
+            border-color:
+                rgba(255,85,85,.50);
+        }
+
+
+        /* =================================================
+           VAZIO
+        ================================================= */
+
+        .vazio {
+
+            padding: 40px 20px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            border:
+                1px dashed
+                rgba(255,115,0,.20);
+
+            background:
+                rgba(255,255,255,.015);
+        }
+
+        .vazio .icone {
+
+            font-size: 36px;
+
+            margin-bottom: 10px;
+        }
+
+        .vazio h3 {
+
+            margin: 0 0 6px;
+
+            color: #ffffff;
+
+            font-size: 16px;
+        }
+
+        .vazio p {
+
+            margin: 0;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* =================================================
+           NAVEGAÇÃO
+        ================================================= */
+
+        .navegacao {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 12px;
+
+            margin-top: 22px;
+        }
+
+        .navegacao a {
+
+            min-width: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 48px;
+
+            padding: 11px 14px;
+
+            border-radius: 13px;
+
+            background:
+                #111111;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            color: #cfcfcf;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition: .18s ease;
+        }
+
+        .navegacao a:hover {
+
+            color: #ffffff;
+
+            border-color:
+                rgba(255,115,0,.40);
+
+            background:
+                rgba(255,115,0,.06);
+
+            transform: translateY(-1px);
+        }
+
+        .navegacao a.principal {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a1f,
+                    #ff7300
+                );
+
+            border-color:
+                #ff7300;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 22px
+                rgba(255,115,0,.16);
+        }
+
+
+        /* =================================================
+           TABLET
+        ================================================= */
+
+        @media (max-width: 800px) {
+
+            .form-grid-3 {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .compra-detalhes {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .filtros {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .filtros input {
+                grid-column: 1 / -1;
+            }
+
+        }
+
+
+        /* =================================================
+           CELULAR
+        ================================================= */
+
+        @media (max-width: 600px) {
+
+            .compras-page {
+
+                padding:
+                    16px 12px 35px;
+            }
+
+            .compras-header {
+
+                margin-bottom: 20px;
+            }
+
+            .compras-header .icone {
+
+                width: 62px;
+                height: 62px;
+
+                border-radius: 18px;
+
+                font-size: 29px;
+            }
+
+            .compras-header h1 {
+
+                font-size: 29px;
+            }
+
+            .compra-form-card,
+            .historico-painel {
+
+                padding: 16px;
+
+                border-radius: 18px;
+            }
+
+            .form-grid,
+            .form-grid-3 {
+
+                grid-template-columns: 1fr;
+
+                gap: 13px;
+            }
+
+            .resumo-compras {
+
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+            }
+
+            .resumo-card {
+
+                padding: 16px;
+            }
+
+            .resumo-card .numero {
+
+                font-size:
+                    clamp(23px, 8vw, 30px);
+            }
+
+            .filtros {
+
+                grid-template-columns: 1fr;
+
+                gap: 9px;
+            }
+
+            .filtros input {
+
+                grid-column: auto;
+            }
+
+            .historico-cabecalho {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .compra-topo {
+
+                flex-direction: column;
+            }
+
+            .status {
+
+                align-self: flex-start;
+            }
+
+            .compra-detalhes {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 13px 10px;
+            }
+
+            .compra-rodape {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .btn-cancelar-compra {
+
+                width: 100%;
+            }
+
+            .navegacao {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* =================================================
+           CELULAR PEQUENO
+        ================================================= */
+
+        @media (max-width: 420px) {
+
+            .compras-page {
+
+                padding-left: 9px;
+                padding-right: 9px;
+            }
+
+            .compra-form-card,
+            .historico-painel {
+
+                padding: 13px;
+            }
+
+            .form-titulo {
+
+                font-size: 16px;
+            }
+
+            .campo input,
+            .campo select,
+            .campo textarea {
+
+                font-size: 14px;
+
+                padding:
+                    12px;
+            }
+
+            .acoes-compra {
+
+                flex-direction: column;
+            }
+
+            .btn-registrar,
+            .btn-limpar {
+
+                width: 100%;
+
+                min-width: 0;
+            }
+
+            .compra-detalhes {
+
+                grid-template-columns: 1fr;
+            }
+
+            .compra-valor {
+
+                text-align: left;
+            }
+
+            .compra-valor .valor {
+
+                font-size: 20px;
+            }
+
+        }
+
+
+        /* =================================================
+           ACESSIBILIDADE
+        ================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                scroll-behavior: auto !important;
+
+                transition: none !important;
+
+                animation: none !important;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
 <body>
 
+    <main class="container compras-page">
 
-<h1>🛒 Compras</h1>
 
-<p>
-Controle de compras e entrada de mercadorias
-</p>
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
 
+        <header class="compras-header">
 
-<hr>
+            <div class="icone">
+                🛒
+            </div>
 
+            <h1>
+                Compras
+            </h1>
 
-<!-- ================================================= -->
-<!-- CADASTRAR COMPRA -->
-<!-- ================================================= -->
+            <p>
+                Controle de mercadorias, fornecedores,
+                estoque e despesas
+            </p>
 
-<h2>➕ Registrar Compra</h2>
+        </header>
 
 
-<div class="card">
+        <!-- =================================================
+             FORMULÁRIO DE COMPRA
+        ================================================== -->
 
+        <section class="compra-form-card">
 
-<label for="fornecedor">
-🏢 Fornecedor
-</label>
 
-<input
-    type="text"
-    id="fornecedor"
-    placeholder="Digite o nome do fornecedor"
-    autocomplete="off"
->
+            <!-- FORNECEDOR -->
 
+            <div class="form-secao">
 
-<label for="mercadoria">
-📦 Mercadoria
-</label>
+                <h2 class="form-titulo">
 
-<input
-    type="text"
-    id="mercadoria"
-    placeholder="Ex: Carne, queijo, bacon..."
-    autocomplete="off"
->
+                    <span class="numero">
+                        1
+                    </span>
 
+                    Fornecedor
 
-<div class="grid">
+                </h2>
 
-<div>
 
-<label for="quantidade">
-🔢 Quantidade
-</label>
+                <div class="form-grid">
 
-<input
-    type="number"
-    id="quantidade"
-    placeholder="0"
-    min="0"
-    step="0.01"
->
+                    <div class="campo">
 
-</div>
+                        <label for="fornecedor">
+                            Fornecedor *
+                        </label>
 
+                        <input
+                            type="text"
+                            id="fornecedor"
+                            list="listaFornecedores"
+                            placeholder="Nome do fornecedor"
+                            autocomplete="off">
 
-<div>
+                        <datalist id="listaFornecedores">
+                        </datalist>
 
-<label for="unidade">
-📏 Unidade
-</label>
+                    </div>
 
-<select id="unidade">
 
-<option value="un">Unidade</option>
-<option value="kg">Kg</option>
-<option value="g">Gramas</option>
-<option value="l">Litros</option>
-<option value="ml">Mililitros</option>
-<option value="cx">Caixa</option>
-<option value="pct">Pacote</option>
+                    <div class="campo">
 
-</select>
+                        <label for="dataCompra">
+                            Data da compra *
+                        </label>
 
-</div>
+                        <input
+                            type="date"
+                            id="dataCompra">
 
-</div>
+                    </div>
 
+                </div>
 
-<label for="valorCompra">
-💰 Valor total da compra
-</label>
+            </div>
 
-<input
-    type="number"
-    id="valorCompra"
-    placeholder="0,00"
-    min="0"
-    step="0.01"
->
 
+            <!-- MERCADORIA -->
 
-<label for="pagamento">
-💳 Forma de pagamento
-</label>
+            <div class="form-secao">
 
-<select id="pagamento">
+                <h2 class="form-titulo">
 
-<option value="Dinheiro">
-💵 Dinheiro
-</option>
+                    <span class="numero">
+                        2
+                    </span>
 
-<option value="Pix">
-📱 Pix
-</option>
+                    Mercadoria
 
-<option value="Cartão">
-💳 Cartão
-</option>
+                </h2>
 
-<option value="Boleto">
-🧾 Boleto
-</option>
 
-<option value="Prazo">
-📅 A prazo
-</option>
+                <div class="form-grid-3">
 
-</select>
+                    <div class="campo">
 
+                        <label for="mercadoria">
+                            Mercadoria *
+                        </label>
 
-<label for="dataCompra">
-📅 Data da compra
-</label>
+                        <input
+                            type="text"
+                            id="mercadoria"
+                            placeholder="Ex.: Carne bovina"
+                            autocomplete="off">
 
-<input
-    type="date"
-    id="dataCompra"
->
+                    </div>
 
 
-<label for="observacao">
-📝 Observação
-</label>
+                    <div class="campo">
 
-<input
-    type="text"
-    id="observacao"
-    placeholder="Opcional"
->
+                        <label for="quantidade">
+                            Quantidade *
+                        </label>
 
+                        <input
+                            type="number"
+                            id="quantidade"
+                            min="0.001"
+                            step="0.001"
+                            placeholder="0">
 
-<div id="mensagem"></div>
+                    </div>
 
 
-<button
-    onclick="registrarCompra()">
+                    <div class="campo">
 
-    🛒 REGISTRAR COMPRA
+                        <label for="unidade">
+                            Unidade
+                        </label>
 
-</button>
+                        <select id="unidade">
 
+                            <option value="un">
+                                Unidade
+                            </option>
 
-</div>
+                            <option value="kg">
+                                Quilograma (kg)
+                            </option>
 
+                            <option value="g">
+                                Grama (g)
+                            </option>
 
-<hr>
+                            <option value="l">
+                                Litro (L)
+                            </option>
 
+                            <option value="ml">
+                                Mililitro (ml)
+                            </option>
 
-<!-- ================================================= -->
-<!-- RESUMO -->
-<!-- ================================================= -->
+                            <option value="cx">
+                                Caixa
+                            </option>
 
-<h2>📊 Resumo</h2>
+                            <option value="pct">
+                                Pacote
+                            </option>
 
+                        </select>
 
-<div class="card">
+                    </div>
 
-<p>
-🧾 Compras registradas:
-</p>
+                </div>
 
-<div
-    id="quantidadeCompras"
-    class="valor">
+            </div>
 
-0
 
-</div>
+            <!-- FINANCEIRO -->
 
+            <div class="form-secao">
 
-<hr>
+                <h2 class="form-titulo">
 
+                    <span class="numero">
+                        3
+                    </span>
 
-<p>
-💰 Total comprado:
-</p>
+                    Financeiro
 
-<div
-    id="totalComprado"
-    class="valor">
+                </h2>
 
-R$ 0,00
 
-</div>
+                <div class="form-grid">
 
-</div>
+                    <div class="campo valor-destaque">
 
+                        <label for="valorCompra">
+                            Valor da compra *
+                        </label>
 
-<hr>
+                        <input
+                            type="number"
+                            id="valorCompra"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="R$ 0,00">
 
+                    </div>
 
-<!-- ================================================= -->
-<!-- HISTÓRICO -->
-<!-- ================================================= -->
 
-<h2>📋 Histórico de Compras</h2>
+                    <div class="campo">
 
+                        <label for="pagamento">
+                            Forma de pagamento
+                        </label>
 
-<div
-    id="listaCompras">
+                        <select id="pagamento">
 
-<p class="vazio">
-Carregando...
-</p>
+                            <option value="Pix">
+                                Pix
+                            </option>
 
-</div>
+                            <option value="Dinheiro">
+                                Dinheiro
+                            </option>
 
+                            <option value="Cartão">
+                                Cartão
+                            </option>
 
-<hr>
+                            <option value="Boleto">
+                                Boleto
+                            </option>
 
+                            <option value="Prazo">
+                                Prazo
+                            </option>
 
-<button
-    onclick="window.location.href='estoque.html'">
+                            <option value="Outro">
+                                Outro
+                            </option>
 
-📦 VER ESTOQUE
+                        </select>
 
-</button>
+                    </div>
 
+                </div>
 
-<button
-    onclick="window.location.href='financeiro.html'">
+            </div>
 
-💰 VER FINANCEIRO
 
-</button>
+            <!-- OBSERVAÇÕES -->
 
+            <div class="form-secao">
 
-<button
-    class="voltar"
-    onclick="window.location.href='index.html'">
+                <h2 class="form-titulo">
 
-🏠 VOLTAR AO INÍCIO
+                    <span class="numero">
+                        4
+                    </span>
 
-</button>
+                    Observações
 
+                </h2>
 
-<script>
 
+                <div class="campo">
 
-// =====================================================
-// 💾 FUNÇÕES DE DADOS
-// =====================================================
+                    <label for="observacao">
+                        Observações da compra
+                    </label>
 
-function ler(chave){
+                    <textarea
+                        id="observacao"
+                        placeholder="Ex.: compra semanal, prazo de pagamento, lote, fornecedor etc."></textarea>
 
-    try{
+                </div>
 
-        const dados =
-            localStorage.getItem(chave);
+            </div>
 
-        if(!dados){
-            return [];
+
+            <!-- MENSAGEM -->
+
+            <div id="mensagem"></div>
+
+
+            <!-- AÇÕES -->
+
+            <div class="acoes-compra">
+
+                <button
+                    type="button"
+                    class="btn-registrar"
+                    onclick="registrarCompra()">
+
+                    🛒 Registrar Compra
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-limpar"
+                    onclick="limparFormulario()">
+
+                    Limpar
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESUMO
+        ================================================== -->
+
+        <section class="resumo-compras">
+
+
+            <article class="resumo-card">
+
+                <div class="icone-resumo">
+                    🛒
+                </div>
+
+                <div class="rotulo">
+                    Compras registradas
+                </div>
+
+                <div
+                    class="numero"
+                    id="quantidadeCompras">
+
+                    0
+
+                </div>
+
+            </article>
+
+
+            <article class="resumo-card verde">
+
+                <div class="icone-resumo">
+                    💰
+                </div>
+
+                <div class="rotulo">
+                    Total comprado
+                </div>
+
+                <div
+                    class="numero"
+                    id="totalComprado">
+
+                    R$ 0,00
+
+                </div>
+
+            </article>
+
+
+            <article class="resumo-card">
+
+                <div class="icone-resumo">
+                    📅
+                </div>
+
+                <div class="rotulo">
+                    Total deste mês
+                </div>
+
+                <div
+                    class="numero"
+                    id="totalMes">
+
+                    R$ 0,00
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =================================================
+             HISTÓRICO
+        ================================================== -->
+
+        <section class="historico-painel">
+
+
+            <div class="historico-cabecalho">
+
+                <h2>
+                    Histórico de
+                    <span>Compras</span>
+                </h2>
+
+            </div>
+
+
+            <!-- FILTROS -->
+
+            <div class="filtros">
+
+                <input
+                    type="search"
+                    id="buscaCompra"
+                    placeholder="🔎 Buscar compra, fornecedor ou mercadoria...">
+
+                <select id="filtroStatus">
+
+                    <option value="todas">
+                        Todos os status
+                    </option>
+
+                    <option value="registrada">
+                        Registradas
+                    </option>
+
+                    <option value="cancelada">
+                        Canceladas
+                    </option>
+
+                </select>
+
+
+                <select id="filtroPeriodo">
+
+                    <option value="tudo">
+                        Todo período
+                    </option>
+
+                    <option value="hoje">
+                        Hoje
+                    </option>
+
+                    <option value="7dias">
+                        Últimos 7 dias
+                    </option>
+
+                    <option value="mes">
+                        Este mês
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- LISTA -->
+
+            <div id="listaCompras">
+
+                <div class="vazio">
+
+                    <div class="icone">
+                        🛒
+                    </div>
+
+                    <h3>
+                        Nenhuma compra registrada
+                    </h3>
+
+                    <p>
+                        As compras cadastradas aparecerão aqui.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NAVEGAÇÃO
+        ================================================== -->
+
+        <nav class="navegacao">
+
+            <a href="estoque.html">
+                📦 Estoque
+            </a>
+
+            <a href="financeiro.html">
+                💰 Financeiro
+            </a>
+
+            <a
+                href="index.html"
+                class="principal">
+
+                🏠 Dashboard
+
+            </a>
+
+        </nav>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT — COMPRAS
+    ====================================================== -->
+
+    <script>
+
+        /* =================================================
+           STORAGE
+        ================================================= */
+
+        function ler(chave) {
+
+            try {
+
+                const valor =
+                    localStorage.getItem(chave);
+
+                if (!valor) {
+                    return [];
+                }
+
+                const dados =
+                    JSON.parse(valor);
+
+                return Array.isArray(dados)
+                    ? dados
+                    : [];
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao ler storage:",
+                    chave,
+                    erro
+                );
+
+                return [];
+            }
         }
 
-        return JSON.parse(dados) || [];
 
-    }
-    catch(erro){
+        function salvar(chave, dados) {
 
-        console.error(
-            "Erro ao ler:",
-            chave,
-            erro
-        );
+            try {
 
-        return [];
+                localStorage.setItem(
+                    chave,
+                    JSON.stringify(dados)
+                );
 
-    }
+                return true;
 
-}
+            } catch (erro) {
 
+                console.error(
+                    "Erro ao salvar storage:",
+                    chave,
+                    erro
+                );
 
-function salvar(chave,dados){
+                mostrarMensagem(
+                    "Não foi possível salvar os dados.",
+                    "erro"
+                );
 
-    localStorage.setItem(
-        chave,
-        JSON.stringify(dados)
-    );
-
-}
-
-
-function dinheiro(valor){
-
-    return "R$ " +
-
-        Number(valor || 0)
-        .toFixed(2)
-        .replace(".",",");
-
-}
+                return false;
+            }
+        }
 
 
-// =====================================================
-// 📅 DATA DE HOJE
-// =====================================================
+        /* =================================================
+           FORMATAÇÃO DE DINHEIRO
+        ================================================= */
 
-function colocarDataHoje(){
+        function dinheiro(valor) {
 
-    const campo =
-        document.getElementById(
-            "dataCompra"
-        );
+            const numero =
+                Number(valor) || 0;
 
-    if(campo.value){
-        return;
-    }
-
-    const hoje =
-        new Date();
-
-    const ano =
-        hoje.getFullYear();
-
-    const mes =
-        String(
-            hoje.getMonth()+1
-        ).padStart(2,"0");
-
-    const dia =
-        String(
-            hoje.getDate()
-        ).padStart(2,"0");
-
-    campo.value =
-        ano+"-"+mes+"-"+dia;
-
-}
+            return numero.toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+        }
 
 
-// =====================================================
-// 🧹 LIMPAR FORMULÁRIO
-// =====================================================
+        /* =================================================
+           NÚMERO SEGURO
+        ================================================= */
 
-function limparFormulario(){
+        function numeroSeguro(valor) {
 
-    document.getElementById(
-        "fornecedor"
-    ).value="";
+            if (
+                valor === null ||
+                valor === undefined ||
+                valor === ""
+            ) {
+                return 0;
+            }
 
-    document.getElementById(
-        "mercadoria"
-    ).value="";
+            if (typeof valor === "number") {
+                return Number.isFinite(valor)
+                    ? valor
+                    : 0;
+            }
 
-    document.getElementById(
-        "quantidade"
-    ).value="";
+            let texto =
+                String(valor).trim();
 
-    document.getElementById(
-        "valorCompra"
-    ).value="";
-
-    document.getElementById(
-        "observacao"
-    ).value="";
-
-    document.getElementById(
-        "pagamento"
-    ).value="Dinheiro";
-
-    colocarDataHoje();
-
-}
-
-
-// =====================================================
-// 📦 ATUALIZAR ESTOQUE
-// =====================================================
-
-function adicionarAoEstoque(compra){
-
-    let estoque =
-        ler("estoque");
-
-
-    // Se não existir estoque,
-    // cria uma lista nova.
-
-    if(!Array.isArray(estoque)){
-        estoque=[];
-    }
-
-
-    const nomeCompra =
-        String(
-            compra.mercadoria || ""
-        )
-        .trim()
-        .toLowerCase();
-
-
-    if(!nomeCompra){
-        return;
-    }
-
-
-    // Procurar mercadoria existente
-
-    let produto =
-        estoque.find(function(item){
-
-            const nome =
-                String(
-                    item.nome ||
-                    item.mercadoria ||
-                    item.produto ||
+            texto =
+                texto.replace(
+                    /R\$/gi,
                     ""
+                ).trim();
+
+            if (
+                texto.includes(",") &&
+                texto.includes(".")
+            ) {
+
+                texto =
+                    texto.replace(
+                        /\./g,
+                        ""
+                    );
+
+                texto =
+                    texto.replace(
+                        ",",
+                        "."
+                    );
+
+            } else if (
+                texto.includes(",")
+            ) {
+
+                texto =
+                    texto.replace(
+                        ",",
+                        "."
+                    );
+            }
+
+            texto =
+                texto.replace(
+                    /[^0-9.-]/g,
+                    ""
+                );
+
+            const numero =
+                Number(texto);
+
+            return Number.isFinite(numero)
+                ? numero
+                : 0;
+        }
+
+
+        /* =================================================
+           ID
+        ================================================= */
+
+        function gerarId() {
+
+            try {
+
+                if (
+                    window.GrillCore &&
+                    typeof window.GrillCore.gerarID ===
+                    "function"
+                ) {
+
+                    return window.GrillCore.gerarID();
+                }
+
+            } catch (erro) {}
+
+            return (
+                Date.now().toString(36) +
+                Math.random()
+                    .toString(36)
+                    .substring(2, 9)
+            );
+        }
+
+
+        /* =================================================
+           ESCAPE HTML
+        ================================================= */
+
+        function escapar(texto) {
+
+            try {
+
+                if (
+                    window.GrillCore &&
+                    typeof window.GrillCore.escapar ===
+                    "function"
+                ) {
+
+                    return window.GrillCore.escapar(
+                        texto
+                    );
+                }
+
+            } catch (erro) {}
+
+            return String(
+                texto ?? ""
+            )
+                .replace(
+                    /&/g,
+                    "&amp;"
                 )
-                .trim()
-                .toLowerCase();
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+        }
 
-            return nome === nomeCompra;
 
-        });
+        /* =================================================
+           DATA LOCAL
+        ================================================= */
+
+        function dataLocalISO() {
+
+            const agora =
+                new Date();
+
+            const ano =
+                agora.getFullYear();
+
+            const mes =
+                String(
+                    agora.getMonth() + 1
+                ).padStart(2, "0");
+
+            const dia =
+                String(
+                    agora.getDate()
+                ).padStart(2, "0");
+
+            return `${ano}-${mes}-${dia}`;
+        }
 
 
-    // =================================================
-    // PRODUTO JÁ EXISTE
-    // =================================================
+        function colocarDataHoje() {
 
-    if(produto){
+            const campo =
+                document.getElementById(
+                    "dataCompra"
+                );
 
-        let quantidadeAtual =
-            Number(
-                produto.quantidade ||
-                produto.estoque ||
+            if (
+                campo &&
+                !campo.value
+            ) {
+
+                campo.value =
+                    dataLocalISO();
+            }
+        }
+
+
+        /* =================================================
+           FORMATAR DATA
+        ================================================= */
+
+        function formatarData(data) {
+
+            if (!data) {
+                return "—";
+            }
+
+            const texto =
+                String(data);
+
+            const match =
+                texto.match(
+                    /^(\d{4})-(\d{2})-(\d{2})$/
+                );
+
+            if (match) {
+
+                return `${match[3]}/${match[2]}/${match[1]}`;
+            }
+
+            const dataObj =
+                new Date(data);
+
+            if (
+                Number.isNaN(
+                    dataObj.getTime()
+                )
+            ) {
+
+                return String(data);
+            }
+
+            return dataObj.toLocaleDateString(
+                "pt-BR"
+            );
+        }
+
+
+        /* =================================================
+           DATA DA COMPRA
+        ================================================= */
+
+        function obterDataCompra(compra) {
+
+            return (
+                compra.data ||
+                compra.dataCompra ||
+                compra.createdAt ||
+                compra.criadoEm ||
+                ""
+            );
+        }
+
+
+        /* =================================================
+           PERÍODO
+        ================================================= */
+
+        function dentroDoPeriodo(
+            data,
+            periodo
+        ) {
+
+            if (
+                periodo === "tudo"
+            ) {
+
+                return true;
+            }
+
+            if (!data) {
+                return false;
+            }
+
+            const hoje =
+                new Date();
+
+            hoje.setHours(
+                0,
+                0,
+                0,
+                0
+            );
+
+            const dataTexto =
+                String(data);
+
+            let dataCompra;
+
+            if (
+                /^\d{4}-\d{2}-\d{2}$/
+                    .test(dataTexto)
+            ) {
+
+                const partes =
+                    dataTexto.split("-");
+
+                dataCompra =
+                    new Date(
+                        Number(partes[0]),
+                        Number(partes[1]) - 1,
+                        Number(partes[2])
+                    );
+
+            } else {
+
+                dataCompra =
+                    new Date(data);
+            }
+
+            if (
+                Number.isNaN(
+                    dataCompra.getTime()
+                )
+            ) {
+
+                return false;
+            }
+
+            dataCompra.setHours(
+                0,
+                0,
+                0,
                 0
             );
 
 
-        let quantidadeCompra =
-            Number(
-                compra.quantidade
-            ) || 0;
+            if (
+                periodo === "hoje"
+            ) {
+
+                return (
+                    dataCompra.getTime() ===
+                    hoje.getTime()
+                );
+            }
 
 
-        produto.quantidade =
-            quantidadeAtual +
-            quantidadeCompra;
+            if (
+                periodo === "7dias"
+            ) {
+
+                const limite =
+                    new Date(hoje);
+
+                limite.setDate(
+                    limite.getDate() - 6
+                );
+
+                return (
+                    dataCompra >= limite &&
+                    dataCompra <= hoje
+                );
+            }
 
 
-        // Mantém compatibilidade
+            if (
+                periodo === "mes"
+            ) {
 
-        produto.estoque =
-            produto.quantidade;
-
-
-        produto.unidade =
-            compra.unidade ||
-            produto.unidade ||
-            "un";
-
-
-        produto.ultimoFornecedor =
-            compra.fornecedor;
+                return (
+                    dataCompra.getMonth() ===
+                    hoje.getMonth() &&
+                    dataCompra.getFullYear() ===
+                    hoje.getFullYear()
+                );
+            }
 
 
-        produto.ultimaCompra =
-            compra.data;
+            return true;
+        }
 
 
-        produto.valorUltimaCompra =
-            Number(
-                compra.valor
-            ) || 0;
+        /* =================================================
+           STATUS
+        ================================================= */
 
-    }
+        function statusCompra(compra) {
+
+            const status =
+                String(
+                    compra.status ||
+                    "registrada"
+                ).toLowerCase();
+
+            return status === "cancelada"
+                ? "cancelada"
+                : "registrada";
+        }
 
 
-    // =================================================
-    // PRODUTO NOVO
-    // =================================================
+        function compraAtiva(compra) {
 
-    else{
+            return (
+                statusCompra(compra) !==
+                "cancelada"
+            );
+        }
 
-        estoque.push({
 
-            id:
-                Date.now(),
+        /* =================================================
+           MENSAGEM
+        ================================================= */
 
-            nome:
-                compra.mercadoria,
+        function mostrarMensagem(
+            texto,
+            tipo = "sucesso"
+        ) {
 
-            mercadoria:
-                compra.mercadoria,
+            const elemento =
+                document.getElementById(
+                    "mensagem"
+                );
 
-            quantidade:
-                Number(
+            if (!elemento) {
+                return;
+            }
+
+            elemento.innerHTML =
+                `<div class="${tipo}">
+                    ${escapar(texto)}
+                </div>`;
+
+            clearTimeout(
+                window._mensagemComprasTimer
+            );
+
+            window._mensagemComprasTimer =
+                setTimeout(
+                    function () {
+
+                        elemento.innerHTML =
+                            "";
+
+                    },
+                    5000
+                );
+        }
+
+
+        /* =================================================
+           FORNECEDORES
+        ================================================= */
+
+        function carregarFornecedores() {
+
+            const lista =
+                document.getElementById(
+                    "listaFornecedores"
+                );
+
+            if (!lista) {
+                return;
+            }
+
+            const fornecedores =
+                ler("fornecedores");
+
+            const nomes =
+                fornecedores
+                    .map(function(fornecedor) {
+
+                        return (
+                            fornecedor.nome ||
+                            fornecedor.empresa ||
+                            ""
+                        ).toString().trim();
+
+                    })
+                    .filter(Boolean);
+
+            const unicos =
+                [...new Set(nomes)];
+
+            unicos.sort(
+                function(a, b) {
+
+                    return a.localeCompare(
+                        b,
+                        "pt-BR"
+                    );
+
+                }
+            );
+
+            lista.innerHTML =
+                unicos.map(function(nome) {
+
+                    return `
+                        <option value="${escapar(nome)}">
+                    `;
+
+                }).join("");
+        }
+
+
+        /* =================================================
+           LIMPAR FORMULÁRIO
+        ================================================= */
+
+        function limparFormulario() {
+
+            const fornecedor =
+                document.getElementById(
+                    "fornecedor"
+                );
+
+            const mercadoria =
+                document.getElementById(
+                    "mercadoria"
+                );
+
+            const quantidade =
+                document.getElementById(
+                    "quantidade"
+                );
+
+            const unidade =
+                document.getElementById(
+                    "unidade"
+                );
+
+            const valorCompra =
+                document.getElementById(
+                    "valorCompra"
+                );
+
+            const pagamento =
+                document.getElementById(
+                    "pagamento"
+                );
+
+            const observacao =
+                document.getElementById(
+                    "observacao"
+                );
+
+            if (fornecedor) {
+                fornecedor.value = "";
+            }
+
+            if (mercadoria) {
+                mercadoria.value = "";
+            }
+
+            if (quantidade) {
+                quantidade.value = "";
+            }
+
+            if (unidade) {
+                unidade.value = "un";
+            }
+
+            if (valorCompra) {
+                valorCompra.value = "";
+            }
+
+            if (pagamento) {
+                pagamento.value = "Pix";
+            }
+
+            if (observacao) {
+                observacao.value = "";
+            }
+
+            colocarDataHoje();
+
+            const mensagem =
+                document.getElementById(
+                    "mensagem"
+                );
+
+            if (mensagem) {
+                mensagem.innerHTML = "";
+            }
+
+            if (mercadoria) {
+                mercadoria.focus();
+            }
+        }
+
+
+        /* =================================================
+           HISTÓRICO DE ESTOQUE
+        ================================================= */
+
+        function registrarHistoricoEstoque(
+            compra
+        ) {
+
+            const historico =
+                ler("historicoEstoque");
+
+            historico.push({
+
+                id: gerarId(),
+
+                tipo: "entrada",
+
+                origem: "compra",
+
+                compraId:
+                    compra.id,
+
+                mercadoria:
+                    compra.mercadoria,
+
+                produto:
+                    compra.mercadoria,
+
+                quantidade:
+                    numeroSeguro(
+                        compra.quantidade
+                    ),
+
+                unidade:
+                    compra.unidade ||
+                    "un",
+
+                fornecedor:
+                    compra.fornecedor,
+
+                valor:
+                    numeroSeguro(
+                        compra.valor
+                    ),
+
+                data:
+                    obterDataCompra(
+                        compra
+                    ),
+
+                dataHora:
+                    new Date()
+                        .toISOString()
+
+            });
+
+            salvar(
+                "historicoEstoque",
+                historico
+            );
+        }
+
+
+        /* =================================================
+           ADICIONAR AO ESTOQUE
+        ================================================= */
+
+        function adicionarAoEstoque(
+            compra
+        ) {
+
+            const estoque =
+                ler("estoque");
+
+            const nomeCompra =
+                String(
+                    compra.mercadoria || ""
+                )
+                .trim();
+
+            const nomeNormalizado =
+                nomeCompra
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(
+                        /[\u0300-\u036f]/g,
+                        ""
+                    );
+
+            const quantidade =
+                numeroSeguro(
                     compra.quantidade
-                ) || 0,
+                );
 
-            estoque:
-                Number(
+            let item =
+                estoque.find(
+                    function(produto) {
+
+                        const nome =
+                            String(
+                                produto.mercadoria ||
+                                produto.nome ||
+                                produto.produto ||
+                                ""
+                            )
+                            .trim()
+                            .toLowerCase()
+                            .normalize("NFD")
+                            .replace(
+                                /[\u0300-\u036f]/g,
+                                ""
+                            );
+
+                        return (
+                            nome ===
+                            nomeNormalizado
+                        );
+                    }
+                );
+
+
+            if (item) {
+
+                const estoqueAtual =
+                    numeroSeguro(
+                        item.estoque ??
+                        item.quantidade
+                    );
+
+                const quantidadeAtual =
+                    numeroSeguro(
+                        item.quantidade
+                    );
+
+                item.estoque =
+                    estoqueAtual +
+                    quantidade;
+
+                item.quantidade =
+                    quantidadeAtual +
+                    quantidade;
+
+                if (
+                    !item.unidade &&
+                    compra.unidade
+                ) {
+
+                    item.unidade =
+                        compra.unidade;
+                }
+
+                if (
+                    !item.fornecedor &&
+                    compra.fornecedor
+                ) {
+
+                    item.fornecedor =
+                        compra.fornecedor;
+                }
+
+                item.atualizadoEm =
+                    new Date()
+                        .toISOString();
+
+            } else {
+
+                item = {
+
+                    id: gerarId(),
+
+                    mercadoria:
+                        nomeCompra,
+
+                    nome:
+                        nomeCompra,
+
+                    produto:
+                        nomeCompra,
+
+                    categoria:
+                        "Outros",
+
+                    fornecedor:
+                        compra.fornecedor,
+
+                    quantidade:
+                        quantidade,
+
+                    estoque:
+                        quantidade,
+
+                    unidade:
+                        compra.unidade ||
+                        "un",
+
+                    custo:
+                        numeroSeguro(
+                            compra.valor
+                        ),
+
+                    precoVenda:
+                        0,
+
+                    estoqueMinimo:
+                        0,
+
+                    criadoEm:
+                        new Date()
+                            .toISOString(),
+
+                    atualizadoEm:
+                        new Date()
+                            .toISOString()
+                };
+
+                estoque.push(item);
+            }
+
+
+            salvar(
+                "estoque",
+                estoque
+            );
+
+
+            registrarHistoricoEstoque(
+                compra
+            );
+        }
+
+
+        /* =================================================
+           REMOVER QUANTIDADE DO ESTOQUE
+           USADO AO CANCELAR COMPRA
+        ================================================= */
+
+        function removerQuantidadeEstoque(
+            compra
+        ) {
+
+            const estoque =
+                ler("estoque");
+
+            const nomeCompra =
+                String(
+                    compra.mercadoria || ""
+                )
+                .trim()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                );
+
+            const quantidade =
+                numeroSeguro(
                     compra.quantidade
-                ) || 0,
+                );
 
-            unidade:
-                compra.unidade,
+            const item =
+                estoque.find(
+                    function(produto) {
 
-            fornecedor:
-                compra.fornecedor,
+                        const nome =
+                            String(
+                                produto.mercadoria ||
+                                produto.nome ||
+                                produto.produto ||
+                                ""
+                            )
+                            .trim()
+                            .toLowerCase()
+                            .normalize("NFD")
+                            .replace(
+                                /[\u0300-\u036f]/g,
+                                ""
+                            );
 
-            ultimoFornecedor:
-                compra.fornecedor,
-
-            ultimaCompra:
-                compra.data,
-
-            valorUltimaCompra:
-                Number(
-                    compra.valor
-                ) || 0
-
-        });
-
-    }
-
-
-    salvar(
-        "estoque",
-        estoque
-    );
-
-}
+                        return (
+                            nome ===
+                            nomeCompra
+                        );
+                    }
+                );
 
 
-// =====================================================
-// 💰 REGISTRAR DESPESA NO FINANCEIRO
-// =====================================================
+            if (!item) {
 
-function registrarDespesaFinanceira(compra){
-
-    let despesas =
-        ler("despesas");
+                return false;
+            }
 
 
-    if(!Array.isArray(despesas)){
-        despesas=[];
-    }
+            const estoqueAtual =
+                numeroSeguro(
+                    item.estoque ??
+                    item.quantidade
+                );
 
 
-    despesas.push({
+            if (
+                estoqueAtual <
+                quantidade
+            ) {
 
-        id:
-            Date.now()+1,
-
-        data:
-            new Date(
-                compra.data+"T12:00:00"
-            ).toISOString(),
-
-        descricao:
-            "Compra de mercadoria - " +
-            compra.mercadoria,
-
-        categoria:
-            "Compras / Mercadorias",
-
-        fornecedor:
-            compra.fornecedor,
-
-        valor:
-            Number(
-                compra.valor
-            ) || 0,
-
-        pagamento:
-            compra.pagamento,
-
-        observacao:
-            compra.observacao || ""
-
-    });
+                return false;
+            }
 
 
-    salvar(
-        "despesas",
-        despesas
-    );
-
-}
+            item.estoque =
+                estoqueAtual -
+                quantidade;
 
 
-// =====================================================
-// 🧾 REGISTRAR COMPRA
-// =====================================================
+            const quantidadeAtual =
+                numeroSeguro(
+                    item.quantidade
+                );
 
-function registrarCompra(){
-
-    const fornecedor =
-        document.getElementById(
-            "fornecedor"
-        ).value.trim();
-
-
-    const mercadoria =
-        document.getElementById(
-            "mercadoria"
-        ).value.trim();
+            item.quantidade =
+                Math.max(
+                    0,
+                    quantidadeAtual -
+                    quantidade
+                );
 
 
-    const quantidade =
-        Number(
+            item.atualizadoEm =
+                new Date()
+                    .toISOString();
+
+
+            salvar(
+                "estoque",
+                estoque
+            );
+
+
+            const historico =
+                ler("historicoEstoque");
+
+
+            historico.push({
+
+                id: gerarId(),
+
+                tipo: "saida",
+
+                origem:
+                    "cancelamento_compra",
+
+                compraId:
+                    compra.id,
+
+                mercadoria:
+                    compra.mercadoria,
+
+                produto:
+                    compra.mercadoria,
+
+                quantidade:
+                    quantidade,
+
+                unidade:
+                    compra.unidade ||
+                    "un",
+
+                fornecedor:
+                    compra.fornecedor,
+
+                valor:
+                    numeroSeguro(
+                        compra.valor
+                    ),
+
+                data:
+                    obterDataCompra(
+                        compra
+                    ),
+
+                dataHora:
+                    new Date()
+                        .toISOString()
+            });
+
+
+            salvar(
+                "historicoEstoque",
+                historico
+            );
+
+
+            return true;
+        }
+
+
+        /* =================================================
+           REGISTRAR DESPESA FINANCEIRA
+        ================================================= */
+
+        function registrarDespesaFinanceira(
+            compra
+        ) {
+
+            const despesas =
+                ler("despesas");
+
+
+            const despesa = {
+
+                id: gerarId(),
+
+                origem:
+                    "compra",
+
+                compraId:
+                    compra.id,
+
+                categoria:
+                    "Compras / Mercadorias",
+
+                descricao:
+                    `Compra de ${compra.mercadoria}`,
+
+                fornecedor:
+                    compra.fornecedor,
+
+                valor:
+                    numeroSeguro(
+                        compra.valor
+                    ),
+
+                formaPagamento:
+                    compra.pagamento ||
+                    "Outro",
+
+                pagamento:
+                    compra.pagamento ||
+                    "Outro",
+
+                data:
+                    obterDataCompra(
+                        compra
+                    ),
+
+                observacao:
+                    compra.observacao ||
+                    "",
+
+                status:
+                    "ativa",
+
+                criadoEm:
+                    new Date()
+                        .toISOString()
+
+            };
+
+
+            despesas.push(
+                despesa
+            );
+
+
+            salvar(
+                "despesas",
+                despesas
+            );
+
+
+            return despesa;
+        }
+
+
+        /* =================================================
+           CANCELAR DESPESA DA COMPRA
+        ================================================= */
+
+        function removerDespesaDaCompra(
+            compra
+        ) {
+
+            const despesas =
+                ler("despesas");
+
+            let alterou = false;
+
+
+            despesas.forEach(
+                function(despesa) {
+
+                    if (
+                        String(
+                            despesa.compraId || ""
+                        ) ===
+                        String(
+                            compra.id || ""
+                        )
+                    ) {
+
+                        despesa.status =
+                            "cancelada";
+
+                        despesa.canceladaEm =
+                            new Date()
+                                .toISOString();
+
+                        alterou = true;
+                    }
+
+                }
+            );
+
+
+            if (alterou) {
+
+                salvar(
+                    "despesas",
+                    despesas
+                );
+            }
+        }
+
+
+        /* =================================================
+           REGISTRAR COMPRA
+        ================================================= */
+
+        function registrarCompra() {
+
+            const fornecedor =
+                document.getElementById(
+                    "fornecedor"
+                ).value.trim();
+
+            const dataCompra =
+                document.getElementById(
+                    "dataCompra"
+                ).value;
+
+            const mercadoria =
+                document.getElementById(
+                    "mercadoria"
+                ).value.trim();
+
+            const quantidade =
+                numeroSeguro(
+                    document.getElementById(
+                        "quantidade"
+                    ).value
+                );
+
+            const unidade =
+                document.getElementById(
+                    "unidade"
+                ).value;
+
+            const valor =
+                numeroSeguro(
+                    document.getElementById(
+                        "valorCompra"
+                    ).value
+                );
+
+            const pagamento =
+                document.getElementById(
+                    "pagamento"
+                ).value;
+
+            const observacao =
+                document.getElementById(
+                    "observacao"
+                ).value.trim();
+
+
+            /* =============================================
+               VALIDAÇÕES
+            ============================================== */
+
+            if (!fornecedor) {
+
+                mostrarMensagem(
+                    "Informe o fornecedor da compra.",
+                    "erro"
+                );
+
+                document
+                    .getElementById(
+                        "fornecedor"
+                    )
+                    .focus();
+
+                return;
+            }
+
+
+            if (!dataCompra) {
+
+                mostrarMensagem(
+                    "Informe a data da compra.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            if (!mercadoria) {
+
+                mostrarMensagem(
+                    "Informe a mercadoria comprada.",
+                    "erro"
+                );
+
+                document
+                    .getElementById(
+                        "mercadoria"
+                    )
+                    .focus();
+
+                return;
+            }
+
+
+            if (
+                quantidade <= 0
+            ) {
+
+                mostrarMensagem(
+                    "Informe uma quantidade válida.",
+                    "erro"
+                );
+
+                document
+                    .getElementById(
+                        "quantidade"
+                    )
+                    .focus();
+
+                return;
+            }
+
+
+            if (
+                valor <= 0
+            ) {
+
+                mostrarMensagem(
+                    "Informe um valor de compra válido.",
+                    "erro"
+                );
+
+                document
+                    .getElementById(
+                        "valorCompra"
+                    )
+                    .focus();
+
+                return;
+            }
+
+
+            const confirmar =
+                window.confirm(
+                    `Registrar compra?\n\n` +
+                    `Mercadoria: ${mercadoria}\n` +
+                    `Quantidade: ${quantidade} ${unidade}\n` +
+                    `Valor: ${dinheiro(valor)}\n` +
+                    `Fornecedor: ${fornecedor}`
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            /* =============================================
+               CRIA COMPRA
+            ============================================== */
+
+            const compra = {
+
+                id: gerarId(),
+
+                fornecedor:
+                    fornecedor,
+
+                mercadoria:
+                    mercadoria,
+
+                produto:
+                    mercadoria,
+
+                quantidade:
+                    quantidade,
+
+                unidade:
+                    unidade,
+
+                valor:
+                    valor,
+
+                valorCompra:
+                    valor,
+
+                pagamento:
+                    pagamento,
+
+                formaPagamento:
+                    pagamento,
+
+                observacao:
+                    observacao,
+
+                data:
+                    dataCompra,
+
+                dataCompra:
+                    dataCompra,
+
+                status:
+                    "registrada",
+
+                criadoEm:
+                    new Date()
+                        .toISOString(),
+
+                atualizadoEm:
+                    new Date()
+                        .toISOString()
+            };
+
+
+            /* =============================================
+               SALVA COMPRA
+            ============================================== */
+
+            const compras =
+                ler("compras");
+
+            compras.push(
+                compra
+            );
+
+
+            if (
+                !salvar(
+                    "compras",
+                    compras
+                )
+            ) {
+
+                return;
+            }
+
+
+            /* =============================================
+               ESTOQUE
+            ============================================== */
+
+            adicionarAoEstoque(
+                compra
+            );
+
+
+            /* =============================================
+               FINANCEIRO
+            ============================================== */
+
+            const despesa =
+                registrarDespesaFinanceira(
+                    compra
+                );
+
+
+            compra.despesaId =
+                despesa.id;
+
+
+            /* Atualiza compra com ID da despesa */
+
+            const comprasAtualizadas =
+                ler("compras");
+
+            const compraSalva =
+                comprasAtualizadas.find(
+                    function(item) {
+
+                        return (
+                            String(item.id) ===
+                            String(compra.id)
+                        );
+
+                    }
+                );
+
+
+            if (compraSalva) {
+
+                compraSalva.despesaId =
+                    despesa.id;
+
+                compraSalva.atualizadoEm =
+                    new Date()
+                        .toISOString();
+
+                salvar(
+                    "compras",
+                    comprasAtualizadas
+                );
+            }
+
+
+            /* =============================================
+               ATUALIZA TELA
+            ============================================== */
+
+            atualizarTudo();
+
+
+            mostrarMensagem(
+                "Compra registrada com sucesso! O estoque e o financeiro foram atualizados.",
+                "sucesso"
+            );
+
+
+            limparCamposAposCompra();
+        }
+
+
+        /* =================================================
+           LIMPAR APÓS COMPRA
+        ================================================= */
+
+        function limparCamposAposCompra() {
+
+            document.getElementById(
+                "fornecedor"
+            ).value = "";
+
+            document.getElementById(
+                "mercadoria"
+            ).value = "";
+
             document.getElementById(
                 "quantidade"
-            ).value
-        );
+            ).value = "";
 
-
-    const unidade =
-        document.getElementById(
-            "unidade"
-        ).value;
-
-
-    const valor =
-        Number(
             document.getElementById(
                 "valorCompra"
-            ).value
-        );
-
-
-    const pagamento =
-        document.getElementById(
-            "pagamento"
-        ).value;
-
-
-    const data =
-        document.getElementById(
-            "dataCompra"
-        ).value;
-
-
-    const observacao =
-        document.getElementById(
-            "observacao"
-        ).value.trim();
-
-
-    const mensagem =
-        document.getElementById(
-            "mensagem"
-        );
-
-
-    // =================================================
-    // VALIDAÇÕES
-    // =================================================
-
-    if(!fornecedor){
-
-        mensagem.innerHTML = `
-            <div class="aviso">
-                ⚠️ Digite o fornecedor.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(!mercadoria){
-
-        mensagem.innerHTML = `
-            <div class="aviso">
-                ⚠️ Digite a mercadoria.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(
-        !quantidade ||
-        quantidade <= 0
-    ){
-
-        mensagem.innerHTML = `
-            <div class="aviso">
-                ⚠️ Informe uma quantidade válida.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(
-        isNaN(valor) ||
-        valor <= 0
-    ){
-
-        mensagem.innerHTML = `
-            <div class="aviso">
-                ⚠️ Informe o valor da compra.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(!data){
-
-        mensagem.innerHTML = `
-            <div class="aviso">
-                ⚠️ Informe a data da compra.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    // =================================================
-    // OBJETO DA COMPRA
-    // =================================================
-
-    const compra = {
-
-        id:
-            Date.now(),
-
-        fornecedor:
-            fornecedor,
-
-        mercadoria:
-            mercadoria,
-
-        quantidade:
-            quantidade,
-
-        unidade:
-            unidade,
-
-        valor:
-            valor,
-
-        pagamento:
-            pagamento,
-
-        data:
-            data,
-
-        observacao:
-            observacao
-
-    };
-
-
-    // =================================================
-    // CONFIRMAR
-    // =================================================
-
-    const confirmar =
-        confirm(
-
-            "🛒 CONFIRMAR COMPRA?\n\n" +
-
-            "🏢 Fornecedor: " +
-            fornecedor +
-
-            "\n\n" +
-
-            "📦 Mercadoria: " +
-            mercadoria +
-
-            "\n" +
-
-            "🔢 Quantidade: " +
-            quantidade +
-            " " +
-            unidade +
-
-            "\n\n" +
-
-            "💰 Valor: " +
-            dinheiro(valor) +
-
-            "\n" +
-
-            "💳 Pagamento: " +
-            pagamento +
-
-            "\n\n" +
-
-            "📦 A quantidade será adicionada ao estoque." +
-
-            "\n💰 O valor será lançado no financeiro." +
-
-            "\n\n" +
-
-            "Deseja registrar esta compra?"
-
-        );
-
-
-    if(!confirmar){
-        return;
-    }
-
-
-    // =================================================
-    // SALVAR COMPRA
-    // =================================================
-
-    let compras =
-        ler("compras");
-
-
-    if(!Array.isArray(compras)){
-        compras=[];
-    }
-
-
-    compras.push(
-        compra
-    );
-
-
-    salvar(
-        "compras",
-        compras
-    );
-
-
-    // =================================================
-    // 📦 ESTOQUE
-    // =================================================
-
-    adicionarAoEstoque(
-        compra
-    );
-
-
-    // =================================================
-    // 💰 FINANCEIRO
-    // =================================================
-
-    registrarDespesaFinanceira(
-        compra
-    );
-
-
-    // =================================================
-    // MENSAGEM
-    // =================================================
-
-    mensagem.innerHTML = `
-
-        <div class="sucesso">
-
-            ✅ <strong>COMPRA REGISTRADA!</strong>
-
-            <br><br>
-
-            🏢 Fornecedor:
-            ${escapar(fornecedor)}
-
-            <br>
-
-            📦 Mercadoria:
-            ${escapar(mercadoria)}
-
-            <br>
-
-            🔢 Quantidade:
-            ${quantidade}
-            ${unidade}
-
-            <br>
-
-            💰 Valor:
-            ${dinheiro(valor)}
-
-            <br><br>
-
-            📦 Estoque atualizado.
-
-            <br>
-
-            💰 Financeiro atualizado.
-
-        </div>
-
-    `;
-
-
-    // =================================================
-    // ATUALIZAR TELA
-    // =================================================
-
-    atualizarResumo();
-
-    mostrarCompras();
-
-
-    // =================================================
-    // LIMPAR
-    // =================================================
-
-    document.getElementById(
-        "fornecedor"
-    ).value = "";
-
-    document.getElementById(
-        "mercadoria"
-    ).value = "";
-
-    document.getElementById(
-        "quantidade"
-    ).value = "";
-
-    document.getElementById(
-        "valorCompra"
-    ).value = "";
-
-    document.getElementById(
-        "observacao"
-    ).value = "";
-
-
-    colocarDataHoje();
-
-
-    alert(
-        "✅ COMPRA REGISTRADA COM SUCESSO!\n\n" +
-
-        "📦 Estoque atualizado.\n" +
-
-        "💰 Financeiro atualizado."
-    );
-
-}
-
-
-// =====================================================
-// 🔒 ESCAPAR TEXTO
-// =====================================================
-
-function escapar(texto){
-
-    return String(
-        texto ?? ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-// =====================================================
-// 📊 RESUMO
-// =====================================================
-
-function atualizarResumo(){
-
-    const compras =
-        ler("compras");
-
-
-    let total = 0;
-
-
-    compras.forEach(
-        function(compra){
-
-            total +=
-                Number(
-                    compra.valor
-                ) || 0;
-
+            ).value = "";
+
+            document.getElementById(
+                "observacao"
+            ).value = "";
+
+            document.getElementById(
+                "unidade"
+            ).value = "un";
+
+            document.getElementById(
+                "pagamento"
+            ).value = "Pix";
+
+            document.getElementById(
+                "mercadoria"
+            ).focus();
         }
-    );
 
 
-    document.getElementById(
-        "quantidadeCompras"
-    ).innerText =
-        compras.length;
+        /* =================================================
+           RESUMO
+        ================================================= */
+
+        function atualizarResumo() {
+
+            const compras =
+                ler("compras");
+
+            const ativas =
+                compras.filter(
+                    compraAtiva
+                );
 
 
-    document.getElementById(
-        "totalComprado"
-    ).innerText =
-        dinheiro(total);
+            const totalComprado =
+                ativas.reduce(
+                    function(total, compra) {
 
-}
+                        return (
+                            total +
+                            numeroSeguro(
+                                compra.valor ??
+                                compra.valorCompra
+                            )
+                        );
 
-
-// =====================================================
-// 📋 HISTÓRICO
-// =====================================================
-
-function mostrarCompras(){
-
-    const lista =
-        document.getElementById(
-            "listaCompras"
-        );
+                    },
+                    0
+                );
 
 
-    const compras =
-        ler("compras");
+            const hoje =
+                new Date();
+
+            const mesAtual =
+                hoje.getMonth();
+
+            const anoAtual =
+                hoje.getFullYear();
 
 
-    if(
-        !compras.length
-    ){
+            const totalMes =
+                ativas.reduce(
+                    function(total, compra) {
 
-        lista.innerHTML = `
+                        const data =
+                            obterDataCompra(
+                                compra
+                            );
 
-            <p class="vazio">
+                        if (!data) {
+                            return total;
+                        }
 
-                📭 Nenhuma compra registrada.
+                        let dataCompra;
 
-            </p>
+                        if (
+                            /^\d{4}-\d{2}-\d{2}$/
+                                .test(
+                                    String(data)
+                                )
+                        ) {
 
-        `;
+                            const partes =
+                                String(data)
+                                    .split("-");
 
-        return;
+                            dataCompra =
+                                new Date(
+                                    Number(partes[0]),
+                                    Number(partes[1]) - 1,
+                                    Number(partes[2])
+                                );
 
-    }
+                        } else {
+
+                            dataCompra =
+                                new Date(data);
+                        }
+
+                        if (
+                            Number.isNaN(
+                                dataCompra.getTime()
+                            )
+                        ) {
+
+                            return total;
+                        }
 
 
-    lista.innerHTML = "";
+                        if (
+                            dataCompra.getMonth() ===
+                            mesAtual &&
+                            dataCompra.getFullYear() ===
+                            anoAtual
+                        ) {
+
+                            return (
+                                total +
+                                numeroSeguro(
+                                    compra.valor ??
+                                    compra.valorCompra
+                                )
+                            );
+                        }
 
 
-    compras
-        .slice()
-        .reverse()
-        .forEach(
-            function(compra){
+                        return total;
 
-                lista.innerHTML += `
+                    },
+                    0
+                );
 
-                    <div class="compra">
+
+            document.getElementById(
+                "quantidadeCompras"
+            ).textContent =
+                ativas.length;
+
+
+            document.getElementById(
+                "totalComprado"
+            ).textContent =
+                dinheiro(
+                    totalComprado
+                );
+
+
+            document.getElementById(
+                "totalMes"
+            ).textContent =
+                dinheiro(
+                    totalMes
+                );
+        }
+
+
+        /* =================================================
+           MOSTRAR COMPRAS
+        ================================================= */
+
+        function mostrarCompras() {
+
+            const lista =
+                document.getElementById(
+                    "listaCompras"
+                );
+
+            if (!lista) {
+                return;
+            }
+
+
+            const compras =
+                ler("compras");
+
+
+            const busca =
+                (
+                    document.getElementById(
+                        "buscaCompra"
+                    )?.value || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            const filtroStatus =
+                document.getElementById(
+                    "filtroStatus"
+                )?.value ||
+                "todas";
+
+
+            const filtroPeriodo =
+                document.getElementById(
+                    "filtroPeriodo"
+                )?.value ||
+                "tudo";
+
+
+            let filtradas =
+                compras.filter(
+                    function(compra) {
+
+                        const status =
+                            statusCompra(
+                                compra
+                            );
+
+
+                        if (
+                            filtroStatus !==
+                            "todas" &&
+                            status !==
+                            filtroStatus
+                        ) {
+
+                            return false;
+                        }
+
+
+                        if (
+                            !dentroDoPeriodo(
+                                obterDataCompra(
+                                    compra
+                                ),
+                                filtroPeriodo
+                            )
+                        ) {
+
+                            return false;
+                        }
+
+
+                        if (busca) {
+
+                            const texto = [
+
+                                compra.fornecedor,
+
+                                compra.mercadoria,
+
+                                compra.produto,
+
+                                compra.unidade,
+
+                                compra.pagamento,
+
+                                compra.formaPagamento,
+
+                                compra.observacao
+
+                            ]
+                            .filter(Boolean)
+                            .join(" ")
+                            .toLowerCase();
+
+
+                            if (
+                                !texto.includes(
+                                    busca
+                                )
+                            ) {
+
+                                return false;
+                            }
+                        }
+
+
+                        return true;
+                    }
+                );
+
+
+            /* =============================================
+               MAIS RECENTES PRIMEIRO
+            ============================================== */
+
+            filtradas.sort(
+                function(a, b) {
+
+                    const dataA =
+                        new Date(
+                            obterDataCompra(a)
+                        ).getTime() || 0;
+
+                    const dataB =
+                        new Date(
+                            obterDataCompra(b)
+                        ).getTime() || 0;
+
+                    return (
+                        dataB - dataA
+                    );
+                }
+            );
+
+
+            if (
+                filtradas.length === 0
+            ) {
+
+                lista.innerHTML = `
+
+                    <div class="vazio">
+
+                        <div class="icone">
+                            🛒
+                        </div>
 
                         <h3>
-
-                            🛒 Compra #${escapar(
-                                compra.id
-                            )}
-
+                            Nenhuma compra encontrada
                         </h3>
 
-
                         <p>
-
-                            📅 <strong>Data:</strong>
-
-                            ${compra.data
-                                ? new Date(
-                                    compra.data+
-                                    "T12:00:00"
-                                  )
-                                  .toLocaleDateString(
-                                    "pt-BR"
-                                  )
-                                : "-"
-                            }
-
+                            Tente alterar os filtros
+                            ou registre uma nova compra.
                         </p>
-
-
-                        <p>
-
-                            🏢 <strong>Fornecedor:</strong>
-
-                            ${escapar(
-                                compra.fornecedor
-                            )}
-
-                        </p>
-
-
-                        <p>
-
-                            📦 <strong>Mercadoria:</strong>
-
-                            ${escapar(
-                                compra.mercadoria
-                            )}
-
-                        </p>
-
-
-                        <p>
-
-                            🔢 <strong>Quantidade:</strong>
-
-                            ${compra.quantidade}
-                            ${escapar(
-                                compra.unidade
-                            )}
-
-                        </p>
-
-
-                        <p>
-
-                            💳 <strong>Pagamento:</strong>
-
-                            ${escapar(
-                                compra.pagamento
-                            )}
-
-                        </p>
-
-
-                        <p>
-
-                            📝 <strong>Observação:</strong>
-
-                            ${escapar(
-                                compra.observacao ||
-                                "Nenhuma"
-                            )}
-
-                        </p>
-
-
-                        <h3 class="valor">
-
-                            💰 ${dinheiro(
-                                compra.valor
-                            )}
-
-                        </h3>
-
-
-                        <button
-                            class="excluir"
-                            onclick="excluirCompra(${compra.id})">
-
-                            🗑️ EXCLUIR COMPRA
-
-                        </button>
-
 
                     </div>
 
                 `;
 
+                return;
+            }
+
+
+            lista.innerHTML =
+                filtradas.map(
+                    function(compra) {
+
+                        const status =
+                            statusCompra(
+                                compra
+                            );
+
+                        const cancelada =
+                            status ===
+                            "cancelada";
+
+                        const valor =
+                            numeroSeguro(
+                                compra.valor ??
+                                compra.valorCompra
+                            );
+
+                        const quantidade =
+                            numeroSeguro(
+                                compra.quantidade
+                            );
+
+                        const unidade =
+                            compra.unidade ||
+                            "un";
+
+                        const data =
+                            obterDataCompra(
+                                compra
+                            );
+
+
+                        return `
+
+                            <article
+                                class="compra ${
+                                    cancelada
+                                        ? "cancelada"
+                                        : ""
+                                }">
+
+                                <div
+                                    class="compra-topo">
+
+                                    <div
+                                        class="compra-produto">
+
+                                        <h3>
+                                            ${escapar(
+                                                compra.mercadoria ||
+                                                compra.produto ||
+                                                "Mercadoria"
+                                            )}
+                                        </h3>
+
+                                        <div
+                                            class="compra-fornecedor">
+
+                                            Fornecedor:
+                                            <strong>
+                                                ${escapar(
+                                                    compra.fornecedor ||
+                                                    "Não informado"
+                                                )}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <span
+                                        class="status ${
+                                            cancelada
+                                                ? "cancelada"
+                                                : "registrada"
+                                        }">
+
+                                        ${
+                                            cancelada
+                                                ? "Cancelada"
+                                                : "Registrada"
+                                        }
+
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="compra-detalhes">
+
+
+                                    <div class="detalhe">
+
+                                        <span>
+                                            Data
+                                        </span>
+
+                                        <strong>
+                                            ${escapar(
+                                                formatarData(data)
+                                            )}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detalhe">
+
+                                        <span>
+                                            Quantidade
+                                        </span>
+
+                                        <strong>
+                                            ${escapar(
+                                                quantidade
+                                            )}
+                                            ${escapar(
+                                                unidade
+                                            )}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detalhe">
+
+                                        <span>
+                                            Pagamento
+                                        </span>
+
+                                        <strong>
+                                            ${escapar(
+                                                compra.pagamento ||
+                                                compra.formaPagamento ||
+                                                "—"
+                                            )}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div
+                                        class="detalhe compra-valor">
+
+                                        <span>
+                                            Valor
+                                        </span>
+
+                                        <strong
+                                            class="valor">
+
+                                            ${dinheiro(
+                                                valor
+                                            )}
+
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                ${
+                                    compra.observacao
+                                        ? `
+                                            <div
+                                                class="compra-rodape">
+
+                                                <div
+                                                    class="compra-observacao">
+
+                                                    📝
+                                                    ${escapar(
+                                                        compra.observacao
+                                                    )}
+
+                                                </div>
+
+                                            </div>
+                                        `
+                                        : ""
+                                }
+
+
+                                ${
+                                    !cancelada
+                                        ? `
+                                            <div
+                                                class="compra-rodape">
+
+                                                <div
+                                                    class="compra-observacao">
+
+                                                    ID:
+                                                    ${escapar(
+                                                        String(
+                                                            compra.id
+                                                        ).slice(-8)
+                                                    )}
+
+                                                </div>
+
+
+                                                <button
+                                                    type="button"
+                                                    class="btn-cancelar-compra"
+                                                    onclick="cancelarCompra('${escapar(
+                                                        compra.id
+                                                    )}')">
+
+                                                    Cancelar compra
+
+                                                </button>
+
+                                            </div>
+                                        `
+                                        : `
+                                            <div
+                                                class="compra-rodape">
+
+                                                <div
+                                                    class="compra-observacao">
+
+                                                    Compra cancelada
+
+                                                </div>
+
+                                            </div>
+                                        `
+                                }
+
+                            </article>
+
+                        `;
+                    }
+                ).join("");
+        }
+
+
+        /* =================================================
+           CANCELAR COMPRA
+        ================================================= */
+
+        function cancelarCompra(id) {
+
+            const compras =
+                ler("compras");
+
+
+            const indice =
+                compras.findIndex(
+                    function(compra) {
+
+                        return (
+                            String(compra.id) ===
+                            String(id)
+                        );
+
+                    }
+                );
+
+
+            if (
+                indice === -1
+            ) {
+
+                mostrarMensagem(
+                    "Compra não encontrada.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            const compra =
+                compras[indice];
+
+
+            if (
+                !compraAtiva(compra)
+            ) {
+
+                mostrarMensagem(
+                    "Esta compra já está cancelada.",
+                    "aviso"
+                );
+
+                return;
+            }
+
+
+            const quantidade =
+                numeroSeguro(
+                    compra.quantidade
+                );
+
+
+            const estoque =
+                ler("estoque");
+
+
+            const nomeCompra =
+                String(
+                    compra.mercadoria ||
+                    compra.produto ||
+                    ""
+                )
+                .trim()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                );
+
+
+            const item =
+                estoque.find(
+                    function(produto) {
+
+                        const nome =
+                            String(
+                                produto.mercadoria ||
+                                produto.nome ||
+                                produto.produto ||
+                                ""
+                            )
+                            .trim()
+                            .toLowerCase()
+                            .normalize("NFD")
+                            .replace(
+                                /[\u0300-\u036f]/g,
+                                ""
+                            );
+
+                        return (
+                            nome ===
+                            nomeCompra
+                        );
+                    }
+                );
+
+
+            if (!item) {
+
+                mostrarMensagem(
+                    "Não foi possível cancelar porque a mercadoria não foi encontrada no estoque.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            const estoqueAtual =
+                numeroSeguro(
+                    item.estoque ??
+                    item.quantidade
+                );
+
+
+            if (
+                estoqueAtual <
+                quantidade
+            ) {
+
+                mostrarMensagem(
+                    "Não é possível cancelar esta compra: o estoque atual é menor que a quantidade que entrou nesta compra.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            const confirmar =
+                window.confirm(
+                    `Cancelar esta compra?\n\n` +
+                    `${compra.mercadoria}\n` +
+                    `${quantidade} ${compra.unidade || "un"}\n` +
+                    `${dinheiro(
+                        numeroSeguro(
+                            compra.valor ??
+                            compra.valorCompra
+                        )
+                    )}\n\n` +
+                    `O estoque será revertido e a despesa financeira será cancelada.`
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            /* =============================================
+               REVERTE ESTOQUE
+            ============================================== */
+
+            const estoqueRevertido =
+                removerQuantidadeEstoque(
+                    compra
+                );
+
+
+            if (!estoqueRevertido) {
+
+                mostrarMensagem(
+                    "Não foi possível reverter o estoque.",
+                    "erro"
+                );
+
+                return;
+            }
+
+
+            /* =============================================
+               CANCELA DESPESA
+            ============================================== */
+
+            removerDespesaDaCompra(
+                compra
+            );
+
+
+            /* =============================================
+               MARCA COMPRA COMO CANCELADA
+            ============================================== */
+
+            compras[indice].status =
+                "cancelada";
+
+            compras[indice].canceladaEm =
+                new Date()
+                    .toISOString();
+
+            compras[indice].atualizadoEm =
+                new Date()
+                    .toISOString();
+
+
+            salvar(
+                "compras",
+                compras
+            );
+
+
+            /* =============================================
+               ATUALIZA
+            ============================================== */
+
+            atualizarTudo();
+
+
+            mostrarMensagem(
+                "Compra cancelada. O estoque e o financeiro foram revertidos.",
+                "sucesso"
+            );
+        }
+
+
+        /* =================================================
+           ATUALIZAR TUDO
+        ================================================= */
+
+        function atualizarTudo() {
+
+            carregarFornecedores();
+
+            atualizarResumo();
+
+            mostrarCompras();
+        }
+
+
+        /* =================================================
+           FILTROS
+        ================================================= */
+
+        function configurarFiltros() {
+
+            const busca =
+                document.getElementById(
+                    "buscaCompra"
+                );
+
+            const status =
+                document.getElementById(
+                    "filtroStatus"
+                );
+
+            const periodo =
+                document.getElementById(
+                    "filtroPeriodo"
+                );
+
+
+            if (busca) {
+
+                busca.addEventListener(
+                    "input",
+                    mostrarCompras
+                );
+            }
+
+
+            if (status) {
+
+                status.addEventListener(
+                    "change",
+                    mostrarCompras
+                );
+            }
+
+
+            if (periodo) {
+
+                periodo.addEventListener(
+                    "change",
+                    mostrarCompras
+                );
+            }
+        }
+
+
+        /* =================================================
+           INICIALIZAÇÃO
+        ================================================= */
+
+        function iniciarCompras() {
+
+            colocarDataHoje();
+
+            carregarFornecedores();
+
+            configurarFiltros();
+
+            atualizarTudo();
+        }
+
+
+        /* =================================================
+           DOM READY
+        ================================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            iniciarCompras
+        );
+
+
+        /* =================================================
+           PAGESHOW
+        ================================================= */
+
+        window.addEventListener(
+            "pageshow",
+            function() {
+
+                atualizarTudo();
+
             }
         );
 
-}
+
+        /* =================================================
+           SINCRONIZAÇÃO ENTRE ABAS
+        ================================================= */
+
+        window.addEventListener(
+            "storage",
+            function(evento) {
+
+                const chavesImportantes = [
+
+                    "compras",
+                    "estoque",
+                    "despesas",
+                    "fornecedores",
+                    "historicoEstoque"
+
+                ];
 
 
-// =====================================================
-// 🗑️ EXCLUIR COMPRA
-// =====================================================
+                if (
+                    chavesImportantes.includes(
+                        evento.key
+                    )
+                ) {
 
-function excluirCompra(id){
-
-    const confirmar =
-        confirm(
-
-            "⚠️ EXCLUIR COMPRA?\n\n" +
-
-            "A compra será removida do histórico.\n\n" +
-
-            "IMPORTANTE: o estoque e a despesa financeira " +
-
-            "já lançados não serão revertidos automaticamente.\n\n" +
-
-            "Deseja continuar?"
-
+                    atualizarTudo();
+                }
+            }
         );
 
 
-    if(!confirmar){
-        return;
-    }
+        /* =================================================
+           CTRL + ENTER
+        ================================================= */
 
+        document.addEventListener(
+            "keydown",
+            function(evento) {
 
-    let compras =
-        ler("compras");
+                if (
+                    (evento.ctrlKey ||
+                     evento.metaKey) &&
+                    evento.key === "Enter"
+                ) {
 
+                    evento.preventDefault();
 
-    compras =
-        compras.filter(
-            function(compra){
-
-                return Number(
-                    compra.id
-                ) !== Number(id);
+                    registrarCompra();
+                }
 
             }
         );
 
 
-    salvar(
-        "compras",
-        compras
-    );
+        /* =================================================
+           FUNÇÕES GLOBAIS
+        ================================================= */
+
+        window.registrarCompra =
+            registrarCompra;
+
+        window.cancelarCompra =
+            cancelarCompra;
+
+        window.excluirCompra =
+            cancelarCompra;
+
+        window.mostrarCompras =
+            mostrarCompras;
+
+        window.atualizarResumo =
+            atualizarResumo;
+
+        window.limparFormulario =
+            limparFormulario;
+
+        window.atualizarCompras =
+            atualizarTudo;
 
 
-    atualizarResumo();
-
-    mostrarCompras();
-
-
-    alert(
-        "🗑️ Compra removida do histórico."
-    );
-
-}
-
-
-// =====================================================
-// 🚀 INICIAR
-// =====================================================
-
-window.addEventListener(
-    "load",
-    function(){
-
-        colocarDataHoje();
-
-        atualizarResumo();
-
-        mostrarCompras();
-
-    }
-);
-
-
-window.addEventListener(
-    "pageshow",
-    function(){
-
-        atualizarResumo();
-
-        mostrarCompras();
-
-    }
-);
-
-</script>
-
+    </script>
 
 </body>
 

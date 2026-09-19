@@ -1,0 +1,880 @@
+/* =========================================================
+   🍔 GRILLCORE ERP
+   TEMA VISUAL LARANJA PREMIUM
+   PADRÃO OFICIAL DAS TELAS
+========================================================= */
+
+:root{
+
+    --gc-laranja:#ff7300;
+    --gc-laranja-2:#ff9800;
+    --gc-laranja-3:#ff4d00;
+    --gc-laranja-claro:#ffb347;
+
+    --gc-preto:#030303;
+    --gc-preto-2:#070707;
+    --gc-painel:#0b0d10;
+    --gc-card:#111317;
+    --gc-card-2:#17191d;
+
+    --gc-branco:#ffffff;
+    --gc-cinza:#b9c0ca;
+    --gc-cinza-2:#747d89;
+
+    --gc-verde:#35d07f;
+    --gc-vermelho:#ff4f4f;
+
+    --gc-borda:rgba(255,115,0,.75);
+
+}
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:
+
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(255,115,0,.13),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            180deg,
+            #020202 0%,
+            #07090b 50%,
+            #020202 100%
+        ) !important;
+
+    color:#fff !important;
+
+}
+
+
+/* =========================================================
+   EFEITO GEOMÉTRICO GERAL
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+    opacity:.20;
+
+    background:
+
+        linear-gradient(
+            125deg,
+            transparent 0 72%,
+            rgba(255,115,0,.14) 72.2%,
+            rgba(255,115,0,.025) 73.5%,
+            transparent 74%
+        ),
+
+        linear-gradient(
+            125deg,
+            transparent 0 78%,
+            rgba(255,115,0,.08) 78.2%,
+            transparent 79%
+        );
+
+}
+
+
+/* =========================================================
+   TÍTULOS
+========================================================= */
+
+h1,
+h2,
+h3{
+
+    color:#fff;
+
+    font-weight:900;
+
+}
+
+h1{
+
+    letter-spacing:-.5px;
+
+}
+
+h2{
+
+    letter-spacing:-.3px;
+
+}
+
+
+/* =========================================================
+   CARDS / PAINÉIS
+========================================================= */
+
+.card,
+.painel,
+.panel,
+.section,
+.box,
+.form-card,
+.lista-painel,
+.conteudo-card,
+.dashboard-card{
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #141619,
+            #090a0c
+        ) !important;
+
+    border:1px solid #30343a !important;
+
+    border-radius:16px !important;
+
+    box-shadow:
+
+        0 8px 25px rgba(0,0,0,.30),
+
+        inset 0 0 20px rgba(255,115,0,.025);
+
+}
+
+
+/* =========================================================
+   CARDS DE RESUMO
+========================================================= */
+
+.stat-card,
+.summary-card,
+.resumo-card,
+.indicator-card,
+.info-card,
+.dashboard-stat,
+.metric-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            110deg,
+            #ff7900 0%,
+            #d94d00 30%,
+            #7e2600 57%,
+            #241007 100%
+        ) !important;
+
+    border:2px solid var(--gc-laranja) !important;
+
+    border-radius:17px !important;
+
+    box-shadow:
+
+        0 0 14px rgba(255,115,0,.28),
+
+        inset 0 0 35px rgba(255,150,0,.10);
+
+}
+
+
+/* detalhe geométrico dos cards */
+
+.stat-card::before,
+.summary-card::before,
+.resumo-card::before,
+.indicator-card::before,
+.info-card::before,
+.dashboard-stat::before,
+.metric-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+
+    height:160px;
+
+    right:-45px;
+
+    top:-30px;
+
+    pointer-events:none;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            transparent 35%,
+            rgba(255,255,255,.08) 36%,
+            transparent 47%,
+            rgba(255,255,255,.04) 48%,
+            transparent 60%
+        );
+
+    transform:skewX(-20deg);
+
+}
+
+
+/* =========================================================
+   NÚMEROS
+========================================================= */
+
+.stat-number,
+.summary-number,
+.resumo-numero,
+.indicator-number,
+.metric-number,
+.valor-card{
+
+    color:#fff !important;
+
+    font-size:clamp(
+        34px,
+        7vw,
+        52px
+    ) !important;
+
+    font-weight:1000 !important;
+
+    line-height:1 !important;
+
+    letter-spacing:-2px !important;
+
+    text-shadow:
+
+        0 2px 8px rgba(0,0,0,.40);
+
+}
+
+
+/* =========================================================
+   LABELS DOS CARDS
+========================================================= */
+
+.stat-label,
+.summary-label,
+.resumo-label,
+.indicator-label,
+.metric-label{
+
+    color:#fff !important;
+
+    font-weight:900 !important;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+
+}
+
+
+/* =========================================================
+   ÍCONES DOS CARDS
+========================================================= */
+
+.stat-icon,
+.summary-icon,
+.resumo-icon,
+.indicator-icon,
+.metric-icon{
+
+    background:#080808 !important;
+
+    border:2px solid rgba(255,160,60,.9) !important;
+
+    color:var(--gc-laranja) !important;
+
+    box-shadow:
+
+        0 0 14px rgba(255,115,0,.30),
+
+        inset 0 0 14px rgba(255,115,0,.08);
+
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+button,
+.btn{
+
+    font-family:inherit;
+
+}
+
+
+/* principais */
+
+.btn-primary,
+.btn-principal,
+.btn-salvar,
+.btn-confirmar,
+.btn-success,
+.btn-laranja,
+button[type="submit"]{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff4d00
+        ) !important;
+
+    color:#fff !important;
+
+    border:1px solid #ff9b32 !important;
+
+    box-shadow:
+
+        0 5px 16px rgba(255,115,0,.20);
+
+    font-weight:900;
+
+}
+
+
+/* hover */
+
+.btn-primary:hover,
+.btn-principal:hover,
+.btn-salvar:hover,
+.btn-confirmar:hover,
+.btn-laranja:hover,
+button[type="submit"]:hover{
+
+    filter:brightness(1.10);
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   BOTÕES SECUNDÁRIOS
+========================================================= */
+
+.btn-secondary,
+.btn-secundario,
+.btn-cancelar,
+.btn-voltar{
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #181a1e,
+            #090a0c
+        ) !important;
+
+    color:#fff !important;
+
+    border:1px solid #3b3f45 !important;
+
+}
+
+
+/* botão voltar com laranja */
+
+.btn-voltar{
+
+    border-color:var(--gc-laranja) !important;
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+input,
+select,
+textarea{
+
+    background:#080a0c !important;
+
+    color:#fff !important;
+
+    border:1px solid #34383e !important;
+
+    border-radius:11px !important;
+
+}
+
+
+/* foco */
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none !important;
+
+    border-color:var(--gc-laranja) !important;
+
+    box-shadow:
+
+        0 0 0 3px rgba(255,115,0,.10),
+
+        0 0 12px rgba(255,115,0,.12) !important;
+
+}
+
+
+/* placeholder */
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#68717e !important;
+
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+label{
+
+    color:#f3f3f3 !important;
+
+    font-weight:800;
+
+}
+
+
+/* =========================================================
+   TÍTULOS DE SEÇÃO
+========================================================= */
+
+.section-title,
+.titulo-secao,
+.form-title{
+
+    color:#fff !important;
+
+}
+
+
+.section-title svg,
+.section-title i,
+.section-icon{
+
+    color:var(--gc-laranja) !important;
+
+}
+
+
+/* =========================================================
+   TABELAS
+========================================================= */
+
+table{
+
+    color:#fff;
+
+    border-color:#30343a !important;
+
+}
+
+thead{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #1b1d20,
+            #0a0b0d
+        ) !important;
+
+}
+
+th{
+
+    color:var(--gc-laranja-claro) !important;
+
+    font-weight:900;
+
+}
+
+td{
+
+    border-color:#292d32 !important;
+
+}
+
+tbody tr:hover{
+
+    background:rgba(
+        255,
+        115,
+        0,
+        .055
+    ) !important;
+
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge{
+
+    background:#191c20 !important;
+
+    color:#c8ced6 !important;
+
+    border:1px solid #34383e;
+
+}
+
+.badge.ok,
+.badge-success,
+.status-ok{
+
+    color:#70e7a6 !important;
+
+    border-color:rgba(
+        53,
+        208,
+        127,
+        .30
+    );
+
+}
+
+.badge.baixo,
+.badge-warning,
+.status-warning{
+
+    color:#ffb84d !important;
+
+    border-color:rgba(
+        255,
+        184,
+        77,
+        .30
+    );
+
+}
+
+.badge.zero,
+.badge-danger,
+.status-danger{
+
+    color:#ff7777 !important;
+
+    border-color:rgba(
+        255,
+        79,
+        79,
+        .30
+    );
+
+}
+
+
+/* =========================================================
+   BARRAS / SEPARADORES
+========================================================= */
+
+hr{
+
+    border:0;
+
+    border-top:1px solid #30343a;
+
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+a{
+
+    color:var(--gc-laranja-claro);
+
+}
+
+a:hover{
+
+    color:#fff;
+
+}
+
+
+/* =========================================================
+   MENU / NAVEGAÇÃO
+========================================================= */
+
+.menu-card,
+.dashboard-card,
+.quick-card{
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #15171a,
+            #08090b
+        ) !important;
+
+    border:1px solid #363a40 !important;
+
+    border-radius:15px !important;
+
+}
+
+.menu-card:hover,
+.dashboard-card:hover,
+.quick-card:hover{
+
+    border-color:var(--gc-laranja) !important;
+
+    box-shadow:
+
+        0 0 15px rgba(
+            255,
+            115,
+            0,
+            .18
+        );
+
+}
+
+
+/* =========================================================
+   CARDS DE PRODUTO / ITEM
+========================================================= */
+
+.produto-card,
+.item-card,
+.lista-item,
+.movimento-card,
+.compra-card,
+.cliente-card{
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #141619,
+            #090a0c
+        ) !important;
+
+    border:1px solid #30343a !important;
+
+    border-radius:15px !important;
+
+}
+
+.produto-card:hover,
+.item-card:hover,
+.lista-item:hover,
+.movimento-card:hover,
+.compra-card:hover,
+.cliente-card:hover{
+
+    border-color:
+
+        rgba(
+            255,
+            115,
+            0,
+            .65
+        ) !important;
+
+}
+
+
+/* =========================================================
+   ALERTAS
+========================================================= */
+
+.alerta,
+.alert,
+.aviso{
+
+    border-color:rgba(
+        255,
+        115,
+        0,
+        .45
+    ) !important;
+
+    background:
+
+        rgba(
+            255,
+            115,
+            0,
+            .07
+        ) !important;
+
+}
+
+
+/* =========================================================
+   RODAPÉ
+========================================================= */
+
+footer,
+.footer{
+
+    color:#626a74 !important;
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+
+    width:7px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#050505;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#713000;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--gc-laranja);
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    .dashboard-grid{
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr)) !important;
+
+        gap:10px !important;
+
+    }
+
+
+    .stat-card,
+    .summary-card,
+    .resumo-card,
+    .indicator-card{
+
+        min-height:105px;
+
+    }
+
+
+    .stat-number,
+    .summary-number,
+    .resumo-numero,
+    .indicator-number{
+
+        font-size:40px !important;
+
+    }
+
+
+    .stat-icon,
+    .summary-icon,
+    .resumo-icon,
+    .indicator-icon{
+
+        width:65px !important;
+
+        height:65px !important;
+
+        font-size:28px !important;
+
+    }
+
+
+    button,
+    .btn{
+
+        min-height:45px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media(max-width:380px){
+
+    .dashboard-grid{
+
+        gap:8px !important;
+
+    }
+
+
+    .stat-number,
+    .summary-number,
+    .resumo-numero,
+    .indicator-number{
+
+        font-size:34px !important;
+
+    }
+
+
+    .stat-label,
+    .summary-label,
+    .resumo-label,
+    .indicator-label{
+
+        font-size:10px !important;
+
+    }
+
+}

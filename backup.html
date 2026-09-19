@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#080808">
+  <link rel="stylesheet" href="tema-laranja.css">
+
+<meta name="apple-mobile-web-app-capable"
+      content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent">
+
+<title>GrillCore ERP | Backup</title>
+
+
+<style>
+
+/* =====================================================
+   🍔 GRILLCORE ERP
+   BACKUP — PREMIUM
+   PRETO • VERMELHO • DOURADO
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+
+    --preto:#080808;
+    --preto2:#101010;
+
+    --vermelho:#9b111e;
+    --vermelho2:#650711;
+    --vermelho3:#3b0308;
+
+    --dourado:#d4af37;
+    --dourado2:#f3d66b;
+
+    --borda:#8e701b;
+
+    --branco:#ffffff;
+    --cinza:#aaa0a0;
+
+    --verde:#35d07f;
+    --erro:#ff5555;
+
+}
+
+html,
+body{
+
+    width:100%;
+    min-height:100%;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    padding:20px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:var(--branco);
+
+    background:
+
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(155,17,30,.35),
+            transparent 38%
+        ),
+
+        linear-gradient(
+            145deg,
+            #030303,
+            #0b0002 55%,
+            #030303
+        );
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:0 auto;
+
+}
+
+
+/* =====================================================
+   TOPO
+===================================================== */
+
+.topo{
+
+    text-align:center;
+
+    padding:15px 0 25px;
+
+}
+
+.logo{
+
+    width:76px;
+    height:76px;
+
+    margin:0 auto 14px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #9b111e,
+            #3b0308
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.7);
+
+    font-size:37px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.55),
+        0 0 25px rgba(155,17,30,.18);
+
+}
+
+h1{
+
+    color:#fff;
+
+    font-size:31px;
+
+    font-weight:800;
+
+}
+
+h1 span{
+
+    color:var(--dourado2);
+
+}
+
+.subtitulo{
+
+    color:#888;
+
+    font-size:13px;
+
+    margin-top:7px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+    padding:22px;
+
+    margin-bottom:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22,22,22,.98),
+            rgba(9,9,9,.98)
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.25);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.03);
+
+}
+
+.card h2{
+
+    color:#f3d66b;
+
+    font-size:18px;
+
+    margin-bottom:9px;
+
+}
+
+.descricao{
+
+    color:#999;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    margin-bottom:18px;
+
+}
+
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+.info{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.info-item{
+
+    padding:14px;
+
+    background:#080808;
+
+    border:
+        1px solid #292929;
+
+    border-radius:13px;
+
+}
+
+.info-item span{
+
+    display:block;
+
+    color:#777;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    letter-spacing:.5px;
+
+    margin-bottom:6px;
+
+}
+
+.info-item strong{
+
+    color:var(--dourado2);
+
+    font-size:18px;
+
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+.btn{
+
+    width:100%;
+
+    min-height:52px;
+
+    border:none;
+
+    border-radius:13px;
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    letter-spacing:.4px;
+
+    cursor:pointer;
+
+    margin-top:9px;
+
+    transition:
+        transform .15s,
+        filter .15s,
+        opacity .15s;
+
+}
+
+.btn:hover{
+
+    filter:brightness(1.08);
+
+}
+
+.btn:active{
+
+    transform:scale(.98);
+
+}
+
+.btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+.btn-backup{
+
+    background:
+        linear-gradient(
+            135deg,
+            #b51225,
+            #790914
+        );
+
+}
+
+.btn-restaurar{
+
+    background:
+        linear-gradient(
+            135deg,
+            #a27b17,
+            #76590d
+        );
+
+}
+
+.btn-voltar{
+
+    background:#171717;
+
+    border:
+        1px solid #333;
+
+    color:#ddd;
+
+}
+
+
+/* =====================================================
+   INPUT ARQUIVO
+===================================================== */
+
+input[type="file"]{
+
+    display:none;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+    min-height:22px;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+.status.sucesso{
+
+    color:var(--verde);
+
+}
+
+.status.erro{
+
+    color:var(--erro);
+
+}
+
+
+/* =====================================================
+   AVISO
+===================================================== */
+
+.aviso{
+
+    padding:16px;
+
+    color:#aaa;
+
+    font-size:12px;
+
+    line-height:1.65;
+
+    background:
+        rgba(212,175,55,.05);
+
+    border:
+        1px solid
+        rgba(212,175,55,.25);
+
+    border-radius:14px;
+
+}
+
+.aviso strong{
+
+    color:var(--dourado2);
+
+}
+
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+.rodape{
+
+    padding:20px;
+
+    text-align:center;
+
+    color:#555;
+
+    font-size:11px;
+
+    line-height:1.6;
+
+}
+
+.rodape strong{
+
+    color:#8c7b3b;
+
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:420px){
+
+    body{
+
+        padding:14px;
+
+    }
+
+    .card{
+
+        padding:18px;
+
+    }
+
+    .info{
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+@media(max-width:340px){
+
+    .info{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =================================================
+         TOPO
+    ================================================== -->
+
+    <div class="topo">
+
+        <div class="logo">
+            🍔
+        </div>
+
+        <h1>
+            Grill<span>Core</span> ERP
+        </h1>
+
+        <p class="subtitulo">
+            Central de segurança e backup
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         RESUMO DOS DADOS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🛡️ Segurança dos dados
+        </h2>
+
+        <p class="descricao">
+
+            Faça cópias periódicas dos dados do
+            GrillCore para proteger as informações
+            da sua operação.
+
+        </p>
+
+
+        <div class="info">
+
+            <div class="info-item">
+
+                <span>
+                    PRODUTOS
+                </span>
+
+                <strong id="qtdProdutos">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    VENDAS
+                </span>
+
+                <strong id="qtdVendas">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    CLIENTES
+                </span>
+
+                <strong id="qtdClientes">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    ESTOQUE
+                </span>
+
+                <strong id="qtdEstoque">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    COMPRAS
+                </span>
+
+                <strong id="qtdCompras">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    FORNECEDORES
+                </span>
+
+                <strong id="qtdFornecedores">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    DESPESAS
+                </span>
+
+                <strong id="qtdDespesas">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>
+                    ENTRADAS
+                </span>
+
+                <strong id="qtdEntradas">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="btn btn-backup"
+            id="btnBackup"
+            onclick="fazerBackup()">
+
+            💾 FAZER BACKUP AGORA
+
+        </button>
+
+
+        <div
+            id="statusBackup"
+            class="status"
+            aria-live="polite">
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         RESTAURAR
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            📥 Restaurar backup
+        </h2>
+
+        <p class="descricao">
+
+            Se você possui um backup anterior,
+            selecione o arquivo JSON para restaurar
+            os dados armazenados nele.
+
+        </p>
+
+
+        <input
+            type="file"
+            id="arquivoBackup"
+            accept=".json,application/json"
+            onchange="restaurarBackup(event)">
+
+
+        <button
+            type="button"
+            class="btn btn-restaurar"
+            onclick="selecionarBackup()">
+
+            📥 SELECIONAR ARQUIVO DE BACKUP
+
+        </button>
+
+
+        <div
+            id="statusRestaurar"
+            class="status"
+            aria-live="polite">
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         AVISO DE SEGURANÇA
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="aviso">
+
+            <strong>
+                ⚠️ Importante sobre o backup
+            </strong>
+
+            <br><br>
+
+            O arquivo contém os dados armazenados
+            localmente pelo GrillCore neste dispositivo.
+
+            <br><br>
+
+            Recomendamos guardar uma cópia em outro
+            local, como computador, pendrive ou
+            armazenamento em nuvem.
+
+            <br><br>
+
+            <strong>
+                Atenção:
+            </strong>
+
+            ao restaurar um backup, os dados das
+            áreas presentes no arquivo serão
+            substituídos pelos dados do backup.
+
+            <br><br>
+
+            Faça um backup atual antes de realizar
+            uma restauração importante.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         VOLTAR
+    ================================================== -->
+
+    <button
+        type="button"
+        class="btn btn-voltar"
+        onclick="voltar()">
+
+        ← VOLTAR PARA O GRILLCORE
+
+    </button>
+
+
+    <!-- =================================================
+         RODAPÉ
+    ================================================== -->
+
+    <div class="rodape">
+
+        <strong>
+            GrillCore ERP
+        </strong>
+
+        <br>
+
+        Sistema profissional de gestão
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   🍔 GRILLCORE ERP
+   BACKUP / RESTAURAÇÃO
+===================================================== */
+
+
+/* =====================================================
+   🔐 PROTEÇÃO DA PÁGINA
+===================================================== */
+
+if(
+    localStorage.getItem(
+        "grillcore_login"
+    ) !== "true"
+){
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/* =====================================================
+   📦 CHAVES OFICIAIS DO GRILLCORE
+===================================================== */
+
+const CHAVES_BACKUP = [
+
+    "produtos",
+
+    "vendas",
+
+    "clientes",
+
+    "telefoneCliente",
+
+    "clienteTelefone",
+
+    "telefonePedido",
+
+    "estoque",
+
+    "compras",
+
+    "fornecedores",
+
+    "entradas",
+
+    "despesas",
+
+    "fechamentosCaixa",
+
+    "historicoEstoque"
+
+];
+
+
+/* =====================================================
+   🔢 VERSÃO DO BACKUP
+===================================================== */
+
+const VERSAO_BACKUP =
+    "3.0";
+
+
+/* =====================================================
+   📖 LER STORAGE
+===================================================== */
+
+function lerDados(chave){
+
+    try{
+
+        const valor =
+            localStorage.getItem(chave);
+
+
+        if(valor === null){
+
+            return null;
+
+        }
+
+
+        try{
+
+            return JSON.parse(
+                valor
+            );
+
+        }
+        catch(erroJSON){
+
+            return valor;
+
+        }
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao ler:",
+            chave,
+            erro
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   💾 SALVAR STORAGE
+===================================================== */
+
+function salvarDados(
+    chave,
+    valor
+){
+
+    try{
+
+        if(
+            typeof valor === "string"
+        ){
+
+            localStorage.setItem(
+                chave,
+                valor
+            );
+
+        }
+        else{
+
+            localStorage.setItem(
+                chave,
+                JSON.stringify(valor)
+            );
+
+        }
+
+        return true;
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao salvar:",
+            chave,
+            erro
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   🔢 CONTADOR SEGURO
+===================================================== */
+
+function quantidadeDados(chave){
+
+    const dados =
+        lerDados(chave);
+
+
+    if(Array.isArray(dados)){
+
+        return dados.length;
+
+    }
+
+
+    if(
+        dados &&
+        typeof dados === "object"
+    ){
+
+        return Object.keys(
+            dados
+        ).length;
+
+    }
+
+
+    return dados !== null
+        ? 1
+        : 0;
+
+}
+
+
+/* =====================================================
+   📊 ATUALIZAR CONTADORES
+===================================================== */
+
+function atualizarContadores(){
+
+    document.getElementById(
+        "qtdProdutos"
+    ).textContent =
+        quantidadeDados(
+            "produtos"
+        );
+
+
+    document.getElementById(
+        "qtdVendas"
+    ).textContent =
+        quantidadeDados(
+            "vendas"
+        );
+
+
+    document.getElementById(
+        "qtdClientes"
+    ).textContent =
+        quantidadeDados(
+            "clientes"
+        );
+
+
+    document.getElementById(
+        "qtdEstoque"
+    ).textContent =
+        quantidadeDados(
+            "estoque"
+        );
+
+
+    document.getElementById(
+        "qtdCompras"
+    ).textContent =
+        quantidadeDados(
+            "compras"
+        );
+
+
+    document.getElementById(
+        "qtdFornecedores"
+    ).textContent =
+        quantidadeDados(
+            "fornecedores"
+        );
+
+
+    document.getElementById(
+        "qtdDespesas"
+    ).textContent =
+        quantidadeDados(
+            "despesas"
+        );
+
+
+    document.getElementById(
+        "qtdEntradas"
+    ).textContent =
+        quantidadeDados(
+            "entradas"
+        );
+
+}
+
+
+/* =====================================================
+   💾 FAZER BACKUP
+===================================================== */
+
+function fazerBackup(){
+
+    const status =
+        document.getElementById(
+            "statusBackup"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnBackup"
+        );
+
+
+    status.className =
+        "status";
+
+    status.textContent =
+        "Preparando backup...";
+
+    botao.disabled = true;
+
+
+    try{
+
+        const dados = {};
+
+        let areasIncluidas = 0;
+
+        let registrosTotais = 0;
+
+
+        /* ---------------------------------------------
+           LER TODAS AS ÁREAS
+        --------------------------------------------- */
+
+        CHAVES_BACKUP.forEach(
+            function(chave){
+
+                const valor =
+                    lerDados(chave);
+
+
+                if(valor !== null){
+
+                    dados[chave] =
+                        valor;
+
+                    areasIncluidas++;
+
+
+                    if(
+                        Array.isArray(valor)
+                    ){
+
+                        registrosTotais +=
+                            valor.length;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ---------------------------------------------
+           METADADOS
+        --------------------------------------------- */
+
+        dados.grillcore_backup =
+            true;
+
+
+        dados.tipo_backup =
+            "GRILLCORE_ERP";
+
+
+        dados.versao_backup =
+            VERSAO_BACKUP;
+
+
+        dados.data_backup =
+            new Date().toISOString();
+
+
+        dados.areas_backup =
+            areasIncluidas;
+
+
+        dados.registros_backup =
+            registrosTotais;
+
+
+        /* ---------------------------------------------
+           CONVERTER PARA JSON
+        --------------------------------------------- */
+
+        const json =
+            JSON.stringify(
+                dados,
+                null,
+                2
+            );
+
+
+        const blob =
+            new Blob(
+                [json],
+                {
+                    type:
+                        "application/json"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        const agora =
+            new Date();
+
+
+        const data =
+            agora
+            .toLocaleDateString(
+                "pt-BR"
+            )
+            .replace(
+                /\//g,
+                "-"
+            );
+
+
+        const hora =
+            String(
+                agora.getHours()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const minutos =
+            String(
+                agora.getMinutes()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const segundos =
+            String(
+                agora.getSeconds()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const nomeArquivo =
+
+            "GrillCore_Backup_" +
+            data +
+            "_" +
+            hora +
+            "-" +
+            minutos +
+            "-" +
+            segundos +
+            ".json";
+
+
+        link.href =
+            url;
+
+        link.download =
+            nomeArquivo;
+
+
+        document.body.appendChild(
+            link
+        );
+
+        link.click();
+
+
+        link.remove();
+
+
+        URL.revokeObjectURL(
+            url
+        );
+
+
+        status.className =
+            "status sucesso";
+
+
+        status.textContent =
+
+            "✓ Backup criado com sucesso! " +
+
+            areasIncluidas +
+
+            " áreas incluídas e " +
+
+            registrosTotais +
+
+            " registros encontrados.";
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro no backup:",
+            erro
+        );
+
+
+        status.className =
+            "status erro";
+
+
+        status.textContent =
+
+            "❌ Não foi possível criar o backup.";
+
+    }
+    finally{
+
+        botao.disabled = false;
+
+    }
+
+}
+
+
+/* =====================================================
+   📥 SELECIONAR BACKUP
+===================================================== */
+
+function selecionarBackup(){
+
+    const campo =
+        document.getElementById(
+            "arquivoBackup"
+        );
+
+
+    campo.value = "";
+
+
+    campo.click();
+
+}
+
+
+/* =====================================================
+   🛡️ VALIDAR BACKUP
+===================================================== */
+
+function validarBackup(dados){
+
+    if(
+        !dados ||
+        typeof dados !== "object"
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        dados.grillcore_backup
+        !== true
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        dados.tipo_backup &&
+        dados.tipo_backup !==
+            "GRILLCORE_ERP"
+    ){
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   📥 RESTAURAR BACKUP
+===================================================== */
+
+function restaurarBackup(event){
+
+    const arquivo =
+        event.target.files[0];
+
+
+    const status =
+        document.getElementById(
+            "statusRestaurar"
+        );
+
+
+    if(!arquivo){
+
+        return;
+
+    }
+
+
+    status.className =
+        "status";
+
+
+    status.textContent =
+        "Lendo arquivo de backup...";
+
+
+    if(
+        !arquivo.name
+        .toLowerCase()
+        .endsWith(".json")
+    ){
+
+        status.className =
+            "status erro";
+
+
+        status.textContent =
+            "❌ Selecione um arquivo JSON válido.";
+
+        event.target.value = "";
+
+        return;
+
+    }
+
+
+    const leitor =
+        new FileReader();
+
+
+    leitor.onload =
+        function(){
+
+            try{
+
+                const dados =
+                    JSON.parse(
+                        leitor.result
+                    );
+
+
+                if(
+                    !validarBackup(dados)
+                ){
+
+                    throw new Error(
+                        "Backup inválido"
+                    );
+
+                }
+
+
+                /* -------------------------------------
+                   CONFIRMAÇÃO 1
+                ------------------------------------- */
+
+                const confirmar =
+                    confirm(
+
+                        "⚠️ ATENÇÃO!\n\n" +
+
+                        "Você está prestes a restaurar " +
+                        "um backup do GrillCore.\n\n" +
+
+                        "Os dados atuais das áreas " +
+                        "presentes no arquivo serão " +
+                        "substituídos.\n\n" +
+
+                        "É altamente recomendado fazer " +
+                        "um backup atual antes de continuar.\n\n" +
+
+                        "Deseja continuar?"
+
+                    );
+
+
+                if(!confirmar){
+
+                    status.textContent =
+                        "Restauração cancelada.";
+
+                    event.target.value =
+                        "";
+
+                    return;
+
+                }
+
+
+                /* -------------------------------------
+                   CONFIRMAÇÃO 2
+                ------------------------------------- */
+
+                const confirmarFinal =
+                    confirm(
+
+                        "🔴 ÚLTIMA CONFIRMAÇÃO\n\n" +
+
+                        "A restauração irá substituir " +
+                        "os dados armazenados pelas " +
+                        "informações deste backup.\n\n" +
+
+                        "Deseja realmente restaurar?"
+
+                    );
+
+
+                if(!confirmarFinal){
+
+                    status.textContent =
+                        "Restauração cancelada.";
+
+                    event.target.value =
+                        "";
+
+                    return;
+
+                }
+
+
+                /* -------------------------------------
+                   RESTAURAR
+                ------------------------------------- */
+
+                let restaurados = 0;
+
+                let falhas = 0;
+
+
+                CHAVES_BACKUP.forEach(
+                    function(chave){
+
+                        if(
+                            Object.prototype
+                            .hasOwnProperty
+                            .call(
+                                dados,
+                                chave
+                            )
+                        ){
+
+                            const sucesso =
+                                salvarDados(
+                                    chave,
+                                    dados[chave]
+                                );
+
+
+                            if(sucesso){
+
+                                restaurados++;
+
+                            }
+                            else{
+
+                                falhas++;
+
+                            }
+
+                        }
+
+                    }
+                );
+
+
+                if(falhas > 0){
+
+                    throw new Error(
+                        "Falha ao restaurar alguns dados"
+                    );
+
+                }
+
+
+                /* -------------------------------------
+                   FINALIZAÇÃO
+                ------------------------------------- */
+
+                status.className =
+                    "status sucesso";
+
+
+                status.textContent =
+
+                    "✓ Restauração concluída! " +
+
+                    restaurados +
+
+                    " áreas foram restauradas.";
+
+
+                atualizarContadores();
+
+
+                setTimeout(
+                    function(){
+
+                        alert(
+
+                            "✅ RESTAURAÇÃO CONCLUÍDA!\n\n" +
+
+                            "O GrillCore será recarregado " +
+                            "para aplicar os dados restaurados."
+
+                        );
+
+
+                        window.location.replace(
+                            "index.html"
+                        );
+
+                    },
+                    700
+                );
+
+
+            }
+            catch(erro){
+
+                console.error(
+                    "Erro na restauração:",
+                    erro
+                );
+
+
+                status.className =
+                    "status erro";
+
+
+                status.textContent =
+
+                    "❌ Não foi possível restaurar este arquivo. " +
+                    "Verifique se ele é um backup válido do GrillCore.";
+
+            }
+
+
+            event.target.value =
+                "";
+
+        };
+
+
+    leitor.onerror =
+        function(){
+
+            status.className =
+                "status erro";
+
+
+            status.textContent =
+                "❌ Erro ao ler o arquivo de backup.";
+
+
+            event.target.value =
+                "";
+
+        };
+
+
+    leitor.readAsText(
+        arquivo
+    );
+
+}
+
+
+/* =====================================================
+   🔙 VOLTAR
+===================================================== */
+
+function voltar(){
+
+    window.location.replace(
+        "index.html"
+    );
+
+}
+
+
+/* =====================================================
+   🚀 INICIALIZAÇÃO
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        atualizarContadores();
+
+    }
+);
+
+
+/* =====================================================
+   🔄 ATUALIZAÇÃO AUTOMÁTICA
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            CHAVES_BACKUP.includes(
+                event.key
+            )
+        ){
+
+            atualizarContadores();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            atualizarContadores();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

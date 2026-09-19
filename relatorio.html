@@ -3,317 +3,2057 @@
 
 <head>
 
+<script>
+if (localStorage.getItem("grillcore_login") !== "true") {
+    window.location.replace("login.html");
+}
+</script>
+
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>Relatório de Vendas - GrillCore ERP</title>
+<meta name="theme-color"
+      content="#080808">
 
-<link rel="stylesheet" href="style.css">
+<title>Relatório de Vendas — GrillCore ERP</title>
+
+<link rel="stylesheet"
+      href="style.css">
+  <link rel="stylesheet" href="tema-laranja.css">
+
+<style>
+
+/* =====================================================
+   RELATÓRIO DE VENDAS
+   ===================================================== */
+
+.relatorio-container{
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+.relatorio-filtros{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.relatorio-filtro{
+    background:linear-gradient(
+        145deg,
+        rgba(25,25,25,.98),
+        rgba(10,10,10,.98)
+    );
+
+    border:1px solid rgba(212,175,55,.30);
+    border-radius:16px;
+    padding:16px;
+}
+
+.relatorio-filtro label{
+    display:block;
+    color:#d4af37;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:8px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.relatorio-filtro select,
+.relatorio-filtro input{
+    width:100%;
+    min-height:44px;
+    padding:10px 12px;
+
+    border-radius:10px;
+    border:1px solid rgba(212,175,55,.30);
+
+    background:#0b0b0b;
+    color:#fff;
+
+    outline:none;
+}
+
+.relatorio-filtro select:focus,
+.relatorio-filtro input:focus{
+    border-color:#d4af37;
+    box-shadow:0 0 0 2px rgba(212,175,55,.10);
+}
+
+
+/* =====================================================
+   CARDS DE RESUMO
+   ===================================================== */
+
+.relatorio-resumo{
+    display:grid;
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.relatorio-card{
+    background:linear-gradient(
+        145deg,
+        rgba(25,25,25,.98),
+        rgba(10,10,10,.98)
+    );
+
+    border:1px solid rgba(212,175,55,.30);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+.relatorio-card .icone{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.relatorio-card .titulo{
+    color:#aaa;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.relatorio-card .valor{
+    margin-top:7px;
+    color:#f3d66b;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.relatorio-card .sub{
+    margin-top:5px;
+    color:#777;
+    font-size:11px;
+}
+
+
+/* =====================================================
+   PAGAMENTOS
+   ===================================================== */
+
+.pagamentos-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.pagamento-card{
+    background:#101010;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:15px;
+
+    padding:16px;
+}
+
+.pagamento-card h3{
+    margin:0 0 8px;
+    font-size:13px;
+    color:#ccc;
+}
+
+.pagamento-card p{
+    margin:0;
+    color:#f3d66b;
+    font-size:18px;
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   SEÇÕES
+   ===================================================== */
+
+.relatorio-secao{
+    background:linear-gradient(
+        145deg,
+        rgba(25,25,25,.98),
+        rgba(10,10,10,.98)
+    );
+
+    border:1px solid rgba(212,175,55,.30);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+}
+
+.relatorio-secao-titulo{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:16px;
+}
+
+.relatorio-secao-titulo h2{
+    margin:0;
+    color:#f3d66b;
+    font-size:20px;
+}
+
+.relatorio-secao-titulo span{
+    color:#777;
+    font-size:12px;
+}
+
+
+/* =====================================================
+   PRODUTOS
+   ===================================================== */
+
+.produto-relatorio{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    padding:14px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.produto-relatorio:last-child{
+    border-bottom:none;
+}
+
+.produto-posicao{
+    width:36px;
+    height:36px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:rgba(155,17,30,.25);
+
+    border:1px solid rgba(212,175,55,.25);
+
+    color:#f3d66b;
+
+    font-weight:bold;
+}
+
+.produto-info{
+    flex:1;
+    min-width:0;
+}
+
+.produto-nome{
+    color:#fff;
+    font-size:15px;
+    font-weight:bold;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.produto-detalhes{
+    margin-top:4px;
+
+    color:#888;
+
+    font-size:12px;
+}
+
+.produto-total{
+    text-align:right;
+    flex-shrink:0;
+}
+
+.produto-total strong{
+    display:block;
+    color:#f3d66b;
+    font-size:15px;
+}
+
+.produto-total small{
+    color:#777;
+    font-size:11px;
+}
+
+
+/* =====================================================
+   TABELA DE VENDAS
+   ===================================================== */
+
+.vendas-relatorio{
+    overflow-x:auto;
+}
+
+.tabela-vendas{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+.tabela-vendas th{
+    padding:12px 10px;
+
+    text-align:left;
+
+    color:#d4af37;
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    border-bottom:
+        1px solid rgba(212,175,55,.25);
+}
+
+.tabela-vendas td{
+    padding:13px 10px;
+
+    color:#ddd;
+
+    font-size:13px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+}
+
+.tabela-vendas tr:hover td{
+    background:rgba(155,17,30,.08);
+}
+
+.valor-venda{
+    color:#f3d66b !important;
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.status-venda{
+    display:inline-flex;
+    align-items:center;
+
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    background:rgba(53,208,127,.10);
+
+    border:1px solid rgba(53,208,127,.25);
+
+    color:#35d07f;
+
+    font-size:10px;
+
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   VAZIO
+   ===================================================== */
+
+.relatorio-vazio{
+    text-align:center;
+
+    padding:35px 15px;
+
+    color:#777;
+}
+
+.relatorio-vazio .icone{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+
+/* =====================================================
+   BOTÕES
+   ===================================================== */
+
+.relatorio-acoes{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:10px;
+}
+
+.relatorio-btn{
+    min-height:44px;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(212,175,55,.30);
+
+    background:#101010;
+
+    color:#f3d66b;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.relatorio-btn:hover{
+    background:#1a1a1a;
+}
+
+.relatorio-btn.principal{
+    background:linear-gradient(
+        135deg,
+        #9b111e,
+        #650711
+    );
+
+    border-color:
+        rgba(212,175,55,.45);
+
+    color:#fff;
+}
+
+
+/* =====================================================
+   RESPONSIVO
+   ===================================================== */
+
+@media(max-width:900px){
+
+    .relatorio-resumo{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+    .pagamentos-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:600px){
+
+    .relatorio-filtros{
+        grid-template-columns:1fr;
+    }
+
+    .relatorio-resumo{
+        grid-template-columns:1fr;
+    }
+
+    .pagamentos-grid{
+        grid-template-columns:1fr;
+    }
+
+    .relatorio-secao{
+        padding:15px;
+    }
+
+    .relatorio-card{
+        padding:16px;
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body>
 
-<h1>📈 Relatório de Vendas</h1>
+<div class="gc-fundo"></div>
 
-<br>
+<div class="gc-app">
 
-<!-- =============================== -->
-<!-- RESUMO -->
-<!-- =============================== -->
+<main class="gc-main">
 
-<h2>📊 Resumo</h2>
+<div class="relatorio-container">
 
-<div>
 
-    <h3>💰 Faturamento Total</h3>
+<!-- =====================================================
+     CABEÇALHO
+     ===================================================== -->
 
-    <h2 id="faturamento">
-        R$ 0,00
-    </h2>
+<header class="gc-topo">
 
-</div>
+    <div class="gc-icone">
+        📈
+    </div>
 
-<br>
+    <h1>
+        Relatório de Vendas
+    </h1>
 
-<div>
-
-    <h3>🧾 Total de Pedidos</h3>
-
-    <h2 id="pedidos">
-        0
-    </h2>
-
-</div>
-
-<br>
-
-<div>
-
-    <h3>💵 Dinheiro</h3>
-
-    <p id="totalDinheiro">
-        R$ 0,00
+    <p>
+        Análise completa das vendas e produtos comercializados
     </p>
 
-</div>
+    <div class="gc-linha"></div>
 
-<div>
+</header>
 
-    <h3>📱 Pix</h3>
 
-    <p id="totalPix">
-        R$ 0,00
-    </p>
+<!-- =====================================================
+     FILTROS
+     ===================================================== -->
 
-</div>
+<section class="relatorio-filtros">
 
-<div>
+    <div class="relatorio-filtro">
 
-    <h3>💳 Cartão</h3>
+        <label for="periodo">
+            📅 Período
+        </label>
 
-    <p id="totalCartao">
-        R$ 0,00
-    </p>
+        <select id="periodo">
 
-</div>
+            <option value="hoje">
+                Hoje
+            </option>
 
-<br>
+            <option value="7dias">
+                Últimos 7 dias
+            </option>
 
-<hr>
+            <option value="mes">
+                Este mês
+            </option>
 
-<br>
+            <option value="tudo"
+                    selected>
+                Todo o período
+            </option>
 
-<!-- =============================== -->
-<!-- PRODUTOS MAIS VENDIDOS -->
-<!-- =============================== -->
+        </select>
 
-<h2>🍔 Produtos Vendidos</h2>
+    </div>
 
-<div id="produtosVendidos">
 
-    <p>Carregando...</p>
+    <div class="relatorio-filtro">
 
-</div>
+        <label for="busca">
+            🔎 Buscar cliente ou pedido
+        </label>
 
-<br>
+        <input
+            type="search"
+            id="busca"
+            placeholder="Digite o cliente ou nº do pedido..."
+            autocomplete="off">
 
-<hr>
+    </div>
 
-<br>
+</section>
 
-<!-- =============================== -->
-<!-- VOLTAR -->
-<!-- =============================== -->
 
-<a href="index.html">
+<!-- =====================================================
+     RESUMO
+     ===================================================== -->
 
-    <button>
+<section class="relatorio-resumo">
+
+
+    <div class="relatorio-card">
+
+        <div class="icone">
+            💰
+        </div>
+
+        <div class="titulo">
+            Faturamento
+        </div>
+
+        <div
+            class="valor"
+            id="faturamento">
+            R$ 0,00
+        </div>
+
+        <div
+            class="sub"
+            id="periodoTexto">
+            Todo o período
+        </div>
+
+    </div>
+
+
+    <div class="relatorio-card">
+
+        <div class="icone">
+            🧾
+        </div>
+
+        <div class="titulo">
+            Total de pedidos
+        </div>
+
+        <div
+            class="valor"
+            id="pedidos">
+            0
+        </div>
+
+        <div class="sub">
+            vendas registradas
+        </div>
+
+    </div>
+
+
+    <div class="relatorio-card">
+
+        <div class="icone">
+            🎯
+        </div>
+
+        <div class="titulo">
+            Ticket médio
+        </div>
+
+        <div
+            class="valor"
+            id="ticketMedio">
+            R$ 0,00
+        </div>
+
+        <div class="sub">
+            média por pedido
+        </div>
+
+    </div>
+
+
+    <div class="relatorio-card">
+
+        <div class="icone">
+            🍔
+        </div>
+
+        <div class="titulo">
+            Itens vendidos
+        </div>
+
+        <div
+            class="valor"
+            id="itensVendidos">
+            0
+        </div>
+
+        <div class="sub">
+            unidades
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FORMAS DE PAGAMENTO
+     ===================================================== -->
+
+<section class="relatorio-secao">
+
+    <div class="relatorio-secao-titulo">
+
+        <h2>
+            💳 Formas de pagamento
+        </h2>
+
+        <span>
+            Distribuição do faturamento
+        </span>
+
+    </div>
+
+
+    <div class="pagamentos-grid">
+
+
+        <div class="pagamento-card">
+
+            <h3>
+                💵 Dinheiro
+            </h3>
+
+            <p id="totalDinheiro">
+                R$ 0,00
+            </p>
+
+        </div>
+
+
+        <div class="pagamento-card">
+
+            <h3>
+                📱 Pix
+            </h3>
+
+            <p id="totalPix">
+                R$ 0,00
+            </p>
+
+        </div>
+
+
+        <div class="pagamento-card">
+
+            <h3>
+                💳 Cartão
+            </h3>
+
+            <p id="totalCartao">
+                R$ 0,00
+            </p>
+
+        </div>
+
+
+        <div class="pagamento-card">
+
+            <h3>
+                💰 Outros
+            </h3>
+
+            <p id="totalOutros">
+                R$ 0,00
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRODUTOS MAIS VENDIDOS
+     ===================================================== -->
+
+<section class="relatorio-secao">
+
+    <div class="relatorio-secao-titulo">
+
+        <h2>
+            🍔 Produtos mais vendidos
+        </h2>
+
+        <span id="produtosResumo">
+            0 produtos
+        </span>
+
+    </div>
+
+
+    <div id="produtosVendidos">
+
+        <div class="relatorio-vazio">
+
+            <div class="icone">
+                ⏳
+            </div>
+
+            Carregando relatório...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VENDAS DO PERÍODO
+     ===================================================== -->
+
+<section class="relatorio-secao">
+
+    <div class="relatorio-secao-titulo">
+
+        <h2>
+            🧾 Vendas do período
+        </h2>
+
+        <span id="vendasResumo">
+            0 vendas
+        </span>
+
+    </div>
+
+
+    <div class="vendas-relatorio">
+
+        <table class="tabela-vendas">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Pedido
+                    </th>
+
+                    <th>
+                        Data
+                    </th>
+
+                    <th>
+                        Cliente
+                    </th>
+
+                    <th>
+                        Itens
+                    </th>
+
+                    <th>
+                        Pagamento
+                    </th>
+
+                    <th>
+                        Total
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="listaVendas">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     AÇÕES
+     ===================================================== -->
+
+<div class="relatorio-acoes">
+
+    <a
+        href="index.html"
+        class="relatorio-btn principal">
+
         🏠 Voltar ao Início
-    </button>
 
-</a>
+    </a>
+
+
+    <a
+        href="historico.html"
+        class="relatorio-btn">
+
+        🧾 Histórico de Vendas
+
+    </a>
+
+
+    <a
+        href="financeiro.html"
+        class="relatorio-btn">
+
+        💰 Financeiro
+
+    </a>
+
+</div>
+
+
+</div>
+
+</main>
+
+</div>
 
 
 <script>
 
-// =====================================================
-// 📊 PEGAR VENDAS
-// =====================================================
-
-let vendas =
-    JSON.parse(
-        localStorage.getItem("vendas")
-    ) || [];
+/* =====================================================
+   GRILLCORE ERP
+   RELATÓRIO DE VENDAS
+   ===================================================== */
 
 
-// =====================================================
-// 💰 FATURAMENTO
-// =====================================================
+/* =====================================================
+   ELEMENTOS
+   ===================================================== */
 
-let faturamento = 0;
+const periodoEl =
+    document.getElementById("periodo");
 
-let dinheiro = 0;
-
-let pix = 0;
-
-let cartao = 0;
+const buscaEl =
+    document.getElementById("busca");
 
 
-// =====================================================
-// 🍔 CONTADOR DE PRODUTOS
-// =====================================================
+/* =====================================================
+   STORAGE
+   ===================================================== */
 
-let produtosContador = {};
+function obterVendas(){
+
+    try{
+
+        const dados =
+            JSON.parse(
+                localStorage.getItem("vendas")
+            );
+
+        return Array.isArray(dados)
+            ? dados
+            : [];
+
+    }
+    catch(e){
+
+        console.error(
+            "Erro ao carregar vendas:",
+            e
+        );
+
+        return [];
+
+    }
+
+}
 
 
-// =====================================================
-// 🔄 PROCESSAR VENDAS
-// =====================================================
+/* =====================================================
+   CONVERSÃO NUMÉRICA
+   ===================================================== */
 
-vendas.forEach(function(venda) {
+function numero(valor){
 
-    let valor =
-        Number(venda.total) || 0;
+    if(
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ){
+        return 0;
+    }
+
+    if(typeof valor === "number"){
+
+        return Number.isFinite(valor)
+            ? valor
+            : 0;
+
+    }
+
+    let texto =
+        String(valor)
+        .trim()
+        .replace("R$","")
+        .replace(/\s/g,"");
+
+    /*
+       Suporta:
+       30
+       30.50
+       30,50
+       1.250,50
+    */
+
+    if(
+        texto.includes(",") &&
+        texto.includes(".")
+    ){
+
+        texto =
+            texto
+            .replace(/\./g,"")
+            .replace(",", ".");
+
+    }
+    else if(
+        texto.includes(",")
+    ){
+
+        texto =
+            texto.replace(",", ".");
+
+    }
+
+    const resultado =
+        parseFloat(texto);
+
+    return Number.isFinite(resultado)
+        ? resultado
+        : 0;
+
+}
 
 
-    faturamento += valor;
+/* =====================================================
+   DINHEIRO
+   ===================================================== */
+
+function dinheiro(valor){
+
+    return "R$ " +
+        numero(valor)
+            .toFixed(2)
+            .replace(".", ",");
+
+}
 
 
-    // ===============================
-    // FORMA DE PAGAMENTO
-    // ===============================
+/* =====================================================
+   ESCAPAR HTML
+   ===================================================== */
 
-    if (venda.pagamento === "Dinheiro") {
+function escapar(valor){
 
-        dinheiro += valor;
+    return String(
+        valor ?? ""
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   DATA DA VENDA
+   ===================================================== */
+
+function dataVenda(venda){
+
+    const origem =
+        venda.dataHora ||
+        venda.data ||
+        venda.criadoEm ||
+        venda.updatedAt;
+
+    if(!origem){
+
+        return null;
+
+    }
+
+    const data =
+        new Date(origem);
+
+    return isNaN(data.getTime())
+        ? null
+        : data;
+
+}
+
+
+/* =====================================================
+   TEXTO DA DATA
+   ===================================================== */
+
+function formatarData(data){
+
+    if(!data){
+
+        return "Data não informada";
+
+    }
+
+    return data.toLocaleDateString(
+        "pt-BR"
+    );
+
+}
+
+
+function formatarDataHora(data){
+
+    if(!data){
+
+        return "Data não informada";
+
+    }
+
+    return data.toLocaleString(
+        "pt-BR",
+        {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   FILTRO DE PERÍODO
+   ===================================================== */
+
+function dentroDoPeriodo(
+    venda,
+    periodo
+){
+
+    if(periodo === "tudo"){
+
+        return true;
+
+    }
+
+    const data =
+        dataVenda(venda);
+
+    if(!data){
+
+        return false;
+
+    }
+
+    const agora =
+        new Date();
+
+    if(periodo === "hoje"){
+
+        return (
+            data.getFullYear()
+            ===
+            agora.getFullYear()
+
+            &&
+
+            data.getMonth()
+            ===
+            agora.getMonth()
+
+            &&
+
+            data.getDate()
+            ===
+            agora.getDate()
+        );
 
     }
 
 
-    if (venda.pagamento === "Pix") {
+    if(periodo === "7dias"){
 
-        pix += valor;
+        const inicio =
+            new Date(agora);
+
+        inicio.setHours(
+            0,0,0,0
+        );
+
+        inicio.setDate(
+            inicio.getDate() - 6
+        );
+
+        return data >= inicio;
+
+    }
+
+
+    if(periodo === "mes"){
+
+        return (
+            data.getFullYear()
+            ===
+            agora.getFullYear()
+
+            &&
+
+            data.getMonth()
+            ===
+            agora.getMonth()
+        );
 
     }
 
 
-    if (venda.pagamento === "Cartão") {
+    return true;
 
-        cartao += valor;
+}
+
+
+/* =====================================================
+   TEXTO DO PERÍODO
+   ===================================================== */
+
+function textoPeriodo(){
+
+    const valor =
+        periodoEl.value;
+
+    if(valor === "hoje"){
+
+        return "Hoje";
+
+    }
+
+    if(valor === "7dias"){
+
+        return "Últimos 7 dias";
+
+    }
+
+    if(valor === "mes"){
+
+        return "Este mês";
+
+    }
+
+    return "Todo o período";
+
+}
+
+
+/* =====================================================
+   ITENS DA VENDA
+   ===================================================== */
+
+function obterItens(venda){
+
+    if(
+        Array.isArray(venda.itens)
+    ){
+
+        return venda.itens;
 
     }
 
 
-    // ===============================
-    // PRODUTO
-    // ===============================
+    /*
+       Compatibilidade com versões
+       antigas do GrillCore.
+    */
 
-    let nomeProduto =
-        venda.hamburguer || "Não informado";
+    const itens = [];
 
 
-    if (
-        produtosContador[nomeProduto]
-    ) {
+    if(venda.hamburguer){
 
-        produtosContador[nomeProduto]++;
+        itens.push({
+
+            nome:
+                venda.hamburguer,
+
+            quantidade:
+                numero(
+                    venda.quantidade
+                ) || 1,
+
+            preco:
+                numero(
+                    venda.preco
+                ),
+
+            subtotal:
+                numero(
+                    venda.total
+                )
+
+        });
 
     }
-    else {
 
-        produtosContador[nomeProduto] = 1;
+
+    return itens;
+
+}
+
+
+/* =====================================================
+   NOME DO ITEM
+   ===================================================== */
+
+function nomeItem(item){
+
+    return (
+        item.nome ||
+        item.produto ||
+        item.mercadoria ||
+        "Produto não informado"
+    );
+
+}
+
+
+/* =====================================================
+   QUANTIDADE DO ITEM
+   ===================================================== */
+
+function quantidadeItem(item){
+
+    return (
+        numero(item.quantidade)
+        ||
+        numero(item.qtd)
+        ||
+        1
+    );
+
+}
+
+
+/* =====================================================
+   SUBTOTAL DO ITEM
+   ===================================================== */
+
+function subtotalItem(item){
+
+    const subtotal =
+        numero(item.subtotal);
+
+    if(subtotal > 0){
+
+        return subtotal;
 
     }
 
-});
+    const preco =
+        numero(item.preco);
+
+    return preco *
+        quantidadeItem(item);
+
+}
 
 
-// =====================================================
-// 📊 MOSTRAR RESUMO
-// =====================================================
+/* =====================================================
+   PROCESSAR RELATÓRIO
+   ===================================================== */
 
-document.getElementById(
-    "faturamento"
-).innerText =
-    "R$ " +
-    faturamento
-        .toFixed(2)
-        .replace(".", ",");
+function processar(){
+
+    const todasVendas =
+        obterVendas();
 
 
-document.getElementById(
-    "pedidos"
-).innerText =
-    vendas.length;
+    const periodo =
+        periodoEl.value;
 
 
-document.getElementById(
-    "totalDinheiro"
-).innerText =
-    "R$ " +
-    dinheiro
-        .toFixed(2)
-        .replace(".", ",");
+    const busca =
+        buscaEl.value
+        .trim()
+        .toLowerCase();
 
 
-document.getElementById(
-    "totalPix"
-).innerText =
-    "R$ " +
-    pix
-        .toFixed(2)
-        .replace(".", ",");
+    let vendas =
+        todasVendas.filter(
+            function(venda){
+
+                if(
+                    !dentroDoPeriodo(
+                        venda,
+                        periodo
+                    )
+                ){
+
+                    return false;
+
+                }
 
 
-document.getElementById(
-    "totalCartao"
-).innerText =
-    "R$ " +
-    cartao
-        .toFixed(2)
-        .replace(".", ",");
+                if(!busca){
+
+                    return true;
+
+                }
 
 
-// =====================================================
-// 🍔 MOSTRAR PRODUTOS
-// =====================================================
+                const cliente =
+                    String(
+                        venda.cliente || ""
+                    ).toLowerCase();
 
-let lista =
-    document.getElementById(
-        "produtosVendidos"
+
+                const numeroPedido =
+                    String(
+                        venda.numeroPedido ||
+                        venda.id ||
+                        ""
+                    ).toLowerCase();
+
+
+                const telefone =
+                    String(
+                        venda.telefone || ""
+                    ).toLowerCase();
+
+
+                return (
+                    cliente.includes(busca)
+                    ||
+                    numeroPedido.includes(busca)
+                    ||
+                    telefone.includes(busca)
+                );
+
+            }
+        );
+
+
+    /*
+       Mais recentes primeiro
+    */
+
+    vendas.sort(
+        function(a,b){
+
+            const da =
+                dataVenda(a);
+
+            const db =
+                dataVenda(b);
+
+            if(!da && !db){
+
+                return 0;
+
+            }
+
+            if(!da){
+
+                return 1;
+
+            }
+
+            if(!db){
+
+                return -1;
+
+            }
+
+            return db - da;
+
+        }
     );
 
 
-if (vendas.length === 0) {
+    /* =================================================
+       TOTAIS
+       ================================================= */
 
-    lista.innerHTML =
-        "<p>📭 Nenhuma venda registrada.</p>";
+    let faturamento = 0;
+
+    let dinheiroTotal = 0;
+
+    let pixTotal = 0;
+
+    let cartaoTotal = 0;
+
+    let outrosTotal = 0;
+
+    let quantidadeItens = 0;
+
+
+    const produtos = {};
+
+
+    vendas.forEach(
+        function(venda){
+
+            const total =
+                numero(venda.total);
+
+            faturamento += total;
+
+
+            const pagamento =
+                String(
+                    venda.pagamento || ""
+                ).trim();
+
+
+            if(
+                pagamento.toLowerCase()
+                ===
+                "dinheiro"
+            ){
+
+                dinheiroTotal += total;
+
+            }
+            else if(
+                pagamento.toLowerCase()
+                ===
+                "pix"
+            ){
+
+                pixTotal += total;
+
+            }
+            else if(
+                pagamento.toLowerCase()
+                ===
+                "cartão"
+                ||
+                pagamento.toLowerCase()
+                ===
+                "cartao"
+            ){
+
+                cartaoTotal += total;
+
+            }
+            else{
+
+                outrosTotal += total;
+
+            }
+
+
+            const itens =
+                obterItens(venda);
+
+
+            itens.forEach(
+                function(item){
+
+                    const nome =
+                        nomeItem(item);
+
+                    const quantidade =
+                        quantidadeItem(item);
+
+                    const subtotal =
+                        subtotalItem(item);
+
+
+                    quantidadeItens +=
+                        quantidade;
+
+
+                    if(
+                        !produtos[nome]
+                    ){
+
+                        produtos[nome] = {
+
+                            quantidade:0,
+
+                            faturamento:0
+
+                        };
+
+                    }
+
+
+                    produtos[nome].quantidade +=
+                        quantidade;
+
+                    produtos[nome].faturamento +=
+                        subtotal;
+
+                }
+            );
+
+        }
+    );
+
+
+    const ticketMedio =
+        vendas.length > 0
+            ? faturamento / vendas.length
+            : 0;
+
+
+    /* =================================================
+       ATUALIZAR RESUMO
+       ================================================= */
+
+    document.getElementById(
+        "faturamento"
+    ).innerText =
+        dinheiro(faturamento);
+
+
+    document.getElementById(
+        "pedidos"
+    ).innerText =
+        vendas.length;
+
+
+    document.getElementById(
+        "ticketMedio"
+    ).innerText =
+        dinheiro(ticketMedio);
+
+
+    document.getElementById(
+        "itensVendidos"
+    ).innerText =
+        quantidadeItens;
+
+
+    document.getElementById(
+        "totalDinheiro"
+    ).innerText =
+        dinheiro(dinheiroTotal);
+
+
+    document.getElementById(
+        "totalPix"
+    ).innerText =
+        dinheiro(pixTotal);
+
+
+    document.getElementById(
+        "totalCartao"
+    ).innerText =
+        dinheiro(cartaoTotal);
+
+
+    document.getElementById(
+        "totalOutros"
+    ).innerText =
+        dinheiro(outrosTotal);
+
+
+    document.getElementById(
+        "periodoTexto"
+    ).innerText =
+        textoPeriodo();
+
+
+    document.getElementById(
+        "vendasResumo"
+    ).innerText =
+        vendas.length +
+        (
+            vendas.length === 1
+                ? " venda"
+                : " vendas"
+        );
+
+
+    /* =================================================
+       PRODUTOS
+       ================================================= */
+
+    renderizarProdutos(
+        produtos
+    );
+
+
+    /* =================================================
+       LISTA DE VENDAS
+       ================================================= */
+
+    renderizarVendas(
+        vendas
+    );
 
 }
-else {
+
+
+/* =====================================================
+   RENDERIZAR PRODUTOS
+   ===================================================== */
+
+function renderizarProdutos(
+    produtos
+){
+
+    const lista =
+        document.getElementById(
+            "produtosVendidos"
+        );
+
+
+    const nomes =
+        Object.keys(produtos)
+        .sort(
+            function(a,b){
+
+                if(
+                    produtos[b].quantidade
+                    !==
+                    produtos[a].quantidade
+                ){
+
+                    return (
+                        produtos[b].quantidade
+                        -
+                        produtos[a].quantidade
+                    );
+
+                }
+
+
+                return (
+                    produtos[b].faturamento
+                    -
+                    produtos[a].faturamento
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "produtosResumo"
+    ).innerText =
+        nomes.length +
+        (
+            nomes.length === 1
+                ? " produto"
+                : " produtos"
+        );
+
+
+    if(nomes.length === 0){
+
+        lista.innerHTML = `
+
+            <div class="relatorio-vazio">
+
+                <div class="icone">
+                    📭
+                </div>
+
+                Nenhum produto vendido
+                no período selecionado.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
 
     lista.innerHTML = "";
 
 
-    Object.keys(
-        produtosContador
-    )
-    .sort(function(a, b) {
+    nomes.forEach(
+        function(nome,index){
 
-        return (
-            produtosContador[b] -
-            produtosContador[a]
+            const item =
+                produtos[nome];
+
+
+            lista.innerHTML += `
+
+                <div class="produto-relatorio">
+
+                    <div class="produto-posicao">
+                        ${index + 1}
+                    </div>
+
+
+                    <div class="produto-info">
+
+                        <div class="produto-nome">
+                            ${escapar(nome)}
+                        </div>
+
+                        <div class="produto-detalhes">
+
+                            ${item.quantidade}
+                            ${
+                                item.quantidade === 1
+                                    ? "unidade"
+                                    : "unidades"
+                            }
+
+                            vendidas
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="produto-total">
+
+                        <strong>
+                            ${dinheiro(
+                                item.faturamento
+                            )}
+                        </strong>
+
+                        <small>
+                            faturamento
+                        </small>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RENDERIZAR VENDAS
+   ===================================================== */
+
+function renderizarVendas(
+    vendas
+){
+
+    const tbody =
+        document.getElementById(
+            "listaVendas"
         );
 
-    })
-    .forEach(function(nome) {
 
-        lista.innerHTML += `
+    if(vendas.length === 0){
 
-        <div>
+        tbody.innerHTML = `
 
-            <h3>
-                🍔 ${nome}
-            </h3>
+            <tr>
 
-            <p>
-                🧾 Quantidade vendida:
-                <strong>
-                    ${produtosContador[nome]}
-                </strong>
-            </p>
+                <td
+                    colspan="6"
+                    style="
+                        text-align:center;
+                        padding:35px 15px;
+                        color:#777;
+                    ">
 
-            <hr>
+                    📭 Nenhuma venda
+                    encontrada.
 
-        </div>
+                </td>
+
+            </tr>
 
         `;
 
-    });
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    vendas.forEach(
+        function(venda){
+
+            const data =
+                dataVenda(venda);
+
+
+            const numeroPedido =
+                venda.numeroPedido ||
+                String(
+                    venda.id || ""
+                ).slice(-6);
+
+
+            const cliente =
+                venda.cliente ||
+                "Cliente não informado";
+
+
+            const pagamento =
+                venda.pagamento ||
+                "Não informado";
+
+
+            const itens =
+                obterItens(venda);
+
+
+            const quantidade =
+                itens.reduce(
+                    function(total,item){
+
+                        return total +
+                            quantidadeItem(item);
+
+                    },
+                    0
+                );
+
+
+            const status =
+                venda.status ||
+                "finalizado";
+
+
+            const statusTexto =
+                status
+                    .charAt(0)
+                    .toUpperCase()
+                +
+                status.slice(1);
+
+
+            tbody.innerHTML += `
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+                            #${escapar(
+                                numeroPedido
+                            )}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapar(
+                            formatarDataHora(
+                                data
+                            )
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapar(
+                            cliente
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${quantidade}
+
+                        ${
+                            quantidade === 1
+                                ? " item"
+                                : " itens"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="status-venda">
+
+                            ${escapar(
+                                pagamento
+                            )}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="valor-venda">
+
+                        ${dinheiro(
+                            venda.total
+                        )}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
 
 }
+
+
+/* =====================================================
+   EVENTOS
+   ===================================================== */
+
+periodoEl.addEventListener(
+    "change",
+    processar
+);
+
+
+buscaEl.addEventListener(
+    "input",
+    processar
+);
+
+
+/* =====================================================
+   ATUALIZAR QUANDO A PÁGINA
+   VOLTAR A FICAR VISÍVEL
+   ===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState
+            ===
+            "visible"
+        ){
+
+            processar();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+   ===================================================== */
+
+processar();
 
 </script>
 

@@ -1,32 +1,35 @@
-// =====================================================
-// 🍔 GRILLCORE ERP
-// SCRIPT.JS — SISTEMA PROFISSIONAL
-// PRODUTOS + CATEGORIAS + PEDIDOS + ESTOQUE
-// VENDAS + FINANCEIRO + CLIENTES + WHATSAPP
-// =====================================================
+/* =====================================================
+   🍔 GRILLCORE ERP
+   SCRIPT.JS
+   SISTEMA CENTRAL
+   VERSÃO PREMIUM INTEGRADA
+===================================================== */
 
 
-// =====================================================
-// 1. STORAGE
-// =====================================================
+/* =====================================================
+   💾 STORAGE — BASE CENTRAL
+===================================================== */
 
-function lerStorage(chave, padrao) {
+function lerStorage(chave, padrao = []){
 
-    try {
+    try{
 
         const dados =
             localStorage.getItem(chave);
 
-        if (!dados) {
+        if(dados === null){
+
             return padrao;
+
         }
 
         return JSON.parse(dados);
 
-    } catch (erro) {
+    }
+    catch(erro){
 
         console.error(
-            "Erro ao ler:",
+            "GrillCore — erro ao ler:",
             chave,
             erro
         );
@@ -38,9 +41,9 @@ function lerStorage(chave, padrao) {
 }
 
 
-function salvarStorage(chave, dados) {
+function salvarStorage(chave, dados){
 
-    try {
+    try{
 
         localStorage.setItem(
             chave,
@@ -49,17 +52,30 @@ function salvarStorage(chave, dados) {
 
         return true;
 
-    } catch (erro) {
+    }
+    catch(erro){
 
         console.error(
-            "Erro ao salvar:",
+            "GrillCore — erro ao salvar:",
             chave,
             erro
         );
 
-        alert(
-            "❌ Não foi possível salvar os dados."
-        );
+        /*
+           Pode acontecer quando o armazenamento
+           do navegador está cheio, especialmente
+           por causa de fotos em Base64.
+        */
+
+        try{
+
+            alert(
+                "⚠️ Não foi possível salvar os dados.\n\n" +
+                "O armazenamento do navegador pode estar cheio."
+            );
+
+        }
+        catch(e){}
 
         return false;
 
@@ -68,10 +84,17 @@ function salvarStorage(chave, dados) {
 }
 
 
-function obterArray(chave) {
+/* =====================================================
+   📦 ARRAYS
+===================================================== */
+
+function obterArray(chave){
 
     const dados =
-        lerStorage(chave, []);
+        lerStorage(
+            chave,
+            []
+        );
 
     return Array.isArray(dados)
         ? dados
@@ -80,239 +103,519 @@ function obterArray(chave) {
 }
 
 
-// =====================================================
-// 2. UTILITÁRIOS
-// =====================================================
+/* =====================================================
+   💰 DINHEIRO
+===================================================== */
 
-function dinheiro(valor) {
+function dinheiro(valor){
 
-    return Number(valor || 0)
-        .toLocaleString(
-            "pt-BR",
-            {
-                style: "currency",
-                currency: "BRL"
-            }
-        );
+    const numero =
+        valorNumerico(valor);
+
+    return numero.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
 
 }
 
 
-function valorNumerico(valor) {
+/* =====================================================
+   🔢 VALOR NUMÉRICO
+===================================================== */
 
-    if (
+function valorNumerico(valor){
+
+    if(
         valor === null ||
         valor === undefined ||
         valor === ""
-    ) {
+    ){
 
         return 0;
 
     }
 
-    if (typeof valor === "number") {
 
-        return isNaN(valor)
-            ? 0
-            : valor;
+    if(
+        typeof valor === "number"
+    ){
+
+        return Number.isFinite(valor)
+            ? valor
+            : 0;
 
     }
+
 
     let texto =
         String(valor)
-        .replace("R$", "")
-        .replace(/\s/g, "")
         .trim();
 
-    if (texto.includes(",")) {
+
+    texto =
+        texto
+        .replace(/R\$/gi,"")
+        .replace(/\s/g,"");
+
+
+    /*
+       Aceita:
+
+       30
+       30.50
+       30,50
+       1.250,50
+    */
+
+    if(
+        texto.includes(",") &&
+        texto.includes(".")
+    ){
 
         texto =
             texto
-            .replace(/\./g, "")
+            .replace(/\./g,"")
             .replace(",", ".");
 
     }
+    else if(
+        texto.includes(",")
+    ){
+
+        texto =
+            texto.replace(",", ".");
+
+    }
+
 
     const numero =
         Number(texto);
 
-    return isNaN(numero)
-        ? 0
-        : numero;
+
+    return Number.isFinite(numero)
+        ? numero
+        : 0;
 
 }
 
 
-function gerarID() {
+/* =====================================================
+   🔢 NÚMERO INTEIRO
+===================================================== */
+
+function inteiro(valor){
+
+    const numero =
+        Number(valor);
+
+    if(
+        !Number.isFinite(numero)
+    ){
+
+        return 0;
+
+    }
+
+    return Math.floor(numero);
+
+}
+
+
+/* =====================================================
+   🧮 ARREDONDAMENTO MONETÁRIO
+===================================================== */
+
+function arredondarDinheiro(valor){
+
+    return Math.round(
+        (
+            valorNumerico(valor)
+            + Number.EPSILON
+        ) * 100
+    ) / 100;
+
+}
+
+
+/* =====================================================
+   🆔 GERAR ID
+===================================================== */
+
+function gerarID(){
 
     return (
-        Date.now().toString() +
+        Date.now().toString(36)
+        +
         Math.random()
             .toString(36)
-            .substring(2, 8)
+            .substring(2,8)
     );
 
 }
 
 
-function chamarSeExistir(nome) {
+/* =====================================================
+   🛡️ ESCAPAR HTML
+===================================================== */
 
-    if (
-        typeof window[nome] ===
-        "function"
-    ) {
+function escapar(texto){
 
-        try {
+    return String(
+        texto ?? ""
+    )
 
-            window[nome]();
+    .replace(
+        /&/g,
+        "&amp;"
+    )
 
-        } catch (erro) {
+    .replace(
+        /</g,
+        "&lt;"
+    )
 
-            console.warn(
-                "Erro:",
-                nome,
-                erro
-            );
+    .replace(
+        />/g,
+        "&gt;"
+    )
 
-        }
+    .replace(
+        /"/g,
+        "&quot;"
+    )
 
-    }
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
 
-// =====================================================
-// 3. PRODUTOS
-// =====================================================
+/* =====================================================
+   📅 DATA ATUAL
+===================================================== */
 
-let produtos =
-    lerStorage(
+function dataAtualISO(){
+
+    return new Date().toISOString();
+
+}
+
+
+/* =====================================================
+   📅 DATA LOCAL — YYYY-MM-DD
+===================================================== */
+
+function dataLocalISO(){
+
+    const agora =
+        new Date();
+
+    const ano =
+        agora.getFullYear();
+
+    const mes =
+        String(
+            agora.getMonth() + 1
+        ).padStart(2,"0");
+
+    const dia =
+        String(
+            agora.getDate()
+        ).padStart(2,"0");
+
+    return (
+        ano +
+        "-" +
+        mes +
+        "-" +
+        dia
+    );
+
+}
+
+
+/* =====================================================
+   📅 FORMATAR DATA
+===================================================== */
+
+function formatarData(data){
+
+    if(!data){
+
+        return "Data não informada";
+
+    }
+
+
+    const objeto =
+        new Date(data);
+
+
+    if(
+        isNaN(
+            objeto.getTime()
+        )
+    ){
+
+        return "Data inválida";
+
+    }
+
+
+    return objeto.toLocaleDateString(
+        "pt-BR"
+    );
+
+}
+
+
+/* =====================================================
+   📅 FORMATAR DATA E HORA
+===================================================== */
+
+function formatarDataHora(data){
+
+    if(!data){
+
+        return "Data não informada";
+
+    }
+
+
+    const objeto =
+        new Date(data);
+
+
+    if(
+        isNaN(
+            objeto.getTime()
+        )
+    ){
+
+        return "Data inválida";
+
+    }
+
+
+    return objeto.toLocaleString(
+        "pt-BR",
+        {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   🔐 VERIFICAR LOGIN
+===================================================== */
+
+function verificarLogin(){
+
+    return (
+        localStorage.getItem(
+            "grillcore_login"
+        ) === "true"
+    );
+
+}
+
+
+/* =====================================================
+   👤 USUÁRIO LOGADO
+===================================================== */
+
+function usuarioLogado(){
+
+    return (
+        localStorage.getItem(
+            "grillcore_usuario"
+        )
+        ||
+        "admin"
+    );
+
+}
+
+
+/* =====================================================
+   🚪 SAIR
+===================================================== */
+
+function sairDoSistema(){
+
+    const confirmar =
+        confirm(
+            "🚪 Deseja realmente sair do GrillCore?"
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "grillcore_login"
+    );
+
+    localStorage.removeItem(
+        "grillcore_usuario"
+    );
+
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/* =====================================================
+   🔐 PROTEGER PÁGINA
+===================================================== */
+
+function protegerPagina(){
+
+    /*
+       O login.html não deve ser protegido.
+    */
+
+    const pagina =
+        location.pathname
+        .split("/")
+        .pop()
+        .toLowerCase();
+
+
+    if(
+        pagina === "login.html"
+        ||
+        pagina === "recuperar-acesso.html"
+        ||
+        pagina === ""
+    ){
+
+        return true;
+
+    }
+
+
+    if(
+        !verificarLogin()
+    ){
+
+        window.location.replace(
+            "login.html"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   📦 PRODUTOS
+===================================================== */
+
+function lerProdutos(){
+
+    return obterArray(
+        "produtos"
+    );
+
+}
+
+
+function salvarProdutos(produtos){
+
+    return salvarStorage(
         "produtos",
-        []
-    );
-
-
-function normalizarProdutos() {
-
-    if (!Array.isArray(produtos)) {
-
-        produtos = [];
-
-    }
-
-
-    produtos.forEach(
-        function(produto) {
-
-            if (!produto.id) {
-
-                produto.id =
-                    gerarID();
-
-            }
-
-            if (!produto.nome) {
-
-                produto.nome =
-                    "Produto";
-
-            }
-
-            produto.preco =
-                valorNumerico(
-                    produto.preco
-                );
-
-            produto.estoque =
-                valorNumerico(
-                    produto.estoque
-                );
-
-            produto.estoqueMinimo =
-                valorNumerico(
-                    produto.estoqueMinimo
-                );
-
-
-            if (
-                produto.estoqueMinimo <= 0
-            ) {
-
-                produto.estoqueMinimo = 2;
-
-            }
-
-
-            if (
-                !produto.categoria
-            ) {
-
-                produto.categoria =
-                    "hamburguer";
-
-            }
-
-
-            if (
-                produto.ingredientes ===
-                undefined
-            ) {
-
-                produto.ingredientes = "";
-
-            }
-
-
-            if (
-                produto.descricao ===
-                undefined
-            ) {
-
-                produto.descricao = "";
-
-            }
-
-        }
+        Array.isArray(produtos)
+            ? produtos
+            : []
     );
 
 }
 
 
-normalizarProdutos();
+/* =====================================================
+   🔎 BUSCAR PRODUTO POR ID
+===================================================== */
 
-salvarStorage(
-    "produtos",
-    produtos
-);
+function buscarProdutoPorID(id){
+
+    const produtos =
+        lerProdutos();
 
 
-// =====================================================
-// 4. BUSCAR PRODUTO
-// =====================================================
+    return produtos.find(
+        function(produto){
 
-function buscarProduto(nome) {
+            return String(
+                produto.id
+            )
+            ===
+            String(id);
+
+        }
+    ) || null;
+
+}
+
+
+/* =====================================================
+   🔎 BUSCAR PRODUTO POR NOME
+===================================================== */
+
+function buscarProdutoPorNome(nome){
 
     const busca =
-        String(nome || "")
+        String(
+            nome || ""
+        )
         .trim()
         .toLowerCase();
 
 
-    if (!busca) {
+    if(!busca){
 
         return null;
 
     }
 
 
+    const produtos =
+        lerProdutos();
+
+
     return produtos.find(
-        function(produto) {
+        function(produto){
 
             return String(
                 produto.nome || ""
             )
             .trim()
-            .toLowerCase() ===
+            .toLowerCase()
+            ===
             busca;
 
         }
@@ -321,842 +624,354 @@ function buscarProduto(nome) {
 }
 
 
-// =====================================================
-// 5. CATEGORIA
-// =====================================================
+/* =====================================================
+   👥 CLIENTES
+===================================================== */
 
-function nomeCategoria(categoria) {
+function lerClientes(){
 
-    const nomes = {
+    return obterArray(
+        "clientes"
+    );
 
-        hamburguer:
-            "🍔 Hambúrguer",
+}
 
-        porcao:
-            "🍟 Porção",
 
-        bebida:
-            "🥤 Bebida",
+function salvarClientes(clientes){
 
-        outro:
-            "📦 Outro"
+    return salvarStorage(
+        "clientes",
+        Array.isArray(clientes)
+            ? clientes
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   🔎 CLIENTE POR ID
+===================================================== */
+
+function buscarClientePorID(id){
+
+    const clientes =
+        lerClientes();
+
+
+    return clientes.find(
+        function(cliente){
+
+            return String(
+                cliente.id
+            )
+            ===
+            String(id);
+
+        }
+    ) || null;
+
+}
+
+
+/* =====================================================
+   🛒 COMPRAS
+===================================================== */
+
+function lerCompras(){
+
+    return obterArray(
+        "compras"
+    );
+
+}
+
+
+function salvarCompras(compras){
+
+    return salvarStorage(
+        "compras",
+        Array.isArray(compras)
+            ? compras
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   📦 ESTOQUE
+===================================================== */
+
+function lerEstoque(){
+
+    return obterArray(
+        "estoque"
+    );
+
+}
+
+
+function salvarEstoque(estoque){
+
+    return salvarStorage(
+        "estoque",
+        Array.isArray(estoque)
+            ? estoque
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   💰 DESPESAS
+===================================================== */
+
+function lerDespesas(){
+
+    return obterArray(
+        "despesas"
+    );
+
+}
+
+
+function salvarDespesas(despesas){
+
+    return salvarStorage(
+        "despesas",
+        Array.isArray(despesas)
+            ? despesas
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   💵 VENDAS
+===================================================== */
+
+function lerVendas(){
+
+    return obterArray(
+        "vendas"
+    );
+
+}
+
+
+function salvarVendas(vendas){
+
+    return salvarStorage(
+        "vendas",
+        Array.isArray(vendas)
+            ? vendas
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   💵 ENTRADAS
+===================================================== */
+
+function lerEntradas(){
+
+    return obterArray(
+        "entradas"
+    );
+
+}
+
+
+function salvarEntradas(entradas){
+
+    return salvarStorage(
+        "entradas",
+        Array.isArray(entradas)
+            ? entradas
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   🧾 FECHAMENTOS
+===================================================== */
+
+function lerFechamentos(){
+
+    return obterArray(
+        "fechamentosCaixa"
+    );
+
+}
+
+
+function salvarFechamentos(fechamentos){
+
+    return salvarStorage(
+        "fechamentosCaixa",
+        Array.isArray(fechamentos)
+            ? fechamentos
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   🏭 FORNECEDORES
+===================================================== */
+
+function lerFornecedores(){
+
+    return obterArray(
+        "fornecedores"
+    );
+
+}
+
+
+function salvarFornecedores(fornecedores){
+
+    return salvarStorage(
+        "fornecedores",
+        Array.isArray(fornecedores)
+            ? fornecedores
+            : []
+    );
+
+}
+
+
+/* =====================================================
+   📊 CATEGORIA DO PRODUTO
+===================================================== */
+
+function nomeCategoriaProduto(categoria){
+
+    const categorias = {
+
+        hamburguer:"Hambúrguer",
+
+        porcao:"Porção",
+
+        bebida:"Bebida",
+
+        outro:"Outro"
 
     };
 
-    return nomes[categoria] ||
-        "📦 Outro";
 
-}
-
-
-// =====================================================
-// 6. SALVAR PRODUTO
-// =====================================================
-
-function salvarProduto() {
-
-    const nomeCampo =
-        document.getElementById(
-            "nomeProduto"
-        );
-
-    const categoriaCampo =
-        document.getElementById(
-            "categoriaProduto"
-        );
-
-    const precoCampo =
-        document.getElementById(
-            "precoProduto"
-        );
-
-    const estoqueCampo =
-        document.getElementById(
-            "estoqueProduto"
-        );
-
-    const ingredientesCampo =
-        document.getElementById(
-            "ingredientes"
-        );
-
-    const descricaoCampo =
-        document.getElementById(
-            "descricao"
-        );
-
-
-    if (
-        !nomeCampo ||
-        !precoCampo
-    ) {
-
-        alert(
-            "❌ Campos não encontrados."
-        );
-
-        return;
-
-    }
-
-
-    const nome =
-        nomeCampo.value.trim();
-
-    const categoria =
-        categoriaCampo
-        ? categoriaCampo.value
-        : "outro";
-
-    const preco =
-        valorNumerico(
-            precoCampo.value
-        );
-
-    const estoque =
-        estoqueCampo
-        ? valorNumerico(
-            estoqueCampo.value
-        )
-        : 0;
-
-    const ingredientes =
-        ingredientesCampo
-        ? ingredientesCampo.value.trim()
-        : "";
-
-    const descricao =
-        descricaoCampo
-        ? descricaoCampo.value.trim()
-        : "";
-
-
-    if (!nome) {
-
-        alert(
-            "⚠️ Digite o nome do produto."
-        );
-
-        nomeCampo.focus();
-
-        return;
-
-    }
-
-
-    if (!categoria) {
-
-        alert(
-            "⚠️ Escolha uma categoria."
-        );
-
-        categoriaCampo.focus();
-
-        return;
-
-    }
-
-
-    if (preco <= 0) {
-
-        alert(
-            "⚠️ Digite um preço válido."
-        );
-
-        precoCampo.focus();
-
-        return;
-
-    }
-
-
-    if (estoque < 0) {
-
-        alert(
-            "⚠️ Estoque inválido."
-        );
-
-        return;
-
-    }
-
-
-    const existe =
-        produtos.some(
-            function(produto) {
-
-                return String(
-                    produto.nome || ""
-                )
-                .trim()
-                .toLowerCase() ===
-                nome.toLowerCase();
-
-            }
-        );
-
-
-    if (existe) {
-
-        alert(
-            "⚠️ Esse produto já está cadastrado!"
-        );
-
-        return;
-
-    }
-
-
-    produtos.push({
-
-        id:
-            gerarID(),
-
-        nome:
-            nome,
-
-        categoria:
-            categoria,
-
-        preco:
-            preco,
-
-        estoque:
-            estoque,
-
-        estoqueMinimo:
-            2,
-
-        ingredientes:
-            ingredientes,
-
-        descricao:
-            descricao,
-
-        criadoEm:
-            new Date()
-            .toISOString()
-
-    });
-
-
-    salvarStorage(
-        "produtos",
-        produtos
-    );
-
-
-    nomeCampo.value = "";
-
-    precoCampo.value = "";
-
-    if (categoriaCampo) {
-
-        categoriaCampo.value = "";
-
-    }
-
-    if (estoqueCampo) {
-
-        estoqueCampo.value = "0";
-
-    }
-
-    if (ingredientesCampo) {
-
-        ingredientesCampo.value = "";
-
-    }
-
-    if (descricaoCampo) {
-
-        descricaoCampo.value = "";
-
-    }
-
-
-    atualizarListaCadastro();
-
-    atualizarListaProdutos();
-
-    atualizarListaEstoque();
-
-    mostrarEstoque();
-
-
-    alert(
-        "✅ PRODUTO CADASTRADO!\n\n" +
-        nomeCategoria(categoria) +
-        "\n" +
-        nome +
-        "\n\n💰 " +
-        dinheiro(preco)
+    return (
+        categorias[
+            String(categoria || "")
+        ]
+        ||
+        "Outro"
     );
 
 }
 
 
-// =====================================================
-// 7. LISTA DE PRODUTOS
-// =====================================================
+/* =====================================================
+   🍔 ÍCONE DA CATEGORIA
+===================================================== */
 
-function atualizarListaCadastro() {
+function iconeCategoria(categoria){
 
-    const lista =
-        document.getElementById(
-            "listaProdutos"
+    const icones = {
+
+        hamburguer:"🍔",
+
+        porcao:"🍟",
+
+        bebida:"🥤",
+
+        outro:"📦"
+
+    };
+
+
+    return (
+        icones[
+            String(categoria || "")
+        ]
+        ||
+        "📦"
+    );
+
+}
+
+
+/* =====================================================
+   🧮 CALCULAR TOTAL
+===================================================== */
+
+function calcularTotal(){
+
+    let total = 0;
+
+
+    const campos =
+        document.querySelectorAll(
+            "[data-preco]"
         );
 
 
-    if (!lista) {
+    campos.forEach(
+        function(campo){
 
-        return;
-
-    }
-
-
-    lista.innerHTML = "";
-
-
-    if (produtos.length === 0) {
-
-        lista.innerHTML =
-            "<p>Nenhum produto cadastrado.</p>";
-
-        return;
-
-    }
-
-
-    produtos.forEach(
-        function(produto, indice) {
-
-            const estoque =
+            const quantidade =
                 valorNumerico(
-                    produto.estoque
+                    campo.dataset.quantidade
                 );
 
 
-            let status =
-                "🟢 Estoque normal";
+            const preco =
+                valorNumerico(
+                    campo.dataset.preco
+                );
 
 
-            if (estoque <= 0) {
+            if(
+                quantidade > 0 &&
+                preco >= 0
+            ){
 
-                status =
-                    "🔴 SEM ESTOQUE";
-
-            } else if (
-                estoque <=
-                produto.estoqueMinimo
-            ) {
-
-                status =
-                    "🟠 ESTOQUE BAIXO";
+                total +=
+                    quantidade * preco;
 
             }
-
-
-            lista.innerHTML += `
-
-                <div class="produto-card">
-
-                    <span class="categoria">
-
-                        ${nomeCategoria(
-                            produto.categoria
-                        )}
-
-                    </span>
-
-                    <h3>
-                        🍔 ${produto.nome}
-                    </h3>
-
-                    <p class="preco">
-                        💰 ${dinheiro(
-                            produto.preco
-                        )}
-                    </p>
-
-                    <p>
-                        📦 Estoque:
-                        <strong>
-                            ${estoque}
-                        </strong>
-                    </p>
-
-                    <p>
-                        ${status}
-                    </p>
-
-                    <p>
-                        🥬 <strong>Ingredientes:</strong>
-                        ${produto.ingredientes ||
-                        "Não informado"}
-                    </p>
-
-                    <p>
-                        📝 <strong>Descrição:</strong>
-                        ${produto.descricao ||
-                        "Não informado"}
-                    </p>
-
-                    <button
-                        class="excluir"
-                        onclick="excluirProduto(${indice})">
-
-                        🗑️ EXCLUIR PRODUTO
-
-                    </button>
-
-                </div>
-
-            `;
 
         }
     );
 
-}
 
-
-// =====================================================
-// 8. EXCLUIR PRODUTO
-// =====================================================
-
-function excluirProduto(indice) {
-
-    if (!produtos[indice]) {
-
-        return;
-
-    }
-
-
-    const produto =
-        produtos[indice];
-
-
-    const confirmar =
-        confirm(
-
-            "⚠️ EXCLUIR PRODUTO?\n\n" +
-            produto.nome +
-            "\n\nEssa ação não poderá ser desfeita."
-
+    total =
+        arredondarDinheiro(
+            total
         );
 
 
-    if (!confirmar) {
-
-        return;
-
-    }
-
-
-    produtos.splice(
-        indice,
-        1
-    );
-
-
-    salvarStorage(
-        "produtos",
-        produtos
-    );
-
-
-    atualizarListaCadastro();
-
-    atualizarListaProdutos();
-
-    atualizarListaEstoque();
-
-    mostrarEstoque();
-
-
-    alert(
-        "✅ Produto excluído."
-    );
-
-}
-
-
-// =====================================================
-// 9. LISTA DE HAMBÚRGUERES
-// =====================================================
-
-function atualizarListaProdutos() {
-
-    const select =
-        document.getElementById(
-            "hamburguer"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    const valorAnterior =
-        select.value;
-
-
-    select.innerHTML = "";
-
-
-    const primeira =
-        document.createElement(
-            "option"
-        );
-
-    primeira.value = "";
-
-    primeira.textContent =
-        "Selecione um hambúrguer";
-
-    select.appendChild(
-        primeira
-    );
-
-
-    produtos
-        .filter(
-            function(produto) {
-
-                return (
-                    produto.categoria ===
-                    "hamburguer"
-                );
-
-            }
-        )
-        .forEach(
-            function(produto) {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    produto.nome;
-
-                option.textContent =
-                    produto.nome +
-                    " — " +
-                    dinheiro(
-                        produto.preco
-                    );
-
-
-                if (
-                    produto.estoque <= 0
-                ) {
-
-                    option.textContent +=
-                        " — SEM ESTOQUE";
-
-                    option.disabled =
-                        true;
-
-                }
-
-
-                select.appendChild(
-                    option
-                );
-
-            }
-        );
-
-
-    if (valorAnterior) {
-
-        select.value =
-            valorAnterior;
-
-    }
-
-}
-
-
-// =====================================================
-// 10. LISTA DE PORÇÕES
-// =====================================================
-
-function atualizarListaPorcoes() {
-
-    const select =
-        document.getElementById(
-            "porcao"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    select.innerHTML = "";
-
-
-    const primeira =
-        document.createElement(
-            "option"
-        );
-
-    primeira.value = "";
-
-    primeira.textContent =
-        "Sem porção";
-
-    select.appendChild(
-        primeira
-    );
-
-
-    produtos
-        .filter(
-            function(produto) {
-
-                return (
-                    produto.categoria ===
-                    "porcao"
-                );
-
-            }
-        )
-        .forEach(
-            function(produto) {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    produto.nome;
-
-                option.textContent =
-                    produto.nome +
-                    " — " +
-                    dinheiro(
-                        produto.preco
-                    );
-
-
-                if (
-                    produto.estoque <= 0
-                ) {
-
-                    option.textContent +=
-                        " — SEM ESTOQUE";
-
-                    option.disabled =
-                        true;
-
-                }
-
-
-                select.appendChild(
-                    option
-                );
-
-            }
-        );
-
-}
-
-
-// =====================================================
-// 11. LISTA DE BEBIDAS
-// =====================================================
-
-function atualizarListaBebidas() {
-
-    const select =
-        document.getElementById(
-            "bebida"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    select.innerHTML = "";
-
-
-    const primeira =
-        document.createElement(
-            "option"
-        );
-
-    primeira.value = "";
-
-    primeira.textContent =
-        "Sem bebida";
-
-    select.appendChild(
-        primeira
-    );
-
-
-    produtos
-        .filter(
-            function(produto) {
-
-                return (
-                    produto.categoria ===
-                    "bebida"
-                );
-
-            }
-        )
-        .forEach(
-            function(produto) {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    produto.nome;
-
-                option.textContent =
-                    produto.nome +
-                    " — " +
-                    dinheiro(
-                        produto.preco
-                    );
-
-
-                if (
-                    produto.estoque <= 0
-                ) {
-
-                    option.textContent +=
-                        " — SEM ESTOQUE";
-
-                    option.disabled =
-                        true;
-
-                }
-
-
-                select.appendChild(
-                    option
-                );
-
-            }
-        );
-
-}
-
-
-// =====================================================
-// 12. BUSCAR PREÇO DO PEDIDO
-// =====================================================
-
-function valorItemPedido(nome) {
-
-    if (!nome) {
-
-        return 0;
-
-    }
-
-
-    const produto =
-        buscarProduto(nome);
-
-
-    if (!produto) {
-
-        return 0;
-
-    }
-
-
-    return valorNumerico(
-        produto.preco
-    );
-
-}
-
-
-// =====================================================
-// 13. CALCULAR TOTAL
-// =====================================================
-
-function calcularTotal() {
-
-    const hamburguer =
-        document.getElementById(
-            "hamburguer"
-        );
-
-    const bebida =
-        document.getElementById(
-            "bebida"
-        );
-
-    const porcao =
-        document.getElementById(
-            "porcao"
-        );
-
-    const totalElemento =
+    const elemento =
         document.getElementById(
             "total"
         );
 
 
-    if (
-        !hamburguer ||
-        !bebida ||
-        !porcao ||
-        !totalElemento
-    ) {
+    if(elemento){
 
-        return 0;
+        elemento.innerText =
+            "Total: " +
+            dinheiro(total);
 
     }
-
-
-    let total = 0;
-
-
-    total +=
-        valorItemPedido(
-            hamburguer.value
-        );
-
-
-    total +=
-        valorItemPedido(
-            bebida.value
-        );
-
-
-    total +=
-        valorItemPedido(
-            porcao.value
-        );
-
-
-    totalElemento.innerText =
-        dinheiro(total);
 
 
     return total;
@@ -1164,972 +979,188 @@ function calcularTotal() {
 }
 
 
-// =====================================================
-// 14. ESTOQUE
-// =====================================================
+/* =====================================================
+   🧮 CALCULAR TOTAL DE ITENS
+===================================================== */
 
-function baixarEstoque(
-    produto,
-    quantidade,
-    motivo
-) {
+function calcularTotalItens(itens){
 
-    if (!produto) {
+    if(
+        !Array.isArray(itens)
+    ){
 
-        return {
-            sucesso: false
-        };
+        return 0;
 
     }
 
 
-    const antes =
-        valorNumerico(
-            produto.estoque
-        );
-
-    const qtd =
-        valorNumerico(
-            quantidade
-        );
-
-
-    if (antes < qtd) {
-
-        return {
-
-            sucesso: false,
-
-            motivo:
-                "estoque_insuficiente",
-
-            estoque:
-                antes
-
-        };
-
-    }
-
-
-    produto.estoque =
-        antes - qtd;
-
-
-    salvarStorage(
-        "produtos",
-        produtos
-    );
-
-
-    return {
-
-        sucesso:
-            true,
-
-        estoque:
-            produto.estoque
-
-    };
-
-}
-
-
-// =====================================================
-// 15. FINALIZAR PEDIDO
-// =====================================================
-
-function finalizarPedido() {
-
-    const cliente =
-        document.getElementById(
-            "cliente"
-        );
-
-    const hamburguer =
-        document.getElementById(
-            "hamburguer"
-        );
-
-    const bebida =
-        document.getElementById(
-            "bebida"
-        );
-
-    const porcao =
-        document.getElementById(
-            "porcao"
-        );
-
-    const pagamento =
-        document.getElementById(
-            "pagamento"
-        );
-
-
-    if (
-        !cliente ||
-        !hamburguer ||
-        !bebida ||
-        !porcao ||
-        !pagamento
-    ) {
-
-        alert(
-            "❌ Campos do pedido não encontrados."
-        );
-
-        return;
-
-    }
-
-
-    const nomeCliente =
-        cliente.value.trim();
-
-    const nomeHamburguer =
-        hamburguer.value;
-
-    const nomeBebida =
-        bebida.value;
-
-    const nomePorcao =
-        porcao.value;
-
-    const formaPagamento =
-        pagamento.value;
-
-
-    if (!nomeCliente) {
-
-        alert(
-            "⚠️ Digite o nome do cliente."
-        );
-
-        cliente.focus();
-
-        return;
-
-    }
-
-
-    if (!nomeHamburguer) {
-
-        alert(
-            "⚠️ Escolha um hambúrguer."
-        );
-
-        hamburguer.focus();
-
-        return;
-
-    }
-
-
-    if (!formaPagamento) {
-
-        alert(
-            "⚠️ Escolha a forma de pagamento."
-        );
-
-        pagamento.focus();
-
-        return;
-
-    }
-
-
-    const produtoHamburguer =
-        buscarProduto(
-            nomeHamburguer
-        );
-
-
-    if (!produtoHamburguer) {
-
-        alert(
-            "❌ Hambúrguer não encontrado."
-        );
-
-        return;
-
-    }
-
-
-    const produtoBebida =
-        buscarProduto(
-            nomeBebida
-        );
-
-
-    const produtoPorcao =
-        buscarProduto(
-            nomePorcao
-        );
-
-
-    const total =
-        valorItemPedido(
-            nomeHamburguer
-        ) +
-
-        valorItemPedido(
-            nomeBebida
-        ) +
-
-        valorItemPedido(
-            nomePorcao
-        );
-
-
-    if (total <= 0) {
-
-        alert(
-            "⚠️ Total inválido."
-        );
-
-        return;
-
-    }
-
-
-    let mensagemEstoque = "";
-
-
-    if (
-        produtoHamburguer.estoque < 1
-    ) {
-
-        alert(
-            "🚫 Hambúrguer sem estoque."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        produtoBebida &&
-        produtoBebida.estoque < 1
-    ) {
-
-        alert(
-            "🚫 Bebida sem estoque."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        produtoPorcao &&
-        produtoPorcao.estoque < 1
-    ) {
-
-        alert(
-            "🚫 Porção sem estoque."
-        );
-
-        return;
-
-    }
-
-
-    const confirmar =
-        confirm(
-
-            "🧾 CONFIRMAR PEDIDO?\n\n" +
-
-            "👤 Cliente: " +
-            nomeCliente +
-
-            "\n\n🍔 " +
-            nomeHamburguer +
-
-            "\n🥤 " +
-            (
-                nomeBebida ||
-                "Sem bebida"
-            ) +
-
-            "\n🍟 " +
-            (
-                nomePorcao ||
-                "Sem porção"
-            ) +
-
-            "\n💳 " +
-            formaPagamento +
-
-            "\n\n💰 TOTAL: " +
-            dinheiro(total)
-
-        );
-
-
-    if (!confirmar) {
-
-        return;
-
-    }
-
-
-    // -------------------------------------------------
-    // BAIXAR ESTOQUES
-    // -------------------------------------------------
-
-    baixarEstoque(
-        produtoHamburguer,
-        1,
-        "Venda"
-    );
-
-
-    if (produtoBebida) {
-
-        baixarEstoque(
-            produtoBebida,
-            1,
-            "Venda"
-        );
-
-    }
-
-
-    if (produtoPorcao) {
-
-        baixarEstoque(
-            produtoPorcao,
-            1,
-            "Venda"
-        );
-
-    }
-
-
-    // -------------------------------------------------
-    // VENDA
-    // -------------------------------------------------
-
-    const id =
-        gerarID();
-
-    const data =
-        new Date()
-        .toISOString();
-
-
-    const venda = {
-
-        id:
-            id,
-
-        data:
-            data,
-
-        cliente:
-            nomeCliente,
-
-        hamburguer:
-            nomeHamburguer,
-
-        bebida:
-            nomeBebida,
-
-        porcao:
-            nomePorcao,
-
-        pagamento:
-            formaPagamento,
-
-        total:
-            total,
-
-        status:
-            "finalizado",
-
-        origem:
-            "pedido"
-
-    };
-
-
-    const vendas =
-        obterArray(
-            "vendas"
-        );
-
-
-    vendas.push(
-        venda
-    );
-
-
-    salvarStorage(
-        "vendas",
-        vendas
-    );
-
-
-    // -------------------------------------------------
-    // FINANCEIRO
-    // -------------------------------------------------
-
-    const entradas =
-        obterArray(
-            "entradas"
-        );
-
-
-    entradas.push({
-
-        id:
-            id,
-
-        data:
-            data,
-
-        descricao:
-            "Venda - " +
-            nomeCliente,
-
-        valor:
-            total,
-
-        formaPagamento:
-            formaPagamento,
-
-        tipo:
-            "entrada",
-
-        categoria:
-            "Venda",
-
-        origem:
-            "pedido",
-
-        cliente:
-            nomeCliente,
-
-        pedido:
-            id
-
-    });
-
-
-    salvarStorage(
-        "entradas",
-        entradas
-    );
-
-
-    // -------------------------------------------------
-    // CLIENTE
-    // -------------------------------------------------
-
-    const clientes =
-        obterArray(
-            "clientes"
-        );
-
-
-    const nomeBusca =
-        nomeCliente
-        .toLowerCase();
-
-
-    let clienteExistente =
-        clientes.find(
-            function(item) {
-
-                return String(
-                    item.nome || ""
+    return itens.reduce(
+        function(total,item){
+
+            const quantidade =
+                valorNumerico(
+                    item.quantidade
                 )
-                .toLowerCase() ===
-                nomeBusca;
+                ||
+                1;
 
-            }
-        );
 
-
-    if (!clienteExistente) {
-
-        clienteExistente = {
-
-            id:
-                gerarID(),
-
-            nome:
-                nomeCliente,
-
-            telefone:
-                "",
-
-            pedidos:
-                0,
-
-            totalGasto:
-                0,
-
-            ultimoPedido:
-                data
-
-        };
-
-        clientes.push(
-            clienteExistente
-        );
-
-    }
-
-
-    clienteExistente.pedidos =
-        valorNumerico(
-            clienteExistente.pedidos
-        ) + 1;
-
-
-    clienteExistente.totalGasto =
-        valorNumerico(
-            clienteExistente.totalGasto
-        ) + total;
-
-
-    clienteExistente.ultimoPedido =
-        data;
-
-
-    salvarStorage(
-        "clientes",
-        clientes
-    );
-
-
-    // -------------------------------------------------
-    // ATUALIZAR
-    // -------------------------------------------------
-
-    atualizarSistema();
-
-
-    // -------------------------------------------------
-    // LIMPAR
-    // -------------------------------------------------
-
-    cliente.value = "";
-
-    hamburguer.value = "";
-
-    bebida.value = "";
-
-    porcao.value = "";
-
-    pagamento.value = "";
-
-
-    calcularTotal();
-
-
-    alert(
-
-        "✅ PEDIDO FINALIZADO!\n\n" +
-
-        "👤 " +
-        nomeCliente +
-
-        "\n🍔 " +
-        nomeHamburguer +
-
-        "\n🥤 " +
-        (
-            nomeBebida ||
-            "Sem bebida"
-        ) +
-
-        "\n🍟 " +
-        (
-            nomePorcao ||
-            "Sem porção"
-        ) +
-
-        "\n\n💰 TOTAL: " +
-        dinheiro(total) +
-
-        "\n\n📦 Estoque atualizado." +
-
-        "\n💰 Financeiro atualizado." +
-
-        "\n📋 Venda registrada."
-
-    );
-
-}
-
-
-// =====================================================
-// 16. WHATSAPP
-// =====================================================
-
-function enviarPedidoWhatsAppNovo() {
-
-    const cliente =
-        document.getElementById(
-            "cliente"
-        );
-
-    const hamburguer =
-        document.getElementById(
-            "hamburguer"
-        );
-
-    const bebida =
-        document.getElementById(
-            "bebida"
-        );
-
-    const porcao =
-        document.getElementById(
-            "porcao"
-        );
-
-    const pagamento =
-        document.getElementById(
-            "pagamento"
-        );
-
-
-    if (
-        !cliente ||
-        !hamburguer ||
-        !bebida ||
-        !porcao ||
-        !pagamento
-    ) {
-
-        return;
-
-    }
-
-
-    const nomeCliente =
-        cliente.value.trim();
-
-    const nomeHamburguer =
-        hamburguer.value;
-
-    const nomeBebida =
-        bebida.value;
-
-    const nomePorcao =
-        porcao.value;
-
-    const formaPagamento =
-        pagamento.value;
-
-
-    if (!nomeCliente) {
-
-        alert(
-            "⚠️ Digite o nome do cliente."
-        );
-
-        return;
-
-    }
-
-
-    if (!nomeHamburguer) {
-
-        alert(
-            "⚠️ Escolha um hambúrguer."
-        );
-
-        return;
-
-    }
-
-
-    if (!formaPagamento) {
-
-        alert(
-            "⚠️ Escolha a forma de pagamento."
-        );
-
-        return;
-
-    }
-
-
-    const total =
-        valorItemPedido(
-            nomeHamburguer
-        ) +
-
-        valorItemPedido(
-            nomeBebida
-        ) +
-
-        valorItemPedido(
-            nomePorcao
-        );
-
-
-    let telefone =
-        localStorage.getItem(
-            "telefoneCliente"
-        ) ||
-        localStorage.getItem(
-            "clienteTelefone"
-        ) ||
-        localStorage.getItem(
-            "telefonePedido"
-        );
-
-
-    if (!telefone) {
-
-        telefone =
-            prompt(
-                "📱 Digite o WhatsApp do cliente com DDD:\n\nExemplo: 44999999999"
-            );
-
-    }
-
-
-    if (!telefone) {
-
-        return;
-
-    }
-
-
-    telefone =
-        telefone.replace(
-            /\D/g,
-            ""
-        );
-
-
-    if (
-        telefone.length === 10 ||
-        telefone.length === 11
-    ) {
-
-        telefone =
-            "55" +
-            telefone;
-
-    }
-
-
-    const mensagem =
-
-        "🍔 *GRILLCORE ERP*\n\n" +
-
-        "📋 *NOVO PEDIDO*\n\n" +
-
-        "👤 Cliente: " +
-        nomeCliente +
-
-        "\n🍔 Hambúrguer: " +
-        nomeHamburguer +
-
-        "\n🥤 Bebida: " +
-        (
-            nomeBebida ||
-            "Sem bebida"
-        ) +
-
-        "\n🍟 Porção: " +
-        (
-            nomePorcao ||
-            "Sem porção"
-        ) +
-
-        "\n💳 Pagamento: " +
-        formaPagamento +
-
-        "\n\n💰 *TOTAL: " +
-        dinheiro(total) +
-        "*\n\n" +
-
-        "Obrigado pela preferência! ❤️";
-
-
-    const url =
-        "https://wa.me/" +
-        telefone +
-        "?text=" +
-        encodeURIComponent(
-            mensagem
-        );
-
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-// =====================================================
-// 17. ESTOQUE — LISTA
-// =====================================================
-
-function atualizarListaEstoque() {
-
-    const select =
-        document.getElementById(
-            "produtoEstoque"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    select.innerHTML = "";
-
-
-    produtos.forEach(
-        function(produto) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                produto.nome;
-
-            option.textContent =
-                produto.nome +
-                " — " +
+            const subtotal =
                 valorNumerico(
-                    produto.estoque
-                );
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
-}
-
-
-// =====================================================
-// 18. MOSTRAR ESTOQUE
-// =====================================================
-
-function mostrarEstoque() {
-
-    const lista =
-        document.getElementById(
-            "listaEstoque"
-        );
-
-
-    if (!lista) {
-
-        return;
-
-    }
-
-
-    lista.innerHTML = "";
-
-
-    produtos.forEach(
-        function(produto) {
-
-            const estoque =
-                valorNumerico(
-                    produto.estoque
+                    item.subtotal
                 );
 
 
-            let status =
-                "🟢 Normal";
+            if(subtotal > 0){
 
-
-            if (estoque <= 0) {
-
-                status =
-                    "🔴 SEM ESTOQUE";
-
-            } else if (
-                estoque <=
-                produto.estoqueMinimo
-            ) {
-
-                status =
-                    "🟠 ESTOQUE BAIXO";
+                return (
+                    total +
+                    subtotal
+                );
 
             }
 
 
-            lista.innerHTML += `
+            const preco =
+                valorNumerico(
+                    item.preco
+                );
 
-                <div class="estoque-item">
 
-                    <h3>
-                        ${nomeCategoria(
-                            produto.categoria
-                        )}
-                        ${produto.nome}
-                    </h3>
+            return (
+                total +
+                (
+                    quantidade *
+                    preco
+                )
+            );
 
-                    <p>
-                        📦 Estoque:
-                        <strong>
-                            ${estoque}
-                        </strong>
-                    </p>
-
-                    <p>
-                        ${status}
-                    </p>
-
-                </div>
-
-            `;
-
-        }
+        },
+        0
     );
 
 }
 
 
-// =====================================================
-// 19. ATUALIZAR SISTEMA
-// =====================================================
+/* =====================================================
+   📦 ATUALIZAR LISTA DE PRODUTOS
+===================================================== */
 
-function atualizarSistema() {
+function atualizarListaProdutos(){
 
-    produtos =
-        lerStorage(
-            "produtos",
-            []
-        );
+    if(
+        typeof window.atualizarListaProdutosPagina
+        ===
+        "function"
+    ){
 
+        window.atualizarListaProdutosPagina();
 
-    normalizarProdutos();
+    }
 
-
-    salvarStorage(
-        "produtos",
-        produtos
-    );
+}
 
 
-    atualizarListaCadastro();
+/* =====================================================
+   🍟 ATUALIZAR LISTA DE PORÇÕES
+===================================================== */
+
+function atualizarListaPorcoes(){
+
+    if(
+        typeof window.atualizarListaPorcoesPagina
+        ===
+        "function"
+    ){
+
+        window.atualizarListaPorcoesPagina();
+
+    }
+
+}
+
+
+/* =====================================================
+   🥤 ATUALIZAR LISTA DE BEBIDAS
+===================================================== */
+
+function atualizarListaBebidas(){
+
+    if(
+        typeof window.atualizarListaBebidasPagina
+        ===
+        "function"
+    ){
+
+        window.atualizarListaBebidasPagina();
+
+    }
+
+}
+
+
+/* =====================================================
+   👥 ATUALIZAR LISTA DE CLIENTES
+===================================================== */
+
+function atualizarListaCadastro(){
+
+    if(
+        typeof window.atualizarListaCadastroPagina
+        ===
+        "function"
+    ){
+
+        window.atualizarListaCadastroPagina();
+
+    }
+
+}
+
+
+/* =====================================================
+   📦 MOSTRAR ESTOQUE
+===================================================== */
+
+function mostrarEstoque(){
+
+    if(
+        typeof window.mostrarEstoquePagina
+        ===
+        "function"
+    ){
+
+        window.mostrarEstoquePagina();
+
+    }
+
+}
+
+
+/* =====================================================
+   💵 MOSTRAR VENDAS
+===================================================== */
+
+function mostrarVendas(){
+
+    if(
+        typeof window.mostrarVendasPagina
+        ===
+        "function"
+    ){
+
+        window.mostrarVendasPagina();
+
+    }
+
+}
+
+
+/* =====================================================
+   🔄 ATUALIZAR SISTEMA
+===================================================== */
+
+function atualizarSistema(){
 
     atualizarListaProdutos();
 
@@ -2137,47 +1168,878 @@ function atualizarSistema() {
 
     atualizarListaBebidas();
 
-    atualizarListaEstoque();
+    atualizarListaCadastro();
 
     mostrarEstoque();
 
-    calcularTotal();
+    mostrarVendas();
 
 }
 
 
-// =====================================================
-// 20. INICIALIZAÇÃO
-// =====================================================
+/* =====================================================
+   📉 BAIXAR ESTOQUE DE PRODUTO
+===================================================== */
 
-window.addEventListener(
-    "load",
-    function() {
+function baixarEstoque(produtoId, quantidade){
 
-        atualizarSistema();
-
-    }
-);
+    const qtd =
+        valorNumerico(
+            quantidade
+        );
 
 
-window.addEventListener(
-    "pageshow",
-    function() {
+    if(qtd <= 0){
 
-        atualizarSistema();
+        return false;
 
     }
-);
 
 
-document.addEventListener(
-    "visibilitychange",
-    function() {
+    const produtos =
+        lerProdutos();
 
-        if (
-            document.visibilityState ===
-            "visible"
-        ) {
+
+    const indice =
+        produtos.findIndex(
+            function(produto){
+
+                return String(
+                    produto.id
+                )
+                ===
+                String(produtoId);
+
+            }
+        );
+
+
+    if(indice === -1){
+
+        return false;
+
+    }
+
+
+    const estoqueAtual =
+        valorNumerico(
+            produtos[indice].estoque
+        );
+
+
+    if(
+        estoqueAtual < qtd
+    ){
+
+        return false;
+
+    }
+
+
+    produtos[indice].estoque =
+        estoqueAtual - qtd;
+
+
+    produtos[indice].atualizadoEm =
+        dataAtualISO();
+
+
+    return salvarProdutos(
+        produtos
+    );
+
+}
+
+
+/* =====================================================
+   📈 REPOR ESTOQUE DE PRODUTO
+===================================================== */
+
+function reporEstoqueProduto(
+    produtoId,
+    quantidade
+){
+
+    const qtd =
+        valorNumerico(
+            quantidade
+        );
+
+
+    if(qtd <= 0){
+
+        return false;
+
+    }
+
+
+    const produtos =
+        lerProdutos();
+
+
+    const indice =
+        produtos.findIndex(
+            function(produto){
+
+                return String(
+                    produto.id
+                )
+                ===
+                String(produtoId);
+
+            }
+        );
+
+
+    if(indice === -1){
+
+        return false;
+
+    }
+
+
+    const atual =
+        valorNumerico(
+            produtos[indice].estoque
+        );
+
+
+    produtos[indice].estoque =
+        atual + qtd;
+
+
+    produtos[indice].atualizadoEm =
+        dataAtualISO();
+
+
+    return salvarProdutos(
+        produtos
+    );
+
+}
+
+
+/* =====================================================
+   🧾 NÚMERO DO PEDIDO
+===================================================== */
+
+function gerarNumeroPedido(){
+
+    return String(
+        Date.now()
+    ).slice(-6);
+
+}
+
+
+/* =====================================================
+   🧾 CRIAR VENDA
+===================================================== */
+
+function criarVenda(dados){
+
+    const venda =
+        {
+
+            id:
+                gerarID(),
+
+            numeroPedido:
+                dados.numeroPedido
+                ||
+                gerarNumeroPedido(),
+
+            cliente:
+                dados.cliente
+                ||
+                "",
+
+            clienteId:
+                dados.clienteId
+                ||
+                null,
+
+            telefone:
+                dados.telefone
+                ||
+                "",
+
+            observacao:
+                dados.observacao
+                ||
+                "",
+
+            itens:
+                Array.isArray(
+                    dados.itens
+                )
+                    ? dados.itens
+                    : [],
+
+            total:
+                arredondarDinheiro(
+                    dados.total
+                ),
+
+            pagamento:
+                dados.pagamento
+                ||
+                "Outro",
+
+            data:
+                dados.data
+                ||
+                dataAtualISO(),
+
+            status:
+                dados.status
+                ||
+                "finalizado",
+
+            criadoEm:
+                dataAtualISO()
+
+        };
+
+
+    return venda;
+
+}
+
+
+/* =====================================================
+   💵 FINALIZAR PEDIDO
+===================================================== */
+
+function finalizarPedido(dados){
+
+    /*
+       Esta função pode ser utilizada
+       pelas páginas que não possuem
+       sua própria rotina de finalização.
+    */
+
+    if(
+        !dados ||
+        typeof dados !== "object"
+    ){
+
+        return {
+            sucesso:false,
+            mensagem:"Dados do pedido inválidos."
+        };
+
+    }
+
+
+    const itens =
+        Array.isArray(
+            dados.itens
+        )
+            ? dados.itens
+            : [];
+
+
+    if(itens.length === 0){
+
+        return {
+            sucesso:false,
+            mensagem:"Adicione pelo menos um item ao pedido."
+        };
+
+    }
+
+
+    const totalInformado =
+        valorNumerico(
+            dados.total
+        );
+
+
+    const totalCalculado =
+        calcularTotalItens(
+            itens
+        );
+
+
+    const total =
+        totalInformado > 0
+            ? totalInformado
+            : totalCalculado;
+
+
+    if(total <= 0){
+
+        return {
+            sucesso:false,
+            mensagem:"O total do pedido precisa ser maior que zero."
+        };
+
+    }
+
+
+    const produtos =
+        lerProdutos();
+
+
+    /*
+       Validar estoque antes de salvar
+       evita deixar venda pela metade.
+    */
+
+    for(
+        const item of itens
+    ){
+
+        if(
+            !item.produtoId
+        ){
+
+            continue;
+
+        }
+
+
+        const produto =
+            produtos.find(
+                function(p){
+
+                    return String(p.id)
+                    ===
+                    String(item.produtoId);
+
+                }
+            );
+
+
+        if(!produto){
+
+            return {
+                sucesso:false,
+                mensagem:
+                    "O produto " +
+                    (
+                        item.nome ||
+                        "selecionado"
+                    ) +
+                    " não foi encontrado."
+            };
+
+        }
+
+
+        const quantidade =
+            valorNumerico(
+                item.quantidade
+            )
+            ||
+            1;
+
+
+        const estoque =
+            valorNumerico(
+                produto.estoque
+            );
+
+
+        if(
+            estoque < quantidade
+        ){
+
+            return {
+                sucesso:false,
+                mensagem:
+                    "Estoque insuficiente para " +
+                    produto.nome +
+                    "."
+            };
+
+        }
+
+    }
+
+
+    /*
+       Baixar estoque.
+    */
+
+    for(
+        const item of itens
+    ){
+
+        if(
+            !item.produtoId
+        ){
+
+            continue;
+
+        }
+
+
+        const quantidade =
+            valorNumerico(
+                item.quantidade
+            )
+            ||
+            1;
+
+
+        const indice =
+            produtos.findIndex(
+                function(p){
+
+                    return String(p.id)
+                    ===
+                    String(item.produtoId);
+
+                }
+            );
+
+
+        if(indice >= 0){
+
+            produtos[indice].estoque =
+                valorNumerico(
+                    produtos[indice].estoque
+                )
+                -
+                quantidade;
+
+            produtos[indice].atualizadoEm =
+                dataAtualISO();
+
+        }
+
+    }
+
+
+    const venda =
+        criarVenda({
+
+            ...dados,
+
+            itens:itens,
+
+            total:total
+
+        });
+
+
+    const vendas =
+        lerVendas();
+
+
+    vendas.push(
+        venda
+    );
+
+
+    /*
+       Salvar estoque primeiro.
+       Se falhar, não grava a venda.
+    */
+
+    if(
+        !salvarProdutos(
+            produtos
+        )
+    ){
+
+        return {
+            sucesso:false,
+            mensagem:
+                "Não foi possível atualizar o estoque."
+        };
+
+    }
+
+
+    if(
+        !salvarVendas(
+            vendas
+        )
+    ){
+
+        /*
+           Tentativa de rollback do estoque.
+        */
+
+        itens.forEach(
+            function(item){
+
+                if(!item.produtoId){
+
+                    return;
+
+                }
+
+
+                const indice =
+                    produtos.findIndex(
+                        function(p){
+
+                            return String(p.id)
+                            ===
+                            String(item.produtoId);
+
+                        }
+                    );
+
+
+                if(indice >= 0){
+
+                    produtos[indice].estoque +=
+                        valorNumerico(
+                            item.quantidade
+                        )
+                        ||
+                        1;
+
+                }
+
+            }
+        );
+
+
+        salvarProdutos(
+            produtos
+        );
+
+
+        return {
+            sucesso:false,
+            mensagem:
+                "Não foi possível registrar a venda."
+        };
+
+    }
+
+
+    /*
+       Tenta atualizar cliente automaticamente
+       quando houver nome e telefone.
+    */
+
+    if(
+        dados.cliente
+        &&
+        String(
+            dados.cliente
+        ).trim()
+    ){
+
+        salvarOuAtualizarCliente({
+
+            id:
+                dados.clienteId
+                ||
+                null,
+
+            nome:
+                dados.cliente,
+
+            telefone:
+                dados.telefone
+                ||
+                ""
+
+        });
+
+    }
+
+
+    return {
+
+        sucesso:true,
+
+        venda:venda,
+
+        mensagem:
+            "Pedido finalizado com sucesso."
+
+    };
+
+}
+
+
+/* =====================================================
+   👥 SALVAR / ATUALIZAR CLIENTE
+===================================================== */
+
+function salvarOuAtualizarCliente(dados){
+
+    if(
+        !dados ||
+        !String(
+            dados.nome || ""
+        ).trim()
+    ){
+
+        return null;
+
+    }
+
+
+    const clientes =
+        lerClientes();
+
+
+    const nome =
+        String(
+            dados.nome
+        ).trim();
+
+
+    const telefone =
+        String(
+            dados.telefone || ""
+        ).trim();
+
+
+    let indice = -1;
+
+
+    if(dados.id){
+
+        indice =
+            clientes.findIndex(
+                function(cliente){
+
+                    return String(
+                        cliente.id
+                    )
+                    ===
+                    String(dados.id);
+
+                }
+            );
+
+    }
+
+
+    /*
+       Se não encontrou por ID,
+       tenta telefone.
+    */
+
+    if(
+        indice === -1 &&
+        telefone
+    ){
+
+        indice =
+            clientes.findIndex(
+                function(cliente){
+
+                    return (
+                        String(
+                            cliente.telefone || ""
+                        )
+                        .replace(/\D/g,"")
+                        ===
+                        telefone.replace(/\D/g,"")
+                    );
+
+                }
+            );
+
+    }
+
+
+    /*
+       Se ainda não encontrou,
+       tenta nome exato.
+    */
+
+    if(indice === -1){
+
+        indice =
+            clientes.findIndex(
+                function(cliente){
+
+                    return (
+                        String(
+                            cliente.nome || ""
+                        )
+                        .trim()
+                        .toLowerCase()
+                        ===
+                        nome.toLowerCase()
+                    );
+
+                }
+            );
+
+    }
+
+
+    if(indice >= 0){
+
+        clientes[indice].nome =
+            nome;
+
+
+        if(telefone){
+
+            clientes[indice].telefone =
+                telefone;
+
+        }
+
+
+        clientes[indice].atualizadoEm =
+            dataAtualISO();
+
+
+        salvarClientes(
+            clientes
+        );
+
+
+        return clientes[indice];
+
+    }
+
+
+    const novoCliente = {
+
+        id:
+            gerarID(),
+
+        nome:
+            nome,
+
+        telefone:
+            telefone,
+
+        endereco:
+            String(
+                dados.endereco || ""
+            ),
+
+        observacoes:
+            String(
+                dados.observacoes || ""
+            ),
+
+        criadoEm:
+            dataAtualISO(),
+
+        atualizadoEm:
+            dataAtualISO()
+
+    };
+
+
+    clientes.push(
+        novoCliente
+    );
+
+
+    salvarClientes(
+        clientes
+    );
+
+
+    return novoCliente;
+
+}
+
+
+/* =====================================================
+   🔄 ATUALIZAR CLIENTE POR VENDA
+===================================================== */
+
+function vincularClienteVenda(
+    vendaId,
+    clienteId
+){
+
+    const vendas =
+        lerVendas();
+
+
+    const indice =
+        vendas.findIndex(
+            function(venda){
+
+                return String(
+                    venda.id
+                )
+                ===
+                String(vendaId);
+
+            }
+        );
+
+
+    if(indice === -1){
+
+        return false;
+
+    }
+
+
+    vendas[indice].clienteId =
+        clienteId;
+
+
+    vendas[indice].atualizadoEm =
+        dataAtualISO();
+
+
+    return salvarVendas(
+        vendas
+    );
+
+}
+
+
+/* =====================================================
+   🔄 ATUALIZAR SISTEMA
+===================================================== */
+
+function recarregarPaginaDados(){
+
+    atualizarSistema();
+
+}
+
+
+/* =====================================================
+   📡 EVENTO ENTRE ABAS / PÁGINAS
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        /*
+           Quando outra página alterar
+           localStorage, atualizamos os
+           componentes da página atual.
+        */
+
+        const chavesImportantes = [
+
+            "produtos",
+            "vendas",
+            "clientes",
+            "estoque",
+            "compras",
+            "despesas",
+            "entradas",
+            "fechamentosCaixa",
+            "fornecedores"
+
+        ];
+
+
+        if(
+            chavesImportantes.includes(
+                event.key
+            )
+        ){
 
             atualizarSistema();
 
@@ -2187,6 +2049,164 @@ document.addEventListener(
 );
 
 
-// =====================================================
-// 🍔 FIM DO SCRIPT.JS
-// =====================================================
+/* =====================================================
+   👀 VOLTOU PARA A PÁGINA
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState
+            ===
+            "visible"
+        ){
+
+            atualizarSistema();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   🚀 INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        /*
+           Login é controlado individualmente
+           pelos HTMLs atuais.
+
+           Por isso não forçamos redirect aqui,
+           evitando conflito com login.html.
+        */
+
+        const pagina =
+            location.pathname
+            .split("/")
+            .pop()
+            .toLowerCase();
+
+
+        if(
+            pagina === "login.html"
+            ||
+            pagina === "recuperar-acesso.html"
+        ){
+
+            return;
+
+        }
+
+
+        atualizarSistema();
+
+    }
+);
+
+
+/* =====================================================
+   🌐 EXPOR FUNÇÕES GLOBAIS
+===================================================== */
+
+window.GrillCore = {
+
+    lerStorage,
+
+    salvarStorage,
+
+    obterArray,
+
+    dinheiro,
+
+    valorNumerico,
+
+    inteiro,
+
+    arredondarDinheiro,
+
+    gerarID,
+
+    escapar,
+
+    verificarLogin,
+
+    usuarioLogado,
+
+    sairDoSistema,
+
+    protegerPagina,
+
+    lerProdutos,
+
+    salvarProdutos,
+
+    buscarProdutoPorID,
+
+    buscarProdutoPorNome,
+
+    lerClientes,
+
+    salvarClientes,
+
+    buscarClientePorID,
+
+    lerCompras,
+
+    salvarCompras,
+
+    lerEstoque,
+
+    salvarEstoque,
+
+    lerDespesas,
+
+    salvarDespesas,
+
+    lerVendas,
+
+    salvarVendas,
+
+    lerEntradas,
+
+    salvarEntradas,
+
+    lerFechamentos,
+
+    salvarFechamentos,
+
+    lerFornecedores,
+
+    salvarFornecedores,
+
+    nomeCategoriaProduto,
+
+    iconeCategoria,
+
+    calcularTotal,
+
+    calcularTotalItens,
+
+    baixarEstoque,
+
+    reporEstoqueProduto,
+
+    gerarNumeroPedido,
+
+    criarVenda,
+
+    finalizarPedido,
+
+    salvarOuAtualizarCliente,
+
+    vincularClienteVenda,
+
+    atualizarSistema
+
+};

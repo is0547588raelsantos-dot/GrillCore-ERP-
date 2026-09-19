@@ -1,371 +1,1376 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Financeiro - GrillCore ERP</title>
+<head>
+
+<script>
+if(localStorage.getItem("grillcore_login") !== "true"){
+    window.location.replace("login.html");
+}
+</script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#ff7300">
+
+<meta name="description"
+      content="Controle financeiro profissional — GrillCore ERP">
+
+<title>Financeiro — GrillCore ERP</title>
 
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tema-laranja.css">
 
 <style>
 
-*{
-    box-sizing:border-box;
+/* =====================================================
+   FINANCEIRO — GRILLCORE ERP
+   PRETO + LARANJA
+===================================================== */
+
+:root{
+    --laranja:#ff7300;
+    --laranja2:#ff9800;
+    --laranja3:#ff4d00;
+    --laranja4:#e85f00;
+
+    --preto:#080808;
+    --preto2:#101010;
+    --painel:#151515;
+
+    --branco:#ffffff;
+    --cinza:#bdbdbd;
+
+    --verde:#35d07f;
+    --vermelho:#ff5555;
 }
+
+
+/* =====================================================
+   BASE
+===================================================== */
 
 body{
-    margin:0;
-    padding:15px;
-    background:#181818;
-    color:#fff;
-    font-family:Arial,sans-serif;
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(255,115,0,.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #111111 0%,
+            #080808 100%
+        );
+
+    color:var(--branco);
 }
 
-h1,h2{
-    color:#ff7a00;
-}
 
-hr{
-    border:0;
-    border-top:1px solid #444;
-    margin:25px 0;
-}
+/* =====================================================
+   CONTAINER
+===================================================== */
 
-.card{
-    background:#242424;
-    border:1px solid #333;
-    border-radius:15px;
-    padding:18px;
-    margin:15px 0;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-
-.mini{
-    background:#1d1d1d;
-    padding:15px;
-    border-radius:12px;
-}
-
-.mini strong{
-    display:block;
-    margin-top:7px;
-    color:#ff7a00;
-    font-size:21px;
-}
-
-.saldo{
-    font-size:36px;
-    font-weight:bold;
-    color:#35d07f;
-    margin-top:8px;
-}
-
-.verde{
-    color:#35d07f !important;
-}
-
-.vermelho{
-    color:#ff5555 !important;
-}
-
-select,
-button{
+.financeiro-container{
     width:100%;
-    padding:15px;
-    margin:7px 0;
-    border:0;
-    border-radius:12px;
-    font-size:17px;
+    max-width:1200px;
+    margin:0 auto;
+    padding:20px;
 }
 
-select{
-    background:#333;
-    color:white;
-}
 
-button{
-    background:#ff7a00;
-    color:white;
-    font-weight:bold;
-}
+/* =====================================================
+   CABEÇALHO
+===================================================== */
 
-button:active{
-    transform:scale(.98);
-}
-
-.botaoVerde{
-    background:#35a85b;
-}
-
-.botaoCinza{
-    background:#444;
-}
-
-.venda{
-    background:#242424;
-    border:1px solid #333;
-    border-left:4px solid #ff7a00;
-    padding:17px;
-    margin:12px 0;
-    border-radius:12px;
-}
-
-.venda h3{
-    color:#ff7a00;
-    margin-top:0;
-}
-
-.venda p{
-    margin:8px 0;
-}
-
-.vazio{
-    color:#aaa;
+.financeiro-header{
     text-align:center;
-    padding:20px;
+    margin-bottom:25px;
 }
 
-.fechamento{
-    background:#202020;
-    border:2px solid #ff7a00;
+.financeiro-header h1{
+    margin:0;
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:.5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #ff9800,
+            #ff7300
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.financeiro-header p{
+    margin:7px 0 0;
+    color:#aaa;
+    font-size:14px;
+}
+
+
+/* =====================================================
+   SEÇÕES
+===================================================== */
+
+.financeiro-section{
+    margin-bottom:24px;
+}
+
+.financeiro-section-title{
+    text-align:center;
+    margin:0 0 15px;
+    font-size:19px;
+    font-weight:900;
+    color:#fff;
+}
+
+.financeiro-section-title::after{
+    content:"";
+    display:block;
+
+    width:65px;
+    height:3px;
+
+    margin:8px auto 0;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--laranja3),
+            var(--laranja2)
+        );
+
+    box-shadow:
+        0 0 12px rgba(255,115,0,.45);
+}
+
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+.filtro-periodo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+
+    margin-bottom:20px;
+}
+
+.filtro-periodo label{
+    font-size:13px;
+    color:#aaa;
+    font-weight:700;
+}
+
+.filtro-periodo select{
+    min-width:190px;
+    padding:11px 14px;
+
+    border:1px solid #333;
+    border-radius:12px;
+
+    background:#121212;
+    color:#fff;
+
+    outline:none;
+}
+
+.filtro-periodo select:focus{
+    border-color:var(--laranja);
+    box-shadow:0 0 0 3px rgba(255,115,0,.12);
+}
+
+
+/* =====================================================
+   CARDS FINANCEIROS
+===================================================== */
+
+.financeiro-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:14px;
+}
+
+.financeiro-card{
+    position:relative;
+
+    min-width:0;
+
+    padding:20px 14px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800 0%,
+            #ff7300 55%,
+            #ff4d00 100%
+        );
+
+    border:1px solid rgba(255,255,255,.20);
+
+    text-align:center;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 25px rgba(255,115,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.25);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.financeiro-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    right:-45px;
+    top:-55px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.13);
+}
+
+.financeiro-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    left:-30px;
+    bottom:-35px;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.10);
+}
+
+.financeiro-card:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 32px rgba(255,115,0,.30),
+        inset 0 1px 0 rgba(255,255,255,.28);
+
+    filter:brightness(1.05);
+}
+
+.financeiro-card .icone{
+    position:relative;
+    z-index:2;
+
+    font-size:27px;
+
+    margin-bottom:8px;
+
+    filter:
+        drop-shadow(
+            0 2px 4px
+            rgba(0,0,0,.25)
+        );
+}
+
+.financeiro-card .label{
+    position:relative;
+    z-index:2;
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+}
+
+.financeiro-card strong{
+    position:relative;
+    z-index:2;
+
+    display:block;
+
+    margin-top:7px;
+
+    color:#fff;
+
+    font-size:24px;
+
+    font-weight:950;
+
+    line-height:1.1;
+
+    text-shadow:
+        0 2px 4px
+        rgba(0,0,0,.25);
+
+    word-break:break-word;
+}
+
+.financeiro-card.destaque{
+    background:
+        linear-gradient(
+            145deg,
+            #ffad19,
+            #ff7300,
+            #f04b00
+        );
+
+    border-color:
+        rgba(255,255,255,.30);
+
+    box-shadow:
+        0 12px 30px
+        rgba(255,115,0,.30);
+}
+
+.financeiro-card.verde{
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff7300
+        );
+}
+
+.financeiro-card.azul{
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff7300
+        );
+}
+
+.financeiro-card.vermelho{
+    background:
+        linear-gradient(
+            145deg,
+            #ff7a00,
+            #e94b00
+        );
+}
+
+
+/* =====================================================
+   SALDO PRINCIPAL
+===================================================== */
+
+.saldo-box{
+    position:relative;
+
+    padding:28px 20px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c1c1c,
+            #0d0d0d
+        );
+
+    border:
+        1px solid
+        rgba(255,115,0,.40);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+    overflow:hidden;
+}
+
+.saldo-box::before{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    top:-90px;
+
+    transform:translateX(-50%);
+
+    width:260px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,115,0,.22),
+            transparent 70%
+        );
+}
+
+.saldo-box .saldo-label{
+    position:relative;
+    z-index:2;
+
+    color:#aaa;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+}
+
+.saldo-box .saldo-valor{
+    position:relative;
+    z-index:2;
+
+    margin-top:8px;
+
+    font-size:38px;
+
+    font-weight:950;
+
+    color:#fff;
+
+    text-shadow:
+        0 0 18px
+        rgba(255,115,0,.20);
+}
+
+.saldo-box .saldo-status{
+    position:relative;
+    z-index:2;
+
+    margin-top:7px;
+
+    font-size:13px;
+
+    color:#aaa;
+}
+
+
+/* =====================================================
+   PAGAMENTOS
+===================================================== */
+
+.pagamentos-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:14px;
+}
+
+.pagamento-card{
+    background:#121212;
+
+    border:1px solid #2a2a2a;
+
+    border-radius:16px;
+
+    padding:17px 12px;
+
+    text-align:center;
+
+    transition:.2s ease;
+}
+
+.pagamento-card:hover{
+    border-color:
+        rgba(255,115,0,.55);
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(255,115,0,.10);
+}
+
+.pagamento-card .pagamento-icone{
+    font-size:25px;
+
+    margin-bottom:7px;
+}
+
+.pagamento-card span{
+    display:block;
+
+    color:#999;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+}
+
+.pagamento-card strong{
+    display:block;
+
+    margin-top:6px;
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-weight:900;
+}
+
+
+/* =====================================================
+   PEDIDOS
+===================================================== */
+
+.pedidos-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:14px;
+}
+
+.pedido-resumo{
+    background:#121212;
+
+    border:1px solid #292929;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    text-align:center;
+}
+
+.pedido-resumo .icone{
+    font-size:27px;
+}
+
+.pedido-resumo span{
+    display:block;
+
+    margin-top:7px;
+
+    color:#999;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+}
+
+.pedido-resumo strong{
+    display:block;
+
+    margin-top:5px;
+
+    color:#fff;
+
+    font-size:25px;
+
+    font-weight:950;
+}
+
+
+/* =====================================================
+   AÇÕES
+===================================================== */
+
+.acoes-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:12px;
+}
+
+.acao-btn{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    min-height:52px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff7300
+        );
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 18px
+        rgba(255,115,0,.15);
+
+    transition:.2s ease;
+}
+
+.acao-btn:hover{
+    transform:translateY(-2px);
+
+    filter:brightness(1.08);
+
+    box-shadow:
+        0 12px 22px
+        rgba(255,115,0,.25);
+}
+
+.acao-btn.secundario{
+    background:#171717;
+
+    border:
+        1px solid
+        #333;
+}
+
+.acao-btn.secundario:hover{
+    border-color:
+        var(--laranja);
+}
+
+
+/* =====================================================
+   FECHAMENTO
+===================================================== */
+
+.fechamento-box{
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #0d0d0d
+        );
+
+    border:
+        1px solid
+        rgba(255,115,0,.35);
+
+    border-radius:18px;
+
     padding:20px;
-    border-radius:15px;
+
+    text-align:center;
+}
+
+.fechamento-box h3{
+    margin:0 0 8px;
+
+    color:#fff;
+
+    font-size:18px;
+}
+
+.fechamento-box p{
+    margin:0 0 16px;
+
+    color:#999;
+
+    font-size:13px;
+}
+
+.fechamento-result{
     margin-top:15px;
-}
 
-.aviso{
-    background:#493600;
-    border:1px solid #ff7a00;
     padding:15px;
-    border-radius:12px;
-    margin-top:10px;
+
+    border-radius:13px;
+
+    background:#101010;
+
+    border:1px solid #292929;
+
+    display:none;
 }
 
-.info{
-    background:#202020;
-    border:1px solid #444;
-    padding:15px;
-    border-radius:12px;
-    margin-top:10px;
+.fechamento-result strong{
+    color:var(--laranja2);
+
+    font-size:24px;
 }
 
-@media(max-width:500px){
 
-    .grid{
-        grid-template-columns:1fr 1fr;
+/* =====================================================
+   BOTÃO VOLTAR
+===================================================== */
+
+.btn-voltar{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    width:max-content;
+
+    margin:0 auto 22px;
+
+    padding:10px 17px;
+
+    border-radius:12px;
+
+    background:#151515;
+
+    border:1px solid #333;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    transition:.2s ease;
+}
+
+.btn-voltar:hover{
+    border-color:var(--laranja);
+
+    color:#ff9800;
+
+    transform:translateY(-2px);
+}
+
+
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
+#mensagemFinanceiro{
+    display:none;
+
+    margin:15px 0;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    background:#161616;
+
+    border:1px solid #333;
+
+    color:#ddd;
+
+    text-align:center;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:900px){
+
+    .financeiro-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
     }
 
-    .mini strong{
-        font-size:18px;
+    .pagamentos-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+    .acoes-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .financeiro-container{
+        padding:15px;
+    }
+
+    .financeiro-header h1{
+        font-size:25px;
+    }
+
+    .financeiro-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:10px;
+    }
+
+    .financeiro-card{
+        padding:17px 10px;
+
+        border-radius:15px;
+    }
+
+    .financeiro-card .icone{
+        font-size:23px;
+    }
+
+    .financeiro-card strong{
+        font-size:19px;
+    }
+
+    .pagamentos-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:10px;
+    }
+
+    .pagamento-card{
+        padding:15px 8px;
+    }
+
+    .pagamento-card strong{
+        font-size:17px;
+    }
+
+    .pedidos-grid{
+        grid-template-columns:1fr;
+    }
+
+    .acoes-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:9px;
+    }
+
+    .acao-btn{
+        min-height:50px;
+
+        font-size:12px;
+    }
+
+    .saldo-box{
+        padding:23px 15px;
+    }
+
+    .saldo-box .saldo-valor{
+        font-size:30px;
+    }
+
+}
+
+
+@media(max-width:360px){
+
+    .financeiro-grid{
+        grid-template-columns:1fr;
+    }
+
+    .pagamentos-grid{
+        grid-template-columns:1fr;
+    }
+
+    .acoes-grid{
+        grid-template-columns:1fr;
+    }
+
+    .financeiro-card strong{
+        font-size:23px;
     }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<h1>💰 Financeiro</h1>
+<div class="financeiro-container">
 
-<p>Controle financeiro do GrillCore ERP</p>
 
-<hr>
+    <!-- =================================================
+         CABEÇALHO
+    ================================================== -->
 
-<h2>📅 Período</h2>
+    <header class="financeiro-header">
 
-<div class="card">
+        <h1>💰 Financeiro</h1>
 
-<select id="filtroPeriodo" onchange="atualizarFinanceiro()">
+        <p>
+            Controle completo das movimentações financeiras
+            da sua hamburgueria
+        </p>
 
-<option value="hoje">
-📅 Hoje
-</option>
+    </header>
 
-<option value="7dias">
-📆 Últimos 7 dias
-</option>
 
-<option value="mes">
-🗓️ Este mês
-</option>
+    <!-- =================================================
+         VOLTAR
+    ================================================== -->
 
-<option value="tudo">
-📊 Todo o período
-</option>
+    <a href="index.html"
+       class="btn-voltar">
 
-</select>
+        ← Voltar para o Dashboard
 
-<div id="aviso"></div>
+    </a>
+
+
+    <!-- =================================================
+         PERÍODO
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <div class="filtro-periodo">
+
+            <label for="periodo">
+                Período:
+            </label>
+
+            <select id="periodo"
+                    onchange="mostrarFinanceiro()">
+
+                <option value="hoje">
+                    Hoje
+                </option>
+
+                <option value="7dias">
+                    Últimos 7 dias
+                </option>
+
+                <option value="mes">
+                    Este mês
+                </option>
+
+                <option value="tudo">
+                    Todo o período
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         RESUMO FINANCEIRO
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <h2 class="financeiro-section-title">
+            Resumo Financeiro
+        </h2>
+
+
+        <div class="financeiro-grid">
+
+
+            <div class="financeiro-card destaque">
+
+                <div class="icone">
+                    💰
+                </div>
+
+                <div class="label">
+                    Vendas
+                </div>
+
+                <strong id="totalVendas">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="financeiro-card">
+
+                <div class="icone">
+                    📥
+                </div>
+
+                <div class="label">
+                    Entradas
+                </div>
+
+                <strong id="totalEntradas">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="financeiro-card">
+
+                <div class="icone">
+                    📤
+                </div>
+
+                <div class="label">
+                    Despesas
+                </div>
+
+                <strong id="totalDespesas">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="financeiro-card">
+
+                <div class="icone">
+                    📊
+                </div>
+
+                <div class="label">
+                    Resultado
+                </div>
+
+                <strong id="resultado">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SALDO
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <h2 class="financeiro-section-title">
+            Saldo Operacional
+        </h2>
+
+
+        <div class="saldo-box">
+
+            <div class="saldo-label">
+                Saldo disponível no período
+            </div>
+
+            <div class="saldo-valor"
+                 id="saldoAtual">
+
+                R$ 0,00
+
+            </div>
+
+            <div class="saldo-status"
+                 id="statusSaldo">
+
+                Calculando movimentações...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FORMAS DE PAGAMENTO
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <h2 class="financeiro-section-title">
+            Vendas por Forma de Pagamento
+        </h2>
+
+
+        <div class="pagamentos-grid">
+
+
+            <div class="pagamento-card">
+
+                <div class="pagamento-icone">
+                    💵
+                </div>
+
+                <span>
+                    Dinheiro
+                </span>
+
+                <strong id="pagDinheiro">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="pagamento-card">
+
+                <div class="pagamento-icone">
+                    📱
+                </div>
+
+                <span>
+                    Pix
+                </span>
+
+                <strong id="pagPix">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="pagamento-card">
+
+                <div class="pagamento-icone">
+                    💳
+                </div>
+
+                <span>
+                    Cartão
+                </span>
+
+                <strong id="pagCartao">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="pagamento-card">
+
+                <div class="pagamento-icone">
+                    💰
+                </div>
+
+                <span>
+                    Outros
+                </span>
+
+                <strong id="pagOutros">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PEDIDOS
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <h2 class="financeiro-section-title">
+            Movimento de Pedidos
+        </h2>
+
+
+        <div class="pedidos-grid">
+
+
+            <div class="pedido-resumo">
+
+                <div class="icone">
+                    🧾
+                </div>
+
+                <span>
+                    Pedidos realizados
+                </span>
+
+                <strong id="quantidadePedidos">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="pedido-resumo">
+
+                <div class="icone">
+                    🛒
+                </div>
+
+                <span>
+                    Ticket médio
+                </span>
+
+                <strong id="ticketMedio">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         AÇÕES
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <h2 class="financeiro-section-title">
+            Acesso Financeiro
+        </h2>
+
+
+        <div class="acoes-grid">
+
+
+            <button class="acao-btn"
+                    onclick="location.href='entradas.html'">
+
+                📥 Entradas
+
+            </button>
+
+
+            <button class="acao-btn"
+                    onclick="location.href='despesas.html'">
+
+                📤 Despesas
+
+            </button>
+
+
+            <button class="acao-btn"
+                    onclick="location.href='compras.html'">
+
+                🛒 Compras
+
+            </button>
+
+
+            <button class="acao-btn"
+                    onclick="location.href='relatorio.html'">
+
+                📊 Relatórios
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FECHAMENTO DE CAIXA
+    ================================================== -->
+
+    <section class="financeiro-section">
+
+        <h2 class="financeiro-section-title">
+            Fechamento de Caixa
+        </h2>
+
+
+        <div class="fechamento-box">
+
+            <h3>
+                🔒 Fechar caixa
+            </h3>
+
+            <p>
+                Registre o resultado financeiro do dia
+                para manter seu histórico de caixa.
+            </p>
+
+
+            <button class="acao-btn"
+                    onclick="fecharCaixa()">
+
+                🔒 Fechar Caixa de Hoje
+
+            </button>
+
+
+            <div class="fechamento-result"
+                 id="resultadoFechamento">
+
+                <strong id="valorFechamento">
+                    R$ 0,00
+                </strong>
+
+                <div style="color:#999;margin-top:5px;">
+                    Resultado registrado
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div id="mensagemFinanceiro"></div>
+
 
 </div>
 
 
-<h2>📊 Resumo Financeiro</h2>
-
-<div class="card">
-
-<div class="grid">
-
-<div class="mini">
-🍔 Vendas
-<strong id="faturamento">R$ 0,00</strong>
-</div>
-
-<div class="mini">
-📈 Outras entradas
-<strong id="outrasEntradas">R$ 0,00</strong>
-</div>
-
-<div class="mini">
-💰 Total de entradas
-<strong id="totalEntradas">R$ 0,00</strong>
-</div>
-
-<div class="mini">
-📉 Despesas
-<strong id="totalDespesas">R$ 0,00</strong>
-</div>
-
-</div>
-
-<hr>
-
-💵 SALDO
-
-<div id="saldo" class="saldo">
-R$ 0,00
-</div>
-
-</div>
-
-
-<h2>💳 Vendas por pagamento</h2>
-
-<div class="card">
-
-<div class="grid">
-
-<div class="mini">
-💵 Dinheiro
-<strong id="totalDinheiro">R$ 0,00</strong>
-</div>
-
-<div class="mini">
-📱 Pix
-<strong id="totalPix">R$ 0,00</strong>
-</div>
-
-<div class="mini">
-💳 Cartão
-<strong id="totalCartao">R$ 0,00</strong>
-</div>
-
-<div class="mini">
-🧾 Outros
-<strong id="totalOutros">R$ 0,00</strong>
-</div>
-
-</div>
-
-</div>
-
-
-<h2>🧾 Resumo dos pedidos</h2>
-
-<div class="card">
-
-<div class="grid">
-
-<div class="mini">
-📦 Pedidos
-<strong id="quantidadePedidos">0</strong>
-</div>
-
-<div class="mini">
-📈 Ticket médio
-<strong id="ticketMedio">R$ 0,00</strong>
-</div>
-
-</div>
-
-</div>
-
-
-<h2>📋 Movimentações</h2>
-
-<div class="card">
-
-<button onclick="window.location.href='entradas.html'">
-➕ Cadastrar Entrada
-</button>
-
-<button onclick="window.location.href='despesas.html'">
-➖ Cadastrar Despesa
-</button>
-
-<button onclick="window.location.href='vendas.html'">
-🧾 Histórico de Vendas
-</button>
-
-<button
-class="botaoCinza"
-onclick="window.location.href='fechamentos.html'">
-🔒 Histórico de Fechamentos
-</button>
-
-<button
-class="botaoCinza"
-onclick="window.location.href='index.html'">
-🏠 Voltar ao Início
-</button>
-
-</div>
-
-
-<hr>
-
-
-<h2>🔒 Fechamento de Caixa</h2>
-
-<div class="card">
-
-<p>
-O fechamento registra os valores financeiros do período selecionado.
-</p>
-
-<button
-class="botaoVerde"
-id="botaoFechar"
-onclick="fecharCaixa()">
-
-🔒 FECHAR CAIXA
-
-</button>
-
-</div>
-
-<div id="resultadoFechamento"></div>
-
-
-<hr>
-
-
-<h2>🧾 Vendas do período</h2>
-
-<div id="listaVendas">
-
-<p class="vazio">
-Carregando vendas...
-</p>
-
-</div>
+<script src="script.js"></script>
 
 
 <script>
@@ -377,29 +1382,31 @@ Carregando vendas...
 
 
 /* =====================================================
-   FUNÇÕES DE LOCALSTORAGE
+   UTILIDADES
 ===================================================== */
 
-function lerJSON(chave){
+function ler(chave){
 
     try{
 
-        const valor = localStorage.getItem(chave);
+        const valor =
+            localStorage.getItem(chave);
 
-        if(!valor){
-            return [];
-        }
+        if(!valor) return [];
 
-        const dados = JSON.parse(valor);
+        const dados =
+            JSON.parse(valor);
 
-        return dados;
+        return Array.isArray(dados)
+            ? dados
+            : [];
 
-    }catch(erro){
+    }catch(e){
 
-        console.log(
+        console.error(
             "Erro ao ler:",
             chave,
-            erro
+            e
         );
 
         return [];
@@ -409,213 +1416,47 @@ function lerJSON(chave){
 }
 
 
-function salvarJSON(chave,dados){
+function valorNumerico(valor){
 
-    localStorage.setItem(
-        chave,
-        JSON.stringify(dados)
-    );
+    if(typeof valor === "number")
+        return isFinite(valor) ? valor : 0;
 
-}
-
-
-/* =====================================================
-   BUSCAR VENDAS
-===================================================== */
-
-function pegarVendas(){
-
-    const possiveisChaves = [
-
-        "vendas",
-
-        "pedidos",
-
-        "vendasGrillCore",
-
-        "pedidosGrillCore",
-
-        "historicoVendas",
-
-        "historicoPedidos",
-
-        "vendasERP",
-
-        "pedidosERP"
-
-    ];
-
-
-    let resultado = [];
-
-
-    possiveisChaves.forEach(function(chave){
-
-        const dados = lerJSON(chave);
-
-        if(Array.isArray(dados)){
-
-            dados.forEach(function(item){
-
-                if(item && typeof item === "object"){
-
-                    resultado.push(item);
-
-                }
-
-            });
-
-        }
-
-    });
-
-
-    /*
-       Remove possíveis duplicações.
-    */
-
-    const mapa = {};
-
-    resultado.forEach(function(venda,index){
-
-        const identificador =
-            venda.id ||
-            venda.numeroPedido ||
-            venda.codigo ||
-            ("item_"+index);
-
-        mapa[
-            String(identificador)
-        ] = venda;
-
-    });
-
-
-    return Object.values(mapa);
-
-}
-
-
-/* =====================================================
-   ENTRADAS
-===================================================== */
-
-function pegarEntradas(){
-
-    const dados =
-        lerJSON("entradas");
-
-    return Array.isArray(dados)
-        ? dados
-        : [];
-
-}
-
-
-/* =====================================================
-   DESPESAS
-===================================================== */
-
-function pegarDespesas(){
-
-    const dados =
-        lerJSON("despesas");
-
-    return Array.isArray(dados)
-        ? dados
-        : [];
-
-}
-
-
-/* =====================================================
-   FECHAMENTOS
-===================================================== */
-
-function pegarFechamentos(){
-
-    const dados =
-        lerJSON("fechamentosCaixa");
-
-    return Array.isArray(dados)
-        ? dados
-        : [];
-
-}
-
-
-/* =====================================================
-   DINHEIRO
-===================================================== */
-
-function numero(valor){
-
-    if(valor === null || valor === undefined){
+    if(valor === null ||
+       valor === undefined ||
+       valor === "")
         return 0;
-    }
-
-
-    if(typeof valor === "number"){
-        return valor;
-    }
-
 
     let texto =
         String(valor)
-        .trim();
-
-
-    if(!texto){
-        return 0;
-    }
-
-
-    /*
-       Trata:
-
-       R$ 30,00
-       30,00
-       30.00
-       1.250,50
-    */
-
-    texto =
-        texto
+        .trim()
         .replace(/R\$/gi,"")
         .replace(/\s/g,"");
 
-
-    if(
-        texto.includes(",") &&
-        texto.includes(".")
-    ){
+    if(texto.includes(",")){
 
         texto =
             texto
             .replace(/\./g,"")
-            .replace(",",".");
-    }
-    else if(texto.includes(",")){
+            .replace(",", ".");
 
-        texto =
-            texto.replace(",",".");
     }
 
+    texto =
+        texto.replace(/[^\d.-]/g,"");
 
-    const valorFinal =
-        parseFloat(texto);
+    const numero =
+        Number(texto);
 
-
-    return isNaN(valorFinal)
-        ? 0
-        : valorFinal;
+    return isFinite(numero)
+        ? numero
+        : 0;
 
 }
 
 
 function dinheiro(valor){
 
-    return Number(valor || 0)
+    return valorNumerico(valor)
         .toLocaleString(
             "pt-BR",
             {
@@ -628,212 +1469,132 @@ function dinheiro(valor){
 
 
 /* =====================================================
-   DATA DA VENDA
+   DATA
 ===================================================== */
 
-function pegarData(item){
+function dataObjeto(valor){
 
-    const possiveis = [
+    if(!valor)
+        return null;
 
-        item.data,
+    const data =
+        new Date(valor);
 
-        item.dataHora,
+    if(!isNaN(data.getTime()))
+        return data;
 
-        item.dataVenda,
+    if(typeof valor === "string"){
 
-        item.criadoEm,
+        const partes =
+            valor.split("/");
 
-        item.createdAt,
+        if(partes.length === 3){
 
-        item.timestamp
-
-    ];
-
-
-    for(let i=0;i<possiveis.length;i++){
-
-        if(possiveis[i]){
-
-            const data =
+            const tentativa =
                 new Date(
-                    possiveis[i]
+                    partes[2],
+                    partes[1]-1,
+                    partes[0]
                 );
 
-
-            if(!isNaN(data.getTime())){
-
-                return data;
-
+            if(!isNaN(
+                tentativa.getTime()
+            )){
+                return tentativa;
             }
 
         }
 
     }
 
-
     return null;
 
 }
 
 
-/* =====================================================
-   VALOR DA VENDA
-===================================================== */
+function inicioHoje(){
 
-function pegarValorVenda(venda){
+    const d = new Date();
 
-    return numero(
-
-        venda.total ??
-        venda.valor ??
-        venda.totalPedido ??
-        venda.valorTotal ??
-        venda.preco ??
-        0
-
+    d.setHours(
+        0,0,0,0
     );
 
-}
-
-
-/* =====================================================
-   FORMA DE PAGAMENTO
-===================================================== */
-
-function pegarPagamento(venda){
-
-    return String(
-
-        venda.pagamento ??
-        venda.formaPagamento ??
-        venda.metodoPagamento ??
-        venda.tipoPagamento ??
-        ""
-
-    )
-    .trim()
-    .toLowerCase();
+    return d;
 
 }
 
 
-/* =====================================================
-   PERÍODO
-===================================================== */
-
-function dentroDoPeriodo(data){
-
-    if(!data){
-        return false;
-    }
-
-
-    const hoje =
-        new Date();
-
-
-    const filtro =
-        document
-        .getElementById(
-            "filtroPeriodo"
-        )
-        .value;
-
-
-    if(filtro === "tudo"){
-
-        return true;
-
-    }
-
+function inicioSeteDias(){
 
     const d =
-        new Date(data);
+        inicioHoje();
+
+    d.setDate(
+        d.getDate()-6
+    );
+
+    return d;
+
+}
 
 
-    if(isNaN(d.getTime())){
+function inicioMes(){
 
+    const d =
+        new Date();
+
+    d.setDate(1);
+
+    d.setHours(
+        0,0,0,0
+    );
+
+    return d;
+
+}
+
+
+function pertenceAoPeriodo(item){
+
+    const periodo =
+        document.getElementById(
+            "periodo"
+        ).value;
+
+    if(periodo === "tudo")
+        return true;
+
+    const data =
+        dataObjeto(
+            item.data ||
+            item.dataVenda ||
+            item.criadoEm
+        );
+
+    if(!data)
         return false;
 
-    }
+    if(periodo === "hoje"){
 
-
-    if(filtro === "hoje"){
-
-        return (
-
-            d.getDate()
-            ===
-            hoje.getDate()
-
-            &&
-
-            d.getMonth()
-            ===
-            hoje.getMonth()
-
-            &&
-
-            d.getFullYear()
-            ===
-            hoje.getFullYear()
-
-        );
+        return data >=
+            inicioHoje();
 
     }
 
+    if(periodo === "7dias"){
 
-    if(filtro === "7dias"){
-
-        const inicio =
-            new Date();
-
-
-        inicio.setDate(
-            hoje.getDate()-6
-        );
-
-
-        inicio.setHours(
-            0,0,0,0
-        );
-
-
-        const fim =
-            new Date();
-
-
-        fim.setHours(
-            23,59,59,999
-        );
-
-
-        return (
-            d >= inicio &&
-            d <= fim
-        );
+        return data >=
+            inicioSeteDias();
 
     }
 
+    if(periodo === "mes"){
 
-    if(filtro === "mes"){
-
-        return (
-
-            d.getMonth()
-            ===
-            hoje.getMonth()
-
-            &&
-
-            d.getFullYear()
-            ===
-            hoje.getFullYear()
-
-        );
+        return data >=
+            inicioMes();
 
     }
-
 
     return true;
 
@@ -841,788 +1602,538 @@ function dentroDoPeriodo(data){
 
 
 /* =====================================================
-   CALCULAR FINANCEIRO
+   STATUS
 ===================================================== */
 
-function calcularFinanceiro(){
+function vendaCancelada(venda){
 
-    const todasVendas =
-        pegarVendas();
+    const status =
+        String(
+            venda.status || ""
+        ).toLowerCase();
 
+    return (
+        status === "cancelada" ||
+        status === "cancelado" ||
+        status === "cancelled"
+    );
+
+}
+
+
+function registroCancelado(item){
+
+    const status =
+        String(
+            item.status || ""
+        ).toLowerCase();
+
+    return (
+        status === "cancelada" ||
+        status === "cancelado" ||
+        status === "cancelled"
+    );
+
+}
+
+
+/* =====================================================
+   CÁLCULO PRINCIPAL
+===================================================== */
+
+function mostrarFinanceiro(){
 
     const vendas =
-        todasVendas.filter(
-            function(venda){
-
-                const data =
-                    pegarData(venda);
-
-                return dentroDoPeriodo(
-                    data
-                );
-
-            }
-        );
-
+        ler("vendas");
 
     const entradas =
-        pegarEntradas()
-        .filter(function(entrada){
-
-            return dentroDoPeriodo(
-                pegarData(entrada)
-            );
-
-        });
-
+        ler("entradas");
 
     const despesas =
-        pegarDespesas()
-        .filter(function(despesa){
+        ler("despesas");
 
-            return dentroDoPeriodo(
-                pegarData(despesa)
+
+    /* -----------------------------------------------
+       VENDAS
+    ------------------------------------------------ */
+
+    const vendasPeriodo =
+        vendas.filter(venda => {
+
+            if(vendaCancelada(venda))
+                return false;
+
+            return pertenceAoPeriodo(
+                venda
             );
 
         });
 
 
-    let faturamento = 0;
+    let totalVendas = 0;
 
     let dinheiroTotal = 0;
-
     let pixTotal = 0;
-
     let cartaoTotal = 0;
-
     let outrosTotal = 0;
 
 
-    vendas.forEach(function(venda){
+    vendasPeriodo.forEach(venda => {
 
-        const valor =
-            pegarValorVenda(venda);
+        const total =
+            valorNumerico(
+                venda.total ||
+                venda.valor ||
+                0
+            );
 
-
-        faturamento += valor;
+        totalVendas += total;
 
 
         const pagamento =
-            pegarPagamento(venda);
+            String(
+                venda.pagamento ||
+                venda.formaPagamento ||
+                "Outro"
+            )
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(
+                /[\u0300-\u036f]/g,
+                ""
+            );
 
 
         if(
-            pagamento.includes("pix")
-        ){
-
-            pixTotal += valor;
-
-        }
-
-        else if(
             pagamento.includes("dinheiro")
         ){
 
-            dinheiroTotal += valor;
+            dinheiroTotal += total;
 
         }
-
         else if(
-            pagamento.includes("cart")
+            pagamento.includes("pix")
         ){
 
-            cartaoTotal += valor;
+            pixTotal += total;
 
         }
+        else if(
+            pagamento.includes("cartao") ||
+            pagamento.includes("credito") ||
+            pagamento.includes("debito")
+        ){
 
+            cartaoTotal += total;
+
+        }
         else{
 
-            outrosTotal += valor;
+            outrosTotal += total;
 
         }
 
     });
 
 
-    let outrasEntradas = 0;
+    /* -----------------------------------------------
+       ENTRADAS
+    ------------------------------------------------ */
 
+    const entradasPeriodo =
+        entradas.filter(entrada => {
 
-    entradas.forEach(
-        function(entrada){
+            if(registroCancelado(
+                entrada
+            )){
+                return false;
+            }
 
-            outrasEntradas +=
-                numero(
+            return pertenceAoPeriodo(
+                entrada
+            );
 
-                    entrada.valor ??
-                    entrada.total ??
-                    entrada.valorTotal ??
-                    0
-
-                );
-
-        }
-    );
-
-
-    let totalDespesas = 0;
-
-
-    despesas.forEach(
-        function(despesa){
-
-            totalDespesas +=
-                numero(
-
-                    despesa.valor ??
-                    despesa.total ??
-                    despesa.valorTotal ??
-                    0
-
-                );
-
-        }
-    );
+        });
 
 
     const totalEntradas =
-        faturamento +
-        outrasEntradas;
+        entradasPeriodo.reduce(
+            (soma, entrada) =>
+                soma +
+                valorNumerico(
+                    entrada.valor
+                ),
+            0
+        );
 
 
-    const saldo =
+    /* -----------------------------------------------
+       DESPESAS
+    ------------------------------------------------ */
+
+    const despesasPeriodo =
+        despesas.filter(despesa => {
+
+            if(registroCancelado(
+                despesa
+            )){
+                return false;
+            }
+
+            return pertenceAoPeriodo(
+                despesa
+            );
+
+        });
+
+
+    const totalDespesas =
+        despesasPeriodo.reduce(
+            (soma, despesa) =>
+                soma +
+                valorNumerico(
+                    despesa.valor
+                ),
+            0
+        );
+
+
+    /* -----------------------------------------------
+       RESULTADO
+    ------------------------------------------------ */
+
+    const resultado =
+        totalVendas +
         totalEntradas -
         totalDespesas;
 
 
-    return {
-
-        vendas,
-
-        entradas,
-
-        despesas,
-
-        faturamento,
-
-        outrasEntradas,
-
-        totalEntradas,
-
-        totalDespesas,
-
-        saldo,
-
-        dinheiroTotal,
-
-        pixTotal,
-
-        cartaoTotal,
-
-        outrosTotal
-
-    };
-
-}
+    const quantidadePedidos =
+        vendasPeriodo.length;
 
 
-/* =====================================================
-   ATUALIZAR TELA
-===================================================== */
-
-function atualizarFinanceiro(){
-
-    const dados =
-        calcularFinanceiro();
+    const ticketMedio =
+        quantidadePedidos > 0
+            ? totalVendas /
+              quantidadePedidos
+            : 0;
 
 
-    document
-        .getElementById(
-            "faturamento"
-        )
-        .innerText =
-        dinheiro(
-            dados.faturamento
-        );
+    /* -----------------------------------------------
+       TELA
+    ------------------------------------------------ */
+
+    document.getElementById(
+        "totalVendas"
+    ).textContent =
+        dinheiro(totalVendas);
 
 
-    document
-        .getElementById(
-            "outrasEntradas"
-        )
-        .innerText =
-        dinheiro(
-            dados.outrasEntradas
-        );
+    document.getElementById(
+        "totalEntradas"
+    ).textContent =
+        dinheiro(totalEntradas);
 
 
-    document
-        .getElementById(
-            "totalEntradas"
-        )
-        .innerText =
-        dinheiro(
-            dados.totalEntradas
-        );
+    document.getElementById(
+        "totalDespesas"
+    ).textContent =
+        dinheiro(totalDespesas);
 
 
-    document
-        .getElementById(
-            "totalDespesas"
-        )
-        .innerText =
-        dinheiro(
-            dados.totalDespesas
-        );
+    document.getElementById(
+        "resultado"
+    ).textContent =
+        dinheiro(resultado);
 
 
-    const saldo =
+    document.getElementById(
+        "saldoAtual"
+    ).textContent =
+        dinheiro(resultado);
+
+
+    document.getElementById(
+        "pagDinheiro"
+    ).textContent =
+        dinheiro(dinheiroTotal);
+
+
+    document.getElementById(
+        "pagPix"
+    ).textContent =
+        dinheiro(pixTotal);
+
+
+    document.getElementById(
+        "pagCartao"
+    ).textContent =
+        dinheiro(cartaoTotal);
+
+
+    document.getElementById(
+        "pagOutros"
+    ).textContent =
+        dinheiro(outrosTotal);
+
+
+    document.getElementById(
+        "quantidadePedidos"
+    ).textContent =
+        quantidadePedidos;
+
+
+    document.getElementById(
+        "ticketMedio"
+    ).textContent =
+        dinheiro(ticketMedio);
+
+
+    /* -----------------------------------------------
+       STATUS DO SALDO
+    ------------------------------------------------ */
+
+    const statusSaldo =
         document.getElementById(
-            "saldo"
+            "statusSaldo"
         );
 
 
-    saldo.innerText =
-        dinheiro(
-            dados.saldo
-        );
+    if(resultado > 0){
 
+        statusSaldo.textContent =
+            "🟢 Resultado positivo no período.";
 
-    saldo.classList.remove(
-        "verde",
-        "vermelho"
-    );
+    }
+    else if(resultado < 0){
 
+        statusSaldo.textContent =
+            "🔴 Resultado negativo no período.";
 
-    saldo.classList.add(
+    }
+    else{
 
-        dados.saldo < 0
-            ? "vermelho"
-            : "verde"
-
-    );
-
-
-    document
-        .getElementById(
-            "totalDinheiro"
-        )
-        .innerText =
-        dinheiro(
-            dados.dinheiroTotal
-        );
-
-
-    document
-        .getElementById(
-            "totalPix"
-        )
-        .innerText =
-        dinheiro(
-            dados.pixTotal
-        );
-
-
-    document
-        .getElementById(
-            "totalCartao"
-        )
-        .innerText =
-        dinheiro(
-            dados.cartaoTotal
-        );
-
-
-    document
-        .getElementById(
-            "totalOutros"
-        )
-        .innerText =
-        dinheiro(
-            dados.outrosTotal
-        );
-
-
-    document
-        .getElementById(
-            "quantidadePedidos"
-        )
-        .innerText =
-        dados.vendas.length;
-
-
-    const ticket =
-        dados.vendas.length
-        ?
-        dados.faturamento /
-        dados.vendas.length
-        :
-        0;
-
-
-    document
-        .getElementById(
-            "ticketMedio"
-        )
-        .innerText =
-        dinheiro(ticket);
-
-
-    mostrarVendas(
-        dados.vendas
-    );
-
-
-    verificarFechamento();
-
-}
-
-
-/* =====================================================
-   MOSTRAR VENDAS
-===================================================== */
-
-function escapar(texto){
-
-    return String(
-        texto ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-function mostrarVendas(vendas){
-
-    const lista =
-        document
-        .getElementById(
-            "listaVendas"
-        );
-
-
-    if(!vendas.length){
-
-        lista.innerHTML = `
-
-            <div class="info">
-
-                <p class="vazio">
-                    📭 Nenhuma venda encontrada neste período.
-                </p>
-
-                <p class="vazio">
-                    Se você já cadastrou um pedido,
-                    selecione <strong>Todo o período</strong>
-                    acima.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
+        statusSaldo.textContent =
+            "⚪ Nenhum resultado financeiro registrado.";
 
     }
 
-
-    vendas.sort(function(a,b){
-
-        const dataA =
-            pegarData(a);
-
-        const dataB =
-            pegarData(b);
-
-
-        if(!dataA && !dataB){
-            return 0;
-        }
-
-
-        if(!dataA){
-            return 1;
-        }
-
-
-        if(!dataB){
-            return -1;
-        }
-
-
-        return dataB - dataA;
-
-    });
-
-
-    lista.innerHTML = "";
-
-
-    vendas
-    .slice(0,100)
-    .forEach(function(venda,index){
-
-        const data =
-            pegarData(venda);
-
-
-        const valor =
-            pegarValorVenda(venda);
-
-
-        const pagamento =
-            venda.pagamento ??
-            venda.formaPagamento ??
-            venda.metodoPagamento ??
-            "Não informado";
-
-
-        const cliente =
-            venda.cliente ??
-            venda.nomeCliente ??
-            "Não informado";
-
-
-        const numeroPedido =
-            venda.id ??
-            venda.numeroPedido ??
-            venda.codigo ??
-            (index+1);
-
-
-        lista.innerHTML += `
-
-            <div class="venda">
-
-                <h3>
-                    🧾 Pedido #${escapar(
-                        numeroPedido
-                    )}
-                </h3>
-
-
-                <p>
-                    👤 <strong>Cliente:</strong>
-                    ${escapar(cliente)}
-                </p>
-
-
-                <p>
-                    💳 <strong>Pagamento:</strong>
-                    ${escapar(pagamento)}
-                </p>
-
-
-                <p>
-                    📅 <strong>Data:</strong>
-                    ${
-                        data
-                        ?
-                        data.toLocaleString(
-                            "pt-BR"
-                        )
-                        :
-                        "Não informada"
-                    }
-                </p>
-
-
-                <h3 class="verde">
-                    💰 ${dinheiro(valor)}
-                </h3>
-
-            </div>
-
-        `;
-
-    });
-
 }
 
 
 /* =====================================================
-   FECHAMENTO
+   FECHAMENTO DE CAIXA
 ===================================================== */
 
-function periodoAtual(){
+function fecharCaixa(){
 
-    return document
-        .getElementById(
-            "filtroPeriodo"
-        )
-        .value;
+    const vendas =
+        ler("vendas");
 
-}
+    const entradas =
+        ler("entradas");
 
+    const despesas =
+        ler("despesas");
 
-function verificarFechamento(){
 
     const hoje =
         new Date();
 
-
-    const periodo =
-        periodoAtual();
-
-
-    const fechamentos =
-        pegarFechamentos();
+    hoje.setHours(
+        0,0,0,0
+    );
 
 
-    const encontrado =
-        fechamentos.find(
-            function(fechamento){
+    function ehHoje(item){
 
-                if(
-                    fechamento.periodo
-                    !==
-                    periodo
-                ){
+        const data =
+            dataObjeto(
+                item.data ||
+                item.dataVenda ||
+                item.criadoEm
+            );
 
-                    return false;
+        if(!data)
+            return false;
 
-                }
+        return (
+            data.getFullYear() ===
+                hoje.getFullYear() &&
 
+            data.getMonth() ===
+                hoje.getMonth() &&
+
+            data.getDate() ===
+                hoje.getDate()
+        );
+
+    }
+
+
+    const vendasHoje =
+        vendas.filter(venda =>
+            !vendaCancelada(venda) &&
+            ehHoje(venda)
+        );
+
+
+    const entradasHoje =
+        entradas.filter(entrada =>
+            !registroCancelado(entrada) &&
+            ehHoje(entrada)
+        );
+
+
+    const despesasHoje =
+        despesas.filter(despesa =>
+            !registroCancelado(despesa) &&
+            ehHoje(despesa)
+        );
+
+
+    const totalVendas =
+        vendasHoje.reduce(
+            (soma,venda) =>
+                soma +
+                valorNumerico(
+                    venda.total ||
+                    venda.valor
+                ),
+            0
+        );
+
+
+    const totalEntradas =
+        entradasHoje.reduce(
+            (soma,entrada) =>
+                soma +
+                valorNumerico(
+                    entrada.valor
+                ),
+            0
+        );
+
+
+    const totalDespesas =
+        despesasHoje.reduce(
+            (soma,despesa) =>
+                soma +
+                valorNumerico(
+                    despesa.valor
+                ),
+            0
+        );
+
+
+    const resultado =
+        totalVendas +
+        totalEntradas -
+        totalDespesas;
+
+
+    const resposta =
+        confirm(
+            "Fechar o caixa de hoje?\n\n" +
+
+            "Vendas: " +
+            dinheiro(totalVendas) +
+            "\n" +
+
+            "Entradas: " +
+            dinheiro(totalEntradas) +
+            "\n" +
+
+            "Despesas: " +
+            dinheiro(totalDespesas) +
+            "\n\n" +
+
+            "Resultado: " +
+            dinheiro(resultado)
+        );
+
+
+    if(!resposta)
+        return;
+
+
+    let fechamentos =
+        ler("fechamentosCaixa");
+
+
+    const agora =
+        new Date()
+        .toISOString();
+
+
+    const jaFechado =
+        fechamentos.some(
+            fechamento => {
 
                 const data =
-                    new Date(
-                        fechamento.data
+                    dataObjeto(
+                        fechamento.data ||
+                        fechamento.criadoEm
                     );
 
+                if(!data)
+                    return false;
 
                 return (
+                    data.getFullYear() ===
+                        hoje.getFullYear() &&
 
-                    data.getDate()
-                    ===
-                    hoje.getDate()
+                    data.getMonth() ===
+                        hoje.getMonth() &&
 
-                    &&
-
-                    data.getMonth()
-                    ===
-                    hoje.getMonth()
-
-                    &&
-
-                    data.getFullYear()
-                    ===
-                    hoje.getFullYear()
-
+                    data.getDate() ===
+                        hoje.getDate()
                 );
 
             }
         );
 
 
-    const botao =
-        document
-        .getElementById(
-            "botaoFechar"
-        );
-
-
-    const aviso =
-        document
-        .getElementById(
-            "aviso"
-        );
-
-
-    if(encontrado){
-
-        botao.disabled =
-            true;
-
-        botao.style.opacity =
-            "0.5";
-
-        botao.innerText =
-            "🔒 CAIXA JÁ FECHADO";
-
-
-        aviso.innerHTML = `
-
-            <div class="aviso">
-
-                ⚠️ Este período já foi fechado hoje.
-
-                <br><br>
-
-                Saldo registrado:
-
-                <strong>
-                    ${dinheiro(
-                        encontrado.saldo
-                    )}
-                </strong>
-
-            </div>
-
-        `;
-
-    }
-    else{
-
-        botao.disabled =
-            false;
-
-        botao.style.opacity =
-            "1";
-
-        botao.innerText =
-            "🔒 FECHAR CAIXA";
-
-
-        aviso.innerHTML = "";
-
-    }
-
-}
-
-
-/* =====================================================
-   FECHAR CAIXA
-===================================================== */
-
-function fecharCaixa(){
-
-    const dados =
-        calcularFinanceiro();
-
-
-    if(
-
-        !dados.vendas.length
-        &&
-        !dados.entradas.length
-        &&
-        !dados.despesas.length
-
-    ){
+    if(jaFechado){
 
         alert(
-
-            "📭 Não existem movimentações neste período."
-
+            "O caixa de hoje já foi fechado."
         );
 
         return;
 
     }
-
-
-    const confirmar =
-        confirm(
-
-            "🔒 CONFIRMAR FECHAMENTO\n\n" +
-
-            "Pedidos: " +
-            dados.vendas.length +
-
-            "\n\nVendas: " +
-            dinheiro(
-                dados.faturamento
-            ) +
-
-            "\nDinheiro: " +
-            dinheiro(
-                dados.dinheiroTotal
-            ) +
-
-            "\nPix: " +
-            dinheiro(
-                dados.pixTotal
-            ) +
-
-            "\nCartão: " +
-            dinheiro(
-                dados.cartaoTotal
-            ) +
-
-            "\n\nOutras entradas: " +
-            dinheiro(
-                dados.outrasEntradas
-            ) +
-
-            "\nDespesas: " +
-            dinheiro(
-                dados.totalDespesas
-            ) +
-
-            "\n\nSALDO FINAL: " +
-            dinheiro(
-                dados.saldo
-            ) +
-
-            "\n\nDeseja fechar o caixa?"
-
-        );
-
-
-    if(!confirmar){
-        return;
-    }
-
-
-    const fechamentos =
-        pegarFechamentos();
 
 
     const fechamento = {
 
-        id:Date.now(),
+        id:
+            "cx_" +
+            Date.now(),
 
         data:
-            new Date()
-            .toISOString(),
-
-        periodo:
-            periodoAtual(),
-
-        pedidos:
-            dados.vendas.length,
+            agora,
 
         vendas:
-            dados.faturamento,
+            totalVendas,
 
-        dinheiro:
-            dados.dinheiroTotal,
-
-        pix:
-            dados.pixTotal,
-
-        cartao:
-            dados.cartaoTotal,
-
-        outrasEntradas:
-            dados.outrasEntradas,
+        entradas:
+            totalEntradas,
 
         despesas:
-            dados.totalDespesas,
+            totalDespesas,
 
-        totalEntradas:
-            dados.totalEntradas,
+        resultado:
+            resultado,
 
-        saldo:
-            dados.saldo
+        pedidos:
+            vendasHoje.length,
+
+        criadoEm:
+            agora,
+
+        status:
+            "fechado"
 
     };
 
@@ -1632,132 +2143,85 @@ function fecharCaixa(){
     );
 
 
-    salvarJSON(
+    localStorage.setItem(
         "fechamentosCaixa",
-        fechamentos
+        JSON.stringify(
+            fechamentos
+        )
     );
 
 
-    document
-        .getElementById(
-            "resultadoFechamento"
-        )
-        .innerHTML = `
-
-        <div class="fechamento">
-
-            <h2>
-                🔒 CAIXA FECHADO
-            </h2>
-
-            <hr>
-
-            <p>
-                📅 Data:
-                <strong>
-                    ${new Date(
-                        fechamento.data
-                    ).toLocaleString(
-                        "pt-BR"
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                🧾 Pedidos:
-                <strong>
-                    ${fechamento.pedidos}
-                </strong>
-            </p>
-
-            <p>
-                🍔 Vendas:
-                <strong>
-                    ${dinheiro(
-                        fechamento.vendas
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                💵 Dinheiro:
-                <strong>
-                    ${dinheiro(
-                        fechamento.dinheiro
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                📱 Pix:
-                <strong>
-                    ${dinheiro(
-                        fechamento.pix
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                💳 Cartão:
-                <strong>
-                    ${dinheiro(
-                        fechamento.cartao
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                📉 Despesas:
-                <strong>
-                    ${dinheiro(
-                        fechamento.despesas
-                    )}
-                </strong>
-            </p>
-
-            <hr>
-
-            <h2 class="${
-                fechamento.saldo < 0
-                ? "vermelho"
-                : "saldo"
-            }">
-
-                💰 SALDO:
-                ${dinheiro(
-                    fechamento.saldo
-                )}
-
-            </h2>
-
-            <p>
-                ✅ Fechamento salvo com sucesso.
-            </p>
-
-        </div>
-
-    `;
+    document.getElementById(
+        "resultadoFechamento"
+    ).style.display =
+        "block";
 
 
-    verificarFechamento();
+    document.getElementById(
+        "valorFechamento"
+    ).textContent =
+        dinheiro(resultado);
 
 
-    alert(
-        "✅ Caixa fechado com sucesso!"
+    mostrarMensagem(
+        "Caixa fechado com sucesso."
     );
 
 }
 
 
 /* =====================================================
-   INICIAR
+   MENSAGEM
 ===================================================== */
 
-window.addEventListener(
-    "load",
+function mostrarMensagem(texto){
+
+    const elemento =
+        document.getElementById(
+            "mensagemFinanceiro"
+        );
+
+
+    elemento.textContent =
+        texto;
+
+    elemento.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        elemento.style.display =
+            "none";
+
+    },3000);
+
+}
+
+
+/* =====================================================
+   ATUALIZAÇÃO AUTOMÁTICA
+===================================================== */
+
+window.mostrarFinanceiro =
+    mostrarFinanceiro;
+
+
+document.addEventListener(
+    "DOMContentLoaded",
     function(){
 
-        atualizarFinanceiro();
+        mostrarFinanceiro();
+
+    }
+);
+
+
+window.addEventListener(
+    "storage",
+    function(){
+
+        mostrarFinanceiro();
 
     }
 );
@@ -1767,11 +2231,27 @@ window.addEventListener(
     "pageshow",
     function(){
 
-        atualizarFinanceiro();
+        mostrarFinanceiro();
 
     }
 );
 
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            mostrarFinanceiro();
+
+        }
+
+    }
+);
 
 </script>
 

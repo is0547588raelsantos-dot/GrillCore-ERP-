@@ -3,250 +3,1038 @@
 
 <head>
 
+<script>
+
+if(
+    localStorage.getItem("grillcore_login")
+    !==
+    "true"
+){
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+</script>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+      content="width=device-width,initial-scale=1.0">
 
-<title>Histórico de Vendas - GrillCore ERP</title>
+<meta name="theme-color"
+      content="#080808">
+
+<title>Histórico de Vendas — GrillCore ERP</title>
+
+<link rel="stylesheet"
+      href="style.css">
+  <link rel="stylesheet" href="tema-laranja.css">
 
 <style>
 
-* {
-    box-sizing: border-box;
+/* =====================================================
+   GRILLCORE ERP
+   HISTÓRICO DE VENDAS
+   PREMIUM — PRETO + VERMELHO + DOURADO
+===================================================== */
+
+*{
+    box-sizing:border-box;
 }
 
-body {
+html,
+body{
 
-    margin: 0;
+    margin:0;
+    padding:0;
 
-    padding: 15px;
-
-    background: #181818;
-
-    color: white;
-
-    font-family: Arial, sans-serif;
+    width:100%;
+    min-height:100%;
 
 }
+
+body{
+
+    background:
+        radial-gradient(
+            circle at top,
+            #260006 0%,
+            #120002 35%,
+            #080808 75%
+        );
+
+    color:#fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:hidden;
+
+}
+
+
+/* =====================================================
+   TOPO
+===================================================== */
+
+.topo{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    padding:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #080808,
+            #220006
+        );
+
+    border-bottom:
+        1px solid
+        #d4af37;
+
+    box-shadow:
+        0 5px 25px
+        rgba(0,0,0,.65);
+
+}
+
+
+.topo-conteudo{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+}
+
+
+.logo-area{
+
+    min-width:0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+.logo{
+
+    width:50px;
+    height:50px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f3d66b,
+            #d4af37
+        );
+
+    border:
+        2px solid
+        #f3d66b;
+
+    font-size:27px;
+
+    box-shadow:
+        0 0 18px
+        rgba(212,175,55,.35);
+
+}
+
+
+.logo-texto{
+
+    min-width:0;
+
+}
+
+
+.logo-texto h1{
+
+    margin:0;
+
+    color:#f3d66b;
+
+    font-size:21px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+.logo-texto span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#999;
+
+    font-size:11px;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.botao-voltar{
+
+    width:48px;
+    height:48px;
+
+    min-height:48px;
+
+    flex-shrink:0;
+
+    margin:0;
+
+    padding:0;
+
+    border:
+        1px solid
+        #d4af37;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #a20e1b,
+            #62050d
+        );
+
+    color:#f3d66b;
+
+    font-size:23px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:
+        24px 12px 45px;
+
+}
+
+
+/* =====================================================
+   CABEÇALHO DA PÁGINA
+===================================================== */
+
+.premium-header{
+
+    text-align:center;
+
+    margin-bottom:22px;
+
+}
+
+
+.premium-header h1{
+
+    margin:0;
+
+    color:#f3d66b;
+
+    font-size:28px;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.premium-header p{
+
+    margin:
+        7px 0 0;
+
+    color:#aaa;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+
+
+.premium-header::after{
+
+    content:"";
+
+    display:block;
+
+    width:110px;
+
+    height:2px;
+
+    margin:
+        14px auto 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            transparent
+        );
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+    width:100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c0508,
+            #100101
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    border-radius:20px;
+
+    padding:17px;
+
+    margin-bottom:15px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.48),
+
+        inset 0 1px 0
+        rgba(255,255,255,.04);
+
+}
+
+
+/* =====================================================
+   TÍTULOS
+===================================================== */
+
+.secao-titulo{
+
+    margin:
+        0 0 14px;
+
+    text-align:center;
+
+    color:#f3d66b;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+.filtro-label{
+
+    display:block;
+
+    text-align:center;
+
+    color:#f3d66b;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin:
+        5px 0 7px;
+
+}
+
+
+/* =====================================================
+   CAMPOS
+===================================================== */
+
+input,
+select{
+
+    width:100%;
+
+    min-height:50px;
+
+    padding:
+        13px 14px;
+
+    margin-bottom:13px;
+
+    border:
+        1px solid
+        #4c3638;
+
+    border-radius:13px;
+
+    background:#171011;
+
+    color:#fff;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:.15s ease;
+
+}
+
+
+input::placeholder{
+
+    color:#777;
+
+}
+
+
+input:focus,
+select:focus{
+
+    border-color:#d4af37;
+
+    box-shadow:
+        0 0 12px
+        rgba(212,175,55,.12);
+
+}
+
+
+select option{
+
+    background:#171011;
+
+    color:#fff;
+
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+button{
+
+    width:100%;
+
+    min-height:52px;
+
+    padding:14px;
+
+    margin:6px 0;
+
+    border:
+        1px solid
+        #d4af37;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #b91525,
+            #650711
+        );
+
+    color:#f3d66b;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s,
+        filter .15s;
+
+}
+
+
+button:hover{
+
+    filter:brightness(1.08);
+
+}
+
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+
+.btn-vermelho{
+
+    background:
+        linear-gradient(
+            135deg,
+            #b32626,
+            #650909
+        );
+
+    color:#fff;
+
+    border-color:#ff5555;
+
+}
+
+
+.voltar{
+
+    background:
+        linear-gradient(
+            135deg,
+            #242424,
+            #111
+        );
+
+    color:#f3d66b;
+
+    border-color:#555;
+
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:10px;
+
+}
+
+
+/* =====================================================
+   MINI CARDS
+===================================================== */
+
+.mini{
+
+    min-width:0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #a20e1b,
+            #62050d
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.75);
+
+    border-radius:16px;
+
+    padding:
+        15px 8px;
+
+    text-align:center;
+
+    color:#ddd;
+
+    font-size:12px;
+
+    overflow:hidden;
+
+}
+
+
+.mini strong{
+
+    display:block;
+
+    margin-top:7px;
+
+    color:#f3d66b;
+
+    font-size:18px;
+
+    word-break:break-word;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.verde{
+
+    color:#35d07f !important;
+
+}
+
+
+.azul{
+
+    color:#42a5f5 !important;
+
+}
+
+
+/* =====================================================
+   VENDA
+===================================================== */
+
+.venda{
+
+    background:
+        linear-gradient(
+            145deg,
+            #230307,
+            #120102
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    border-radius:19px;
+
+    padding:17px;
+
+    margin-bottom:14px;
+
+    box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.4);
+
+}
+
+
+.venda:hover{
+
+    border-color:
+        rgba(212,175,55,.75);
+
+}
+
+
+.venda h3{
+
+    text-align:center;
+
+    color:#f3d66b;
+
+    margin:
+        0 0 15px;
+
+    font-size:19px;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.venda p{
+
+    color:#c7bebe;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    margin:8px 0;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.venda p strong{
+
+    color:#eee;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+    display:inline-block;
+
+    padding:
+        5px 10px;
+
+    margin-top:5px;
+
+    border-radius:20px;
+
+    background:
+        rgba(53,208,127,.10);
+
+    border:
+        1px solid
+        rgba(53,208,127,.45);
+
+    color:#35d07f;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   ITENS
+===================================================== */
+
+.itens-titulo{
+
+    margin:
+        15px 0 5px;
+
+    padding-bottom:7px;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.18);
+
+    color:#f3d66b;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+
+.item-venda{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    padding:11px 0;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.12);
+
+    color:#bbb;
+
+    line-height:1.4;
+
+}
+
+
+.item-venda:last-child{
+
+    border-bottom:0;
+
+}
+
+
+.item-info{
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+
+.item-nome{
+
+    color:#ddd;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.item-detalhe{
+
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:11px;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.item-valor{
+
+    flex-shrink:0;
+
+    color:#f3d66b;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+}
+
+
+/* =====================================================
+   TOTAL
+===================================================== */
+
+.total-venda{
+
+    text-align:center;
+
+    color:#35d07f;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    padding-top:15px;
+
+    margin-top:8px;
+
+    border-top:
+        1px solid
+        rgba(212,175,55,.20);
+
+}
+
+
+/* =====================================================
+   VAZIO
+===================================================== */
+
+.vazio{
+
+    text-align:center;
+
+    color:#888;
+
+    padding:
+        28px 10px;
+
+    line-height:1.6;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+/* =====================================================
+   DIVISOR
+===================================================== */
+
+.divisor{
+
+    border:0;
+
+    border-top:
+        1px solid
+        rgba(212,175,55,.20);
+
+    margin:
+        25px 0;
+
+}
+
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+.rodape{
+
+    text-align:center;
+
+    padding:
+        25px 10px 10px;
+
+    color:#777;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+.rodape strong{
+
+    color:#d4af37;
+
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:380px){
+
+    .container{
+
+        padding-left:9px;
+        padding-right:9px;
+
+    }
+
+
+    .logo-texto h1{
+
+        font-size:18px;
+
+    }
+
+
+    .logo-texto span{
+
+        font-size:10px;
+
+    }
+
+
+    .premium-header h1{
+
+        font-size:24px;
+
+    }
+
+
+    .grid{
+
+        gap:8px;
+
+    }
+
+
+    .mini{
+
+        padding:
+            14px 5px;
+
+    }
+
+
+    .mini strong{
+
+        font-size:16px;
+
+    }
+
+
+    .item-venda{
+
+        gap:7px;
+
+    }
+
+
+    .item-valor{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+/* =====================================================
+   TEXTO
+===================================================== */
 
 h1,
-h2 {
-
-    color: #ff7a00;
-
-}
-
-.topo {
-
-    background: #252525;
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    border: 1px solid #333;
-
-    margin-bottom: 20px;
-
-}
-
-.filtros {
-
-    background: #252525;
-
-    padding: 18px;
-
-    border-radius: 15px;
-
-    border: 1px solid #333;
-
-    margin-bottom: 20px;
-
-}
-
-select,
-input {
-
-    width: 100%;
-
-    padding: 14px;
-
-    margin-top: 8px;
-
-    margin-bottom: 12px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    font-size: 17px;
-
-}
-
-.resumo {
-
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 12px;
-
-    margin-bottom: 25px;
-
-}
-
-.card {
-
-    background: #202020;
-
-    border: 1px solid #333;
-
-    border-radius: 12px;
-
-    padding: 15px;
-
-    text-align: center;
-
-}
-
-.card h3 {
-
-    margin: 0 0 8px 0;
-
-    font-size: 15px;
-
-}
-
-.card p {
-
-    margin: 0;
-
-    color: #ff7a00;
-
-    font-size: 23px;
-
-    font-weight: bold;
-
-}
-
-.pagamento {
-
-    margin-top: 20px;
-
-}
-
-button {
-
-    width: 100%;
-
-    padding: 15px;
-
-    margin-top: 8px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #ff7a00;
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-}
-
-button:active {
-
-    transform: scale(0.98);
-
-}
-
-.venda {
-
-    background: #252525;
-
-    border: 1px solid #333;
-
-    border-radius: 15px;
-
-    padding: 18px;
-
-    margin-bottom: 15px;
-
-}
-
-.venda h3 {
-
-    margin-top: 0;
-
-    color: #ff7a00;
-
-}
-
-.venda p {
-
-    margin: 8px 0;
-
-    line-height: 1.4;
-
-}
-
-.total-venda {
-
-    color: #ff7a00;
-
-    font-size: 25px;
-
-    font-weight: bold;
-
-    border-top: 1px solid #444;
-
-    padding-top: 12px;
-
-}
-
-.excluir {
-
-    background: #b3261e;
-
-}
-
-.voltar {
-
-    background: #333;
-
-    margin-top: 20px;
-
-}
-
-.vazio {
-
-    text-align: center;
-
-    color: #aaa;
-
-    padding: 30px 10px;
-
-}
-
-.verde {
-
-    color: #35d07f !important;
-
-}
-
-.azul {
-
-    color: #42a5f5 !important;
-
-}
-
-.amarelo {
-
-    color: #ffd54f !important;
+h2,
+h3,
+p,
+strong,
+label,
+button,
+.mini{
+
+    overflow-wrap:anywhere;
 
 }
 
@@ -258,417 +1046,587 @@ button:active {
 <body>
 
 
-<!-- =====================================
-     CABEÇALHO
-===================================== -->
+<!-- =====================================================
+     TOPO
+===================================================== -->
 
-<div class="topo">
+<header class="topo">
+
+<div class="topo-conteudo">
+
+<div class="logo-area">
+
+<div class="logo">
+🍔
+</div>
+
+<div class="logo-texto">
+
+<h1>
+GrillCore ERP
+</h1>
+
+<span>
+Histórico de vendas
+</span>
+
+</div>
+
+</div>
+
+
+<button
+type="button"
+class="botao-voltar"
+onclick="window.location.href='index.html'">
+
+←
+
+</button>
+
+</div>
+
+</header>
+
+
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
+
+<main class="container">
+
+
+<div class="premium-header">
 
 <h1>
 🧾 Histórico de Vendas
 </h1>
 
 <p>
-GrillCore ERP
+Consulte pedidos, clientes, pagamentos e faturamento.
 </p>
 
 </div>
 
 
-<!-- =====================================
+<!-- =====================================================
      FILTROS
-===================================== -->
+===================================================== -->
 
-<div class="filtros">
+<div class="card">
 
-<h2>
+<h2 class="secao-titulo">
 🔎 Filtros
 </h2>
 
 
-<label>
-
-📅 Período
-
+<label class="filtro-label">
+📅 PERÍODO
 </label>
 
 
 <select
-    id="filtroPeriodo"
-    onchange="atualizarTela()">
+id="filtroPeriodo"
+onchange="atualizarTela()">
 
-    <option value="hoje">
-        📅 Hoje
-    </option>
+<option value="hoje">
+📅 Hoje
+</option>
 
-    <option value="7dias">
-        📆 Últimos 7 dias
-    </option>
+<option value="7dias">
+📆 Últimos 7 dias
+</option>
 
-    <option value="mes">
-        🗓️ Este mês
-    </option>
+<option value="mes">
+🗓️ Este mês
+</option>
 
-    <option value="tudo">
-        📊 Todo o período
-    </option>
+<option value="tudo">
+📊 Todo o período
+</option>
 
 </select>
 
 
-<label>
-
-👤 Cliente
-
+<label class="filtro-label">
+👤 CLIENTE
 </label>
 
 
 <input
-    type="text"
-    id="pesquisa"
-    placeholder="Digite o nome do cliente..."
-    oninput="atualizarTela()"
->
+id="pesquisa"
+type="text"
+placeholder="Digite o nome do cliente..."
+autocomplete="off"
+oninput="atualizarTela()">
 
 
-<button onclick="atualizarTela()">
+<button
+type="button"
+onclick="atualizarTela()">
 
-🔄 Atualizar Vendas
+🔄 ATUALIZAR HISTÓRICO
 
 </button>
 
 </div>
 
 
-<!-- =====================================
+<!-- =====================================================
      RESUMO
-===================================== -->
+===================================================== -->
 
-<h2>
-📊 Resumo do Período
+<div class="card">
+
+<h2 class="secao-titulo">
+📊 Resumo das Vendas
 </h2>
 
 
-<div class="resumo">
+<div class="grid">
 
 
-<div class="card">
+<div class="mini">
 
-<h3>
 🧾 Pedidos
-</h3>
 
-<p id="totalPedidos">
+<strong id="totalPedidos">
 0
-</p>
+</strong>
 
 </div>
 
 
-<div class="card">
+<div class="mini">
 
-<h3>
 💰 Faturamento
-</h3>
 
-<p id="faturamento">
+<strong
+id="faturamento"
+class="verde">
+
 R$ 0,00
-</p>
+
+</strong>
 
 </div>
 
 
-<div class="card">
+<div class="mini">
 
-<h3>
 📈 Ticket Médio
-</h3>
 
-<p id="ticketMedio">
+<strong id="ticketMedio">
 R$ 0,00
-</p>
+</strong>
 
 </div>
 
+
+<div class="mini">
+
+📅 Hoje
+
+<strong id="pedidosHoje">
+0
+</strong>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PAGAMENTOS
+===================================================== -->
 
 <div class="card">
 
-<h3>
-📅 Hoje
-</h3>
-
-<p id="pedidosHoje">
-0
-</p>
-
-</div>
-
-
-</div>
-
-
-<!-- =====================================
-     FORMAS DE PAGAMENTO
-===================================== -->
-
-<h2>
+<h2 class="secao-titulo">
 💳 Formas de Pagamento
 </h2>
 
 
-<div class="resumo">
+<div class="grid">
 
 
-<div class="card">
+<div class="mini">
 
-<h3>
 💵 Dinheiro
-</h3>
 
-<p
-    id="totalDinheiro"
-    class="verde">
+<strong
+id="totalDinheiro"
+class="verde">
 
 R$ 0,00
 
-</p>
+</strong>
 
 </div>
 
 
-<div class="card">
+<div class="mini">
 
-<h3>
 📱 Pix
-</h3>
 
-<p
-    id="totalPix"
-    class="verde">
+<strong
+id="totalPix"
+class="verde">
 
 R$ 0,00
 
-</p>
+</strong>
 
 </div>
 
 
-<div class="card">
+<div class="mini">
 
-<h3>
 💳 Cartão
-</h3>
 
-<p
-    id="totalCartao"
-    class="azul">
-
-R$ 0,00
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-💰 Outras
-</h3>
-
-<p
-    id="totalOutros"
-    class="amarelo">
+<strong
+id="totalCartao"
+class="azul">
 
 R$ 0,00
 
-</p>
+</strong>
+
+</div>
+
+
+<div class="mini">
+
+🧾 Outros
+
+<strong
+id="totalOutros">
+
+R$ 0,00
+
+</strong>
 
 </div>
 
 
 </div>
 
+</div>
 
-<!-- =====================================
+
+<!-- =====================================================
      LISTA
-===================================== -->
+===================================================== -->
 
-<h2>
+<h2 class="secao-titulo">
+
 📋 Vendas Registradas
+
 </h2>
 
 
 <div id="listaVendas">
 
+<div class="card">
+
 <p class="vazio">
-
-Carregando vendas...
-
+Carregando histórico...
 </p>
 
 </div>
 
+</div>
 
-<!-- =====================================
-     VOLTAR
-===================================== -->
+
+<hr class="divisor">
+
 
 <button
-    class="voltar"
-    onclick="window.location.href='index.html'">
+type="button"
+class="voltar"
+onclick="window.location.href='financeiro.html'">
 
-↩️ Voltar para o Dashboard
+💰 VOLTAR PARA O FINANCEIRO
 
 </button>
 
 
+<button
+type="button"
+class="voltar"
+onclick="window.location.href='index.html'">
+
+🏠 VOLTAR AO INÍCIO
+
+</button>
+
+
+<div class="rodape">
+
+🍔
+
+<strong>
+GrillCore ERP
+</strong>
+
+<br>
+
+Histórico profissional de vendas
+
+</div>
+
+
+</main>
+
+
 <script>
 
-
-// =====================================================
-// 💾 PEGAR VENDAS
-// =====================================================
-
-function pegarVendas() {
-
-    return JSON.parse(
-
-        localStorage.getItem("vendas")
-
-    ) || [];
-
-}
+/* =====================================================
+   GRILLCORE ERP
+   HISTÓRICO DE VENDAS
+===================================================== */
 
 
-// =====================================================
-// 💾 PEGAR PRODUTOS
-// =====================================================
+/* =====================================================
+   💾 STORAGE
+===================================================== */
 
-function pegarProdutos() {
+function lerJSON(chave){
 
-    return JSON.parse(
+    try{
 
-        localStorage.getItem("produtos")
+        const dados =
+            JSON.parse(
+                localStorage.getItem(
+                    chave
+                )
+            );
 
-    ) || [];
+        return Array.isArray(dados)
+            ? dados
+            : [];
 
-}
+    }
 
+    catch(e){
 
-// =====================================================
-// 💰 DINHEIRO
-// =====================================================
+        console.error(
+            "Erro ao ler:",
+            chave,
+            e
+        );
 
-function dinheiro(valor) {
+        return [];
 
-    return "R$ " +
-
-        Number(valor || 0)
-
-        .toFixed(2)
-
-        .replace(".", ",");
+    }
 
 }
 
 
-// =====================================================
-// 📅 DATA
-// =====================================================
+function salvarJSON(
+    chave,
+    dados
+){
 
-function formatarData(data) {
+    try{
 
-    if (!data) {
+        localStorage.setItem(
+            chave,
+            JSON.stringify(dados)
+        );
+
+        return true;
+
+    }
+
+    catch(e){
+
+        console.error(
+            "Erro ao salvar:",
+            chave,
+            e
+        );
+
+        alert(
+            "❌ Não foi possível salvar os dados."
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   💰 DINHEIRO
+===================================================== */
+
+function dinheiro(valor){
+
+    return Number(
+        valor || 0
+    ).toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   🔢 NÚMERO
+===================================================== */
+
+function numero(valor){
+
+    const n =
+        Number(valor);
+
+    return Number.isFinite(n)
+        ? n
+        : 0;
+
+}
+
+
+/* =====================================================
+   🧾 ESCAPAR HTML
+===================================================== */
+
+function escapar(texto){
+
+    return String(
+        texto ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   📅 FORMATAR DATA
+===================================================== */
+
+function formatarData(
+    valor
+){
+
+    const data =
+        new Date(valor);
+
+
+    if(
+        isNaN(
+            data.getTime()
+        )
+    ){
 
         return "Data não informada";
 
     }
 
 
-    let dataObj = new Date(data);
-
-
-    if (isNaN(dataObj.getTime())) {
-
-        return "Data inválida";
-
-    }
-
-
-    return dataObj.toLocaleString(
-
-        "pt-BR"
-
+    return data.toLocaleString(
+        "pt-BR",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
     );
 
 }
 
 
-// =====================================================
-// 📅 PERÍODO
-// =====================================================
+/* =====================================================
+   📅 VERIFICAR PERÍODO
+===================================================== */
 
-function dentroDoPeriodo(data) {
+function dentroDoPeriodo(
+    valor
+){
 
-    if (!data) {
+    const data =
+        new Date(valor);
+
+
+    if(
+        isNaN(
+            data.getTime()
+        )
+    ){
 
         return false;
 
     }
 
 
-    let dataVenda =
-        new Date(data);
-
-
-    if (isNaN(dataVenda.getTime())) {
-
-        return false;
-
-    }
-
-
-    let hoje =
+    const hoje =
         new Date();
 
 
-    let filtro =
-        document.getElementById(
+    const filtro =
+        document
+        .getElementById(
             "filtroPeriodo"
-        ).value;
+        )
+        .value;
 
 
-    // =========================================
-    // TODO O PERÍODO
-    // =========================================
-
-    if (filtro === "tudo") {
+    if(
+        filtro === "tudo"
+    ){
 
         return true;
 
     }
 
 
-    // =========================================
-    // HOJE
-    // =========================================
-
-    if (filtro === "hoje") {
+    if(
+        filtro === "hoje"
+    ){
 
         return (
 
-            dataVenda.getDate() ===
+            data.getDate()
+            ===
             hoje.getDate()
 
             &&
 
-            dataVenda.getMonth() ===
+            data.getMonth()
+            ===
             hoje.getMonth()
 
             &&
 
-            dataVenda.getFullYear() ===
+            data.getFullYear()
+            ===
             hoje.getFullYear()
 
         );
@@ -676,17 +1634,15 @@ function dentroDoPeriodo(data) {
     }
 
 
-    // =========================================
-    // ÚLTIMOS 7 DIAS
-    // =========================================
+    if(
+        filtro === "7dias"
+    ){
 
-    if (filtro === "7dias") {
-
-        let limite =
+        const inicio =
             new Date();
 
 
-        limite.setHours(
+        inicio.setHours(
             0,
             0,
             0,
@@ -694,30 +1650,48 @@ function dentroDoPeriodo(data) {
         );
 
 
-        limite.setDate(
-            limite.getDate() - 6
+        inicio.setDate(
+            inicio.getDate() - 6
         );
 
 
-        return dataVenda >= limite;
+        const fim =
+            new Date();
+
+
+        fim.setHours(
+            23,
+            59,
+            59,
+            999
+        );
+
+
+        return (
+
+            data >= inicio
+            &&
+            data <= fim
+
+        );
 
     }
 
 
-    // =========================================
-    // ESTE MÊS
-    // =========================================
-
-    if (filtro === "mes") {
+    if(
+        filtro === "mes"
+    ){
 
         return (
 
-            dataVenda.getMonth() ===
+            data.getMonth()
+            ===
             hoje.getMonth()
 
             &&
 
-            dataVenda.getFullYear() ===
+            data.getFullYear()
+            ===
             hoje.getFullYear()
 
         );
@@ -730,224 +1704,135 @@ function dentroDoPeriodo(data) {
 }
 
 
-// =====================================================
-// 📊 FILTRAR VENDAS
-// =====================================================
+/* =====================================================
+   🧾 OBTER VENDAS
+===================================================== */
 
-function obterVendasFiltradas() {
+function obterVendas(){
 
-    let vendas =
-        pegarVendas();
-
-
-    let pesquisa =
-        document.getElementById(
-            "pesquisa"
-        ).value
-
-        .trim()
-
-        .toLowerCase();
-
-
-    vendas =
-        vendas.filter(
-
-            function(venda) {
-
-                if (
-                    !dentroDoPeriodo(
-                        venda.data
-                    )
-                ) {
-
-                    return false;
-
-                }
-
-
-                if (
-                    pesquisa === ""
-                ) {
-
-                    return true;
-
-                }
-
-
-                let cliente =
-                    String(
-                        venda.cliente || ""
-                    ).toLowerCase();
-
-
-                return cliente.includes(
-                    pesquisa
-                );
-
-            }
-
+    const vendas =
+        lerJSON(
+            "vendas"
         );
 
 
-    vendas.sort(
+    const campoPesquisa =
+        document.getElementById(
+            "pesquisa"
+        );
 
-        function(a, b) {
 
-            return Number(
-                b.id || 0
-            ) -
+    const pesquisa =
+        campoPesquisa
+        ?
+        campoPesquisa.value
+            .trim()
+            .toLowerCase()
+        :
+        "";
 
-            Number(
-                a.id || 0
+
+    return vendas
+
+    .filter(
+        function(venda){
+
+            if(
+                !dentroDoPeriodo(
+                    venda.data
+                )
+            ){
+
+                return false;
+
+            }
+
+
+            if(!pesquisa){
+
+                return true;
+
+            }
+
+
+            const cliente =
+                String(
+                    venda.cliente || ""
+                )
+                .toLowerCase();
+
+
+            const telefone =
+                String(
+                    venda.telefone || ""
+                )
+                .toLowerCase();
+
+
+            const numeroPedido =
+                String(
+                    venda.numeroPedido || ""
+                )
+                .toLowerCase();
+
+
+            return (
+
+                cliente.includes(
+                    pesquisa
+                )
+
+                ||
+
+                telefone.includes(
+                    pesquisa
+                )
+
+                ||
+
+                numeroPedido.includes(
+                    pesquisa
+                )
+
             );
 
         }
+    )
 
+    .sort(
+        function(a,b){
+
+            return (
+
+                new Date(
+                    b.data || 0
+                )
+
+                -
+
+                new Date(
+                    a.data || 0
+                )
+
+            );
+
+        }
     );
-
-
-    return vendas;
 
 }
 
 
-// =====================================================
-// 📊 RESUMO
-// =====================================================
+/* =====================================================
+   📊 ATUALIZAR RESUMO
+===================================================== */
 
-function atualizarResumo() {
+function atualizarResumo(){
 
-    let vendas =
-        obterVendasFiltradas();
+    const vendas =
+        obterVendas();
 
-
-    // =========================================
-    // PEDIDOS
-    // =========================================
-
-    document.getElementById(
-        "totalPedidos"
-    ).innerText =
-
-        vendas.length;
-
-
-    // =========================================
-    // FATURAMENTO
-    // =========================================
 
     let faturamento = 0;
-
-
-    vendas.forEach(
-
-        function(venda) {
-
-            faturamento +=
-                Number(
-                    venda.total || 0
-                );
-
-        }
-
-    );
-
-
-    document.getElementById(
-        "faturamento"
-    ).innerText =
-
-        dinheiro(
-            faturamento
-        );
-
-
-    // =========================================
-    // TICKET MÉDIO
-    // =========================================
-
-    let ticket = 0;
-
-
-    if (vendas.length > 0) {
-
-        ticket =
-            faturamento /
-            vendas.length;
-
-    }
-
-
-    document.getElementById(
-        "ticketMedio"
-    ).innerText =
-
-        dinheiro(ticket);
-
-
-    // =========================================
-    // VENDAS DE HOJE
-    // =========================================
-
-    let todas =
-        pegarVendas();
-
-
-    let hoje =
-        new Date();
-
-
-    let vendasHoje =
-        todas.filter(
-
-            function(venda) {
-
-                if (!venda.data) {
-
-                    return false;
-
-                }
-
-
-                let data =
-                    new Date(
-                        venda.data
-                    );
-
-
-                return (
-
-                    data.getDate() ===
-                    hoje.getDate()
-
-                    &&
-
-                    data.getMonth() ===
-                    hoje.getMonth()
-
-                    &&
-
-                    data.getFullYear() ===
-                    hoje.getFullYear()
-
-                );
-
-            }
-
-        );
-
-
-    document.getElementById(
-        "pedidosHoje"
-    ).innerText =
-
-        vendasHoje.length;
-
-
-    // =========================================
-    // PAGAMENTOS
-    // =========================================
 
     let dinheiroTotal = 0;
 
@@ -959,122 +1844,628 @@ function atualizarResumo() {
 
 
     vendas.forEach(
+        function(venda){
 
-        function(venda) {
-
-            let valor =
-                Number(
-                    venda.total || 0
+            const valor =
+                numero(
+                    venda.total
                 );
 
 
-            let pagamento =
+            faturamento +=
+                valor;
+
+
+            const pagamento =
                 String(
                     venda.pagamento || ""
-                ).toLowerCase();
+                )
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                );
 
 
-            if (
-                pagamento ===
-                "dinheiro"
-            ) {
+            if(
+                pagamento.includes(
+                    "dinheiro"
+                )
+            ){
 
-                dinheiroTotal += valor;
-
-            }
-
-            else if (
-                pagamento ===
-                "pix"
-            ) {
-
-                pixTotal += valor;
-
-            }
-
-            else if (
-                pagamento ===
-                "cartão" ||
-
-                pagamento ===
-                "cartao"
-            ) {
-
-                cartaoTotal += valor;
+                dinheiroTotal +=
+                    valor;
 
             }
 
-            else {
+            else if(
+                pagamento.includes(
+                    "pix"
+                )
+            ){
 
-                outrosTotal += valor;
+                pixTotal +=
+                    valor;
+
+            }
+
+            else if(
+                pagamento.includes(
+                    "cart"
+                )
+            ){
+
+                cartaoTotal +=
+                    valor;
+
+            }
+
+            else{
+
+                outrosTotal +=
+                    valor;
 
             }
 
         }
-
     );
+
+
+    document.getElementById(
+        "totalPedidos"
+    ).innerText =
+        vendas.length;
+
+
+    document.getElementById(
+        "faturamento"
+    ).innerText =
+        dinheiro(
+            faturamento
+        );
+
+
+    document.getElementById(
+        "ticketMedio"
+    ).innerText =
+        dinheiro(
+
+            vendas.length > 0
+
+            ?
+
+            faturamento /
+            vendas.length
+
+            :
+
+            0
+
+        );
+
+
+    /* =================================================
+       PEDIDOS DE HOJE
+    ================================================= */
+
+    const todasVendas =
+        lerJSON(
+            "vendas"
+        );
+
+
+    const hoje =
+        new Date();
+
+
+    let pedidosHoje = 0;
+
+
+    todasVendas.forEach(
+        function(venda){
+
+            const data =
+                new Date(
+                    venda.data
+                );
+
+
+            if(
+                isNaN(
+                    data.getTime()
+                )
+            ){
+
+                return;
+
+            }
+
+
+            if(
+
+                data.getDate()
+                ===
+                hoje.getDate()
+
+                &&
+
+                data.getMonth()
+                ===
+                hoje.getMonth()
+
+                &&
+
+                data.getFullYear()
+                ===
+                hoje.getFullYear()
+
+            ){
+
+                pedidosHoje++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "pedidosHoje"
+    ).innerText =
+        pedidosHoje;
 
 
     document.getElementById(
         "totalDinheiro"
     ).innerText =
-
-        dinheiro(dinheiroTotal);
+        dinheiro(
+            dinheiroTotal
+        );
 
 
     document.getElementById(
         "totalPix"
     ).innerText =
-
-        dinheiro(pixTotal);
+        dinheiro(
+            pixTotal
+        );
 
 
     document.getElementById(
         "totalCartao"
     ).innerText =
-
-        dinheiro(cartaoTotal);
+        dinheiro(
+            cartaoTotal
+        );
 
 
     document.getElementById(
         "totalOutros"
     ).innerText =
-
-        dinheiro(outrosTotal);
+        dinheiro(
+            outrosTotal
+        );
 
 }
 
 
-// =====================================================
-// 🧾 MOSTRAR VENDAS
-// =====================================================
+/* =====================================================
+   📦 DEVOLVER ESTOQUE DE PRODUTOS
+===================================================== */
 
-function mostrarVendas() {
+function devolverEstoqueProdutos(
+    venda
+){
+
+    if(
+        !Array.isArray(
+            venda.itens
+        )
+    ){
+
+        return;
+
+    }
+
+
+    let produtos =
+        lerJSON(
+            "produtos"
+        );
+
+
+    if(
+        !Array.isArray(produtos)
+        ||
+        !produtos.length
+    ){
+
+        return;
+
+    }
+
+
+    let alterou = false;
+
+
+    venda.itens.forEach(
+        function(item){
+
+            const produto =
+                produtos.find(
+                    function(p){
+
+                        return String(
+                            p.id
+                        )
+                        ===
+                        String(
+                            item.produtoId
+                        );
+
+                    }
+                );
+
+
+            if(!produto){
+
+                return;
+
+            }
+
+
+            produto.estoque =
+                numero(
+                    produto.estoque
+                )
+                +
+                numero(
+                    item.quantidade
+                );
+
+
+            produto.atualizadoEm =
+                new Date().toISOString();
+
+
+            alterou = true;
+
+        }
+    );
+
+
+    if(alterou){
+
+        salvarJSON(
+            "produtos",
+            produtos
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   📦 DEVOLVER ESTOQUE DE MERCADORIAS
+===================================================== */
+
+function devolverEstoqueMercadorias(
+    venda
+){
+
+    if(
+        !Array.isArray(
+            venda.itens
+        )
+    ){
+
+        return;
+
+    }
+
+
+    let estoque =
+        lerJSON(
+            "estoque"
+        );
+
+
+    if(
+        !Array.isArray(estoque)
+        ||
+        !estoque.length
+    ){
+
+        return;
+
+    }
+
+
+    let alterou = false;
+
+
+    venda.itens.forEach(
+        function(item){
+
+            /*
+               Caso algum pedido futuro tenha
+               estoqueId ou mercadoriaId,
+               o sistema consegue devolver
+               diretamente para a mercadoria.
+            */
+
+            const estoqueId =
+                item.estoqueId
+                ||
+                item.mercadoriaId;
+
+
+            if(!estoqueId){
+
+                return;
+
+            }
+
+
+            const mercadoria =
+                estoque.find(
+                    function(p){
+
+                        return String(
+                            p.id
+                        )
+                        ===
+                        String(
+                            estoqueId
+                        );
+
+                    }
+                );
+
+
+            if(!mercadoria){
+
+                return;
+
+            }
+
+
+            mercadoria.quantidade =
+                numero(
+                    mercadoria.quantidade
+                )
+                +
+                numero(
+                    item.quantidade
+                );
+
+
+            mercadoria.atualizadoEm =
+                new Date().toISOString();
+
+
+            alterou = true;
+
+        }
+    );
+
+
+    if(alterou){
+
+        salvarJSON(
+            "estoque",
+            estoque
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   🗑️ EXCLUIR VENDA
+===================================================== */
+
+function excluirVenda(
+    id
+){
 
     let vendas =
-        obterVendasFiltradas();
+        lerJSON(
+            "vendas"
+        );
 
 
-    let lista =
+    const indice =
+        vendas.findIndex(
+            function(item){
+
+                return String(
+                    item.id
+                )
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(
+        indice === -1
+    ){
+
+        alert(
+            "❌ Venda não encontrada."
+        );
+
+        return;
+
+    }
+
+
+    const venda =
+        vendas[indice];
+
+
+    const numeroPedido =
+        venda.numeroPedido
+        ||
+        venda.id
+        ||
+        "-";
+
+
+    const cliente =
+        venda.cliente
+        ||
+        "Não informado";
+
+
+    const total =
+        dinheiro(
+            venda.total
+        );
+
+
+    const confirmar =
+        confirm(
+
+            "⚠️ EXCLUIR ESTA VENDA?\n\n"
+
+            +
+
+            "Pedido: #"
+            +
+            numeroPedido
+
+            +
+
+            "\nCliente: "
+            +
+            cliente
+
+            +
+
+            "\nValor: "
+            +
+            total
+
+            +
+
+            "\n\n"
+
+            +
+
+            "Os produtos vendidos serão devolvidos ao estoque.\n"
+
+            +
+
+            "Esta ação não poderá ser desfeita."
+
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    /*
+       PRIMEIRO DEVOLVE O ESTOQUE
+    */
+
+    devolverEstoqueProdutos(
+        venda
+    );
+
+
+    devolverEstoqueMercadorias(
+        venda
+    );
+
+
+    /*
+       DEPOIS REMOVE A VENDA
+    */
+
+    vendas.splice(
+        indice,
+        1
+    );
+
+
+    if(
+        !salvarJSON(
+            "vendas",
+            vendas
+        )
+    ){
+
+        return;
+
+    }
+
+
+    atualizarTela();
+
+
+    alert(
+        "✅ Venda excluída com sucesso!"
+    );
+
+}
+
+
+/* =====================================================
+   📋 MOSTRAR VENDAS
+===================================================== */
+
+function mostrarVendas(){
+
+    const vendas =
+        obterVendas();
+
+
+    const lista =
         document.getElementById(
             "listaVendas"
         );
 
 
-    if (vendas.length === 0) {
+    if(
+        !vendas.length
+    ){
+
+        const pesquisa =
+            document
+            .getElementById(
+                "pesquisa"
+            )
+            .value
+            .trim();
+
 
         lista.innerHTML = `
 
-        <div class="venda">
+            <div class="card">
 
-            <p class="vazio">
+                <p class="vazio">
 
-                🧾 Nenhuma venda encontrada
-                neste período.
+                    ${
+                        pesquisa
+                        ?
+                        "🔎 Nenhuma venda encontrada para esta pesquisa."
+                        :
+                        "📭 Nenhuma venda encontrada no período selecionado."
+                    }
 
-            </p>
+                </p>
 
-        </div>
+            </div>
 
         `;
 
@@ -1087,284 +2478,314 @@ function mostrarVendas() {
 
 
     vendas.forEach(
+        function(venda){
 
-        function(venda, indice) {
+            const itens =
+                Array.isArray(
+                    venda.itens
+                )
+                ?
+                venda.itens
+                :
+                [];
 
 
-            let numeroPedido =
-                venda.id ||
-                (indice + 1);
+            let itensHTML = "";
+
+
+            if(itens.length){
+
+                itens.forEach(
+                    function(item){
+
+                        const quantidade =
+                            numero(
+                                item.quantidade
+                            );
+
+
+                        const preco =
+                            numero(
+                                item.preco
+                            );
+
+
+                        const subtotal =
+                            numero(
+                                item.subtotal
+                            )
+                            ||
+                            (
+                                preco *
+                                quantidade
+                            );
+
+
+                        const categoria =
+                            item.categoria
+                            ||
+                            "";
+
+
+                        itensHTML += `
+
+                            <div class="item-venda">
+
+                                <div class="item-info">
+
+                                    <div class="item-nome">
+
+                                        ${
+                                            escapar(
+                                                item.emoji
+                                                ||
+                                                "🍔"
+                                            )
+                                        }
+
+                                        ${escapar(
+                                            item.nome
+                                            ||
+                                            "Item"
+                                        )}
+
+                                    </div>
+
+
+                                    <div class="item-detalhe">
+
+                                        ${quantidade} ×
+                                        ${dinheiro(preco)}
+
+                                        ${
+                                            categoria
+                                            ?
+                                            " • " +
+                                            escapar(categoria)
+                                            :
+                                            ""
+                                        }
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="item-valor">
+
+                                    ${dinheiro(
+                                        subtotal
+                                    )}
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+            }
+
+            else{
+
+                itensHTML = `
+
+                    <p class="vazio">
+
+                        Nenhum item detalhado neste pedido.
+
+                    </p>
+
+                `;
+
+            }
+
+
+            const status =
+                venda.status
+                ||
+                "finalizado";
 
 
             lista.innerHTML += `
 
-            <div class="venda">
+                <div class="venda">
 
-                <h3>
+                    <h3>
 
-                    🧾 Pedido #${numeroPedido}
+                        🧾 Pedido #
 
-                </h3>
+                        ${escapar(
+                            numeroPedidoSeguro(
+                                venda
+                            )
+                        )}
 
-
-                <p>
-
-                    📅 <strong>Data:</strong>
-
-                    ${formatarData(
-                        venda.data
-                    )}
-
-                </p>
+                    </h3>
 
 
-                <p>
+                    <p>
 
-                    👤 <strong>Cliente:</strong>
+                        📅 <strong>Data:</strong>
+
+                        ${escapar(
+                            formatarData(
+                                venda.data
+                            )
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        👤 <strong>Cliente:</strong>
+
+                        ${escapar(
+                            venda.cliente
+                            ||
+                            "Não informado"
+                        )}
+
+                    </p>
+
 
                     ${
-                        venda.cliente ||
-                        "Não informado"
+                        venda.telefone
+                        ?
+                        `
+                        <p>
+
+                            📱 <strong>
+                            Telefone:
+                            </strong>
+
+                            ${escapar(
+                                venda.telefone
+                            )}
+
+                        </p>
+                        `
+                        :
+                        ""
                     }
 
-                </p>
+
+                    <p>
+
+                        💳 <strong>
+                        Pagamento:
+                        </strong>
+
+                        ${escapar(
+                            venda.pagamento
+                            ||
+                            "Não informado"
+                        )}
+
+                    </p>
 
 
-                <p>
+                    <span class="status">
 
-                    🍔 <strong>Hambúrguer:</strong>
+                        ✓ ${escapar(
+                            status
+                        ).toUpperCase()}
+
+                    </span>
+
+
+                    <div class="itens-titulo">
+
+                        🍔 Itens do pedido
+
+                    </div>
+
+
+                    <div>
+
+                        ${itensHTML}
+
+                    </div>
+
 
                     ${
-                        venda.hamburguer ||
-                        "Não informado"
+                        venda.observacao
+                        ?
+                        `
+                        <p>
+
+                            📝 <strong>
+                            Observação:
+                            </strong>
+
+                            ${escapar(
+                                venda.observacao
+                            )}
+
+                        </p>
+                        `
+                        :
+                        ""
                     }
 
-                </p>
+
+                    <div class="total-venda">
+
+                        💰
+
+                        ${dinheiro(
+                            venda.total
+                        )}
+
+                    </div>
 
 
-                <p>
+                    <button
+                        type="button"
+                        class="btn-vermelho"
+                        onclick="excluirVenda('${String(venda.id).replace(/'/g,"\\\\'")}')">
 
-                    🥤 <strong>Bebida:</strong>
+                        🗑️ EXCLUIR VENDA
 
-                    ${
-                        venda.bebida ||
-                        "Sem bebida"
-                    }
+                    </button>
 
-                </p>
-
-
-                <p>
-
-                    🍟 <strong>Porção:</strong>
-
-                    ${
-                        venda.porcao ||
-                        "Sem porção"
-                    }
-
-                </p>
-
-
-                <p>
-
-                    💳 <strong>Pagamento:</strong>
-
-                    ${
-                        venda.pagamento ||
-                        "Não informado"
-                    }
-
-                </p>
-
-
-                <p class="total-venda">
-
-                    💰 ${dinheiro(
-                        venda.total
-                    )}
-
-                </p>
-
-
-                <button
-                    class="excluir"
-                    onclick="excluirVenda(${venda.id})">
-
-                    🗑️ Excluir Venda
-
-                </button>
-
-
-            </div>
+                </div>
 
             `;
 
         }
-
     );
 
 }
 
 
-// =====================================================
-// 🗑️ EXCLUIR VENDA
-// =====================================================
+/* =====================================================
+   🧾 NÚMERO DO PEDIDO
+===================================================== */
 
-function excluirVenda(id) {
+function numeroPedidoSeguro(
+    venda
+){
 
-    let vendas =
-        pegarVendas();
-
-
-    let venda =
-        vendas.find(
-
-            function(item) {
-
-                return Number(
-                    item.id
-                ) === Number(id);
-
-            }
-
-        );
-
-
-    if (!venda) {
-
-        alert(
-            "❌ Venda não encontrada."
-        );
-
-        return;
-
-    }
-
-
-    let confirmar =
-        confirm(
-
-            "⚠️ EXCLUIR VENDA?\n\n" +
-
-            "Cliente: " +
-
-            (
-                venda.cliente ||
-                "Não informado"
-            ) +
-
-            "\n\nHambúrguer: " +
-
-            (
-                venda.hamburguer ||
-                "Não informado"
-            ) +
-
-            "\n\nValor: " +
-
-            dinheiro(
-                venda.total
-            ) +
-
-            "\n\nO produto será devolvido ao estoque."
-
-        );
-
-
-    if (!confirmar) {
-
-        return;
-
-    }
-
-
-    // =================================================
-    // DEVOLVER PRODUTO AO ESTOQUE
-    // =================================================
-
-    let produtos =
-        pegarProdutos();
-
-
-    let produto =
-        produtos.find(
-
-            function(item) {
-
-                return item.nome ===
-                       venda.hamburguer;
-
-            }
-
-        );
-
-
-    if (produto) {
-
-        produto.estoque =
-            Number(
-                produto.estoque || 0
-            ) + 1;
-
-
-        localStorage.setItem(
-
-            "produtos",
-
-            JSON.stringify(
-                produtos
-            )
-
-        );
-
-    }
-
-
-    // =================================================
-    // REMOVER VENDA
-    // =================================================
-
-    vendas =
-        vendas.filter(
-
-            function(item) {
-
-                return Number(
-                    item.id
-                ) !== Number(id);
-
-            }
-
-        );
-
-
-    localStorage.setItem(
-
-        "vendas",
-
-        JSON.stringify(
-            vendas
-        )
-
-    );
-
-
-    atualizarTela();
-
-
-    alert(
-        "✅ Venda excluída e estoque atualizado!"
+    return (
+        venda.numeroPedido
+        ||
+        venda.id
+        ||
+        "000000"
     );
 
 }
 
 
-// =====================================================
-// 🔄 ATUALIZAR TELA
-// =====================================================
+/* =====================================================
+   🔄 ATUALIZAR TELA
+===================================================== */
 
-function atualizarTela() {
+function atualizarTela(){
 
     atualizarResumo();
 
@@ -1373,39 +2794,52 @@ function atualizarTela() {
 }
 
 
-// =====================================================
-// 🚀 INICIAR
-// =====================================================
+/* =====================================================
+   🔄 ATUALIZAÇÃO ENTRE ABAS
+===================================================== */
 
 window.addEventListener(
+    "storage",
+    function(event){
 
+        if(
+            event.key === "vendas"
+            ||
+            event.key === "produtos"
+            ||
+            event.key === "estoque"
+        ){
+
+            atualizarTela();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   🚀 INICIAR
+===================================================== */
+
+window.addEventListener(
     "load",
-
-    function() {
+    function(){
 
         atualizarTela();
 
     }
-
 );
 
-
-// =====================================================
-// 🔄 ATUALIZAR AO VOLTAR
-// =====================================================
 
 window.addEventListener(
-
     "pageshow",
-
-    function() {
+    function(){
 
         atualizarTela();
 
     }
-
 );
-
 
 </script>
 

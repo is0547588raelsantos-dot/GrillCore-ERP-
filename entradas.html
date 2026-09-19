@@ -3,264 +3,872 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <!-- =====================================================
+         🔐 PROTEÇÃO DE LOGIN
+    ====================================================== -->
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <script>
 
-<title>Entradas - GrillCore ERP</title>
+        if (
+            localStorage.getItem("grillcore_login")
+            !==
+            "true"
+        ) {
 
-<link rel="stylesheet" href="style.css">
+            window.location.replace("login.html");
 
-<style>
+        }
 
-body {
-    background: #181818;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 15px;
-}
+    </script>
 
-h1,
-h2 {
-    color: #ff7a00;
-}
 
-.card {
-    background: #242424;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 15px;
-}
+    <meta charset="UTF-8">
 
-input,
-select {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-button {
-    width: 100%;
-    padding: 18px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 12px;
-    background: #ff7a00;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
 
-.entrada {
-    background: #242424;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 18px;
-    margin: 12px 0;
-}
+    <title>Entradas — GrillCore ERP</title>
 
-.valor {
-    color: #ff7a00;
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.excluir {
-    background: #b3261e;
-}
-
-</style>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
+
 <body>
 
-<h1>📈 Entradas</h1>
 
-<p>Cadastro de entradas financeiras</p>
-
-<hr>
+<div class="container">
 
 
-<!-- ================================= -->
-<!-- CADASTRAR ENTRADA -->
-<!-- ================================= -->
+    <!-- =====================================================
+         👑 CABEÇALHO
+    ====================================================== -->
 
-<h2>➕ Nova Entrada</h2>
+    <header class="premium-header">
 
-<div class="card">
+        <div class="premium-logo">
 
-<label>Descrição</label>
+            🍔
 
-<input
-    type="text"
-    id="descricao"
-    placeholder="Ex: Venda de bebida, investimento..."
->
+            <div>
 
+                <strong>
+                    GrillCore
+                </strong>
 
-<label>Valor</label>
+                <span>
+                    Hambúrgueria
+                </span>
 
-<input
-    type="number"
-    id="valor"
-    placeholder="0,00"
-    step="0.01"
->
+            </div>
+
+        </div>
 
 
-<label>Forma de recebimento</label>
+        <p>
+            Controle profissional de entradas financeiras
+        </p>
 
-<select id="formaPagamento">
-
-    <option value="Dinheiro">
-        💵 Dinheiro
-    </option>
-
-    <option value="Pix">
-        📱 Pix
-    </option>
-
-    <option value="Cartão">
-        💳 Cartão
-    </option>
-
-</select>
+    </header>
 
 
-<button onclick="cadastrarEntrada()">
 
-    ➕ Cadastrar Entrada
+    <!-- =====================================================
+         📈 TÍTULO
+    ====================================================== -->
 
-</button>
+    <h1>
+        📈 Entradas
+    </h1>
+
+
+    <p class="secao-titulo">
+        Registro de valores recebidos além das vendas
+    </p>
+
+
+
+    <!-- =====================================================
+         📊 RESUMO
+    ====================================================== -->
+
+    <div class="grid">
+
+
+        <div class="card mini">
+
+            <span>
+                💰 Total de Entradas
+            </span>
+
+            <strong
+                id="total"
+                class="verde"
+            >
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <div class="card mini">
+
+            <span>
+                🧾 Quantidade
+            </span>
+
+            <strong
+                id="quantidadeEntradas"
+            >
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="card mini">
+
+            <span>
+                📊 Média por Entrada
+            </span>
+
+            <strong
+                id="mediaEntradas"
+            >
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ➕ NOVA ENTRADA
+    ====================================================== -->
+
+    <section class="card">
+
+        <h2>
+            ➕ Nova Entrada
+        </h2>
+
+
+        <p class="secao-titulo">
+            Registre um valor recebido pelo estabelecimento
+        </p>
+
+
+
+        <label for="descricao">
+            Descrição
+        </label>
+
+        <input
+            type="text"
+            id="descricao"
+            placeholder="Ex: Investimento, venda de equipamento..."
+            autocomplete="off"
+        >
+
+
+
+        <label for="valor">
+            Valor
+        </label>
+
+        <input
+            type="number"
+            id="valor"
+            placeholder="0,00"
+            step="0.01"
+            min="0"
+            inputmode="decimal"
+        >
+
+
+
+        <label for="formaPagamento">
+            Forma de recebimento
+        </label>
+
+        <select id="formaPagamento">
+
+            <option value="Dinheiro">
+                💵 Dinheiro
+            </option>
+
+            <option value="Pix">
+                📱 Pix
+            </option>
+
+            <option value="Cartão">
+                💳 Cartão
+            </option>
+
+            <option value="Transferência">
+                🏦 Transferência
+            </option>
+
+            <option value="Boleto">
+                🧾 Boleto
+            </option>
+
+            <option value="Outro">
+                📋 Outro
+            </option>
+
+        </select>
+
+
+
+        <label for="observacao">
+            Observação
+        </label>
+
+        <textarea
+            id="observacao"
+            rows="3"
+            placeholder="Informações adicionais..."
+        ></textarea>
+
+
+
+        <button
+            class="salvar"
+            type="button"
+            onclick="cadastrarEntrada()"
+        >
+
+            ➕ Cadastrar Entrada
+
+        </button>
+
+
+
+        <button
+            class="btn-cinza"
+            type="button"
+            onclick="limparFormulario()"
+        >
+
+            🧹 Limpar
+
+        </button>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         🔎 FILTROS
+    ====================================================== -->
+
+    <section class="card">
+
+        <h2>
+            🔎 Consultar Entradas
+        </h2>
+
+
+        <label for="periodo">
+            Período
+        </label>
+
+        <select
+            id="periodo"
+            onchange="mostrarEntradas()"
+        >
+
+            <option value="hoje">
+                Hoje
+            </option>
+
+            <option value="7dias">
+                Últimos 7 dias
+            </option>
+
+            <option value="mes">
+                Este mês
+            </option>
+
+            <option value="tudo">
+                Todo o período
+            </option>
+
+        </select>
+
+
+
+        <label for="busca">
+            Buscar
+        </label>
+
+        <input
+            type="search"
+            id="busca"
+            placeholder="Descrição, pagamento ou observação..."
+            autocomplete="off"
+            oninput="mostrarEntradas()"
+        >
+
+    </section>
+
+
+
+    <!-- =====================================================
+         📋 HISTÓRICO
+    ====================================================== -->
+
+    <section class="card">
+
+        <h2>
+            📋 Histórico de Entradas
+        </h2>
+
+
+        <div id="listaEntradas">
+
+            <div class="vazio">
+
+                ⏳ Carregando entradas...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         🔙 NAVEGAÇÃO
+    ====================================================== -->
+
+    <button
+        class="voltar"
+        type="button"
+        onclick="window.location.href='financeiro.html'"
+    >
+
+        💰 Voltar ao Financeiro
+
+    </button>
+
+
+    <button
+        class="btn-cinza"
+        type="button"
+        onclick="window.location.href='index.html'"
+    >
+
+        🏠 Voltar ao Início
+
+    </button>
+
 
 </div>
 
-
-<hr>
-
-
-<!-- ================================= -->
-<!-- RESUMO -->
-<!-- ================================= -->
-
-<h2>💰 Total de Entradas</h2>
-
-<div class="card">
-
-<div
-    id="total"
-    class="valor">
-
-R$ 0,00
-
-</div>
-
-</div>
-
-
-<hr>
-
-
-<!-- ================================= -->
-<!-- HISTÓRICO -->
-<!-- ================================= -->
-
-<h2>📋 Histórico de Entradas</h2>
-
-<div id="listaEntradas">
-
-Carregando...
-
-</div>
-
-
-<hr>
-
-
-<button
-    onclick="window.location.href='financeiro.html'">
-
-    💰 Voltar ao Financeiro
-
-</button>
-
-
-<button
-    onclick="window.location.href='index.html'">
-
-    🏠 Voltar ao Início
-
-</button>
 
 
 <script>
 
-// =====================================
-// 💾 BANCO DE ENTRADAS
-// =====================================
+/* =====================================================
+   🍔 GRILLCORE ERP
+   ENTRADAS
+   MÓDULO FINANCEIRO
+===================================================== */
+
+
+/* =====================================================
+   💾 BANCO DE ENTRADAS
+===================================================== */
 
 let entradas =
-    JSON.parse(
-        localStorage.getItem("entradas")
-    ) || [];
+    typeof lerEntradas === "function"
+        ? lerEntradas()
+        : obterEntradasFallback();
 
 
-// =====================================
-// 💰 FORMATAR DINHEIRO
-// =====================================
 
-function dinheiro(valor) {
+/* =====================================================
+   💾 FALLBACK
+===================================================== */
 
-    return "R$ " +
-        Number(valor || 0)
-        .toFixed(2)
-        .replace(".", ",");
+function obterEntradasFallback() {
+
+    try {
+
+        const dados =
+            JSON.parse(
+                localStorage.getItem("entradas")
+            );
+
+        return Array.isArray(dados)
+            ? dados
+            : [];
+
+    }
+    catch (erro) {
+
+        console.error(
+            "GrillCore — erro ao carregar entradas:",
+            erro
+        );
+
+        return [];
+
+    }
 
 }
 
 
-// =====================================
-// ➕ CADASTRAR ENTRADA
-// =====================================
+
+/* =====================================================
+   🔢 VALOR NUMÉRICO
+===================================================== */
+
+function valorEntrada(valor) {
+
+    if (
+        typeof valorNumerico === "function"
+    ) {
+
+        return valorNumerico(valor);
+
+    }
+
+
+    if (
+        typeof valor === "number"
+    ) {
+
+        return Number.isFinite(valor)
+            ? valor
+            : 0;
+
+    }
+
+
+    let texto =
+        String(valor || "")
+        .replace(/R\$/gi, "")
+        .replace(/\s/g, "");
+
+
+    if (
+        texto.includes(",") &&
+        texto.includes(".")
+    ) {
+
+        texto =
+            texto
+            .replace(/\./g, "")
+            .replace(",", ".");
+
+    }
+    else {
+
+        texto =
+            texto.replace(",", ".");
+
+    }
+
+
+    const numero =
+        Number(texto);
+
+
+    return Number.isFinite(numero)
+        ? numero
+        : 0;
+
+}
+
+
+
+/* =====================================================
+   💰 FORMATAR DINHEIRO
+===================================================== */
+
+function dinheiroEntrada(valor) {
+
+    if (
+        typeof dinheiro === "function"
+    ) {
+
+        return dinheiro(valor);
+
+    }
+
+
+    return (
+        "R$ " +
+        valorEntrada(valor)
+            .toFixed(2)
+            .replace(".", ",")
+    );
+
+}
+
+
+
+/* =====================================================
+   🆔 ID
+===================================================== */
+
+function gerarIDEntrada() {
+
+    if (
+        typeof gerarID === "function"
+    ) {
+
+        return gerarID();
+
+    }
+
+
+    return (
+        Date.now().toString(36) +
+        Math.random()
+            .toString(36)
+            .substring(2, 8)
+    );
+
+}
+
+
+
+/* =====================================================
+   🛡️ ESCAPAR HTML
+===================================================== */
+
+function escaparEntrada(texto) {
+
+    if (
+        typeof escapar === "function"
+    ) {
+
+        return escapar(texto);
+
+    }
+
+
+    return String(
+        texto ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+
+/* =====================================================
+   📅 DATA DO REGISTRO
+===================================================== */
+
+function obterDataEntrada(entrada) {
+
+    return (
+        entrada.data
+        ||
+        entrada.dataHora
+        ||
+        entrada.criadoEm
+        ||
+        null
+    );
+
+}
+
+
+
+/* =====================================================
+   📅 FORMATAR DATA
+===================================================== */
+
+function formatarDataEntrada(data) {
+
+    if (
+        typeof formatarDataHora === "function"
+    ) {
+
+        return formatarDataHora(data);
+
+    }
+
+
+    if (!data) {
+
+        return "Data não informada";
+
+    }
+
+
+    const objeto =
+        new Date(data);
+
+
+    if (
+        Number.isNaN(
+            objeto.getTime()
+        )
+    ) {
+
+        return "Data inválida";
+
+    }
+
+
+    return objeto.toLocaleString(
+        "pt-BR"
+    );
+
+}
+
+
+
+/* =====================================================
+   📆 FILTRO DE PERÍODO
+===================================================== */
+
+function dentroDoPeriodoEntrada(
+    data,
+    periodo
+) {
+
+    if (
+        periodo === "tudo"
+    ) {
+
+        return true;
+
+    }
+
+
+    if (!data) {
+
+        return false;
+
+    }
+
+
+    const objeto =
+        new Date(data);
+
+
+    if (
+        Number.isNaN(
+            objeto.getTime()
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    const agora =
+        new Date();
+
+
+    /* ================================================
+       HOJE
+    ================================================= */
+
+    if (
+        periodo === "hoje"
+    ) {
+
+        return (
+            objeto.getFullYear()
+            ===
+            agora.getFullYear()
+            &&
+            objeto.getMonth()
+            ===
+            agora.getMonth()
+            &&
+            objeto.getDate()
+            ===
+            agora.getDate()
+        );
+
+    }
+
+
+    /* ================================================
+       ÚLTIMOS 7 DIAS
+    ================================================= */
+
+    if (
+        periodo === "7dias"
+    ) {
+
+        const inicio =
+            new Date(agora);
+
+
+        inicio.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        inicio.setDate(
+            inicio.getDate() - 6
+        );
+
+
+        const fim =
+            new Date(agora);
+
+
+        fim.setHours(
+            23,
+            59,
+            59,
+            999
+        );
+
+
+        return (
+            objeto >= inicio &&
+            objeto <= fim
+        );
+
+    }
+
+
+    /* ================================================
+       ESTE MÊS
+    ================================================= */
+
+    if (
+        periodo === "mes"
+    ) {
+
+        return (
+            objeto.getFullYear()
+            ===
+            agora.getFullYear()
+            &&
+            objeto.getMonth()
+            ===
+            agora.getMonth()
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+
+/* =====================================================
+   🔄 RECARREGAR BANCO
+===================================================== */
+
+function recarregarEntradas() {
+
+    entradas =
+        typeof lerEntradas === "function"
+            ? lerEntradas()
+            : obterEntradasFallback();
+
+}
+
+
+
+/* =====================================================
+   ➕ CADASTRAR ENTRADA
+===================================================== */
 
 function cadastrarEntrada() {
 
-    let descricao =
+    const descricao =
         document
         .getElementById("descricao")
         .value
         .trim();
 
 
-    let valor =
-        Number(
+    const valor =
+        valorEntrada(
             document
             .getElementById("valor")
             .value
         );
 
 
-    let formaPagamento =
+    const formaPagamento =
         document
         .getElementById("formaPagamento")
         .value;
 
 
-    // =================================
-    // VALIDAÇÃO
-    // =================================
+    const observacao =
+        document
+        .getElementById("observacao")
+        .value
+        .trim();
 
-    if (descricao === "") {
+
+
+    /* ================================================
+       VALIDAÇÃO
+    ================================================= */
+
+    if (!descricao) {
 
         alert(
-            "⚠️ Digite uma descrição."
+            "⚠️ Digite uma descrição para a entrada."
         );
+
+        document
+        .getElementById("descricao")
+        .focus();
 
         return;
 
@@ -268,12 +876,158 @@ function cadastrarEntrada() {
 
 
     if (
-        isNaN(valor) ||
         valor <= 0
     ) {
 
         alert(
-            "⚠️ Digite um valor válido."
+            "⚠️ Digite um valor maior que zero."
+        );
+
+        document
+        .getElementById("valor")
+        .focus();
+
+        return;
+
+    }
+
+
+
+    /* ================================================
+       CONFIRMAÇÃO
+    ================================================= */
+
+    const confirmar =
+        confirm(
+            "Registrar esta entrada?\n\n" +
+
+            descricao +
+            "\n" +
+
+            dinheiroEntrada(valor) +
+            "\n\n" +
+
+            "Recebimento: " +
+            formaPagamento
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+
+    /* ================================================
+       NOVA ENTRADA
+    ================================================= */
+
+    const agora =
+        new Date().toISOString();
+
+
+    const novaEntrada = {
+
+        id:
+            gerarIDEntrada(),
+
+        data:
+            agora,
+
+        descricao:
+            descricao,
+
+        valor:
+            typeof arredondarDinheiro === "function"
+                ? arredondarDinheiro(valor)
+                : Math.round(
+                    valor * 100
+                ) / 100,
+
+        pagamento:
+            formaPagamento,
+
+        observacao:
+            observacao,
+
+        origem:
+            "manual",
+
+        status:
+            "ativa",
+
+        criadoEm:
+            agora,
+
+        atualizadoEm:
+            agora
+
+    };
+
+
+
+    /* ================================================
+       RECARREGAR PARA EVITAR CONFLITOS
+    ================================================= */
+
+    recarregarEntradas();
+
+
+    entradas.push(
+        novaEntrada
+    );
+
+
+
+    /* ================================================
+       SALVAR
+    ================================================= */
+
+    let salvo =
+        false;
+
+
+    if (
+        typeof salvarEntradas === "function"
+    ) {
+
+        salvo =
+            salvarEntradas(
+                entradas
+            );
+
+    }
+    else {
+
+        try {
+
+            localStorage.setItem(
+                "entradas",
+                JSON.stringify(entradas)
+            );
+
+            salvo =
+                true;
+
+        }
+        catch (erro) {
+
+            console.error(
+                "GrillCore — erro ao salvar entrada:",
+                erro
+            );
+
+        }
+
+    }
+
+
+    if (!salvo) {
+
+        alert(
+            "❌ Não foi possível salvar a entrada."
         );
 
         return;
@@ -281,39 +1035,38 @@ function cadastrarEntrada() {
     }
 
 
-    // =================================
-    // SALVAR
-    // =================================
 
-    entradas.push({
+    /* ================================================
+       LIMPAR
+    ================================================= */
 
-        id:
-            Date.now(),
-
-        data:
-            new Date().toISOString(),
-
-        descricao:
-            descricao,
-
-        valor:
-            valor,
-
-        pagamento:
-            formaPagamento
-
-    });
+    limparFormulario();
 
 
-    localStorage.setItem(
-        "entradas",
-        JSON.stringify(entradas)
+
+    /* ================================================
+       ATUALIZAR
+    ================================================= */
+
+    mostrarEntradas();
+
+
+    alert(
+        "✅ Entrada cadastrada com sucesso!\n\n" +
+        descricao +
+        "\n" +
+        dinheiroEntrada(valor)
     );
 
+}
 
-    // =================================
-    // LIMPAR
-    // =================================
+
+
+/* =====================================================
+   🧹 LIMPAR FORMULÁRIO
+===================================================== */
+
+function limparFormulario() {
 
     document
     .getElementById("descricao")
@@ -325,173 +1078,630 @@ function cadastrarEntrada() {
     .value = "";
 
 
-    // =================================
-    // ATUALIZAR
-    // =================================
-
-    mostrarEntradas();
+    document
+    .getElementById("observacao")
+    .value = "";
 
 
-    alert(
-        "✅ Entrada cadastrada!\n\n" +
-        descricao +
-        "\n" +
-        dinheiro(valor)
-    );
+    document
+    .getElementById("descricao")
+    .focus();
 
 }
 
 
-// =====================================
-// 📋 MOSTRAR ENTRADAS
-// =====================================
+
+/* =====================================================
+   📋 MOSTRAR ENTRADAS
+===================================================== */
 
 function mostrarEntradas() {
 
-    let lista =
+    recarregarEntradas();
+
+
+    const lista =
         document.getElementById(
             "listaEntradas"
         );
 
 
-    let total = 0;
-
-
-    if (entradas.length === 0) {
-
-        lista.innerHTML =
-            "<p>📭 Nenhuma entrada cadastrada.</p>";
-
+    const periodo =
         document.getElementById(
-            "total"
-        ).innerText =
-            "R$ 0,00";
+            "periodo"
+        ).value;
+
+
+    const busca =
+        document.getElementById(
+            "busca"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+
+    /* ================================================
+       FILTRAR
+    ================================================= */
+
+    const entradasFiltradas =
+        entradas
+        .filter(function(entrada) {
+
+
+            /*
+               Entradas canceladas não entram
+               nos totais financeiros.
+            */
+
+            if (
+                entrada.status === "cancelada"
+                ||
+                entrada.status === "cancelado"
+            ) {
+
+                return false;
+
+            }
+
+
+            const data =
+                obterDataEntrada(
+                    entrada
+                );
+
+
+            if (
+                !dentroDoPeriodoEntrada(
+                    data,
+                    periodo
+                )
+            ) {
+
+                return false;
+
+            }
+
+
+            if (!busca) {
+
+                return true;
+
+            }
+
+
+            const texto =
+                (
+                    String(
+                        entrada.descricao || ""
+                    )
+                    +
+                    " " +
+                    String(
+                        entrada.pagamento || ""
+                    )
+                    +
+                    " " +
+                    String(
+                        entrada.formaPagamento || ""
+                    )
+                    +
+                    " " +
+                    String(
+                        entrada.observacao || ""
+                    )
+                )
+                .toLowerCase();
+
+
+            return texto.includes(
+                busca
+            );
+
+        });
+
+
+
+    /* ================================================
+       CALCULAR TOTAL
+    ================================================= */
+
+    let total =
+        0;
+
+
+    entradasFiltradas.forEach(
+        function(entrada) {
+
+            total +=
+                valorEntrada(
+                    entrada.valor
+                    ??
+                    entrada.total
+                    ??
+                    entrada.valorTotal
+                );
+
+        }
+    );
+
+
+    const quantidade =
+        entradasFiltradas.length;
+
+
+    const media =
+        quantidade > 0
+            ? total / quantidade
+            : 0;
+
+
+
+    /* ================================================
+       RESUMO
+    ================================================= */
+
+    document
+    .getElementById("total")
+    .innerText =
+        dinheiroEntrada(total);
+
+
+    document
+    .getElementById("quantidadeEntradas")
+    .innerText =
+        quantidade;
+
+
+    document
+    .getElementById("mediaEntradas")
+    .innerText =
+        dinheiroEntrada(media);
+
+
+
+    /* ================================================
+       ESTADO VAZIO
+    ================================================= */
+
+    if (
+        entradasFiltradas.length === 0
+    ) {
+
+        lista.innerHTML = `
+
+            <div class="vazio">
+
+                📭 Nenhuma entrada encontrada
+                para o período selecionado.
+
+            </div>
+
+        `;
 
         return;
 
     }
 
 
-    lista.innerHTML = "";
+
+    /* ================================================
+       ORDENAR
+    ================================================= */
+
+    entradasFiltradas.sort(
+        function(a,b) {
+
+            const dataA =
+                new Date(
+                    obterDataEntrada(a)
+                    || 0
+                ).getTime();
 
 
-    entradas
-    .slice()
-    .reverse()
-    .forEach(function(
-        entrada
-    ) {
-
-        total +=
-            Number(entrada.valor) || 0;
+            const dataB =
+                new Date(
+                    obterDataEntrada(b)
+                    || 0
+                ).getTime();
 
 
-        let data =
-            entrada.data
-            ? new Date(
-                entrada.data
-              ).toLocaleString(
-                "pt-BR"
-              )
-            : "-";
+            return dataB - dataA;
+
+        }
+    );
 
 
-        lista.innerHTML += `
 
-        <div class="entrada">
+    /* ================================================
+       RENDERIZAR
+    ================================================= */
 
-            <h3>
-                💰 ${entrada.descricao}
-            </h3>
-
-            <p>
-                📅 <strong>Data:</strong>
-                ${data}
-            </p>
-
-            <p>
-                💳 <strong>Pagamento:</strong>
-                ${entrada.pagamento || "-"}
-            </p>
-
-            <p class="valor">
-
-                ${dinheiro(entrada.valor)}
-
-            </p>
-
-            <button
-                class="excluir"
-                onclick="excluirEntrada(${entrada.id})">
-
-                🗑️ Excluir Entrada
-
-            </button>
-
-        </div>
-
-        `;
-
-    });
+    lista.innerHTML =
+        entradasFiltradas
+        .map(function(entrada) {
 
 
-    document.getElementById(
-        "total"
-    ).innerText =
-        dinheiro(total);
+            const valor =
+                valorEntrada(
+                    entrada.valor
+                    ??
+                    entrada.total
+                    ??
+                    entrada.valorTotal
+                );
+
+
+            const descricao =
+                escaparEntrada(
+                    entrada.descricao
+                    ||
+                    "Entrada sem descrição"
+                );
+
+
+            const pagamento =
+                escaparEntrada(
+                    entrada.pagamento
+                    ||
+                    entrada.formaPagamento
+                    ||
+                    "Não informado"
+                );
+
+
+            const observacao =
+                entrada.observacao
+                    ? `
+                        <p>
+                            📝
+                            <strong>
+                                Observação:
+                            </strong>
+                            ${escaparEntrada(
+                                entrada.observacao
+                            )}
+                        </p>
+                      `
+                    : "";
+
+
+            const origem =
+                entrada.origem === "manual"
+                    ? "✍️ Manual"
+                    : (
+                        entrada.origem
+                        ? escaparEntrada(
+                            entrada.origem
+                        )
+                        : "📋 Registro"
+                    );
+
+
+            return `
+
+                <article class="card">
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:flex-start;
+                            gap:12px;
+                            flex-wrap:wrap;
+                        "
+                    >
+
+                        <div>
+
+                            <h3>
+                                💰 ${descricao}
+                            </h3>
+
+                            <p>
+
+                                📅
+                                <strong>
+                                    Data:
+                                </strong>
+
+                                ${formatarDataEntrada(
+                                    obterDataEntrada(
+                                        entrada
+                                    )
+                                )}
+
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="valor"
+                            style="
+                                color:var(--dourado2);
+                                font-size:1.35rem;
+                                font-weight:800;
+                            "
+                        >
+
+                            ${dinheiroEntrada(valor)}
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <p>
+
+                        💳
+                        <strong>
+                            Recebimento:
+                        </strong>
+
+                        ${pagamento}
+
+                    </p>
+
+
+                    <p>
+
+                        🏷️
+                        <strong>
+                            Origem:
+                        </strong>
+
+                        ${origem}
+
+                    </p>
+
+
+                    ${observacao}
+
+
+                    <button
+                        class="btn-vermelho"
+                        type="button"
+                        onclick="excluirEntrada('${escaparEntrada(
+                            entrada.id
+                        )}')"
+                    >
+
+                        🗑️ Excluir Entrada
+
+                    </button>
+
+                </article>
+
+            `;
+
+        })
+        .join("");
 
 }
 
 
-// =====================================
-// 🗑️ EXCLUIR ENTRADA
-// =====================================
+
+/* =====================================================
+   🗑️ EXCLUIR ENTRADA
+===================================================== */
 
 function excluirEntrada(id) {
 
-    let confirmar =
-        confirm(
-            "Deseja realmente excluir esta entrada?"
-        );
+    recarregarEntradas();
 
 
-    if (!confirmar) {
-        return;
-    }
-
-
-    entradas =
-        entradas.filter(
+    const indice =
+        entradas.findIndex(
             function(entrada) {
 
-                return entrada.id !== id;
+                return String(
+                    entrada.id
+                )
+                ===
+                String(id);
 
             }
         );
 
 
-    localStorage.setItem(
-        "entradas",
-        JSON.stringify(entradas)
+    if (
+        indice === -1
+    ) {
+
+        alert(
+            "⚠️ Entrada não encontrada."
+        );
+
+        return;
+
+    }
+
+
+    const entrada =
+        entradas[indice];
+
+
+    /*
+       Se no futuro alguma entrada estiver
+       vinculada a outro módulo, protegemos
+       o registro contra exclusão direta.
+    */
+
+    if (
+        entrada.origem
+        &&
+        entrada.origem !== "manual"
+        &&
+        entrada.origem !== "entrada"
+    ) {
+
+        alert(
+            "⚠️ Esta entrada está vinculada a outro módulo.\n\n" +
+            "Para manter o Financeiro sincronizado, " +
+            "faça a alteração pelo módulo de origem."
+        );
+
+        return;
+
+    }
+
+
+    const valor =
+        valorEntrada(
+            entrada.valor
+        );
+
+
+    const confirmar =
+        confirm(
+            "🗑️ Deseja realmente excluir esta entrada?\n\n" +
+
+            String(
+                entrada.descricao ||
+                "Entrada"
+            ) +
+
+            "\n" +
+
+            dinheiroEntrada(valor)
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    entradas.splice(
+        indice,
+        1
     );
+
+
+    const salvo =
+        typeof salvarEntradas === "function"
+            ? salvarEntradas(
+                entradas
+            )
+            : salvarEntradasFallback(
+                entradas
+            );
+
+
+    if (!salvo) {
+
+        alert(
+            "❌ Não foi possível excluir a entrada."
+        );
+
+        return;
+
+    }
 
 
     mostrarEntradas();
 
 
     alert(
-        "🗑️ Entrada excluída."
+        "🗑️ Entrada excluída com sucesso."
     );
 
 }
 
 
-// =====================================
-// 🚀 INICIAR
-// =====================================
+
+/* =====================================================
+   💾 FALLBACK DE SALVAMENTO
+===================================================== */
+
+function salvarEntradasFallback(dados) {
+
+    try {
+
+        localStorage.setItem(
+            "entradas",
+            JSON.stringify(
+                Array.isArray(dados)
+                    ? dados
+                    : []
+            )
+        );
+
+        return true;
+
+    }
+    catch (erro) {
+
+        console.error(
+            "GrillCore — erro ao salvar:",
+            erro
+        );
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   📡 ATUALIZAÇÃO ENTRE ABAS
+===================================================== */
 
 window.addEventListener(
-    "load",
+    "storage",
+    function(event) {
+
+        if (
+            event.key === "entradas"
+        ) {
+
+            mostrarEntradas();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   👀 RETORNO À PÁGINA
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            document.visibilityState
+            ===
+            "visible"
+        ) {
+
+            mostrarEntradas();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   🚀 INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
     function() {
 
         mostrarEntradas();
@@ -499,7 +1709,18 @@ window.addEventListener(
     }
 );
 
+
+
+/* =====================================================
+   🌐 INTEGRAÇÃO COM SCRIPT CENTRAL
+===================================================== */
+
+window.mostrarEntradasPagina =
+    mostrarEntradas;
+
+
 </script>
+
 
 </body>
 

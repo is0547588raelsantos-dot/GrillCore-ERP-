@@ -1,0 +1,434 @@
+/* =====================================================
+   🍔 GRILLCORE ERP
+   LAYOUT PROFISSIONAL — PADRÃO DO SISTEMA
+===================================================== */
+
+:root {
+    --gc-preto: #050505;
+    --gc-painel: #0d0d0d;
+    --gc-card: #151515;
+
+    --gc-vermelho: #9b111e;
+    --gc-vermelho-escuro: #5e0710;
+    --gc-vermelho-brilho: #c7192b;
+
+    --gc-dourado: #d4af37;
+    --gc-dourado-claro: #f3d66b;
+
+    --gc-branco: #ffffff;
+    --gc-cinza: #a9a0a0;
+
+    --gc-borda: rgba(212,175,55,.35);
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: var(--gc-branco);
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #35050a 0%,
+            #160205 28%,
+            #050505 72%
+        );
+}
+
+
+/* =====================================================
+   FUNDO
+===================================================== */
+
+.gc-fundo {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(155,17,30,.10),
+            transparent 60%
+        );
+}
+
+
+/* =====================================================
+   ESTRUTURA
+===================================================== */
+
+.gc-app {
+    min-height: 100vh;
+    position: relative;
+}
+
+
+/* =====================================================
+   MENU LATERAL
+===================================================== */
+
+.gc-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 245px;
+
+    padding: 20px 14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #120104,
+            #080808
+        );
+
+    border-right:
+        1px solid
+        rgba(212,175,55,.30);
+
+    box-shadow:
+        12px 0 35px
+        rgba(0,0,0,.45);
+
+    z-index: 100;
+}
+
+
+/* =====================================================
+   LOGO MENU
+===================================================== */
+
+.gc-brand {
+    text-align: center;
+
+    padding:
+        5px 5px 20px;
+
+    margin-bottom: 12px;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.20);
+}
+
+
+.gc-brand-logo {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--gc-dourado-claro),
+            var(--gc-dourado)
+        );
+
+    border:
+        2px solid
+        var(--gc-dourado-claro);
+
+    font-size: 29px;
+
+    box-shadow:
+        0 0 25px
+        rgba(212,175,55,.22);
+}
+
+
+.gc-brand h1 {
+    color:
+        var(--gc-dourado-claro);
+
+    font-size: 21px;
+
+    letter-spacing: .8px;
+}
+
+
+.gc-brand span {
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        #777;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.gc-menu {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.gc-menu a {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 46px;
+
+    padding:
+        10px 13px;
+
+    border-radius: 11px;
+
+    color:
+        #c9c2c2;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition:
+        .18s ease;
+}
+
+
+.gc-menu a .icone {
+    width: 25px;
+
+    text-align: center;
+
+    font-size: 19px;
+}
+
+
+.gc-menu a:hover {
+    color: white;
+
+    background:
+        rgba(155,17,30,.18);
+
+    transform:
+        translateX(2px);
+}
+
+
+.gc-menu a.ativo {
+    color:
+        var(--gc-dourado-claro);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(155,17,30,.75),
+            rgba(94,7,16,.65)
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.35);
+}
+
+
+/* =====================================================
+   SAIR
+===================================================== */
+
+.gc-menu .gc-sair {
+    margin-top: 10px;
+
+    color:
+        #c77b7b;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.05);
+
+    padding-top: 15px;
+}
+
+
+/* =====================================================
+   CONTEÚDO
+===================================================== */
+
+.gc-main {
+    min-height: 100vh;
+
+    margin-left: 245px;
+
+    padding:
+        24px;
+}
+
+
+/* =====================================================
+   TOPO DA PÁGINA
+===================================================== */
+
+.gc-topo {
+    max-width: 1200px;
+
+    margin:
+        0 auto 24px;
+
+    text-align: center;
+}
+
+
+.gc-topo .gc-icone {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--gc-dourado-claro),
+            var(--gc-dourado)
+        );
+
+    color:
+        #450006;
+
+    font-size: 31px;
+
+    border:
+        2px solid
+        var(--gc-dourado-claro);
+
+    box-shadow:
+        0 0 28px
+        rgba(212,175,55,.20);
+}
+
+
+.gc-topo h1 {
+    color:
+        var(--gc-dourado-claro);
+
+    font-size: 28px;
+
+    letter-spacing: .7px;
+}
+
+
+.gc-topo p {
+    margin-top: 6px;
+
+    color:
+        var(--gc-cinza);
+
+    font-size: 13px;
+}
+
+
+.gc-linha {
+    width: 120px;
+    height: 2px;
+
+    margin:
+        15px auto 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gc-dourado),
+            transparent
+        );
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.gc-grid {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.gc-card {
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.98),
+            rgba(10,10,10,.98)
+        );
+
+    border:
+       

@@ -3,160 +3,1585 @@
 
 <head>
 
+<script>
+if(localStorage.getItem("grillcore_login") !== "true"){
+    window.location.replace("login.html");
+}
+</script>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Clientes - GrillCore ERP</title>
+<meta name="theme-color"
+      content="#ff7300">
 
-<link rel="stylesheet" href="style.css">
+<meta name="description"
+      content="Gestão de clientes — GrillCore ERP">
+
+<title>Clientes — GrillCore ERP</title>
+
+<link rel="stylesheet"
+      href="style.css">
+
+<link rel="stylesheet"
+      href="tema-laranja.css">
+
 
 <style>
 
-body {
-    background: #181818;
-    color: white;
-    font-family: Arial, sans-serif;
-    padding: 15px;
+/* =====================================================
+   🍔 GRILLCORE ERP
+   CLIENTES — PADRÃO PROFISSIONAL
+   PRETO + LARANJA
+===================================================== */
+
+:root{
+
+    --cli-preto:#050505;
+    --cli-preto2:#0b0b0b;
+    --cli-card:#111111;
+    --cli-card2:#171717;
+
+    --cli-laranja:#ff7300;
+    --cli-laranja2:#ff9800;
+    --cli-laranja3:#ff4d00;
+
+    --cli-branco:#ffffff;
+    --cli-cinza:#aaa;
+    --cli-cinza2:#777;
+
+    --cli-verde:#29d66f;
+    --cli-vermelho:#ff4d4d;
+
 }
 
-h1,
-h2 {
-    color: #ff7a00;
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    box-sizing:border-box;
 }
 
-.card {
-    background: #242424;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 15px;
-    border: 1px solid #333;
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    margin:0;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(255,115,0,.10),
+            transparent 34%
+        ),
+        linear-gradient(
+            180deg,
+            #090909 0%,
+            #050505 100%
+        );
+
+    color:#fff;
+
 }
 
-input,
-textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 10px;
-    font-size: 17px;
-    background: #333;
-    color: white;
+
+/* =====================================================
+   PÁGINA
+===================================================== */
+
+.clientes-page{
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:0 auto;
+
+    padding:
+        12px
+        12px
+        45px;
+
 }
 
-textarea {
-    min-height: 90px;
-    resize: vertical;
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.clientes-header{
+
+    text-align:center;
+
+    padding:
+        8px
+        0
+        25px;
+
 }
 
-input::placeholder,
-textarea::placeholder {
-    color: #aaa;
+
+.clientes-header .icone{
+
+    width:66px;
+    height:66px;
+
+    margin:
+        0
+        auto
+        12px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff4d00
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    font-size:33px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(255,115,0,.25);
+
 }
 
-button {
-    width: 100%;
-    padding: 17px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 12px;
-    background: #ff7a00;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
+
+.clientes-header h1{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:
+        clamp(
+            32px,
+            7vw,
+            46px
+        );
+
+    line-height:1;
+
+    font-weight:950;
+
+    letter-spacing:-1.5px;
+
 }
 
-button:active {
-    transform: scale(0.98);
+
+.clientes-header h1::after{
+
+    content:"";
+
+    display:block;
+
+    width:58px;
+    height:4px;
+
+    margin:
+        12px
+        auto
+        0;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4d00,
+            #ff9800
+        );
+
 }
 
-.salvar {
-    background: #35a85b;
+
+.clientes-header p{
+
+    margin:
+        11px
+        0
+        0;
+
+    color:#929292;
+
+    font-size:14px;
+
+    font-weight:650;
+
 }
 
-.cancelar {
-    background: #555;
+
+/* =====================================================
+   SEÇÕES
+===================================================== */
+
+.clientes-secao{
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #0b0b0b
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:21px;
+
+    padding:20px;
+
+    margin-bottom:16px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 14px 35px
+        rgba(0,0,0,.38);
+
 }
 
-.voltar {
-    background: #333;
+
+.clientes-secao::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ff7300,
+            transparent
+        );
+
 }
 
-.editar {
-    background: #1769aa;
+
+/* =====================================================
+   TÍTULOS
+===================================================== */
+
+.secao-titulo{
+
+    margin:
+        0
+        0
+        19px;
+
+    text-align:center;
+
+    color:#fff;
+
+    font-size:
+        clamp(
+            20px,
+            5vw,
+            27px
+        );
+
+    line-height:1.15;
+
+    font-weight:950;
+
 }
 
-.excluir {
-    background: #b83232;
+
+.secao-titulo::after{
+
+    content:"";
+
+    display:block;
+
+    width:46px;
+    height:3px;
+
+    margin:
+        9px
+        auto
+        0;
+
+    border-radius:10px;
+
+    background:#ff7300;
+
 }
 
-.cliente {
-    background: #242424;
-    padding: 18px;
-    margin: 12px 0;
-    border-radius: 14px;
-    border: 1px solid #333;
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+.resumo-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:12px;
+
 }
 
-.cliente h3 {
-    color: #ff7a00;
-    margin-top: 0;
+
+/* =====================================================
+   CARD LARANJA
+===================================================== */
+
+.resumo-card{
+
+    position:relative;
+
+    min-width:0;
+
+    min-height:142px;
+
+    padding:
+        14px
+        9px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800 0%,
+            #ff7300 45%,
+            #ff4d00 100%
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    color:#fff;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 25px
+        rgba(255,115,0,.17);
+
 }
 
-.cliente-info {
-    line-height: 1.7;
+
+/* brilho superior */
+
+.resumo-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:115px;
+    height:115px;
+
+    right:-55px;
+    top:-55px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.10);
+
 }
 
-.estatisticas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+
+/* detalhe inferior */
+
+.resumo-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    left:-34px;
+    bottom:-34px;
+
+    border-radius:50%;
+
+    background:
+        rgba(0,0,0,.10);
+
 }
 
-.estatistica {
-    background: #1d1d1d;
-    padding: 14px;
-    border-radius: 10px;
+
+/* =====================================================
+   ÍCONE
+===================================================== */
+
+.resumo-icone{
+
+    position:relative;
+
+    z-index:2;
+
+    display:block;
+
+    font-size:24px;
+
+    line-height:1;
+
+    margin-bottom:7px;
+
 }
 
-.estatistica strong {
-    display: block;
-    color: #ff7a00;
-    font-size: 20px;
-    margin-top: 5px;
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+.resumo-label{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    color:#fff;
+
+    font-size:11px;
+
+    line-height:1.2;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:.25px;
+
 }
 
-.valor {
-    color: #ff7a00;
-    font-size: 28px;
-    font-weight: bold;
+
+/* =====================================================
+   NÚMEROS
+===================================================== */
+
+.resumo-numero{
+
+    position:relative;
+
+    z-index:2;
+
+    display:block;
+
+    width:100%;
+
+    margin-top:7px;
+
+    color:#fff;
+
+    font-size:29px !important;
+
+    line-height:1;
+
+    font-weight:950;
+
+    letter-spacing:-.8px;
+
+    white-space:nowrap;
+
+    text-align:center;
+
+    text-shadow:
+        0 3px 8px
+        rgba(0,0,0,.22);
+
 }
 
-.verde {
-    color: #35d07f !important;
+
+/* =====================================================
+   VALORES MONETÁRIOS
+   TAMANHO MENOR PARA NÃO CORTAR
+===================================================== */
+
+.resumo-numero.valor{
+
+    font-size:20px !important;
+
+    letter-spacing:-.5px;
+
 }
 
-.vermelho {
-    color: #ff5555 !important;
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+.formulario{
+
+    display:none;
+
+    animation:
+        aparecerFormulario
+        .2s
+        ease;
+
 }
 
-.vazio {
-    color: #aaa;
-    text-align: center;
-    padding: 25px;
+
+@keyframes aparecerFormulario{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(-8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
 }
 
-hr {
-    border: 0;
-    border-top: 1px solid #555;
-    margin: 25px 0;
+
+.formulario label{
+
+    display:block;
+
+    margin:
+        15px
+        0
+        7px;
+
+    color:#ddd;
+
+    font-size:13px;
+
+    font-weight:850;
+
 }
 
-#formularioCliente {
-    display: none;
+
+.formulario input,
+.formulario textarea{
+
+    width:100%;
+
+}
+
+
+.formulario input:focus,
+.formulario textarea:focus,
+.busca-input:focus{
+
+    border-color:
+        #ff7300 !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,115,0,.12);
+
+}
+
+
+/* =====================================================
+   BOTÃO PRINCIPAL
+===================================================== */
+
+.botao-principal{
+
+    width:100%;
+
+    min-height:58px;
+
+    margin-bottom:14px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff4d00
+        );
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:950;
+
+    letter-spacing:.2px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 10px 26px
+        rgba(255,115,0,.20);
+
+    transition:
+        transform .18s ease,
+        filter .18s ease;
+
+}
+
+
+.botao-principal:hover{
+
+    transform:
+        translateY(-2px);
+
+    filter:
+        brightness(1.08);
+
+}
+
+
+.botao-principal:active{
+
+    transform:
+        scale(.98);
+
+}
+
+
+/* =====================================================
+   BOTÃO CANCELAR
+===================================================== */
+
+.botao-cancelar{
+
+    width:100%;
+
+    min-height:52px;
+
+    margin-top:0;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:15px;
+
+    background:#111;
+
+    color:#aaa;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+}
+
+
+.botao-cancelar:hover{
+
+    color:#fff;
+
+    border-color:
+        rgba(255,115,0,.4);
+
+}
+
+
+/* =====================================================
+   BUSCA
+===================================================== */
+
+.busca-area{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+
+.busca-label{
+
+    color:#ff9800;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    margin-bottom:9px;
+
+}
+
+
+.busca-input{
+
+    width:100%;
+
+    max-width:650px;
+
+    min-height:54px;
+
+    padding:
+        0
+        16px;
+
+    text-align:center;
+
+    border-radius:15px !important;
+
+    background:#080808 !important;
+
+}
+
+
+/* =====================================================
+   LISTA
+===================================================== */
+
+.lista-titulo{
+
+    margin:
+        24px
+        0
+        14px;
+
+    text-align:center;
+
+    color:#fff;
+
+    font-size:22px;
+
+    line-height:1.2;
+
+    font-weight:950;
+
+}
+
+
+.lista-titulo::after{
+
+    content:"";
+
+    display:block;
+
+    width:42px;
+    height:3px;
+
+    margin:
+        8px
+        auto
+        0;
+
+    border-radius:10px;
+
+    background:#ff7300;
+
+}
+
+
+/* =====================================================
+   CARD DO CLIENTE
+===================================================== */
+
+.cliente{
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #181818,
+            #0c0c0c
+        );
+
+    border:
+        1px solid
+        rgba(255,115,0,.22);
+
+    border-radius:20px;
+
+    padding:19px;
+
+    margin-bottom:14px;
+
+    box-shadow:
+        0 10px 28px
+        rgba(0,0,0,.38);
+
+    overflow:hidden;
+
+}
+
+
+.cliente::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:4px;
+    height:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ff9800,
+            #ff4d00
+        );
+
+}
+
+
+/* =====================================================
+   TOPO CLIENTE
+===================================================== */
+
+.cliente-topo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:15px;
+
+}
+
+
+.cliente-avatar{
+
+    flex:
+        0 0
+        48px;
+
+    width:48px;
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff9800,
+            #ff4d00
+        );
+
+    font-size:24px;
+
+    box-shadow:
+        0 7px 18px
+        rgba(255,115,0,.16);
+
+}
+
+
+.cliente-titulo{
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+
+.cliente h3{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:19px;
+
+    line-height:1.15;
+
+    font-weight:950;
+
+    word-break:break-word;
+
+}
+
+
+.cliente-status{
+
+    display:inline-block;
+
+    margin-top:5px;
+
+    color:#ff9800;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
+
+}
+
+
+/* =====================================================
+   INFORMAÇÕES
+===================================================== */
+
+.cliente-info{
+
+    display:grid;
+
+    gap:8px;
+
+    color:#aaa;
+
+    line-height:1.45;
+
+}
+
+
+.cliente-info p{
+
+    margin:0;
+
+    padding:
+        9px
+        10px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    font-size:13px;
+
+}
+
+
+.cliente-info strong{
+
+    color:#ddd;
+
+}
+
+
+/* =====================================================
+   SEPARADOR
+===================================================== */
+
+.cliente hr{
+
+    border:0;
+
+    border-top:
+        1px solid
+        rgba(255,115,0,.15);
+
+    margin:
+        16px
+        0;
+
+}
+
+
+/* =====================================================
+   ESTATÍSTICAS
+===================================================== */
+
+.estatisticas{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:8px;
+
+}
+
+
+.estatistica{
+
+    min-width:0;
+
+    padding:
+        12px
+        6px;
+
+    text-align:center;
+
+    border-radius:13px;
+
+    background:#101010;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    color:#999;
+
+    font-size:9px;
+
+    line-height:1.2;
+
+    font-weight:800;
+
+}
+
+
+.estatistica strong{
+
+    display:block;
+
+    margin-top:6px;
+
+    color:#ff9800;
+
+    font-size:16px;
+
+    line-height:1.05;
+
+    font-weight:950;
+
+    white-space:nowrap;
+
+}
+
+
+.estatistica strong.verde{
+
+    color:#29d66f;
+
+}
+
+
+/* =====================================================
+   AÇÕES
+===================================================== */
+
+.cliente-acoes{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+
+    margin-top:15px;
+
+}
+
+
+.cliente-acoes button{
+
+    min-height:49px;
+
+    margin:0;
+
+    border-radius:13px;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+}
+
+
+.cliente-acoes .editar{
+
+    background:
+        rgba(255,115,0,.10);
+
+    border:
+        1px solid
+        rgba(255,115,0,.4);
+
+    color:#ff9800;
+
+}
+
+
+.cliente-acoes .editar:hover{
+
+    background:
+        rgba(255,115,0,.18);
+
+}
+
+
+.cliente-acoes .excluir{
+
+    background:
+        rgba(255,77,77,.06);
+
+    border:
+        1px solid
+        rgba(255,77,77,.3);
+
+    color:#ff7777;
+
+}
+
+
+.cliente-acoes .excluir:hover{
+
+    background:
+        rgba(255,77,77,.12);
+
+}
+
+
+/* =====================================================
+   VAZIO
+===================================================== */
+
+.vazio{
+
+    text-align:center;
+
+    padding:
+        35px
+        15px;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
+.vazio-icon{
+
+    display:block;
+
+    font-size:42px;
+
+    margin-bottom:10px;
+
+}
+
+
+/* =====================================================
+   VOLTAR
+===================================================== */
+
+.voltar-clientes{
+
+    width:100%;
+
+    min-height:55px;
+
+    margin-top:4px;
+
+    border:
+        1px solid
+        rgba(255,115,0,.25);
+
+    border-radius:15px;
+
+    background:#111;
+
+    color:#ddd;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+}
+
+
+.voltar-clientes:hover{
+
+    color:#fff;
+
+    border-color:#ff7300;
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:850px){
+
+    .resumo-grid{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media(max-width:600px){
+
+    .clientes-page{
+
+        padding:
+            8px
+            8px
+            35px;
+
+    }
+
+
+    .clientes-header{
+
+        padding-bottom:20px;
+
+    }
+
+
+    .clientes-header .icone{
+
+        width:58px;
+        height:58px;
+
+        font-size:29px;
+
+        border-radius:17px;
+
+    }
+
+
+    .clientes-header h1{
+
+        font-size:34px;
+
+    }
+
+
+    .clientes-header p{
+
+        font-size:12px;
+
+    }
+
+
+    .clientes-secao{
+
+        padding:
+            17px
+            12px;
+
+        border-radius:18px;
+
+    }
+
+
+    .secao-titulo{
+
+        font-size:20px;
+
+    }
+
+
+    /* =================================================
+       CARDS DO RESUMO
+    ================================================= */
+
+    .resumo-grid{
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        gap:9px;
+
+    }
+
+
+    .resumo-card{
+
+        min-height:120px;
+
+        padding:
+            12px
+            5px;
+
+        border-radius:15px;
+
+    }
+
+
+    .resumo-icone{
+
+        font-size:21px;
+
+        margin-bottom:6px;
+
+    }
+
+
+    .resumo-label{
+
+        font-size:8.5px;
+
+        letter-spacing:.1px;
+
+    }
+
+
+    /* NÚMEROS INTEIROS */
+
+    .resumo-numero{
+
+        font-size:25px !important;
+
+        margin-top:6px;
+
+        letter-spacing:-.5px;
+
+    }
+
+
+    /* DINHEIRO */
+
+    .resumo-numero.valor{
+
+        font-size:16px !important;
+
+        letter-spacing:-.35px;
+
+    }
+
+
+    .botao-principal{
+
+        min-height:56px;
+
+        font-size:14px;
+
+    }
+
+
+    .cliente{
+
+        padding:
+            16px
+            13px;
+
+    }
+
+
+    .cliente h3{
+
+        font-size:18px;
+
+    }
+
+
+    .cliente-info p{
+
+        font-size:12px;
+
+    }
+
+
+    .estatisticas{
+
+        gap:7px;
+
+    }
+
+
+    .estatistica{
+
+        font-size:8.5px;
+
+        padding:
+            11px
+            4px;
+
+    }
+
+
+    .estatistica strong{
+
+        font-size:14px;
+
+    }
+
+}
+
+
+/* =====================================================
+   CELULAR PEQUENO
+===================================================== */
+
+@media(max-width:380px){
+
+    .clientes-page{
+
+        padding-left:6px;
+        padding-right:6px;
+
+    }
+
+
+    .resumo-grid{
+
+        gap:7px;
+
+    }
+
+
+    .resumo-card{
+
+        min-height:113px;
+
+        padding:
+            10px
+            4px;
+
+    }
+
+
+    .resumo-icone{
+
+        font-size:19px;
+
+    }
+
+
+    .resumo-label{
+
+        font-size:8px;
+
+    }
+
+
+    .resumo-numero{
+
+        font-size:23px !important;
+
+    }
+
+
+    .resumo-numero.valor{
+
+        font-size:14px !important;
+
+    }
+
+
+    .cliente-avatar{
+
+        width:44px;
+        height:44px;
+
+        flex-basis:44px;
+
+        font-size:21px;
+
+    }
+
+
+    .cliente-acoes{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+/* =====================================================
+   MUITO PEQUENO
+===================================================== */
+
+@media(max-width:330px){
+
+    .resumo-numero{
+
+        font-size:21px !important;
+
+    }
+
+
+    .resumo-numero.valor{
+
+        font-size:13px !important;
+
+    }
+
 }
 
 </style>
@@ -167,329 +1592,634 @@ hr {
 <body>
 
 
-<h1>👥 Clientes</h1>
-
-<p>
-Cadastro e histórico de clientes do GrillCore ERP
-</p>
-
-<hr>
+<div class="container clientes-page">
 
 
-<!-- ================================================= -->
-<!-- RESUMO -->
-<!-- ================================================= -->
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
 
-<h2>📊 Resumo</h2>
+<header class="clientes-header">
 
-<div class="card">
-
-<div class="estatisticas">
-
-    <div class="estatistica">
-
-        👥 Clientes cadastrados
-
-        <strong id="totalClientes">
-            0
-        </strong>
-
+    <div class="icone">
+        👥
     </div>
 
 
-    <div class="estatistica">
+    <h1>
+        Clientes
+    </h1>
 
-        🧾 Total de pedidos
 
-        <strong id="totalPedidos">
-            0
-        </strong>
+    <p>
+        Gestão profissional da sua base de clientes
+    </p>
+
+</header>
+
+
+<!-- =====================================================
+     RESUMO
+===================================================== -->
+
+<section class="clientes-secao">
+
+    <h2 class="secao-titulo">
+        📊 Resumo de Clientes
+    </h2>
+
+
+    <div class="resumo-grid">
+
+
+        <div class="resumo-card">
+
+            <span class="resumo-icone">
+                👥
+            </span>
+
+
+            <span class="resumo-label">
+                Clientes cadastrados
+            </span>
+
+
+            <strong
+                id="totalClientes"
+                class="resumo-numero">
+
+                0
+
+            </strong>
+
+        </div>
+
+
+        <div class="resumo-card">
+
+            <span class="resumo-icone">
+                🧾
+            </span>
+
+
+            <span class="resumo-label">
+                Total de pedidos
+            </span>
+
+
+            <strong
+                id="totalPedidos"
+                class="resumo-numero">
+
+                0
+
+            </strong>
+
+        </div>
+
+
+        <div class="resumo-card">
+
+            <span class="resumo-icone">
+                💰
+            </span>
+
+
+            <span class="resumo-label">
+                Faturamento
+            </span>
+
+
+            <strong
+                id="faturamentoClientes"
+                class="resumo-numero valor">
+
+                R$ 0,00
+
+            </strong>
+
+        </div>
+
+
+        <div class="resumo-card">
+
+            <span class="resumo-icone">
+                📈
+            </span>
+
+
+            <span class="resumo-label">
+                Ticket médio
+            </span>
+
+
+            <strong
+                id="ticketMedioClientes"
+                class="resumo-numero valor">
+
+                R$ 0,00
+
+            </strong>
+
+        </div>
 
     </div>
 
-
-    <div class="estatistica">
-
-        💰 Faturamento dos clientes
-
-        <strong id="faturamentoClientes">
-            R$ 0,00
-        </strong>
-
-    </div>
+</section>
 
 
-    <div class="estatistica">
-
-        📈 Ticket médio
-
-        <strong id="ticketMedioClientes">
-            R$ 0,00
-        </strong>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- BOTÕES -->
-<!-- ================================================= -->
+<!-- =====================================================
+     NOVO CLIENTE
+===================================================== -->
 
 <button
-    class="salvar"
+    class="botao-principal"
     onclick="mostrarFormulario()">
 
-➕ Novo Cliente
+    ➕ &nbsp; NOVO CLIENTE
 
 </button>
 
 
-<button
-    class="voltar"
-    onclick="window.location.href='index.html'">
+<!-- =====================================================
+     FORMULÁRIO
+===================================================== -->
 
-🏠 Voltar ao Início
-
-</button>
-
-
-<!-- ================================================= -->
-<!-- FORMULÁRIO -->
-<!-- ================================================= -->
-
-<div
+<section
     id="formularioCliente"
-    class="card">
+    class="clientes-secao formulario">
 
-<h2 id="tituloFormulario">
-➕ Cadastrar Cliente
+
+    <h2
+        id="tituloFormulario"
+        class="secao-titulo">
+
+        ➕ Cadastrar Cliente
+
+    </h2>
+
+
+    <input
+        type="hidden"
+        id="clienteId">
+
+
+    <label for="clienteNome">
+        👤 Nome completo
+    </label>
+
+
+    <input
+        type="text"
+        id="clienteNome"
+        maxlength="100"
+        autocomplete="name"
+        placeholder="Digite o nome do cliente">
+
+
+    <label for="clienteTelefone">
+        📱 Telefone / WhatsApp
+    </label>
+
+
+    <input
+        type="tel"
+        id="clienteTelefone"
+        maxlength="20"
+        autocomplete="tel"
+        placeholder="(00) 00000-0000">
+
+
+    <label for="clienteEndereco">
+        🏠 Endereço
+    </label>
+
+
+    <input
+        type="text"
+        id="clienteEndereco"
+        maxlength="200"
+        autocomplete="street-address"
+        placeholder="Rua, número, bairro">
+
+
+    <label for="clienteObservacoes">
+        📝 Observações
+    </label>
+
+
+    <textarea
+        id="clienteObservacoes"
+        maxlength="500"
+        rows="4"
+        placeholder="Preferências, observações ou informações importantes..."></textarea>
+
+
+    <button
+        class="botao-principal"
+        onclick="salvarCliente()">
+
+        💾 &nbsp; SALVAR CLIENTE
+
+    </button>
+
+
+    <button
+        class="botao-cancelar"
+        onclick="cancelarFormulario()">
+
+        ❌ &nbsp; CANCELAR
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     BUSCA
+===================================================== -->
+
+<section class="clientes-secao">
+
+
+    <h2 class="secao-titulo">
+        🔎 Buscar Cliente
+    </h2>
+
+
+    <div class="busca-area">
+
+        <div class="busca-label">
+            Nome ou telefone
+        </div>
+
+
+        <input
+            type="search"
+            id="buscaCliente"
+            class="busca-input"
+            autocomplete="off"
+            placeholder="🔎 Digite para pesquisar..."
+            oninput="mostrarClientes()">
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     LISTA
+===================================================== -->
+
+<h2 class="lista-titulo">
+    📋 Clientes cadastrados
 </h2>
 
 
-<input
-    type="hidden"
-    id="clienteId">
-
-
-<label>
-👤 Nome
-</label>
-
-<input
-    type="text"
-    id="clienteNome"
-    placeholder="Nome completo">
-
-
-<label>
-📱 Telefone / WhatsApp
-</label>
-
-<input
-    type="tel"
-    id="clienteTelefone"
-    placeholder="(00) 00000-0000">
-
-
-<label>
-🏠 Endereço
-</label>
-
-<input
-    type="text"
-    id="clienteEndereco"
-    placeholder="Rua, número, bairro">
-
-
-<label>
-📝 Observações
-</label>
-
-<textarea
-    id="clienteObservacoes"
-    placeholder="Ex: sem cebola, prefere Pix, endereço dos fundos..."></textarea>
-
-
-<button
-    class="salvar"
-    onclick="salvarCliente()">
-
-💾 Salvar Cliente
-
-</button>
-
-
-<button
-    class="cancelar"
-    onclick="cancelarFormulario()">
-
-❌ Cancelar
-
-</button>
-
-</div>
-
-
-<hr>
-
-
-<!-- ================================================= -->
-<!-- PESQUISA -->
-<!-- ================================================= -->
-
-<h2>🔎 Buscar Cliente</h2>
-
-<div class="card">
-
-<input
-    type="search"
-    id="buscaCliente"
-    placeholder="Digite nome ou telefone..."
-    oninput="mostrarClientes()">
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- LISTA -->
-<!-- ================================================= -->
-
-<h2>📋 Clientes cadastrados</h2>
-
 <div id="listaClientes">
 
-<p class="vazio">
-Carregando...
-</p>
+    <div class="clientes-secao">
+
+        <p class="vazio">
+
+            <span class="vazio-icon">
+                ⏳
+            </span>
+
+            Carregando clientes...
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     VOLTAR
+===================================================== -->
+
+<button
+    class="voltar-clientes"
+    onclick="window.location.href='index.html'">
+
+    🏠 &nbsp; VOLTAR AO INÍCIO
+
+</button>
+
 
 </div>
 
 
 <script>
 
+/* =====================================================
+   CLIENTES
+===================================================== */
 
-// =====================================================
-// 💾 BANCO LOCAL
-// =====================================================
+function pegarClientes(){
 
-function pegarClientes() {
+    try{
 
-    return JSON.parse(
-        localStorage.getItem("clientes")
-    ) || [];
+        const dados =
+            JSON.parse(
+                localStorage.getItem("clientes")
+            );
+
+        return Array.isArray(dados)
+            ? dados
+            : [];
+
+    }
+    catch(e){
+
+        return [];
+
+    }
 
 }
 
 
-function salvarClientes(clientes) {
+function salvarClientes(clientes){
 
-    localStorage.setItem(
-        "clientes",
-        JSON.stringify(clientes)
+    try{
+
+        localStorage.setItem(
+            "clientes",
+            JSON.stringify(clientes)
+        );
+
+        return true;
+
+    }
+    catch(e){
+
+        console.error(
+            "Erro ao salvar clientes:",
+            e
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   VENDAS
+===================================================== */
+
+function pegarVendas(){
+
+    try{
+
+        const dados =
+            JSON.parse(
+                localStorage.getItem("vendas")
+            );
+
+        return Array.isArray(dados)
+            ? dados
+            : [];
+
+    }
+    catch(e){
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   DINHEIRO
+===================================================== */
+
+function dinheiro(valor){
+
+    const numero =
+        valorNumericoSeguro(valor);
+
+    return numero.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
     );
 
 }
 
 
-function pegarVendas() {
+/* =====================================================
+   VALOR NUMÉRICO
+===================================================== */
 
-    return JSON.parse(
-        localStorage.getItem("vendas")
-    ) || [];
+function valorNumericoSeguro(valor){
+
+    if(
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ){
+
+        return 0;
+
+    }
+
+
+    if(
+        typeof valor === "number"
+    ){
+
+        return Number.isFinite(valor)
+            ? valor
+            : 0;
+
+    }
+
+
+    let texto =
+        String(valor)
+        .trim()
+        .replace(/R\$/gi,"")
+        .replace(/\s/g,"");
+
+
+    if(!texto){
+
+        return 0;
+
+    }
+
+
+    if(texto.includes(",")){
+
+        texto =
+            texto.replace(/\./g,"");
+
+        texto =
+            texto.replace(",", ".");
+
+    }
+
+
+    texto =
+        texto.replace(
+            /[^0-9.-]/g,
+            ""
+        );
+
+
+    const numero =
+        Number(texto);
+
+
+    return Number.isFinite(numero)
+        ? numero
+        : 0;
 
 }
 
 
-// =====================================================
-// 💰 DINHEIRO
-// =====================================================
+/* =====================================================
+   ID
+===================================================== */
 
-function dinheiro(valor) {
+function gerarIdCliente(){
 
-    return "R$ " +
-
-        Number(valor || 0)
-            .toFixed(2)
-            .replace(".", ",");
-
-}
-
-
-// =====================================================
-// 🆔 NOVO ID
-// =====================================================
-
-function gerarIdCliente() {
-
-    return Date.now();
+    return (
+        Date.now()
+        +
+        Math.floor(
+            Math.random() * 1000
+        )
+    );
 
 }
 
 
-// =====================================================
-// ➕ MOSTRAR FORMULÁRIO
-// =====================================================
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
 
-function mostrarFormulario() {
+function escapar(texto){
 
-    document.getElementById(
-        "formularioCliente"
-    ).style.display = "block";
+    return String(
+        texto ?? ""
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   NORMALIZAR
+===================================================== */
+
+function normalizar(texto){
+
+    return String(
+        texto ?? ""
+    )
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+        /[\u0300-\u036f]/g,
+        ""
+    );
+
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+function mostrarFormulario(){
+
+    const formulario =
+        document.getElementById(
+            "formularioCliente"
+        );
+
+
+    formulario.style.display =
+        "block";
+
 
     document.getElementById(
         "tituloFormulario"
     ).innerText =
         "➕ Cadastrar Cliente";
 
+
     limparFormulario();
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+
+    formulario.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
     });
+
+
+    setTimeout(
+        function(){
+
+            document
+                .getElementById(
+                    "clienteNome"
+                )
+                .focus();
+
+        },
+        250
+    );
 
 }
 
 
-// =====================================================
-// ❌ CANCELAR
-// =====================================================
-
-function cancelarFormulario() {
+function cancelarFormulario(){
 
     document.getElementById(
         "formularioCliente"
-    ).style.display = "none";
+    ).style.display =
+        "none";
+
 
     limparFormulario();
 
 }
 
 
-// =====================================================
-// 🧹 LIMPAR FORMULÁRIO
-// =====================================================
-
-function limparFormulario() {
+function limparFormulario(){
 
     document.getElementById(
         "clienteId"
     ).value = "";
 
+
     document.getElementById(
         "clienteNome"
     ).value = "";
+
 
     document.getElementById(
         "clienteTelefone"
     ).value = "";
 
+
     document.getElementById(
         "clienteEndereco"
     ).value = "";
+
 
     document.getElementById(
         "clienteObservacoes"
@@ -498,47 +2228,53 @@ function limparFormulario() {
 }
 
 
-// =====================================================
-// 💾 SALVAR CLIENTE
-// =====================================================
+/* =====================================================
+   SALVAR CLIENTE
+===================================================== */
 
-function salvarCliente() {
+function salvarCliente(){
 
-    let id =
+    const id =
         document.getElementById(
             "clienteId"
         ).value;
 
-    let nome =
+
+    const nome =
         document.getElementById(
             "clienteNome"
         ).value.trim();
 
-    let telefone =
+
+    const telefone =
         document.getElementById(
             "clienteTelefone"
         ).value.trim();
 
-    let endereco =
+
+    const endereco =
         document.getElementById(
             "clienteEndereco"
         ).value.trim();
 
-    let observacoes =
+
+    const observacoes =
         document.getElementById(
             "clienteObservacoes"
         ).value.trim();
 
 
-    // =============================================
-    // VALIDAR
-    // =============================================
-
-    if (!nome) {
+    if(!nome){
 
         alert(
             "⚠️ Informe o nome do cliente."
         );
+
+        document
+            .getElementById(
+                "clienteNome"
+            )
+            .focus();
 
         return;
 
@@ -549,126 +2285,218 @@ function salvarCliente() {
         pegarClientes();
 
 
-    // =============================================
-    // EDITAR
-    // =============================================
+    /* =================================================
+       EDIÇÃO
+    ================================================= */
 
-    if (id) {
+    if(id){
 
-        let indice =
+        const indice =
             clientes.findIndex(
-                function(cliente) {
+                function(cliente){
 
                     return Number(
                         cliente.id
-                    ) === Number(id);
+                    )
+                    ===
+                    Number(id);
 
                 }
             );
 
 
-        if (indice !== -1) {
+        if(indice === -1){
 
-            clientes[indice].nome =
-                nome;
+            alert(
+                "❌ Cliente não encontrado."
+            );
 
-            clientes[indice].telefone =
-                telefone;
+            cancelarFormulario();
 
-            clientes[indice].endereco =
-                endereco;
-
-            clientes[indice].observacoes =
-                observacoes;
-
-            clientes[indice].atualizadoEm =
-                new Date().toISOString();
+            return;
 
         }
 
-    }
 
-    // =============================================
-    // NOVO
-    // =============================================
+        clientes[indice] = {
 
-    else {
+            ...clientes[indice],
 
-        let cliente = {
-
-            id:
-                gerarIdCliente(),
-
-            nome:
-                nome,
-
-            telefone:
-                telefone,
-
-            endereco:
-                endereco,
-
-            observacoes:
-                observacoes,
-
-            criadoEm:
-                new Date().toISOString(),
+            nome,
+            telefone,
+            endereco,
+            observacoes,
 
             atualizadoEm:
                 new Date().toISOString()
 
         };
 
+    }
 
-        clientes.push(
-            cliente
-        );
+
+    /* =================================================
+       NOVO CLIENTE
+    ================================================= */
+
+    else{
+
+        const nomeNormalizado =
+            normalizar(nome);
+
+
+        const telefoneNormalizado =
+            normalizar(telefone);
+
+
+        const duplicado =
+            clientes.find(
+                function(cliente){
+
+                    const mesmoNome =
+                        nomeNormalizado &&
+                        normalizar(
+                            cliente.nome
+                        ) ===
+                        nomeNormalizado;
+
+
+                    const mesmoTelefone =
+                        telefoneNormalizado &&
+                        normalizar(
+                            cliente.telefone
+                        ) ===
+                        telefoneNormalizado;
+
+
+                    return (
+                        mesmoNome ||
+                        mesmoTelefone
+                    );
+
+                }
+            );
+
+
+        if(duplicado){
+
+            const confirmar =
+                confirm(
+
+                    "⚠️ Já existe um cliente parecido cadastrado.\n\n"
+
+                    +
+                    "Nome: "
+                    +
+                    (
+                        duplicado.nome ||
+                        "Não informado"
+                    )
+
+                    +
+                    "\nTelefone: "
+                    +
+                    (
+                        duplicado.telefone ||
+                        "Não informado"
+                    )
+
+                    +
+                    "\n\nDeseja cadastrar mesmo assim?"
+
+                );
+
+
+            if(!confirmar){
+
+                return;
+
+            }
+
+        }
+
+
+        const agora =
+            new Date().toISOString();
+
+
+        clientes.push({
+
+            id:
+                gerarIdCliente(),
+
+            nome,
+            telefone,
+            endereco,
+            observacoes,
+
+            criadoEm:
+                agora,
+
+            atualizadoEm:
+                agora
+
+        });
 
     }
 
 
-    salvarClientes(
-        clientes
-    );
+    if(
+        !salvarClientes(clientes)
+    ){
+
+        alert(
+            "❌ Não foi possível salvar o cliente."
+        );
+
+        return;
+
+    }
 
 
     cancelarFormulario();
 
-    mostrarClientes();
-
     atualizarResumo();
+
+    mostrarClientes();
 
 
     alert(
-        "✅ Cliente salvo com sucesso!"
+        id
+        ?
+        "✅ Cliente atualizado com sucesso!"
+        :
+        "✅ Cliente cadastrado com sucesso!"
     );
 
 }
 
 
-// =====================================================
-// ✏️ EDITAR CLIENTE
-// =====================================================
+/* =====================================================
+   EDITAR
+===================================================== */
 
-function editarCliente(id) {
+function editarCliente(id){
 
-    let clientes =
+    const clientes =
         pegarClientes();
 
 
-    let cliente =
+    const cliente =
         clientes.find(
-            function(item) {
+            function(item){
 
                 return Number(
                     item.id
-                ) === Number(id);
+                )
+                ===
+                Number(id);
 
             }
         );
 
 
-    if (!cliente) {
+    if(!cliente){
 
         alert(
             "❌ Cliente não encontrado."
@@ -681,7 +2509,8 @@ function editarCliente(id) {
 
     document.getElementById(
         "formularioCliente"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
 
     document.getElementById(
@@ -720,59 +2549,85 @@ function editarCliente(id) {
         cliente.observacoes || "";
 
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+    const formulario =
+        document.getElementById(
+            "formularioCliente"
+        );
+
+
+    formulario.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
     });
+
+
+    setTimeout(
+        function(){
+
+            document
+                .getElementById(
+                    "clienteNome"
+                )
+                .focus();
+
+        },
+        250
+    );
 
 }
 
 
-// =====================================================
-// 🗑️ EXCLUIR CLIENTE
-// =====================================================
+/* =====================================================
+   EXCLUIR
+===================================================== */
 
-function excluirCliente(id) {
+function excluirCliente(id){
 
     let clientes =
         pegarClientes();
 
 
-    let cliente =
+    const cliente =
         clientes.find(
-            function(item) {
+            function(item){
 
                 return Number(
                     item.id
-                ) === Number(id);
+                )
+                ===
+                Number(id);
 
             }
         );
 
 
-    if (!cliente) {
+    if(!cliente){
 
         return;
 
     }
 
 
-    let confirmar =
+    const confirmar =
         confirm(
 
-            "🗑️ EXCLUIR CLIENTE?\n\n" +
+            "🗑️ EXCLUIR CLIENTE?\n\n"
 
-            "Cliente: " +
-            cliente.nome +
+            +
+            "Cliente: "
+            +
+            (
+                cliente.nome ||
+                "Não informado"
+            )
 
-            "\n\n" +
-
-            "O histórico de vendas não será apagado."
+            +
+            "\n\nO histórico de vendas não será apagado."
 
         );
 
 
-    if (!confirmar) {
+    if(!confirmar){
 
         return;
 
@@ -781,82 +2636,137 @@ function excluirCliente(id) {
 
     clientes =
         clientes.filter(
-            function(item) {
+            function(item){
 
                 return Number(
                     item.id
-                ) !== Number(id);
+                )
+                !==
+                Number(id);
 
             }
         );
 
 
-    salvarClientes(
-        clientes
-    );
+    if(
+        !salvarClientes(clientes)
+    ){
 
+        alert(
+            "❌ Não foi possível excluir o cliente."
+        );
 
-    mostrarClientes();
+        return;
+
+    }
+
 
     atualizarResumo();
 
+    mostrarClientes();
+
 
     alert(
-        "✅ Cliente excluído."
+        "✅ Cliente excluído com sucesso."
     );
 
 }
 
 
-// =====================================================
-// 📊 ESTATÍSTICAS DO CLIENTE
-// =====================================================
+/* =====================================================
+   ESTATÍSTICAS DO CLIENTE
+===================================================== */
 
-function estatisticasCliente(cliente) {
+function estatisticasCliente(cliente){
 
-    let vendas =
+    const vendas =
         pegarVendas();
 
 
-    let vendasCliente =
-        vendas.filter(
-            function(venda) {
+    const idCliente =
+        Number(cliente.id);
 
-                // Compatibilidade com vários formatos
-                let idVenda =
+
+    const nomeCliente =
+        normalizar(cliente.nome);
+
+
+    const telefoneCliente =
+        normalizar(cliente.telefone);
+
+
+    const vendasCliente =
+        vendas.filter(
+            function(venda){
+
+                const status =
+                    normalizar(
+                        venda.status
+                    );
+
+
+                if(
+                    status === "cancelado" ||
+                    status === "cancelada"
+                ){
+
+                    return false;
+
+                }
+
+
+                const idVenda =
                     Number(
                         venda.clienteId
                     );
 
-                let idCliente =
-                    Number(
-                        cliente.id
-                    );
 
-
-                if (
+                if(
                     idVenda &&
+                    idCliente &&
                     idVenda === idCliente
-                ) {
+                ){
 
                     return true;
 
                 }
 
 
-                let nomeVenda =
-                    String(
-                        venda.cliente || ""
-                    ).trim()
-                    .toLowerCase();
+                const nomeVenda =
+                    normalizar(
+                        venda.cliente
+                    );
 
 
-                return (
-                    nomeVenda ===
-                    String(
-                        cliente.nome || ""
-                    ).trim().toLowerCase()
-                );
+                if(
+                    nomeVenda &&
+                    nomeCliente &&
+                    nomeVenda === nomeCliente
+                ){
+
+                    return true;
+
+                }
+
+
+                const telefoneVenda =
+                    normalizar(
+                        venda.telefone
+                    );
+
+
+                if(
+                    telefoneVenda &&
+                    telefoneCliente &&
+                    telefoneVenda === telefoneCliente
+                ){
+
+                    return true;
+
+                }
+
+
+                return false;
 
             }
         );
@@ -866,29 +2776,23 @@ function estatisticasCliente(cliente) {
 
 
     vendasCliente.forEach(
-        function(venda) {
+        function(venda){
 
             total +=
-                Number(
+                valorNumericoSeguro(
                     venda.total
-                ) || 0;
+                );
 
         }
     );
 
 
-    let ticket = 0;
-
-
-    if (
-        vendasCliente.length > 0
-    ) {
-
-        ticket =
-            total /
-            vendasCliente.length;
-
-    }
+    const ticket =
+        vendasCliente.length
+        ?
+        total / vendasCliente.length
+        :
+        0;
 
 
     return {
@@ -896,53 +2800,55 @@ function estatisticasCliente(cliente) {
         pedidos:
             vendasCliente.length,
 
-        total:
-            total,
+        total,
 
-        ticket:
-            ticket
+        ticket
 
     };
 
 }
 
 
-// =====================================================
-// 📋 MOSTRAR CLIENTES
-// =====================================================
+/* =====================================================
+   MOSTRAR CLIENTES
+===================================================== */
 
-function mostrarClientes() {
+function mostrarClientes(){
 
     let clientes =
         pegarClientes();
 
 
-    let busca =
-        String(
-            document.getElementById(
-                "buscaCliente"
-            ).value || ""
-        )
-        .trim()
-        .toLowerCase();
+    const campoBusca =
+        document.getElementById(
+            "buscaCliente"
+        );
 
 
-    if (busca) {
+    const busca =
+        normalizar(
+            campoBusca
+                ? campoBusca.value
+                : ""
+        );
+
+
+    if(busca){
 
         clientes =
             clientes.filter(
-                function(cliente) {
+                function(cliente){
 
-                    let nome =
-                        String(
-                            cliente.nome || ""
-                        ).toLowerCase();
+                    const nome =
+                        normalizar(
+                            cliente.nome
+                        );
 
 
-                    let telefone =
-                        String(
-                            cliente.telefone || ""
-                        ).toLowerCase();
+                    const telefone =
+                        normalizar(
+                            cliente.telefone
+                        );
 
 
                     return (
@@ -956,23 +2862,35 @@ function mostrarClientes() {
     }
 
 
-    let lista =
+    const lista =
         document.getElementById(
             "listaClientes"
         );
 
 
-    if (
-        clientes.length === 0
-    ) {
+    if(!clientes.length){
 
         lista.innerHTML = `
 
-            <p class="vazio">
+            <div class="clientes-secao">
 
-                📭 Nenhum cliente encontrado.
+                <p class="vazio">
 
-            </p>
+                    <span class="vazio-icon">
+                        📭
+                    </span>
+
+                    ${
+                        busca
+                        ?
+                        "Nenhum cliente encontrado para essa busca."
+                        :
+                        "Nenhum cliente cadastrado ainda."
+                    }
+
+                </p>
+
+            </div>
 
         `;
 
@@ -987,7 +2905,7 @@ function mostrarClientes() {
     clientes
         .slice()
         .sort(
-            function(a, b) {
+            function(a,b){
 
                 return String(
                     a.nome || ""
@@ -995,16 +2913,18 @@ function mostrarClientes() {
                     String(
                         b.nome || ""
                     ),
-                    "pt-BR"
+                    "pt-BR",
+                    {
+                        sensitivity:"base"
+                    }
                 );
 
             }
         )
         .forEach(
-            function(cliente) {
+            function(cliente){
 
-
-                let estatisticas =
+                const estatisticas =
                     estatisticasCliente(
                         cliente
                     );
@@ -1012,30 +2932,75 @@ function mostrarClientes() {
 
                 lista.innerHTML += `
 
-                    <div class="cliente">
+                    <article class="cliente">
 
-                        <h3>
-                            👤 ${cliente.nome}
-                        </h3>
+
+                        <div class="cliente-topo">
+
+                            <div class="cliente-avatar">
+                                👤
+                            </div>
+
+
+                            <div class="cliente-titulo">
+
+                                <h3>
+                                    ${escapar(
+                                        cliente.nome
+                                    )}
+                                </h3>
+
+
+                                <span class="cliente-status">
+                                    Cliente cadastrado
+                                </span>
+
+                            </div>
+
+                        </div>
 
 
                         <div class="cliente-info">
 
                             <p>
-                                📱 <strong>Telefone:</strong>
-                                ${cliente.telefone || "Não informado"}
+                                📱
+                                <strong>
+                                    Telefone:
+                                </strong>
+
+                                ${escapar(
+                                    cliente.telefone ||
+                                    "Não informado"
+                                )}
+
                             </p>
 
 
                             <p>
-                                🏠 <strong>Endereço:</strong>
-                                ${cliente.endereco || "Não informado"}
+                                🏠
+                                <strong>
+                                    Endereço:
+                                </strong>
+
+                                ${escapar(
+                                    cliente.endereco ||
+                                    "Não informado"
+                                )}
+
                             </p>
 
 
                             <p>
-                                📝 <strong>Observações:</strong>
-                                ${cliente.observacoes || "Nenhuma"}
+                                📝
+                                <strong>
+                                    Observações:
+                                </strong>
+
+                                ${escapar(
+                                    cliente.observacoes ||
+                                    "Nenhuma"
+                                )}
+
                             </p>
 
                         </div>
@@ -1046,12 +3011,15 @@ function mostrarClientes() {
 
                         <div class="estatisticas">
 
+
                             <div class="estatistica">
 
                                 🧾 Pedidos
 
                                 <strong>
+
                                     ${estatisticas.pedidos}
+
                                 </strong>
 
                             </div>
@@ -1062,9 +3030,11 @@ function mostrarClientes() {
                                 💰 Total gasto
 
                                 <strong class="verde">
+
                                     ${dinheiro(
                                         estatisticas.total
                                     )}
+
                                 </strong>
 
                             </div>
@@ -1075,20 +3045,11 @@ function mostrarClientes() {
                                 📈 Ticket médio
 
                                 <strong>
+
                                     ${dinheiro(
                                         estatisticas.ticket
                                     )}
-                                </strong>
 
-                            </div>
-
-
-                            <div class="estatistica">
-
-                                🆔 Código
-
-                                <strong>
-                                    ${cliente.id}
                                 </strong>
 
                             </div>
@@ -1096,24 +3057,30 @@ function mostrarClientes() {
                         </div>
 
 
-                        <button
-                            class="editar"
-                            onclick="editarCliente(${cliente.id})">
-
-                            ✏️ Editar Cliente
-
-                        </button>
+                        <div class="cliente-acoes">
 
 
-                        <button
-                            class="excluir"
-                            onclick="excluirCliente(${cliente.id})">
+                            <button
+                                class="editar"
+                                onclick="editarCliente(${Number(cliente.id)})">
 
-                            🗑️ Excluir Cliente
+                                ✏️ EDITAR
 
-                        </button>
+                            </button>
 
-                    </div>
+
+                            <button
+                                class="excluir"
+                                onclick="excluirCliente(${Number(cliente.id)})">
+
+                                🗑️ EXCLUIR
+
+                            </button>
+
+                        </div>
+
+
+                    </article>
 
                 `;
 
@@ -1123,44 +3090,62 @@ function mostrarClientes() {
 }
 
 
-// =====================================================
-// 📊 RESUMO GERAL
-// =====================================================
+/* =====================================================
+   RESUMO GERAL
+===================================================== */
 
-function atualizarResumo() {
+function atualizarResumo(){
 
-    let clientes =
+    const clientes =
         pegarClientes();
 
 
-    let vendas =
+    const vendas =
         pegarVendas();
 
 
-    let totalPedidos =
-        vendas.length;
+    let totalPedidos = 0;
 
-
-    let faturamento =
-        0;
+    let faturamento = 0;
 
 
     vendas.forEach(
-        function(venda) {
+        function(venda){
+
+            const status =
+                normalizar(
+                    venda.status
+                );
+
+
+            if(
+                status === "cancelado" ||
+                status === "cancelada"
+            ){
+
+                return;
+
+            }
+
 
             faturamento +=
-                Number(
+                valorNumericoSeguro(
                     venda.total
-                ) || 0;
+                );
+
+
+            totalPedidos++;
 
         }
     );
 
 
-    let ticketMedio =
-        totalPedidos > 0
-        ? faturamento / totalPedidos
-        : 0;
+    const ticketMedio =
+        totalPedidos
+        ?
+        faturamento / totalPedidos
+        :
+        0;
 
 
     document.getElementById(
@@ -1189,11 +3174,11 @@ function atualizarResumo() {
 }
 
 
-// =====================================================
-// 🚀 INICIAR
-// =====================================================
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
 
-function iniciarClientes() {
+function iniciarClientes(){
 
     atualizarResumo();
 
@@ -1202,13 +3187,15 @@ function iniciarClientes() {
 }
 
 
-// =====================================================
-// 🔄 ATUALIZAR AO VOLTAR
-// =====================================================
+window.addEventListener(
+    "load",
+    iniciarClientes
+);
+
 
 window.addEventListener(
     "pageshow",
-    function() {
+    function(){
 
         atualizarResumo();
 
@@ -1218,18 +3205,30 @@ window.addEventListener(
 );
 
 
-window.addEventListener(
-    "load",
-    function() {
+/* =====================================================
+   ATUALIZAÇÃO ENTRE ABAS
+===================================================== */
 
-        iniciarClientes();
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key === "clientes" ||
+            event.key === "vendas" ||
+            event.key === null
+        ){
+
+            atualizarResumo();
+
+            mostrarClientes();
+
+        }
 
     }
 );
 
-
 </script>
-
 
 </body>
 

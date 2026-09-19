@@ -1,0 +1,949 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+content="#080808">
+
+<link rel="stylesheet"
+      href="tema-laranja.css"><meta name="apple-mobile-web-app-capable"
+content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+content="black-translucent">
+
+<title>GrillCore ERP — Recuperar acesso</title><style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #351300 0%,
+            #180900 30%,
+            #080808 72%
+        );
+
+}
+
+.container{
+
+    width:100%;
+    max-width:430px;
+
+    margin:auto;
+
+}
+
+.marca{
+
+    text-align:center;
+
+    margin-bottom:24px;
+
+}
+
+.logo{
+
+    width:78px;
+    height:78px;
+
+    margin:0 auto 10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff7300,
+            #b94700
+        );
+
+    border:1px solid #ff9a3d;
+
+    font-size:44px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.55),
+        0 0 28px rgba(255,115,0,.20);
+
+}
+
+.marca h1{
+
+    font-size:38px;
+
+    line-height:1;
+
+    font-weight:800;
+
+    color:#fff;
+
+}
+
+.marca h1 span{
+
+    color:#ff8a1f;
+
+}
+
+.marca p{
+
+    margin-top:8px;
+
+    color:#888;
+
+    font-size:12px;
+
+}
+
+.box{
+
+    width:100%;
+
+    padding:28px 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(27,15,8,.98),
+            rgba(10,10,10,.98)
+        );
+
+    border:
+        1px solid
+        rgba(255,115,0,.38);
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.65),
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+}
+
+.icone{
+
+    width:58px;
+    height:58px;
+
+    margin-bottom:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,115,0,.18),
+            rgba(185,71,0,.10)
+        );
+
+    border:
+        1px solid
+        rgba(255,115,0,.30);
+
+    font-size:25px;
+
+}
+
+h2{
+
+    color:#ff9a3d;
+
+    font-size:23px;
+
+    margin-bottom:9px;
+
+}
+
+.descricao{
+
+    color:#aaa;
+
+    font-size:13px;
+
+    line-height:1.65;
+
+    margin-bottom:22px;
+
+}
+
+.form-group{
+
+    margin-bottom:17px;
+
+}
+
+label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#ddd;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+.input-wrapper{
+
+    position:relative;
+
+}
+
+input{
+
+    width:100%;
+
+    min-height:52px;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    border:1px solid #49301b;
+
+    background:#0b0b0b;
+
+    color:#fff;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+input:focus{
+
+    border-color:#ff7300;
+
+    box-shadow:
+        0 0 0 2px rgba(255,115,0,.12);
+
+}
+
+input::placeholder{
+
+    color:#777;
+
+}
+
+.btn-olho{
+
+    position:absolute;
+
+    right:5px;
+    top:5px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#ff8a1f;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+}
+
+.aviso{
+
+    padding:15px;
+
+    margin-bottom:22px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,115,0,.06);
+
+    border:
+        1px solid
+        rgba(255,115,0,.24);
+
+    color:#cfcfcf;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+
+.aviso strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    color:#ff9a3d;
+
+    font-size:14px;
+
+}
+
+.mensagem{
+
+    display:none;
+
+    padding:13px;
+
+    margin-bottom:17px;
+
+    border-radius:11px;
+
+    text-align:center;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+.mensagem.erro{
+
+    background:#3d1208;
+
+    border:1px solid #9d3515;
+
+    color:#ff9a7a;
+
+}
+
+.mensagem.sucesso{
+
+    background:rgba(53,208,127,.10);
+
+    border:1px solid rgba(53,208,127,.35);
+
+    color:#72e6a4;
+
+}
+
+.btn{
+
+    width:100%;
+
+    min-height:53px;
+
+    border:none;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff8a1f,
+            #d95700
+        );
+
+    color:#120900;
+
+    font-weight:900;
+
+    font-size:14px;
+
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.4);
+
+}
+
+.btn:active{
+
+    transform:scale(.98);
+
+}
+
+.btn:disabled{
+
+    opacity:.7;
+
+    cursor:wait;
+
+}
+
+.voltar{
+
+    display:block;
+
+    margin-top:18px;
+
+    text-align:center;
+
+    color:#ff9a3d;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+}
+
+.voltar:hover{
+
+    color:#ffb56f;
+
+    text-decoration:underline;
+
+}
+
+.rodape{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#666;
+
+    font-size:11px;
+
+    line-height:1.6;
+
+}
+
+.rodape strong{
+
+    color:#ff8a1f;
+
+}
+
+@media(max-width:480px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+    .box{
+
+        padding:25px 18px;
+
+        border-radius:21px;
+
+    }
+
+    .marca h1{
+
+        font-size:34px;
+
+    }
+
+}
+
+</style></head><body><div class="container"><div class="marca"><div class="logo">
+    🍔
+</div>
+
+<h1>
+    Grill<span>Core</span>
+</h1>
+
+<p>
+    ERP • Gestão inteligente para hamburguerias
+</p>
+
+</div><div class="box"><div class="icone">
+    🔐
+</div>
+
+<h2>
+    Recuperar acesso
+</h2>
+
+<p class="descricao">
+
+    Altere sua senha de acesso ao
+    GrillCore diretamente neste dispositivo.
+
+</p>
+
+<div class="aviso">
+
+    <strong>
+        🛡️ Recuperação segura
+    </strong>
+
+    A nova senha será salva somente
+    neste dispositivo através do armazenamento
+    local do navegador.
+
+</div>
+
+<div class="form-group">
+
+    <label for="usuario">
+        👤 Usuário
+    </label>
+
+    <input
+        id="usuario"
+        type="text"
+        placeholder="Digite seu usuário"
+        autocomplete="username"
+        autocapitalize="none"
+        spellcheck="false">
+
+</div>
+
+<div class="form-group">
+
+    <label for="novaSenha">
+        🔑 Nova senha
+    </label>
+
+    <div class="input-wrapper">
+
+        <input
+            id="novaSenha"
+            type="password"
+            placeholder="Digite a nova senha"
+            autocomplete="new-password">
+
+        <button
+            type="button"
+            class="btn-olho"
+            onclick="alternarCampo('novaSenha', this)"
+            aria-label="Mostrar senha">
+
+            👁️
+
+        </button>
+
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <label for="confirmarSenha">
+        🔐 Confirmar nova senha
+    </label>
+
+    <div class="input-wrapper">
+
+        <input
+            id="confirmarSenha"
+            type="password"
+            placeholder="Digite novamente a nova senha"
+            autocomplete="new-password">
+
+        <button
+            type="button"
+            class="btn-olho"
+            onclick="alternarCampo('confirmarSenha', this)"
+            aria-label="Mostrar senha">
+
+            👁️
+
+        </button>
+
+    </div>
+
+</div>
+
+<div
+    id="mensagemErro"
+    class="mensagem erro">
+</div>
+
+<div
+    id="mensagemSucesso"
+    class="mensagem sucesso">
+</div>
+
+<button
+    type="button"
+    class="btn"
+    id="btnSalvar"
+    onclick="salvarNovaSenha()">
+
+    🔐 SALVAR NOVA SENHA
+
+</button>
+
+<a
+    href="login.html"
+    class="voltar">
+
+    ← Voltar para o login
+
+</a>
+
+</div><div class="rodape"><strong>
+    GrillCore ERP
+</strong>
+
+<br>
+
+Sistema profissional de gestão
+
+</div></div><script>
+
+const USUARIO_PADRAO = "admin";
+
+const SENHA_PADRAO = "1234";
+
+const CHAVE_USUARIO =
+    "grillcore_usuario_login";
+
+const CHAVE_SENHA =
+    "grillcore_senha_login";
+
+
+function alternarCampo(id, botao){
+
+    const campo =
+        document.getElementById(id);
+
+    if(!campo) return;
+
+    if(campo.type === "password"){
+
+        campo.type = "text";
+
+        botao.textContent = "😎";
+
+        botao.setAttribute(
+            "aria-label",
+            "Ocultar senha"
+        );
+
+    }
+    else{
+
+        campo.type = "password";
+
+        botao.textContent = "👁️";
+
+        botao.setAttribute(
+            "aria-label",
+            "Mostrar senha"
+        );
+
+    }
+
+}
+
+
+function mostrarErro(texto){
+
+    const erro =
+        document.getElementById(
+            "mensagemErro"
+        );
+
+    const sucesso =
+        document.getElementById(
+            "mensagemSucesso"
+        );
+
+    sucesso.style.display = "none";
+
+    erro.textContent = texto;
+
+    erro.style.display = "block";
+
+}
+
+
+function mostrarSucesso(texto){
+
+    const erro =
+        document.getElementById(
+            "mensagemErro"
+        );
+
+    const sucesso =
+        document.getElementById(
+            "mensagemSucesso"
+        );
+
+    erro.style.display = "none";
+
+    sucesso.textContent = texto;
+
+    sucesso.style.display = "block";
+
+}
+
+
+function salvarNovaSenha(){
+
+    const usuario =
+        document.getElementById(
+            "usuario"
+        ).value.trim();
+
+    const novaSenha =
+        document.getElementById(
+            "novaSenha"
+        ).value;
+
+    const confirmarSenha =
+        document.getElementById(
+            "confirmarSenha"
+        ).value;
+
+    const botao =
+        document.getElementById(
+            "btnSalvar"
+        );
+
+    document.getElementById(
+        "mensagemErro"
+    ).style.display = "none";
+
+    document.getElementById(
+        "mensagemSucesso"
+    ).style.display = "none";
+
+
+    if(!usuario){
+
+        mostrarErro(
+            "⚠️ Digite o usuário."
+        );
+
+        document.getElementById(
+            "usuario"
+        ).focus();
+
+        return;
+
+    }
+
+
+    const usuarioAtual =
+        localStorage.getItem(
+            CHAVE_USUARIO
+        ) || USUARIO_PADRAO;
+
+
+    if(usuario !== usuarioAtual){
+
+        mostrarErro(
+            "❌ Usuário não encontrado neste dispositivo."
+        );
+
+        document.getElementById(
+            "usuario"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(!novaSenha){
+
+        mostrarErro(
+            "⚠️ Digite uma nova senha."
+        );
+
+        document.getElementById(
+            "novaSenha"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(novaSenha.length < 4){
+
+        mostrarErro(
+            "⚠️ A nova senha precisa ter pelo menos 4 caracteres."
+        );
+
+        document.getElementById(
+            "novaSenha"
+        ).focus();
+
+        return;
+
+    }
+
+
+    if(novaSenha !== confirmarSenha){
+
+        mostrarErro(
+            "❌ As senhas não são iguais."
+        );
+
+        document.getElementById(
+            "confirmarSenha"
+        ).focus();
+
+        return;
+
+    }
+
+
+    try{
+
+        localStorage.setItem(
+            CHAVE_USUARIO,
+            usuario
+        );
+
+        localStorage.setItem(
+            CHAVE_SENHA,
+            novaSenha
+        );
+
+        localStorage.removeItem(
+            "grillcore_login"
+        );
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "✅ SENHA ALTERADA";
+
+        mostrarSucesso(
+            "✅ Senha alterada com sucesso! Você será levado para o login."
+        );
+
+        setTimeout(
+            function(){
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            },
+            1500
+        );
+
+    }
+    catch(erro){
+
+        botao.disabled = false;
+
+        botao.textContent =
+            "🔐 SALVAR NOVA SENHA";
+
+        mostrarErro(
+            "❌ Não foi possível salvar a nova senha neste dispositivo."
+        );
+
+        console.error(
+            "GrillCore:",
+            erro
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            salvarNovaSenha();
+
+        }
+
+    }
+);
+
+
+(function verificarSessao(){
+
+    try{
+
+        if(
+            localStorage.getItem(
+                "grillcore_login"
+            ) === "true"
+        ){
+
+            window.location.replace(
+                "index.html"
+            );
+
+        }
+
+    }
+    catch(erro){
+
+        console.warn(
+            "GrillCore: não foi possível verificar a sessão.",
+            erro
+        );
+
+    }
+
+})();
+
+
+window.addEventListener(
+    "load",
+    function(){
+
+        const usuario =
+            document.getElementById(
+                "usuario"
+            );
+
+        if(usuario){
+
+            usuario.focus();
+
+        }
+
+    }
+);
+
+</script></body></html>

@@ -1,50 +1,37 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
 
 <script>
-if(localStorage.getItem("grillcore_login") !== "true"){
+if (localStorage.getItem("grillcore_login") !== "true") {
     window.location.replace("login.html");
 }
 </script>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color"
-      content="#ff7300">
-
-<meta name="description"
-      content="GrillCore ERP — Sistema profissional de gestão para hamburguerias">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0d0d">
 
 <link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet" href="style.css">
-
-<link rel="stylesheet" href="tema-laranja.css">
-
-<title>GrillCore ERP — Dashboard</title>
+<title>GrillCore ERP</title>
 
 <style>
 
 :root{
-    --laranja:#ff7300;
-    --laranja2:#ff9800;
-    --laranja3:#ff4d00;
+    --fundo:#0d0d0d;
+    --grafite:#222222;
+    --grafite2:#292929;
+    --grafite3:#181818;
 
-    --preto:#050505;
-    --preto2:#0b0b0b;
-    --painel:#101010;
-    --card:#151515;
+    --dourado:#d4af37;
+    --dourado-claro:#f0cf65;
+
+    --laranja:#ff7300;
 
     --branco:#ffffff;
-    --cinza:#a9a9a9;
-
-    --verde:#35d07f;
-    --vermelho:#ff4d4d;
+    --cinza:#a7a7a7;
 }
 
 *{
@@ -53,487 +40,191 @@ if(localStorage.getItem("grillcore_login") !== "true"){
     padding:0;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
+    font-family:Arial,Helvetica,sans-serif;
 
     background:
         radial-gradient(
-            circle at top,
-            #241000 0%,
-            #0d0805 35%,
-            #050505 75%
-        );
+            circle at top right,
+            rgba(212,175,55,.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            rgba(255,115,0,.05),
+            transparent 30%
+        ),
+        var(--fundo);
 
     color:var(--branco);
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
     min-height:100vh;
 
+    overflow-x:hidden;
 }
 
-.dashboard-container{
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
+}
 
+.container{
     width:100%;
-    max-width:1250px;
-    margin:0 auto;
-    padding:24px 18px 50px;
-
-}
-
-.dashboard-header{
-
-    text-align:center;
-    padding:18px 10px 28px;
-
-}
-
-.dashboard-logo{
-
-    width:78px;
-    height:78px;
-
-    margin:0 auto 12px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:42px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffb300,
-            #ff7300,
-            #d83b00
-        );
-
-    border:3px solid #ffb300;
-
-    box-shadow:
-        0 0 25px rgba(255,115,0,.45),
-        inset 0 2px 5px rgba(255,255,255,.35);
-
-}
-
-.dashboard-header h1{
-
-    font-size:clamp(30px,6vw,48px);
-
-    font-weight:900;
-
-    letter-spacing:-1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffb300,
-            #ff7300,
-            #ffd166
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-
-    color:transparent;
-
-}
-
-.dashboard-header p{
-
-    margin-top:8px;
-    color:#bdbdbd;
-    font-size:clamp(15px,3vw,19px);
-
-}
-
-.header-line{
-
-    width:110px;
-    height:4px;
-    margin:20px auto 0;
-
-    border-radius:10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--laranja),
-            transparent
-        );
-
-}
-
-.usuario-card{
-
-    width:100%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #171717,
-            #0b0b0b
-        );
-
-    border:1px solid rgba(255,115,0,.35);
-
-    border-radius:20px;
-
+    max-width:1180px;
+    margin:auto;
     padding:18px;
+}
 
+
+/* =========================
+   TOPO
+========================= */
+
+.topo{
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
 
     gap:15px;
 
-    margin-bottom:22px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.35);
-
+    margin-bottom:24px;
 }
 
-.usuario-info{
-
+.logo-area{
     display:flex;
     align-items:center;
-    gap:14px;
 
+    gap:12px;
 }
 
-.usuario-avatar{
+.logo{
+    width:48px;
+    height:48px;
 
-    width:58px;
-    height:58px;
+    border-radius:14px;
 
-    border-radius:50%;
+    background:
+        linear-gradient(
+            145deg,
+            #f0cf65,
+            #9b7810
+        );
+
+    color:#111;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    font-size:30px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff9800,
-            #ff5c00
-        );
-
-    border:2px solid #ffb300;
+    font-weight:900;
+    font-size:18px;
 
     box-shadow:
-        0 0 18px rgba(255,115,0,.35);
-
+        0 0 20px rgba(212,175,55,.18);
 }
 
-.usuario-label{
-
-    color:#888;
-    font-size:12px;
-    font-weight:bold;
-    letter-spacing:1.5px;
-
-}
-
-.usuario-nome{
-
-    color:#fff;
-    font-size:23px;
+.titulo{
+    font-size:22px;
     font-weight:900;
-    margin-top:3px;
-
 }
 
-.status-online{
-
-    padding:10px 15px;
-
-    border-radius:30px;
-
-    color:var(--verde);
-
-    background:rgba(53,208,127,.08);
-
-    border:1px solid rgba(53,208,127,.35);
-
-    font-size:14px;
-    font-weight:bold;
-
-    white-space:nowrap;
-
-}
-
-.boas-vindas{
-
-    position:relative;
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            #251000,
-            #120a05,
-            #090909
-        );
-
-    border:1px solid rgba(255,115,0,.45);
-
-    border-radius:22px;
-
-    padding:25px;
-
-    margin-bottom:25px;
-
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.4);
-
-}
-
-.boas-vindas::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:180px;
-    height:180px;
-
-    right:-70px;
-    top:-80px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,115,0,.25),
-            transparent 70%
-        );
-
-}
-
-.boas-conteudo{
-
-    display:flex;
-    align-items:center;
-    gap:18px;
-
-    position:relative;
-    z-index:2;
-
-}
-
-.boas-icone{
-
-    width:70px;
-    height:70px;
-
-    flex-shrink:0;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:38px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffb300,
-            #ff7300
-        );
-
-    border:3px solid #ffd166;
-
-    box-shadow:
-        0 0 25px rgba(255,115,0,.4);
-
-}
-
-.boas-vindas h2{
-
-    font-size:clamp(22px,5vw,31px);
-    font-weight:900;
-
-}
-
-.boas-vindas p{
-
-    margin-top:6px;
-    color:#bdbdbd;
-    font-size:16px;
-
-}
-
-.section-title{
-
-    text-align:center;
-    margin:32px 0 16px;
-
-}
-
-.section-title h2{
-
-    font-size:25px;
-    font-weight:900;
-    color:#fff;
-
-}
-
-.section-title h2 span{
-
-    color:var(--laranja);
-
-}
-
-.section-title p{
-
-    color:#888;
+.subtitulo{
+    color:var(--cinza);
     font-size:13px;
-    margin-top:5px;
-
+    margin-top:3px;
 }
 
-.resumo-grid{
+.usuario{
+    background:#191919;
 
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,minmax(0,1fr));
-
-    gap:15px;
-
-}
-
-.resumo-card{
-
-    position:relative;
-    overflow:hidden;
-
-    min-height:155px;
-
-    padding:22px 18px;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff9800 0%,
-            #ff7300 55%,
-            #f04d00 100%
-        );
-
-    border:1px solid rgba(255,255,255,.22);
-
-    box-shadow:
-        0 12px 28px rgba(255,115,0,.20),
-        inset 0 1px 0 rgba(255,255,255,.3);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-
-}
-
-.resumo-card:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 18px 38px rgba(255,115,0,.3);
-
-}
-
-.resumo-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:100px;
-    height:100px;
-
-    right:-35px;
-    bottom:-40px;
-
-    border-radius:50%;
-
-    background:
-        rgba(255,255,255,.10);
-
-}
-
-.resumo-topo{
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-}
-
-.resumo-icone{
-
-    font-size:30px;
-
-}
-
-.olho-btn{
-
-    width:42px;
-    height:42px;
+    border:1px solid rgba(212,175,55,.35);
 
     border-radius:12px;
 
-    border:1px solid rgba(255,255,255,.35);
-
-    background:
-        rgba(0,0,0,.20);
-
-    color:#fff;
-
-    font-size:21px;
-
-    cursor:pointer;
-
-}
-
-.resumo-label{
-
-    display:block;
-
-    margin-top:18px;
+    padding:9px 13px;
 
     font-size:13px;
+
+    color:var(--dourado-claro);
+
+    white-space:nowrap;
+}
+
+
+/* =========================
+   BOAS VINDAS
+========================= */
+
+.boas-vindas{
+    margin-bottom:20px;
+}
+
+.boas-vindas h1{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.boas-vindas p{
+    color:var(--cinza);
+    font-size:14px;
+}
+
+
+/* =========================
+   CABEÇALHO DOS INDICADORES
+========================= */
+
+.indicadores-area{
+    margin-bottom:28px;
+}
+
+.indicadores-cabecalho{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+}
+
+.indicadores-cabecalho span{
+
+    color:#777;
+
+    font-size:11px;
 
     font-weight:bold;
 
     text-transform:uppercase;
 
-    letter-spacing:.8px;
-
-    opacity:.9;
-
+    letter-spacing:.7px;
 }
 
 
-/* =====================================================
-   🔢 NÚMEROS DO RESUMO
-   SOMENTE OS NÚMEROS FORAM REDUZIDOS
-===================================================== */
+/* BOTÃO ÚNICO */
 
-.resumo-numero{
+.olho-geral{
+
+    width:40px;
+    height:34px;
+
+    border-radius:10px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    background:#151515;
+
+    color:white;
+
+    font-size:17px;
 
     display:flex;
 
@@ -541,1301 +232,1731 @@ body{
 
     justify-content:center;
 
-    width:100%;
-    max-width:100%;
+    cursor:pointer;
 
-    min-width:0;
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.25);
 
-    margin:8px auto 0;
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        border-color .15s ease;
+}
 
-    padding:0;
+.olho-geral:hover{
 
-    text-align:center;
+    background:#222;
 
-    white-space:nowrap;
+    border-color:
+        var(--dourado);
+}
 
-    overflow:hidden;
+.olho-geral:active{
 
-    text-overflow:ellipsis;
-
-    font-size:24px !important;
-
-    line-height:1.05;
-
-    font-weight:900;
-
-    letter-spacing:-.5px;
-
-    font-variant-numeric:tabular-nums;
-
-    box-sizing:border-box;
-
+    transform:scale(.90);
 }
 
 
-/* Produtos e Clientes */
+/* =========================
+   INDICADORES
+========================= */
 
-.resumo-card:nth-child(1) .resumo-numero,
-.resumo-card:nth-child(2) .resumo-numero{
-
-    font-size:29px !important;
-
-}
-
-
-/* Vendas e Entradas */
-
-.resumo-card:nth-child(3) .resumo-numero,
-.resumo-card:nth-child(4) .resumo-numero{
-
-    font-size:20px !important;
-
-    letter-spacing:-.5px;
-
-}
-
-
-/* =====================================================
-   ACESSO RÁPIDO
-===================================================== */
-
-.acesso-grid{
+.indicadores{
 
     display:grid;
 
     grid-template-columns:
-        repeat(4,minmax(0,1fr));
+        repeat(4,1fr);
 
-    gap:15px;
-
+    gap:14px;
 }
 
-.acesso-card{
+.indicador{
 
     position:relative;
 
-    min-height:130px;
+    min-height:125px;
 
-    padding:20px;
+    padding:18px;
 
-    border-radius:19px;
+    border-radius:18px;
 
     background:
         linear-gradient(
             145deg,
-            #181818,
-            #0c0c0c
+            #292929,
+            #1d1d1d
         );
 
-    border:1px solid #292929;
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.35),
+        inset 0 1px 0
+        rgba(255,255,255,.04);
+
+    overflow:hidden;
+}
+
+.indicador::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    right:-30px;
+    bottom:-35px;
+
+    background:
+        rgba(212,175,55,.08);
+}
+
+.indicador-topo{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:13px;
+}
+
+.indicador-nome{
+
+    color:#cfcfcf;
+
+    font-size:13px;
+
+    font-weight:bold;
+}
+
+.icone-indicador{
+    font-size:20px;
+}
+
+.valor{
+
+    font-size:23px;
+
+    font-weight:900;
+
+    color:var(--dourado-claro);
+
+    letter-spacing:.3px;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+/* =========================
+   TÍTULO DA SEÇÃO
+========================= */
+
+.secao-titulo{
+
+    display:flex;
+
+    align-items:center;
+
+    margin-bottom:13px;
+}
+
+.secao-titulo h2{
+    font-size:19px;
+}
+
+.linha-dourada{
+
+    height:2px;
+
+    flex:1;
+
+    max-width:90px;
+
+    margin-left:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--dourado),
+            transparent
+        );
+}
+
+
+/* =========================
+   9 CARDS
+========================= */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+}
+
+.card{
+
+    position:relative;
+
+    min-height:125px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #292929,
+            #202020
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.42);
+
+    border-radius:18px;
+
+    padding:18px;
 
     text-decoration:none;
 
-    color:#fff;
+    color:white;
 
     display:flex;
 
     flex-direction:column;
 
     justify-content:center;
-    align-items:center;
-
-    text-align:center;
-
-    gap:9px;
-
-    overflow:hidden;
 
     transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
-
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
 }
 
-.acesso-card::before{
+.card::before{
 
     content:"";
 
     position:absolute;
 
     left:0;
-    top:0;
 
-    width:100%;
-    height:3px;
+    top:18px;
+    bottom:18px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ff4d00,
-            #ff9800,
-            #ff4d00
-        );
+    width:3px;
 
+    border-radius:5px;
+
+    background:var(--dourado);
 }
 
-.acesso-card:hover{
+.card:hover{
 
-    transform:translateY(-4px);
+    transform:translateY(-3px);
+
+    border-color:
+        var(--dourado);
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.4),
+        0 0 18px
+        rgba(212,175,55,.10);
+}
+
+.card:active{
+    transform:scale(.97);
+}
+
+
+/* NOVO PEDIDO */
+
+.card.destaque{
 
     border-color:
         rgba(255,115,0,.7);
 
-    box-shadow:
-        0 12px 30px rgba(255,115,0,.15);
-
+    background:
+        linear-gradient(
+            145deg,
+            #332719,
+            #22201d
+        );
 }
 
-.acesso-icone{
+.card.destaque::before{
+    background:var(--laranja);
+}
 
-    width:58px;
-    height:58px;
+.card.destaque .icone-card{
+    border-color:
+        rgba(255,115,0,.55);
+}
+
+
+/* ÍCONE DOS CARDS */
+
+.icone-card{
+
+    width:45px;
+    height:45px;
+
+    border-radius:13px;
+
+    background:#171717;
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
-    border-radius:16px;
+    font-size:23px;
 
-    font-size:31px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff9800,
-            #ff5c00
-        );
-
-    box-shadow:
-        0 6px 18px rgba(255,115,0,.25);
-
+    margin-bottom:11px;
 }
 
-.acesso-nome{
+.card h3{
 
     font-size:16px;
-    font-weight:900;
 
+    margin-bottom:5px;
 }
 
-.acesso-descricao{
-
-    color:#888;
-    font-size:11px;
-
-}
-
-.sair-card{
-
-    border-color:
-        rgba(255,77,77,.25);
-
-}
-
-.sair-card::before{
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff3b3b,
-            #ff7373,
-            #ff3b3b
-        );
-
-}
-
-.sair-card .acesso-icone{
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff5555,
-            #b50000
-        );
-
-}
-
-.dashboard-footer{
-
-    text-align:center;
-
-    margin-top:35px;
-
-    padding-top:20px;
-
-    border-top:1px solid #222;
-
-    color:#666;
+.card p{
 
     font-size:12px;
 
-}
+    color:#999;
 
-.dashboard-footer strong{
-
-    color:var(--laranja);
-
+    line-height:1.35;
 }
 
 
-/* =====================================================
+/* =========================
+   RESUMO
+========================= */
+
+.resumo{
+
+    margin-top:28px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+.resumo-box{
+
+    background:#191919;
+
+    border:1px solid #333;
+
+    border-radius:15px;
+
+    padding:17px;
+}
+
+.resumo-label{
+
+    color:#999;
+
+    font-size:12px;
+
+    margin-bottom:7px;
+}
+
+.resumo-numero{
+
+    color:var(--dourado-claro);
+
+    font-size:24px;
+
+    font-weight:900;
+}
+
+
+/* =========================
+   SAIR
+========================= */
+
+.area-sair{
+
+    margin-top:28px;
+
+    text-align:center;
+}
+
+.btn-sair{
+
+    width:100%;
+
+    max-width:320px;
+
+    padding:13px 20px;
+
+    border-radius:13px;
+
+    border:1px solid #3b3b3b;
+
+    background:#181818;
+
+    color:#ddd;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.btn-sair:active{
+    transform:scale(.98);
+}
+
+.btn-sair:hover{
+
+    border-color:#8b3333;
+
+    color:#ff7777;
+}
+
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.rodape{
+
+    text-align:center;
+
+    color:#666;
+
+    font-size:11px;
+
+    margin-top:18px;
+
+    padding-bottom:12px;
+}
+
+
+/* =========================
    TABLET
-===================================================== */
+========================= */
 
-@media(max-width:950px){
+@media(max-width:850px){
 
-    .resumo-grid{
-
-        grid-template-columns:
-            repeat(2,minmax(0,1fr));
-
-    }
-
-    .acesso-grid{
+    .indicadores{
 
         grid-template-columns:
-            repeat(3,minmax(0,1fr));
-
+            repeat(2,1fr);
     }
 
-    .resumo-card:nth-child(1) .resumo-numero,
-    .resumo-card:nth-child(2) .resumo-numero{
+    .cards{
 
-        font-size:28px !important;
-
+        grid-template-columns:
+            repeat(3,1fr);
     }
-
-    .resumo-card:nth-child(3) .resumo-numero,
-    .resumo-card:nth-child(4) .resumo-numero{
-
-        font-size:20px !important;
-
-    }
-
 }
 
 
-/* =====================================================
+/* =========================
    CELULAR
-===================================================== */
+========================= */
 
-@media(max-width:650px){
+@media(max-width:600px){
 
-    .dashboard-container{
-
-        padding:
-            15px
-            12px
-            35px;
-
+    .container{
+        padding:14px;
     }
 
-    .dashboard-header{
-
-        padding-top:10px;
-
+    .topo{
+        align-items:flex-start;
     }
 
-    .dashboard-logo{
+    .logo{
 
-        width:68px;
-        height:68px;
+        width:43px;
+        height:43px;
 
-        font-size:35px;
-
+        border-radius:12px;
     }
 
-    .usuario-card{
+    .titulo{
+        font-size:18px;
+    }
+
+    .usuario{
+
+        font-size:11px;
+
+        padding:8px 9px;
+    }
+
+    .boas-vindas h1{
+        font-size:23px;
+    }
+
+    .indicadores{
+        gap:10px;
+    }
+
+    .indicador{
+
+        min-height:115px;
 
         padding:14px;
 
+        border-radius:15px;
     }
 
-    .status-online{
-
-        padding:
-            8px 10px;
-
-        font-size:12px;
-
-    }
-
-    .usuario-avatar{
-
-        width:50px;
-        height:50px;
-
-        font-size:26px;
-
-    }
-
-    .usuario-nome{
-
+    .valor{
         font-size:19px;
-
     }
 
-    .boas-vindas{
+    .olho-geral{
 
-        padding:20px;
+        width:38px;
+        height:32px;
 
+        font-size:16px;
     }
 
-    .boas-conteudo{
-
-        align-items:flex-start;
-
-    }
-
-    .boas-icone{
-
-        width:58px;
-        height:58px;
-
-        font-size:31px;
-
-    }
-
-    .resumo-grid{
+    .cards{
 
         grid-template-columns:
-            repeat(2,minmax(0,1fr));
+            repeat(2,1fr);
 
-        gap:10px;
-
+        gap:11px;
     }
 
-    .resumo-card{
+    .card{
 
-        min-height:140px;
+        min-height:120px;
 
-        padding:16px 13px;
+        padding:15px;
 
+        border-radius:15px;
+    }
+
+    .card h3{
+        font-size:14px;
+    }
+
+    .card p{
+        font-size:11px;
+    }
+
+    .icone-card{
+
+        width:40px;
+        height:40px;
+
+        font-size:20px;
+    }
+
+    .resumo{
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:8px;
+    }
+
+    .resumo-box{
+
+        padding:12px 8px;
+
+        text-align:center;
     }
 
     .resumo-numero{
-
-        width:100%;
-
-        max-width:100%;
-
-        min-width:0;
-
-        margin-left:auto;
-        margin-right:auto;
-
-        justify-content:center;
-
-        text-align:center;
-
-        overflow:hidden;
-
-        white-space:nowrap;
-
+        font-size:19px;
     }
-
-
-    /* Produtos */
-
-    .resumo-card:nth-child(1) .resumo-numero,
-    .resumo-card:nth-child(2) .resumo-numero{
-
-        font-size:27px !important;
-
-        line-height:1;
-
-    }
-
-
-    /* Vendas */
-
-    .resumo-card:nth-child(3) .resumo-numero,
-    .resumo-card:nth-child(4) .resumo-numero{
-
-        font-size:17px !important;
-
-        line-height:1;
-
-        letter-spacing:-.4px;
-
-    }
-
-
-    .acesso-grid{
-
-        grid-template-columns:
-            repeat(2,minmax(0,1fr));
-
-        gap:10px;
-
-    }
-
-    .acesso-card{
-
-        min-height:125px;
-
-        padding:15px 8px;
-
-    }
-
-    .acesso-icone{
-
-        width:50px;
-        height:50px;
-
-        font-size:27px;
-
-    }
-
 }
 
 
-/* =====================================================
-   CELULARES PEQUENOS
-===================================================== */
+/* =========================
+   CELULAR PEQUENO
+========================= */
 
 @media(max-width:380px){
 
-    .status-online{
+    .cards{
+        gap:8px;
+    }
 
+    .card{
+
+        padding:12px;
+
+        min-height:112px;
+    }
+
+    .card h3{
+        font-size:13px;
+    }
+
+    .card p{
         display:none;
-
     }
 
-    .resumo-card{
-
-        min-height:130px;
-
-        padding-left:9px;
-        padding-right:9px;
-
+    .indicador{
+        padding:12px;
     }
 
-
-    .resumo-card:nth-child(1) .resumo-numero,
-    .resumo-card:nth-child(2) .resumo-numero{
-
-        font-size:25px !important;
-
+    .valor{
+        font-size:17px;
     }
+}
 
 
-    .resumo-card:nth-child(3) .resumo-numero,
-    .resumo-card:nth-child(4) .resumo-numero{
+/* =========================
+   FOCO
+========================= */
 
-        font-size:15px !important;
+a:focus-visible,
+button:focus-visible{
 
-        letter-spacing:-.3px;
+    outline:
+        2px solid
+        var(--dourado);
 
-    }
-
-
-    .acesso-nome{
-
-        font-size:14px;
-
-    }
-
+    outline-offset:3px;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<div class="dashboard-container">
+
+<div class="container">
 
 
-<header class="dashboard-header">
+<!-- =========================
+     TOPO
+========================= -->
 
-<div class="dashboard-logo">
-    🍔
-</div>
+<header class="topo">
 
-<h1>
-    GrillCore ERP
-</h1>
+    <div class="logo-area">
 
-<p>
-    Sistema profissional de gestão para sua hamburgueria
-</p>
+        <div class="logo">
+            GF
+        </div>
 
-<div class="header-line"></div>
+        <div>
+
+            <div class="titulo">
+                GrillCore ERP
+            </div>
+
+            <div class="subtitulo">
+                Gestão inteligente
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="usuario"
+        id="nomeUsuario"
+    >
+        Usuário
+    </div>
 
 </header>
 
 
-<section class="usuario-card">
-
-<div class="usuario-info">
-
-    <div class="usuario-avatar">
-        👤
-    </div>
-
-    <div>
-
-        <div class="usuario-label">
-            USUÁRIO CONECTADO
-        </div>
-
-        <div
-            class="usuario-nome"
-            id="usuarioLogado"
-        >
-            admin
-        </div>
-
-    </div>
-
-</div>
-
-<div class="status-online">
-    🟢 Sistema online
-</div>
-
-</section>
-
+<!-- =========================
+     BOAS VINDAS
+========================= -->
 
 <section class="boas-vindas">
 
-<div class="boas-conteudo">
+    <h1>
+        Visão geral 👋
+    </h1>
 
-    <div class="boas-icone">
-        🍔
-    </div>
-
-    <div>
-
-        <h2 id="mensagemBoasVindas">
-            Bem-vindo, admin!
-        </h2>
-
-        <p>
-            Aqui está o resumo do seu negócio.
-        </p>
-
-    </div>
-
-</div>
+    <p>
+        Acompanhe o movimento da sua operação.
+    </p>
 
 </section>
 
 
-<div class="section-title">
+<!-- =========================
+     INDICADORES
+========================= -->
 
-<h2>
-    📊 <span>Resumo</span> do Sistema
-</h2>
+<section class="indicadores-area">
 
-<p>
-    Visão geral dos seus dados no GrillCore
-</p>
+    <div class="indicadores-cabecalho">
 
-</div>
+        <span>
+            Resumo financeiro
+        </span>
 
-
-<section class="resumo-grid">
-
-
-<div class="resumo-card">
-
-    <div class="resumo-topo">
-
-        <div class="resumo-icone">
-            🍔
-        </div>
+        <!-- UM ÚNICO BOTÃO PARA OS 4 -->
 
         <button
-            class="olho-btn"
-            onclick="alternarValores()"
-            id="botaoOlho"
-            title="Mostrar ou ocultar valores"
+            class="olho-geral"
+            id="btnOlhoGeral"
+            type="button"
+            onclick="alternarTodosValores()"
+            aria-label="Ocultar valores"
         >
-            👁️
+            👁
         </button>
 
     </div>
 
-    <span class="resumo-label">
-        Produtos
-    </span>
 
-    <strong
-        class="resumo-numero"
-        id="totalProdutos"
-    >
-        0
-    </strong>
-
-</div>
+    <div class="indicadores">
 
 
-<div class="resumo-card">
+        <!-- VENDAS -->
 
-    <div class="resumo-topo">
+        <div class="indicador">
 
-        <div class="resumo-icone">
-            👥
+            <div class="indicador-topo">
+
+                <span class="indicador-nome">
+                    Vendas
+                </span>
+
+                <span class="icone-indicador">
+                    💰
+                </span>
+
+            </div>
+
+
+            <div
+                class="valor"
+                id="valorVendas"
+                data-valor="R$ 0,00"
+            >
+                R$ 0,00
+            </div>
+
         </div>
+
+
+        <!-- ENTRADAS -->
+
+        <div class="indicador">
+
+            <div class="indicador-topo">
+
+                <span class="indicador-nome">
+                    Entradas
+                </span>
+
+                <span class="icone-indicador">
+                    📥
+                </span>
+
+            </div>
+
+
+            <div
+                class="valor"
+                id="valorEntradas"
+                data-valor="R$ 0,00"
+            >
+                R$ 0,00
+            </div>
+
+        </div>
+
+
+        <!-- ESTOQUE -->
+
+        <div class="indicador">
+
+            <div class="indicador-topo">
+
+                <span class="indicador-nome">
+                    Estoque
+                </span>
+
+                <span class="icone-indicador">
+                    📦
+                </span>
+
+            </div>
+
+
+            <div
+                class="valor"
+                id="valorEstoque"
+                data-valor="R$ 0,00"
+            >
+                R$ 0,00
+            </div>
+
+        </div>
+
+
+        <!-- DESPESAS -->
+
+        <div class="indicador">
+
+            <div class="indicador-topo">
+
+                <span class="indicador-nome">
+                    Despesas
+                </span>
+
+                <span class="icone-indicador">
+                    💸
+                </span>
+
+            </div>
+
+
+            <div
+                class="valor"
+                id="valorDespesas"
+                data-valor="R$ 0,00"
+            >
+                R$ 0,00
+            </div>
+
+        </div>
+
 
     </div>
 
-    <span class="resumo-label">
-        Clientes
-    </span>
+</section>
 
-    <strong
-        class="resumo-numero"
-        id="totalClientes"
-    >
-        0
-    </strong>
+
+<!-- =========================
+     TÍTULO
+========================= -->
+
+<div class="secao-titulo">
+
+    <h2>
+        Acesso rápido
+    </h2>
+
+    <div class="linha-dourada"></div>
 
 </div>
 
 
-<div class="resumo-card">
+<!-- =========================
+     9 CARDS
+========================= -->
 
-    <div class="resumo-topo">
+<section class="cards">
 
-        <div class="resumo-icone">
+
+    <!-- 1 -->
+
+    <a
+        href="pedido2.html"
+        class="card destaque"
+    >
+
+        <div class="icone-card">
+            🛒
+        </div>
+
+        <h3>
+            Novo Pedido
+        </h3>
+
+        <p>
+            Registrar uma nova venda
+        </p>
+
+    </a>
+
+
+    <!-- 2 -->
+
+    <a
+        href="vendas.html"
+        class="card"
+    >
+
+        <div class="icone-card">
             💰
         </div>
 
-    </div>
+        <h3>
+            Vendas
+        </h3>
 
-    <span class="resumo-label">
-        Vendas
-    </span>
+        <p>
+            Consulte suas vendas
+        </p>
 
-    <strong
-        class="resumo-numero"
-        id="totalVendas"
+    </a>
+
+
+    <!-- 3 -->
+
+    <a
+        href="produtos.html"
+        class="card"
     >
-        R$ 0,00
-    </strong>
 
-</div>
+        <div class="icone-card">
+            🍔
+        </div>
+
+        <h3>
+            Produtos
+        </h3>
+
+        <p>
+            Gerenciar produtos
+        </p>
+
+    </a>
 
 
-<div class="resumo-card">
+    <!-- 4 -->
 
-    <div class="resumo-topo">
+    <a
+        href="clientes.html"
+        class="card"
+    >
 
-        <div class="resumo-icone">
-            📈
+        <div class="icone-card">
+            👥
+        </div>
+
+        <h3>
+            Clientes
+        </h3>
+
+        <p>
+            Cadastro de clientes
+        </p>
+
+    </a>
+
+
+    <!-- 5 -->
+
+    <a
+        href="estoque.html"
+        class="card"
+    >
+
+        <div class="icone-card">
+            📦
+        </div>
+
+        <h3>
+            Estoque
+        </h3>
+
+        <p>
+            Controle de estoque
+        </p>
+
+    </a>
+
+
+    <!-- 6 -->
+
+    <a
+        href="financeiro.html"
+        class="card"
+    >
+
+        <div class="icone-card">
+            💳
+        </div>
+
+        <h3>
+            Financeiro
+        </h3>
+
+        <p>
+            Controle financeiro
+        </p>
+
+    </a>
+
+
+    <!-- 7 -->
+
+    <a
+        href="compras.html"
+        class="card"
+    >
+
+        <div class="icone-card">
+            🛍️
+        </div>
+
+        <h3>
+            Compras
+        </h3>
+
+        <p>
+            Entradas e fornecedores
+        </p>
+
+    </a>
+
+
+    <!-- 8 -->
+
+    <a
+        href="historico.html"
+        class="card"
+    >
+
+        <div class="icone-card">
+            📋
+        </div>
+
+        <h3>
+            Histórico
+        </h3>
+
+        <p>
+            Consulte movimentações
+        </p>
+
+    </a>
+
+
+    <!-- 9 -->
+
+    <a
+        href="backup.html"
+        class="card"
+    >
+
+        <div class="icone-card">
+            💾
+        </div>
+
+        <h3>
+            Backup
+        </h3>
+
+        <p>
+            Segurança dos dados
+        </p>
+
+    </a>
+
+
+</section>
+
+
+<!-- =========================
+     RESUMO
+========================= -->
+
+<section class="resumo">
+
+
+    <div class="resumo-box">
+
+        <div class="resumo-label">
+            Pedidos
+        </div>
+
+        <div
+            class="resumo-numero"
+            id="qtdPedidos"
+        >
+            0
         </div>
 
     </div>
 
-    <span class="resumo-label">
-        Entradas
-    </span>
 
-    <strong
-        class="resumo-numero"
-        id="totalEntradas"
+    <div class="resumo-box">
+
+        <div class="resumo-label">
+            Produtos
+        </div>
+
+        <div
+            class="resumo-numero"
+            id="qtdProdutos"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="resumo-box">
+
+        <div class="resumo-label">
+            Clientes
+        </div>
+
+        <div
+            class="resumo-numero"
+            id="qtdClientes"
+        >
+            0
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================
+     SAIR
+========================= -->
+
+<div class="area-sair">
+
+    <button
+        class="btn-sair"
+        type="button"
+        onclick="sairSistema()"
     >
-        R$ 0,00
-    </strong>
+        🚪 Sair do GrillCore
+    </button>
 
 </div>
 
 
-</section>
+<div class="rodape">
 
-
-<div class="section-title">
-
-<h2>
-    ⚡ <span>Acesso</span> Rápido
-</h2>
-
-<p>
-    Acesse rapidamente as principais áreas do sistema
-</p>
+    GrillCore ERP • Rocha Forte Hambúrgueria
 
 </div>
-
-
-<section class="acesso-grid">
-
-
-<a
-    href="pedido2.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        🛒
-    </div>
-
-    <div class="acesso-nome">
-        Novo Pedido
-    </div>
-
-    <div class="acesso-descricao">
-        Registrar venda
-    </div>
-
-</a>
-
-
-<a
-    href="produtos.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        🍔
-    </div>
-
-    <div class="acesso-nome">
-        Produtos
-    </div>
-
-    <div class="acesso-descricao">
-        Gerenciar produtos
-    </div>
-
-</a>
-
-
-<a
-    href="clientes.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        👥
-    </div>
-
-    <div class="acesso-nome">
-        Clientes
-    </div>
-
-    <div class="acesso-descricao">
-        Cadastro de clientes
-    </div>
-
-</a>
-
-
-<a
-    href="estoque.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        📦
-    </div>
-
-    <div class="acesso-nome">
-        Estoque
-    </div>
-
-    <div class="acesso-descricao">
-        Controle de estoque
-    </div>
-
-</a>
-
-
-<a
-    href="financeiro.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        💰
-    </div>
-
-    <div class="acesso-nome">
-        Financeiro
-    </div>
-
-    <div class="acesso-descricao">
-        Controle financeiro
-    </div>
-
-</a>
-
-
-<a
-    href="compras.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        🛍️
-    </div>
-
-    <div class="acesso-nome">
-        Compras
-    </div>
-
-    <div class="acesso-descricao">
-        Registrar compras
-    </div>
-
-</a>
-
-
-<a
-    href="historico-estoque.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        📋
-    </div>
-
-    <div class="acesso-nome">
-        Histórico
-    </div>
-
-    <div class="acesso-descricao">
-        Movimentações
-    </div>
-
-</a>
-
-
-<a
-    href="backup.html"
-    class="acesso-card"
->
-
-    <div class="acesso-icone">
-        💾
-    </div>
-
-    <div class="acesso-nome">
-        Backup
-    </div>
-
-    <div class="acesso-descricao">
-        Segurança dos dados
-    </div>
-
-</a>
-
-
-<button
-    class="acesso-card sair-card"
-    onclick="sairDoSistema()"
->
-
-    <div class="acesso-icone">
-        🚪
-    </div>
-
-    <div class="acesso-nome">
-        Sair do sistema
-    </div>
-
-    <div class="acesso-descricao">
-        Encerrar sessão
-    </div>
-
-</button>
-
-
-</section>
-
-
-<footer class="dashboard-footer">
-
-<strong>GrillCore ERP</strong>
-
-<br>
-
-Sistema profissional de gestão para hamburguerias
-
-<br><br>
-
-Versão Premium
-
-</footer>
 
 
 </div>
 
 
-<script src="script.js"></script>
-  <script>
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-        navigator.serviceWorker.register("./service-worker.js")
-            .then(function (registro) {
-                console.log(
-                    "GrillCore: Service Worker registrado.",
-                    registro.scope
-                );
-            })
-            .catch(function (erro) {
-                console.error(
-                    "GrillCore: erro ao registrar Service Worker.",
-                    erro
-                );
-            });
-    });
+<script>
+
+/* =====================================================
+   LER LOCALSTORAGE
+===================================================== */
+
+function lerStorage(chave){
+
+    try{
+
+        const dados =
+            localStorage.getItem(chave);
+
+        if(!dados){
+            return [];
+        }
+
+        const convertido =
+            JSON.parse(dados);
+
+        if(Array.isArray(convertido)){
+            return convertido;
+        }
+
+        return [];
+
+    }catch(erro){
+
+        console.log(
+            "Erro ao ler " + chave,
+            erro
+        );
+
+        return [];
+
+    }
+
 }
-    
-  </script>
 
 
+/* =====================================================
+   CONVERTER PARA NÚMERO
+===================================================== */
+
+function numero(valor){
+
+    if(
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ){
+
+        return 0;
+
+    }
 
 
+    if(typeof valor === "number"){
 
-function atualizarUsuarioDashboard(){
+        return isNaN(valor)
+            ? 0
+            : valor;
+
+    }
+
+
+    let texto =
+        String(valor)
+        .replace(/[R$\s]/g,"");
+
+
+    if(
+        texto.includes(".") &&
+        texto.includes(",")
+    ){
+
+        texto =
+            texto
+            .replace(/\./g,"")
+            .replace(",", ".");
+
+    }
+
+    else if(texto.includes(",")){
+
+        texto =
+            texto.replace(",", ".");
+
+    }
+
+
+    const resultado =
+        parseFloat(texto);
+
+
+    return isNaN(resultado)
+        ? 0
+        : resultado;
+
+}
+
+
+/* =====================================================
+   FORMATA DINHEIRO
+===================================================== */
+
+function dinheiro(valor){
+
+    return numero(valor)
+        .toLocaleString(
+            "pt-BR",
+            {
+                style:"currency",
+                currency:"BRL"
+            }
+        );
+
+}
+
+
+/* =====================================================
+   VALOR DE VENDA
+===================================================== */
+
+function valorVenda(item){
+
+    return numero(
+
+        item.total ??
+        item.valorTotal ??
+        item.totalVenda ??
+        item.valor ??
+        item.preco ??
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   VALOR DE ENTRADA
+===================================================== */
+
+function valorEntrada(item){
+
+    return numero(
+
+        item.total ??
+        item.valorTotal ??
+        item.valor ??
+        item.preco ??
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   VALOR DE DESPESA
+===================================================== */
+
+function valorDespesa(item){
+
+    return numero(
+
+        item.valor ??
+        item.total ??
+        item.valorTotal ??
+        item.preco ??
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   CALCULAR VALOR DO ESTOQUE
+===================================================== */
+
+function calcularEstoque(){
+
+    const estoques =
+        lerStorage("estoque");
+
+    const produtos =
+        lerStorage("produtos");
+
+    let total = 0;
+
+
+    if(estoques.length > 0){
+
+        estoques.forEach(
+            function(item){
+
+                const quantidade =
+                    numero(
+
+                        item.quantidade ??
+                        item.qtd ??
+                        item.estoque ??
+                        0
+
+                    );
+
+
+                const custo =
+                    numero(
+
+                        item.custo ??
+                        item.precoCusto ??
+                        item.preco ??
+                        0
+
+                    );
+
+
+                total +=
+                    quantidade * custo;
+
+            }
+        );
+
+
+        return total;
+
+    }
+
+
+    produtos.forEach(
+        function(produto){
+
+            const quantidade =
+                numero(
+
+                    produto.estoque ??
+                    produto.quantidade ??
+                    produto.qtd ??
+                    0
+
+                );
+
+
+            const custo =
+                numero(
+
+                    produto.custo ??
+                    produto.precoCusto ??
+                    produto.preco ??
+                    0
+
+                );
+
+
+            total +=
+                quantidade * custo;
+
+        }
+    );
+
+
+    return total;
+
+}
+
+
+/* =====================================================
+   ATUALIZAR DASHBOARD
+===================================================== */
+
+function atualizarDashboard(){
+
+    const vendas =
+        lerStorage("vendas");
+
+    const entradas =
+        lerStorage("entradas");
+
+    const despesas =
+        lerStorage("despesas");
+
+    const produtos =
+        lerStorage("produtos");
+
+    const clientes =
+        lerStorage("clientes");
+
+
+    /* VENDAS */
+
+    let totalVendas = 0;
+
+    vendas.forEach(
+        function(item){
+
+            totalVendas +=
+                valorVenda(item);
+
+        }
+    );
+
+
+    /* ENTRADAS */
+
+    let totalEntradas = 0;
+
+    entradas.forEach(
+        function(item){
+
+            totalEntradas +=
+                valorEntrada(item);
+
+        }
+    );
+
+
+    /* DESPESAS */
+
+    let totalDespesas = 0;
+
+    despesas.forEach(
+        function(item){
+
+            totalDespesas +=
+                valorDespesa(item);
+
+        }
+    );
+
+
+    /* ESTOQUE */
+
+    const totalEstoque =
+        calcularEstoque();
+
+
+    /*
+       Guardar os valores
+    */
+
+    document.getElementById(
+        "valorVendas"
+    ).dataset.valor =
+        dinheiro(totalVendas);
+
+
+    document.getElementById(
+        "valorEntradas"
+    ).dataset.valor =
+        dinheiro(totalEntradas);
+
+
+    document.getElementById(
+        "valorEstoque"
+    ).dataset.valor =
+        dinheiro(totalEstoque);
+
+
+    document.getElementById(
+        "valorDespesas"
+    ).dataset.valor =
+        dinheiro(totalDespesas);
+
+
+    /*
+       Aplicar estado atual
+    */
+
+    aplicarVisibilidadeTodos();
+
+
+    /*
+       Quantidades
+    */
+
+    document.getElementById(
+        "qtdPedidos"
+    ).textContent =
+        vendas.length;
+
+
+    document.getElementById(
+        "qtdProdutos"
+    ).textContent =
+        produtos.length;
+
+
+    document.getElementById(
+        "qtdClientes"
+    ).textContent =
+        clientes.length;
+
+}
+
+
+/* =====================================================
+   APLICAR VISIBILIDADE NOS 4
+===================================================== */
+
+function aplicarVisibilidadeTodos(){
+
+    const ids = [
+
+        "valorVendas",
+        "valorEntradas",
+        "valorEstoque",
+        "valorDespesas"
+
+    ];
+
+
+    const oculto =
+        localStorage.getItem(
+            "grillcore_valores_ocultos"
+        ) === "true";
+
+
+    ids.forEach(
+        function(id){
+
+            const elemento =
+                document.getElementById(id);
+
+
+            if(!elemento){
+                return;
+            }
+
+
+            if(oculto){
+
+                elemento.textContent =
+                    "••••••";
+
+            }else{
+
+                elemento.textContent =
+                    elemento.dataset.valor ||
+                    "R$ 0,00";
+
+            }
+
+        }
+    );
+
+
+    atualizarIconeGeral(oculto);
+
+}
+
+
+/* =====================================================
+   ALTERAR OS 4 AO MESMO TEMPO
+===================================================== */
+
+function alternarTodosValores(){
+
+    const atual =
+        localStorage.getItem(
+            "grillcore_valores_ocultos"
+        ) === "true";
+
+
+    const novoEstado =
+        !atual;
+
+
+    localStorage.setItem(
+        "grillcore_valores_ocultos",
+        novoEstado
+    );
+
+
+    aplicarVisibilidadeTodos();
+
+}
+
+
+/* =====================================================
+   ALTERAR ÍCONE 👁 / 😎
+===================================================== */
+
+function atualizarIconeGeral(oculto){
+
+    const botao =
+        document.getElementById(
+            "btnOlhoGeral"
+        );
+
+
+    if(!botao){
+        return;
+    }
+
+
+    if(oculto){
+
+        botao.textContent =
+            "😎";
+
+        botao.setAttribute(
+            "aria-label",
+            "Mostrar valores"
+        );
+
+    }else{
+
+        botao.textContent =
+            "👁";
+
+        botao.setAttribute(
+            "aria-label",
+            "Ocultar valores"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CARREGAR USUÁRIO
+===================================================== */
+
+function carregarUsuario(){
 
     const usuario =
         localStorage.getItem(
             "grillcore_usuario"
-        )
-        ||
-        "admin";
+        );
 
 
     const elemento =
         document.getElementById(
-            "usuarioLogado"
+            "nomeUsuario"
         );
 
 
-    if(elemento){
+    if(usuario){
 
         elemento.textContent =
-            usuario;
+            "👤 " + usuario;
 
-    }
+    }else{
 
-
-    const mensagem =
-        document.getElementById(
-            "mensagemBoasVindas"
-        );
-
-
-    if(mensagem){
-
-        mensagem.textContent =
-            "Bem-vindo, " +
-            usuario +
-            "!";
+        elemento.textContent =
+            "GrillCore";
 
     }
 
 }
 
 
+/* =====================================================
+   SAIR
+===================================================== */
 
-function atualizarResumoDashboard(){
+function sairSistema(){
 
-    const produtos =
-        typeof lerProdutos === "function"
-            ? lerProdutos()
-            : [];
-
-
-    const clientes =
-        typeof lerClientes === "function"
-            ? lerClientes()
-            : [];
-
-
-    const vendas =
-        typeof lerVendas === "function"
-            ? lerVendas()
-            : [];
-
-
-    const entradas =
-        typeof lerEntradas === "function"
-            ? lerEntradas()
-            : [];
-
-
-    const produtosEl =
-        document.getElementById(
-            "totalProdutos"
+    const confirmar =
+        confirm(
+            "Deseja sair do GrillCore?"
         );
 
 
-    const clientesEl =
-        document.getElementById(
-            "totalClientes"
-        );
-
-
-    const vendasEl =
-        document.getElementById(
-            "totalVendas"
-        );
-
-
-    const entradasEl =
-        document.getElementById(
-            "totalEntradas"
-        );
-
-
-    if(produtosEl){
-
-        produtosEl.textContent =
-            produtos.length;
-
-    }
-
-
-    if(clientesEl){
-
-        clientesEl.textContent =
-            clientes.length;
-
-    }
-
-
-    let totalVendas = 0;
-
-
-    vendas.forEach(
-        function(venda){
-
-            const status =
-                String(
-                    venda.status || ""
-                )
-                .toLowerCase();
-
-
-            if(
-                status === "cancelada" ||
-                status === "cancelado"
-            ){
-
-                return;
-
-            }
-
-
-            totalVendas +=
-                typeof valorNumerico === "function"
-                    ? valorNumerico(venda.total)
-                    : Number(venda.total) || 0;
-
-        }
-    );
-
-
-    let totalEntradas = 0;
-
-
-    entradas.forEach(
-        function(entrada){
-
-            const status =
-                String(
-                    entrada.status || ""
-                )
-                .toLowerCase();
-
-
-            if(
-                status === "cancelada" ||
-                status === "cancelado"
-            ){
-
-                return;
-
-            }
-
-
-            totalEntradas +=
-                typeof valorNumerico === "function"
-                    ? valorNumerico(entrada.valor)
-                    : Number(entrada.valor) || 0;
-
-        }
-    );
-
-
-    if(vendasEl){
-
-        vendasEl.textContent =
-            typeof dinheiro === "function"
-                ? dinheiro(totalVendas)
-                : totalVendas.toLocaleString(
-                    "pt-BR",
-                    {
-                        style:"currency",
-                        currency:"BRL"
-                    }
-                );
-
-    }
-
-
-    if(entradasEl){
-
-        entradasEl.textContent =
-            typeof dinheiro === "function"
-                ? dinheiro(totalEntradas)
-                : totalEntradas.toLocaleString(
-                    "pt-BR",
-                    {
-                        style:"currency",
-                        currency:"BRL"
-                    }
-                );
-
-    }
-
-}
-
-
-
-let valoresOcultos =
-    localStorage.getItem(
-        "grillcore_dashboard_valores_ocultos"
-    ) === "true";
-
-
-
-function aplicarOcultacao(){
-
-    const produtos =
-        document.getElementById(
-            "totalProdutos"
-        );
-
-
-    const clientes =
-        document.getElementById(
-            "totalClientes"
-        );
-
-
-    const vendas =
-        document.getElementById(
-            "totalVendas"
-        );
-
-
-    const entradas =
-        document.getElementById(
-            "totalEntradas"
-        );
-
-
-    if(!produtos){
-
+    if(!confirmar){
         return;
-
     }
 
 
-    if(valoresOcultos){
-
-        produtos.textContent =
-            "•••";
-
-
-        clientes.textContent =
-            "•••";
-
-
-        vendas.textContent =
-            "R$ •••";
-
-
-        entradas.textContent =
-            "R$ •••";
-
-    }
-    else{
-
-        atualizarResumoDashboard();
-
-    }
-
-
-    const botao =
-        document.getElementById(
-            "botaoOlho"
-        );
-
-
-    if(botao){
-
-        botao.textContent =
-            valoresOcultos
-                ? "😎"
-                : "👁️";
-
-    }
-
-}
-
-
-
-function alternarValores(){
-
-    valoresOcultos =
-        !valoresOcultos;
-
-
-    localStorage.setItem(
-        "grillcore_dashboard_valores_ocultos",
-        valoresOcultos
-            ? "true"
-            : "false"
+    localStorage.removeItem(
+        "grillcore_login"
     );
 
 
-    aplicarOcultacao();
+    window.location.href =
+        "login.html";
 
 }
 
 
+/* =====================================================
+   INICIAR
+===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+carregarUsuario();
 
-        atualizarUsuarioDashboard();
-
-        atualizarResumoDashboard();
-
-        aplicarOcultacao();
-
-    }
-);
+atualizarDashboard();
 
 
-
-window.addEventListener(
-    "storage",
-    function(){
-
-        atualizarUsuarioDashboard();
-
-
-        if(!valoresOcultos){
-
-            atualizarResumoDashboard();
-
-        }
-
-    }
-);
-
-
+/* =====================================================
+   ATUALIZAR AO VOLTAR PARA A TELA
+===================================================== */
 
 document.addEventListener(
     "visibilitychange",
@@ -1846,22 +1967,49 @@ document.addEventListener(
             "visible"
         ){
 
-            atualizarUsuarioDashboard();
+            carregarUsuario();
 
-
-            if(!valoresOcultos){
-
-                atualizarResumoDashboard();
-
-            }
+            atualizarDashboard();
 
         }
 
     }
 );
 
-</scrip>
+
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
+
+if(
+    "serviceWorker" in navigator
+){
+
+    window.addEventListener(
+        "load",
+        function(){
+
+            navigator.serviceWorker
+                .register(
+                    "service-worker.js"
+                )
+                .catch(
+                    function(erro){
+
+                        console.log(
+                            "Service Worker:",
+                            erro
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+</script>
 
 </body>
-
-</html>
+    </html>

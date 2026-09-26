@@ -3,1922 +3,753 @@
 
 <head>
 
-    <!-- =====================================================
-         🔐 PROTEÇÃO DE ACESSO
-    ====================================================== -->
+<script>
+if (localStorage.getItem("grillcore_login") !== "true") {
+    window.location.replace("login.html");
+}
+</script>
 
-    <script>
-        if (localStorage.getItem("grillcore_login") !== "true") {
-            window.location.replace("login.html");
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0d0d">
 
-    <meta charset="UTF-8">
+<title>Histórico de Estoque — GrillCore ERP</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
+<style>
 
-    <meta
-        name="theme-color"
-        content="#ff7300"
-    >
+:root{
+    --fundo:#0d0d0d;
+    --card:#1b1b1b;
+    --card2:#232323;
+    --borda:rgba(212,175,55,.35);
 
-    <meta
-        name="description"
-        content="Histórico profissional de movimentações de estoque — GrillCore ERP"
-    >
+    --dourado:#d4af37;
+    --dourado-claro:#f0cf65;
 
-    <title>Histórico de Estoque — GrillCore ERP</title>
+    --laranja:#ff7300;
 
-    <!-- =====================================================
-         🎨 ESTILOS CENTRAIS
-    ====================================================== -->
+    --branco:#fff;
+    --cinza:#a7a7a7;
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="tema-laranja.css">
+    --verde:#35c759;
+    --vermelho:#ff4d4d;
+}
 
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-    <!-- =====================================================
-         🎨 VISUAL PREMIUM — HISTÓRICO
-    ====================================================== -->
+body{
+    font-family:Arial,Helvetica,sans-serif;
 
-    <style>
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(212,175,55,.08),
+            transparent 30%
+        ),
+        var(--fundo);
 
-        /* =================================================
-           BASE
-        ================================================= */
+    color:var(--branco);
 
-        :root {
+    min-height:100vh;
 
-            --hist-preto: #050505;
-            --hist-preto-2: #080808;
-            --hist-painel: #0d0d0d;
-            --hist-card: #121212;
-            --hist-card-2: #181818;
+    padding:16px;
+}
 
-            --hist-laranja: #ff7300;
-            --hist-laranja-2: #ff8a1f;
-            --hist-laranja-3: #ff9a3d;
-            --hist-laranja-escuro: #b94700;
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+}
 
-            --hist-verde: #35d07f;
-            --hist-verde-bg: rgba(53,208,127,.10);
 
-            --hist-vermelho: #ff5555;
-            --hist-vermelho-bg: rgba(255,85,85,.10);
+/* =========================
+   TOPO
+========================= */
 
-            --hist-branco: #ffffff;
-            --hist-cinza: #a9a9a9;
-            --hist-cinza-2: #777777;
+.topo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+}
 
-            --hist-borda: rgba(255,115,0,.28);
-            --hist-borda-forte: rgba(255,115,0,.55);
+.btn-voltar{
+    width:42px;
+    height:42px;
 
-            --hist-raio: 18px;
+    border-radius:12px;
 
-        }
+    border:1px solid #333;
 
+    background:#181818;
 
-        /* =================================================
-           PÁGINA
-        ================================================= */
+    color:white;
 
-        body {
+    font-size:20px;
 
-            background:
-                radial-gradient(
-                    circle at 50% -10%,
-                    rgba(255,115,0,.15),
-                    transparent 38%
-                ),
-                radial-gradient(
-                    circle at 100% 35%,
-                    rgba(255,115,0,.07),
-                    transparent 30%
-                ),
-                linear-gradient(
-                    180deg,
-                    #090909 0%,
-                    #050505 100%
-                );
+    cursor:pointer;
+}
 
-            color: var(--hist-branco);
+.btn-voltar:active{
+    transform:scale(.94);
+}
 
-            min-height: 100vh;
+.titulo-area h1{
+    font-size:24px;
+    margin-bottom:4px;
+}
 
-        }
+.titulo-area p{
+    color:var(--cinza);
+    font-size:13px;
+}
 
 
-        .historico-page {
+/* =========================
+   MÉTRICAS
+========================= */
 
-            width: 100%;
+.metricas{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:18px;
+}
 
-            max-width: 1080px;
+.metrica{
+    background:
+        linear-gradient(
+            145deg,
+            #242424,
+            #181818
+        );
 
-            margin: 0 auto;
+    border:1px solid var(--borda);
 
-            padding:
-                22px
-                18px
-                45px;
+    border-radius:16px;
 
-        }
+    padding:15px;
 
+    text-align:center;
+}
 
-        /* =================================================
-           CABEÇALHO PREMIUM
-        ================================================= */
+.metrica-label{
+    color:#999;
+    font-size:11px;
+    text-transform:uppercase;
+    font-weight:bold;
+    margin-bottom:7px;
+}
 
-        .historico-header {
+.metrica-numero{
+    font-size:24px;
+    font-weight:900;
+}
 
-            text-align: center;
+.entrada{
+    color:var(--verde);
+}
 
-            padding:
-                12px
-                5px
-                28px;
+.saida{
+    color:var(--vermelho);
+}
 
-        }
+.movimento{
+    color:var(--dourado-claro);
+}
 
 
-        .historico-logo {
+/* =========================
+   FILTROS
+========================= */
 
-            width: 72px;
+.filtros{
+    background:
+        linear-gradient(
+            145deg,
+            #222,
+            #181818
+        );
 
-            height: 72px;
+    border:1px solid var(--borda);
 
-            margin: 0 auto 14px;
+    border-radius:18px;
 
-            display: flex;
+    padding:18px;
 
-            align-items: center;
+    margin-bottom:18px;
+}
 
-            justify-content: center;
+.filtros-titulo{
+    color:var(--dourado-claro);
 
-            border-radius: 22px;
+    font-size:17px;
 
-            font-size: 34px;
+    font-weight:bold;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    var(--hist-laranja-2),
-                    var(--hist-laranja-escuro)
-                );
+    margin-bottom:16px;
+}
 
-            border:
-                1px solid
-                rgba(255,154,61,.65);
+.grid-filtros{
+    display:grid;
 
-            box-shadow:
-                0 0 0 5px rgba(255,115,0,.06),
-                0 10px 35px rgba(255,115,0,.24);
+    grid-template-columns:
+        2fr 1fr 1fr 1fr;
 
-        }
+    gap:10px;
+}
 
+.campo label{
+    display:block;
 
-        .historico-header h1 {
+    font-size:12px;
 
-            margin: 0;
+    color:#bbb;
 
-            font-size:
-                clamp(27px, 6vw, 42px);
+    margin-bottom:6px;
+}
 
-            line-height: 1.08;
+.campo input,
+.campo select{
 
-            font-weight: 900;
+    width:100%;
 
-            letter-spacing: -.7px;
+    background:#111;
 
-            color: var(--hist-laranja-2);
+    color:white;
 
-            text-shadow:
-                0 0 22px rgba(255,115,0,.20);
+    border:1px solid #444;
 
-        }
+    border-radius:10px;
 
+    padding:12px;
 
-        .historico-header p {
+    outline:none;
 
-            margin:
-                8px
-                0
-                0;
+    font-size:14px;
+}
 
-            color: var(--hist-cinza);
+.campo input:focus,
+.campo select:focus{
+    border-color:var(--dourado);
+}
 
-            font-size:
-                clamp(14px, 3vw, 17px);
+.campo select option{
+    background:#111;
+    color:white;
+}
 
-        }
 
+/* =========================
+   BOTÕES
+========================= */
 
-        .historico-pill {
+.acoes{
+    display:flex;
 
-            display: inline-flex;
+    gap:10px;
 
-            align-items: center;
+    margin-top:14px;
+}
 
-            justify-content: center;
+.btn{
+    flex:1;
 
-            margin-top: 13px;
+    padding:13px;
 
-            padding:
-                7px
-                13px;
+    border-radius:12px;
 
-            border-radius: 999px;
+    border:1px solid #444;
 
-            background:
-                rgba(255,115,0,.08);
+    background:#171717;
 
-            border:
-                1px solid
-                rgba(255,115,0,.25);
+    color:white;
 
-            color: var(--hist-laranja-3);
+    font-weight:bold;
 
-            font-size: 11px;
+    cursor:pointer;
+}
 
-            font-weight: 800;
+.btn-filtrar{
+    background:
+        linear-gradient(
+            135deg,
+            #ff7300,
+            #c94f00
+        );
 
-            letter-spacing: .7px;
+    border:none;
+}
 
-            text-transform: uppercase;
+.btn-limpar:hover{
+    border-color:var(--dourado);
+}
 
-        }
+.btn:active{
+    transform:scale(.98);
+}
 
 
-        /* =================================================
-           CARDS GERAIS
-        ================================================= */
+/* =========================
+   LISTA
+========================= */
 
-        .historico-card {
+.lista{
+    background:#171717;
 
-            position: relative;
+    border:1px solid #303030;
 
-            width: 100%;
+    border-radius:18px;
 
-            min-width: 0;
+    overflow:hidden;
+}
 
-            margin-bottom: 18px;
+.lista-topo{
+    display:flex;
 
-            padding: 21px;
+    justify-content:space-between;
 
-            border-radius: var(--hist-raio);
+    align-items:center;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(25,25,25,.98),
-                    rgba(10,10,10,.98)
-                );
+    padding:16px;
 
-            border:
-                1px solid
-                var(--hist-borda);
+    border-bottom:1px solid #303030;
+}
 
-            box-shadow:
-                0 12px 35px rgba(0,0,0,.35);
+.lista-topo h2{
+    font-size:17px;
+}
 
-            overflow: hidden;
+.lista-topo span{
+    color:#888;
+    font-size:12px;
+}
 
-        }
+.movimento-item{
 
+    padding:15px;
 
-        .historico-card::before {
+    border-bottom:1px solid #292929;
 
-            content: "";
+    display:flex;
 
-            position: absolute;
+    justify-content:space-between;
 
-            top: 0;
-            left: 20px;
-            right: 20px;
+    align-items:center;
 
-            height: 2px;
+    gap:12px;
+}
 
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--hist-laranja),
-                    transparent
-                );
+.movimento-item:last-child{
+    border-bottom:none;
+}
 
-            opacity: .7;
+.movimento-info{
+    min-width:0;
+}
 
-        }
+.produto{
+    font-weight:bold;
+    font-size:15px;
 
+    margin-bottom:5px;
 
-        .historico-card:hover {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
-            border-color:
-                var(--hist-borda-forte);
+.detalhes{
+    color:#888;
+    font-size:12px;
 
-        }
+    line-height:1.5;
+}
 
+.movimento-direita{
+    text-align:right;
+    flex-shrink:0;
+}
 
-        .historico-section-title {
+.tipo{
+    display:inline-block;
 
-            margin: 0 0 8px;
+    padding:5px 8px;
 
-            display: flex;
+    border-radius:8px;
 
-            align-items: center;
+    font-size:10px;
 
-            gap: 9px;
+    font-weight:bold;
 
-            color: var(--hist-laranja-2);
+    margin-bottom:5px;
+}
 
-            font-size:
-                clamp(18px, 4vw, 22px);
+.tipo-entrada{
+    color:#72e58a;
+    background:rgba(53,199,89,.12);
+}
 
-            font-weight: 900;
+.tipo-saida{
+    color:#ff7777;
+    background:rgba(255,77,77,.12);
+}
 
-        }
+.quantidade{
+    font-size:17px;
+    font-weight:900;
+}
 
+.data{
+    color:#777;
+    font-size:10px;
+    margin-top:3px;
+}
 
-        .historico-section-text {
 
-            margin: 0;
+/* =========================
+   VAZIO
+========================= */
 
-            color: var(--hist-cinza);
+.vazio{
+    text-align:center;
 
-            font-size: 14px;
+    padding:35px 20px;
 
-            line-height: 1.65;
+    color:#777;
+}
 
-        }
+.vazio .icone{
+    font-size:35px;
+    margin-bottom:10px;
+}
 
+.vazio strong{
+    display:block;
 
-        /* =================================================
-           RESUMO
-        ================================================= */
+    color:#aaa;
 
-        .historico-resumo {
+    margin-bottom:5px;
+}
 
-            display: grid;
 
-            grid-template-columns:
-                repeat(4, minmax(0, 1fr));
+/* =========================
+   RESPONSIVO
+========================= */
 
-            gap: 13px;
+@media(max-width:700px){
 
-            margin-top: 16px;
+    .grid-filtros{
+        grid-template-columns:1fr 1fr;
+    }
 
-        }
+    .campo:first-child{
+        grid-column:1 / -1;
+    }
 
+}
 
-        .resumo-estoque {
+@media(max-width:500px){
 
-            position: relative;
+    body{
+        padding:12px;
+    }
 
-            min-width: 0;
+    .titulo-area h1{
+        font-size:20px;
+    }
 
-            overflow: hidden;
+    .metricas{
+        gap:7px;
+    }
 
-            text-align: center;
+    .metrica{
+        padding:12px 6px;
+        border-radius:13px;
+    }
 
-            padding:
-                19px
-                12px
-                17px;
+    .metrica-numero{
+        font-size:20px;
+    }
 
-            border-radius: 16px;
+    .grid-filtros{
+        grid-template-columns:1fr;
+    }
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #191919,
-                    #0d0d0d
-                );
+    .campo:first-child{
+        grid-column:auto;
+    }
 
-            border:
-                1px solid
-                rgba(255,115,0,.25);
+    .movimento-item{
+        align-items:flex-start;
+    }
 
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,.035);
+}
 
-            transition:
-                transform .2s ease,
-                border-color .2s ease;
-
-        }
-
-
-        .resumo-estoque:hover {
-
-            transform: translateY(-2px);
-
-            border-color:
-                rgba(255,115,0,.55);
-
-        }
-
-
-        .resumo-estoque::before {
-
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 15%;
-            right: 15%;
-
-            height: 3px;
-
-            border-radius: 0 0 5px 5px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--hist-laranja),
-                    transparent
-                );
-
-        }
-
-
-        .resumo-estoque .icone {
-
-            font-size: 25px;
-
-            line-height: 1;
-
-            margin-bottom: 10px;
-
-        }
-
-
-        .resumo-estoque .numero {
-
-            display: block;
-
-            width: 100%;
-
-            min-width: 0;
-
-            overflow: hidden;
-
-            font-size:
-                clamp(21px, 4vw, 30px);
-
-            line-height: 1.05;
-
-            font-weight: 900;
-
-            letter-spacing: -.5px;
-
-            font-variant-numeric:
-                tabular-nums;
-
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
-
-            color:
-                var(--hist-laranja-2);
-
-            text-shadow:
-                0 0 15px rgba(255,115,0,.16);
-
-        }
-
-
-        .resumo-estoque .legenda {
-
-            display: block;
-
-            margin-top: 7px;
-
-            color: var(--hist-cinza);
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-        }
-
-
-        .resumo-estoque.entrada-card {
-
-            border-color:
-                rgba(53,208,127,.24);
-
-        }
-
-
-        .resumo-estoque.entrada-card::before {
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--hist-verde),
-                    transparent
-                );
-
-        }
-
-
-        .resumo-estoque.entrada-card .numero {
-
-            color: var(--hist-verde);
-
-            text-shadow:
-                0 0 15px rgba(53,208,127,.14);
-
-        }
-
-
-        .resumo-estoque.saida-card {
-
-            border-color:
-                rgba(255,85,85,.24);
-
-        }
-
-
-        .resumo-estoque.saida-card::before {
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--hist-vermelho),
-                    transparent
-                );
-
-        }
-
-
-        .resumo-estoque.saida-card .numero {
-
-            color: var(--hist-vermelho);
-
-            text-shadow:
-                0 0 15px rgba(255,85,85,.13);
-
-        }
-
-
-        /* =================================================
-           FILTROS
-        ================================================= */
-
-        .historico-filtros {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 15px;
-
-            margin-top: 17px;
-
-        }
-
-
-        .filtro-campo {
-
-            min-width: 0;
-
-        }
-
-
-        .filtro-campo label {
-
-            display: block;
-
-            margin-bottom: 7px;
-
-            color: #d5d5d5;
-
-            font-size: 12px;
-
-            font-weight: 800;
-
-            letter-spacing: .25px;
-
-        }
-
-
-        .filtro-campo input,
-        .filtro-campo select {
-
-            width: 100%;
-
-            min-width: 0;
-
-            height: 47px;
-
-            padding:
-                0
-                13px;
-
-            border-radius: 11px;
-
-            outline: none;
-
-            color: var(--hist-branco);
-
-            background:
-                #0a0a0a;
-
-            border:
-                1px solid
-                rgba(255,255,255,.10);
-
-            font-size: 14px;
-
-            transition:
-                border-color .2s ease,
-                box-shadow .2s ease;
-
-        }
-
-
-        .filtro-campo input::placeholder {
-
-            color: #666;
-
-        }
-
-
-        .filtro-campo input:focus,
-        .filtro-campo select:focus {
-
-            border-color:
-                var(--hist-laranja);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(255,115,0,.10);
-
-        }
-
-
-        .filtro-campo select option {
-
-            background: #101010;
-
-            color: #fff;
-
-        }
-
-
-        /* =================================================
-           BOTÃO ATUALIZAR
-        ================================================= */
-
-        .btn-atualizar {
-
-            width: 100%;
-
-            min-height: 49px;
-
-            margin-top: 17px;
-
-            border: 0;
-
-            border-radius: 12px;
-
-            color: #fff;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff8a1f,
-                    #ff7300 55%,
-                    #c74d00
-                );
-
-            box-shadow:
-                0 8px 22px
-                rgba(255,115,0,.18);
-
-            font-size: 14px;
-
-            font-weight: 900;
-
-            cursor: pointer;
-
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
-
-        }
-
-
-        .btn-atualizar:hover {
-
-            transform: translateY(-1px);
-
-            box-shadow:
-                0 11px 28px
-                rgba(255,115,0,.28);
-
-        }
-
-
-        .btn-atualizar:active {
-
-            transform: scale(.985);
-
-        }
-
-
-        /* =================================================
-           CONTADOR
-        ================================================= */
-
-        .contador-resultados {
-
-            margin-top: 12px;
-
-            color: var(--hist-cinza);
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            text-align: right;
-
-        }
-
-
-        /* =================================================
-           AVISO
-        ================================================= */
-
-        .aviso-historico {
-
-            margin-top: 13px;
-
-            padding: 14px 15px;
-
-            border-radius: 12px;
-
-            background:
-                rgba(255,115,0,.055);
-
-            border:
-                1px solid
-                rgba(255,115,0,.18);
-
-            color: #a9a9a9;
-
-            font-size: 12px;
-
-            line-height: 1.6;
-
-        }
-
-
-        .aviso-historico strong {
-
-            color:
-                var(--hist-laranja-3);
-
-        }
-
-
-        /* =================================================
-           LISTA
-        ================================================= */
-
-        .lista-cabecalho {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 10px;
-
-            margin:
-                7px
-                2px
-                13px;
-
-        }
-
-
-        .lista-cabecalho h2 {
-
-            margin: 0;
-
-            color: var(--hist-laranja-2);
-
-            font-size:
-                clamp(19px, 4vw, 23px);
-
-            font-weight: 900;
-
-        }
-
-
-        .lista-cabecalho span {
-
-            color: var(--hist-cinza-2);
-
-            font-size: 11px;
-
-            font-weight: 700;
-
-        }
-
-
-        /* =================================================
-           MOVIMENTO
-        ================================================= */
-
-        .movimento {
-
-            position: relative;
-
-            min-width: 0;
-
-            overflow: hidden;
-
-            margin-bottom: 15px;
-
-            padding: 19px;
-
-            border-radius: 17px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #181818,
-                    #0b0b0b
-                );
-
-            border:
-                1px solid
-                rgba(255,255,255,.08);
-
-            box-shadow:
-                0 10px 28px rgba(0,0,0,.28);
-
-        }
-
-
-        .movimento::before {
-
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 0;
-            right: 0;
-
-            height: 3px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--hist-laranja),
-                    transparent
-                );
-
-            opacity: .65;
-
-        }
-
-
-        .movimento.entrada {
-
-            border-left:
-                4px solid
-                var(--hist-verde);
-
-        }
-
-
-        .movimento.saida {
-
-            border-left:
-                4px solid
-                var(--hist-vermelho);
-
-        }
-
-
-        .movimento-topo {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 12px;
-
-            flex-wrap: wrap;
-
-            margin-bottom: 16px;
-
-        }
-
-
-        .movimento-titulo {
-
-            margin: 0;
-
-            font-size:
-                clamp(15px, 3.5vw, 18px);
-
-            line-height: 1.25;
-
-            font-weight: 900;
-
-        }
-
-
-        .entrada-titulo {
-
-            color: var(--hist-verde);
-
-        }
-
-
-        .saida-titulo {
-
-            color: var(--hist-vermelho);
-
-        }
-
-
-        .movimento-data {
-
-            margin-top: 5px;
-
-            color: var(--hist-cinza-2);
-
-            font-size: 11px;
-
-        }
-
-
-        .badge-movimento {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            flex-shrink: 0;
-
-            padding:
-                7px
-                11px;
-
-            border-radius: 999px;
-
-            font-size: 10px;
-
-            font-weight: 900;
-
-            letter-spacing: .5px;
-
-        }
-
-
-        .badge-entrada {
-
-            color: var(--hist-verde);
-
-            background:
-                var(--hist-verde-bg);
-
-            border:
-                1px solid
-                rgba(53,208,127,.30);
-
-        }
-
-
-        .badge-saida {
-
-            color: var(--hist-vermelho);
-
-            background:
-                var(--hist-vermelho-bg);
-
-            border:
-                1px solid
-                rgba(255,85,85,.30);
-
-        }
-
-
-        /* =================================================
-           INFORMAÇÕES
-        ================================================= */
-
-        .movimento-info {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 10px;
-
-        }
-
-
-        .info-box {
-
-            min-width: 0;
-
-            padding: 12px;
-
-            border-radius: 11px;
-
-            background:
-                rgba(255,255,255,.025);
-
-            border:
-                1px solid
-                rgba(255,255,255,.06);
-
-        }
-
-
-        .info-box small {
-
-            display: block;
-
-            margin-bottom: 5px;
-
-            color: var(--hist-cinza-2);
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            line-height: 1.3;
-
-        }
-
-
-        .info-box strong {
-
-            display: block;
-
-            min-width: 0;
-
-            color: var(--hist-branco);
-
-            font-size: 13px;
-
-            line-height: 1.45;
-
-            word-break: break-word;
-
-            overflow-wrap: anywhere;
-
-        }
-
-
-        .info-box.quantidade-box strong {
-
-            color: var(--hist-laranja-2);
-
-            font-size: 16px;
-
-            font-weight: 900;
-
-            font-variant-numeric:
-                tabular-nums;
-
-        }
-
-
-        /* =================================================
-           ESTOQUE FINAL
-        ================================================= */
-
-        .estoque-final {
-
-            margin-top: 14px;
-
-            padding: 13px 14px;
-
-            border-radius: 12px;
-
-            text-align: center;
-
-            color: var(--hist-laranja-3);
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(255,115,0,.045),
-                    rgba(255,115,0,.09),
-                    rgba(255,115,0,.045)
-                );
-
-            border:
-                1px solid
-                rgba(255,115,0,.20);
-
-            font-size: 12px;
-
-            font-weight: 800;
-
-            line-height: 1.45;
-
-        }
-
-
-        /* =================================================
-           ESTADO VAZIO
-        ================================================= */
-
-        .historico-vazio {
-
-            text-align: center;
-
-            padding:
-                40px
-                20px;
-
-            border-radius: 17px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #151515,
-                    #0b0b0b
-                );
-
-            border:
-                1px dashed
-                rgba(255,115,0,.25);
-
-        }
-
-
-        .historico-vazio .icone {
-
-            font-size: 42px;
-
-            margin-bottom: 12px;
-
-        }
-
-
-        .historico-vazio strong {
-
-            display: block;
-
-            color: #e7e7e7;
-
-            font-size: 15px;
-
-        }
-
-
-        .historico-vazio p {
-
-            margin:
-                8px
-                0
-                0;
-
-            color: var(--hist-cinza-2);
-
-            font-size: 12px;
-
-            line-height: 1.5;
-
-        }
-
-
-        /* =================================================
-           AÇÕES
-        ================================================= */
-
-        .acoes-historico {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 11px;
-
-        }
-
-
-        .acoes-historico button {
-
-            width: 100%;
-
-            min-width: 0;
-
-            min-height: 47px;
-
-            margin: 0;
-
-            border-radius: 11px;
-
-            cursor: pointer;
-
-            font-size: 13px;
-
-            font-weight: 800;
-
-        }
-
-
-        .btn-acao {
-
-            color: #fff;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #1c1c1c,
-                    #101010
-                );
-
-            border:
-                1px solid
-                rgba(255,255,255,.10);
-
-            transition:
-                border-color .2s ease,
-                transform .2s ease;
-
-        }
-
-
-        .btn-acao:hover {
-
-            transform: translateY(-1px);
-
-            border-color:
-                rgba(255,115,0,.45);
-
-        }
-
-
-        .btn-limpar {
-
-            color: #fff;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #541515,
-                    #2b0808
-                );
-
-            border:
-                1px solid
-                rgba(255,85,85,.35);
-
-        }
-
-
-        .btn-limpar:hover {
-
-            border-color:
-                rgba(255,85,85,.65);
-
-        }
-
-
-        /* =================================================
-           RESPONSIVIDADE
-        ================================================= */
-
-        @media (max-width: 850px) {
-
-            .historico-page {
-
-                padding:
-                    18px
-                    15px
-                    38px;
-
-            }
-
-            .historico-resumo {
-
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-
-            }
-
-        }
-
-
-        @media (max-width: 650px) {
-
-            .historico-filtros {
-
-                grid-template-columns: 1fr;
-
-            }
-
-            .historico-card {
-
-                padding: 17px;
-
-            }
-
-            .movimento {
-
-                padding: 16px;
-
-            }
-
-        }
-
-
-        @media (max-width: 480px) {
-
-            .historico-page {
-
-                padding:
-                    14px
-                    11px
-                    32px;
-
-            }
-
-            .historico-header {
-
-                padding-bottom: 22px;
-
-            }
-
-            .historico-logo {
-
-                width: 62px;
-
-                height: 62px;
-
-                border-radius: 19px;
-
-                font-size: 29px;
-
-            }
-
-            .historico-resumo {
-
-                gap: 9px;
-
-            }
-
-            .resumo-estoque {
-
-                padding:
-                    16px
-                    8px
-                    14px;
-
-            }
-
-            .resumo-estoque .icone {
-
-                font-size: 22px;
-
-            }
-
-            .resumo-estoque .numero {
-
-                font-size:
-                    clamp(20px, 7vw, 27px);
-
-            }
-
-            .resumo-estoque .legenda {
-
-                font-size: 11px;
-
-            }
-
-            .movimento-info {
-
-                grid-template-columns: 1fr;
-
-            }
-
-            .acoes-historico {
-
-                grid-template-columns: 1fr;
-
-            }
-
-        }
-
-
-        @media (max-width: 360px) {
-
-            .historico-page {
-
-                padding-left: 8px;
-
-                padding-right: 8px;
-
-            }
-
-            .historico-card {
-
-                padding: 14px;
-
-            }
-
-            .historico-resumo {
-
-                gap: 7px;
-
-            }
-
-            .resumo-estoque {
-
-                padding-left: 5px;
-
-                padding-right: 5px;
-
-            }
-
-            .resumo-estoque .numero {
-
-                font-size: 19px;
-
-            }
-
-            .resumo-estoque .legenda {
-
-                font-size: 10px;
-
-            }
-
-            .movimento {
-
-                padding: 14px 12px;
-
-            }
-
-            .movimento-topo {
-
-                align-items: flex-start;
-
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
-
 <body>
 
+<div class="container">
 
-<div class="historico-page">
 
+<!-- =========================
+     TOPO
+========================= -->
 
-    <!-- =====================================================
-         🏆 CABEÇALHO
-    ====================================================== -->
+<header class="topo">
 
-    <header class="historico-header">
+    <button
+        class="btn-voltar"
+        type="button"
+        onclick="voltar()"
+    >
+        ←
+    </button>
 
-        <div class="historico-logo">
-            🍔
-        </div>
+    <div class="titulo-area">
 
         <h1>
-            GrillCore ERP
+            Histórico de Estoque
         </h1>
 
         <p>
-            Histórico de Estoque
+            Movimentações de produtos e mercadorias
         </p>
 
-        <div class="historico-pill">
-            Controle de movimentações
+    </div>
+
+</header>
+
+
+<!-- =========================
+     MÉTRICAS
+========================= -->
+
+<section class="metricas">
+
+    <div class="metrica">
+
+        <div class="metrica-label">
+            Entradas
         </div>
-
-    </header>
-
-
-    <!-- =====================================================
-         📌 INTRODUÇÃO
-    ====================================================== -->
-
-    <section class="historico-card">
-
-        <h2 class="historico-section-title">
-            📜 Movimentações de Estoque
-        </h2>
-
-        <p class="historico-section-text">
-
-            Consulte entradas e saídas de mercadorias,
-            acompanhe os motivos, fornecedores e a evolução
-            registrada no estoque.
-
-        </p>
-
-    </section>
-
-
-    <!-- =====================================================
-         📊 RESUMO
-    ====================================================== -->
-
-    <section class="historico-card">
-
-        <h2 class="historico-section-title">
-            📊 Resumo do Estoque
-        </h2>
-
-
-        <div class="historico-resumo">
-
-
-            <div class="resumo-estoque entrada-card">
-
-                <div class="icone">
-                    📥
-                </div>
-
-                <span
-                    class="numero"
-                    id="totalEntradas"
-                >
-                    0
-                </span>
-
-                <span class="legenda">
-                    Entradas
-                </span>
-
-            </div>
-
-
-            <div class="resumo-estoque saida-card">
-
-                <div class="icone">
-                    📤
-                </div>
-
-                <span
-                    class="numero"
-                    id="totalSaidas"
-                >
-                    0
-                </span>
-
-                <span class="legenda">
-                    Saídas
-                </span>
-
-            </div>
-
-
-            <div class="resumo-estoque">
-
-                <div class="icone">
-                    📦
-                </div>
-
-                <span
-                    class="numero"
-                    id="totalMovimentos"
-                >
-                    0
-                </span>
-
-                <span class="legenda">
-                    Movimentações
-                </span>
-
-            </div>
-
-
-            <div class="resumo-estoque">
-
-                <div class="icone">
-                    📅
-                </div>
-
-                <span
-                    class="numero"
-                    id="movimentosHoje"
-                >
-                    0
-                </span>
-
-                <span class="legenda">
-                    Hoje
-                </span>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         🔎 FILTROS
-    ====================================================== -->
-
-    <section class="historico-card">
-
-        <h2 class="historico-section-title">
-            🔎 Filtrar Histórico
-        </h2>
-
-
-        <div class="historico-filtros">
-
-
-            <div class="filtro-campo">
-
-                <label for="filtroProduto">
-                    Produto / Mercadoria
-                </label>
-
-                <select
-                    id="filtroProduto"
-                    onchange="mostrarHistorico()"
-                >
-
-                    <option value="">
-                        Todos os produtos
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="filtro-campo">
-
-                <label for="filtroTipo">
-                    Tipo de movimentação
-                </label>
-
-                <select
-                    id="filtroTipo"
-                    onchange="mostrarHistorico()"
-                >
-
-                    <option value="">
-                        Todas
-                    </option>
-
-                    <option value="entrada">
-                        📥 Entradas
-                    </option>
-
-                    <option value="saida">
-                        📤 Saídas
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="filtro-campo">
-
-                <label for="pesquisa">
-                    Pesquisa
-                </label>
-
-                <input
-                    type="text"
-                    id="pesquisa"
-                    placeholder="Produto, motivo ou fornecedor..."
-                    oninput="mostrarHistorico()"
-                >
-
-            </div>
-
-
-            <div class="filtro-campo">
-
-                <label for="filtroPeriodo">
-                    Período
-                </label>
-
-                <select
-                    id="filtroPeriodo"
-                    onchange="mostrarHistorico()"
-                >
-
-                    <option value="tudo">
-                        Todo o histórico
-                    </option>
-
-                    <option value="hoje">
-                        Hoje
-                    </option>
-
-                    <option value="7dias">
-                        Últimos 7 dias
-                    </option>
-
-                    <option value="mes">
-                        Este mês
-                    </option>
-
-                </select>
-
-            </div>
-
-
-        </div>
-
-
-        <button
-            class="btn-atualizar"
-            onclick="atualizarHistoricoCompleto()"
-        >
-
-            🔄 Atualizar Histórico
-
-        </button>
-
 
         <div
-            class="contador-resultados"
-            id="contadorResultados"
+            class="metrica-numero entrada"
+            id="totalEntradas"
         >
-            0 movimentações encontradas.
+            0
         </div>
 
+    </div>
 
-        <div class="aviso-historico">
 
-            💡 <strong>Importante:</strong>
-            o histórico registra as movimentações realizadas
-            no estoque. Limpar o histórico não altera a quantidade
-            atual das mercadorias.
+    <div class="metrica">
 
+        <div class="metrica-label">
+            Saídas
         </div>
 
-    </section>
-
-
-    <!-- =====================================================
-         📋 LISTA
-    ====================================================== -->
-
-    <section>
-
-        <div class="lista-cabecalho">
-
-            <h2>
-                📋 Movimentações
-            </h2>
-
-            <span>
-                HISTÓRICO
-            </span>
-
+        <div
+            class="metrica-numero saida"
+            id="totalSaidas"
+        >
+            0
         </div>
 
+    </div>
 
-        <div id="listaHistorico">
 
-            <div class="historico-vazio">
+    <div class="metrica">
 
-                <div class="icone">
-                    ⏳
-                </div>
-
-                <strong>
-                    Carregando histórico...
-                </strong>
-
-            </div>
-
+        <div class="metrica-label">
+            Movimentos
         </div>
 
-    </section>
+        <div
+            class="metrica-numero movimento"
+            id="totalMovimentos"
+        >
+            0
+        </div>
+
+    </div>
+
+</section>
 
 
-    <!-- =====================================================
-         🗑️ AÇÕES
-    ====================================================== -->
+<!-- =========================
+     FILTROS
+========================= -->
 
-    <section class="historico-card">
+<section class="filtros">
 
-        <div class="acoes-historico">
+    <div class="filtros-titulo">
+        🔍 Filtrar movimentações
+    </div>
 
 
-            <button
-                class="btn-limpar"
-                onclick="limparHistorico()"
+    <div class="grid-filtros">
+
+
+        <div class="campo">
+
+            <label>
+                Produto
+            </label>
+
+            <input
+                type="text"
+                id="filtroProduto"
+                placeholder="Digite o produto..."
             >
 
-                🗑️ Limpar Histórico
-
-            </button>
+        </div>
 
 
-            <button
-                class="btn-acao"
-                onclick="window.location.href='estoque.html'"
-            >
+        <div class="campo">
 
-                📦 Voltar para Estoque
+            <label>
+                Tipo
+            </label>
 
-            </button>
+            <select id="filtroTipo">
 
+                <option value="">
+                    Todos
+                </option>
 
-            <button
-                class="btn-acao"
-                onclick="window.location.href='index.html'"
-            >
+                <option value="entrada">
+                    Entrada
+                </option>
 
-                🏠 Voltar para Dashboard
+                <option value="saida">
+                    Saída
+                </option>
 
-            </button>
-
-
-            <button
-                class="btn-acao"
-                onclick="window.location.href='financeiro.html'"
-            >
-
-                💰 Ir para Financeiro
-
-            </button>
-
+            </select>
 
         </div>
 
-    </section>
+
+        <div class="campo">
+
+            <label>
+                Data inicial
+            </label>
+
+            <input
+                type="date"
+                id="dataInicial"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Data final
+            </label>
+
+            <input
+                type="date"
+                id="dataFinal"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="acoes">
+
+        <button
+            class="btn btn-filtrar"
+            type="button"
+            onclick="aplicarFiltros()"
+        >
+            🔍 Filtrar
+        </button>
+
+        <button
+            class="btn btn-limpar"
+            type="button"
+            onclick="limparFiltros()"
+        >
+            Limpar
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LISTA
+========================= -->
+
+<section class="lista">
+
+    <div class="lista-topo">
+
+        <h2>
+            📋 Movimentações
+        </h2>
+
+        <span id="contador">
+            0 registros
+        </span>
+
+    </div>
+
+
+    <div id="listaMovimentos">
+
+    </div>
+
+</section>
 
 
 </div>
 
 
-<!-- =====================================================
-     📚 SCRIPT CENTRAL
-====================================================== -->
-
-<script src="script.js"></script>
-
-
 <script>
 
+/* =========================
+   STORAGE
+========================= */
 
-/* =====================================================
-   📦 STORAGE
-===================================================== */
+function lerHistorico(){
 
-function pegarHistorico() {
-
-    try {
+    try{
 
         const dados =
             localStorage.getItem(
                 "historicoEstoque"
             );
 
-        if (!dados) {
+        if(!dados){
             return [];
         }
 
-        const historico =
+        const convertido =
             JSON.parse(dados);
 
-        return Array.isArray(historico)
-            ? historico
+        return Array.isArray(convertido)
+            ? convertido
             : [];
 
-    }
-    catch (erro) {
+    }catch(erro){
 
-        console.error(
-            "Erro ao carregar histórico:",
+        console.log(
+            "Erro no histórico:",
             erro
         );
 
@@ -1929,1245 +760,240 @@ function pegarHistorico() {
 }
 
 
-/* =====================================================
-   💾 SALVAR HISTÓRICO
-===================================================== */
+/* =========================
+   NÚMERO
+========================= */
 
-function salvarHistorico(historico) {
+function numero(valor){
 
-    try {
-
-        localStorage.setItem(
-            "historicoEstoque",
-            JSON.stringify(historico)
-        );
-
-        return true;
-
-    }
-    catch (erro) {
-
-        console.error(
-            "Erro ao salvar histórico:",
-            erro
-        );
-
-        alert(
-            "❌ Não foi possível salvar o histórico."
-        );
-
-        return false;
-
-    }
-
-}
-
-
-/* =====================================================
-   📦 PRODUTOS
-===================================================== */
-
-function pegarProdutos() {
-
-    if (
-        typeof lerProdutos === "function"
-    ) {
-
-        try {
-
-            const resultado =
-                lerProdutos();
-
-            return Array.isArray(resultado)
-                ? resultado
-                : [];
-
-        }
-        catch (erro) {
-
-            console.warn(
-                "Erro ao usar lerProdutos:",
-                erro
-            );
-
-        }
-
-    }
-
-
-    try {
-
-        const dados =
-            localStorage.getItem(
-                "produtos"
-            );
-
-        const produtos =
-            dados
-                ? JSON.parse(dados)
-                : [];
-
-        return Array.isArray(produtos)
-            ? produtos
-            : [];
-
-    }
-    catch (erro) {
-
-        return [];
-
-    }
-
-}
-
-
-/* =====================================================
-   🛡️ ESCAPAR HTML
-===================================================== */
-
-function escaparTexto(valor) {
-
-    if (
-        typeof escapar === "function"
-    ) {
-
-        return escapar(
-            String(valor ?? "")
-        );
-
-    }
-
-
-    return String(valor ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =====================================================
-   🔢 NÚMERO SEGURO
-===================================================== */
-
-function numeroSeguro(valor) {
-
-    if (
-        typeof valorNumerico === "function"
-    ) {
-
-        const resultado =
-            valorNumerico(valor);
-
-        return Number.isFinite(
-            Number(resultado)
-        )
-            ? Number(resultado)
-            : 0;
-
-    }
-
-
-    if (
-        typeof valor === "number"
-    ) {
-
-        return Number.isFinite(valor)
-            ? valor
-            : 0;
-
-    }
-
-
-    if (
+    if(
         valor === null ||
         valor === undefined ||
         valor === ""
-    ) {
-
+    ){
         return 0;
-
     }
 
+    if(typeof valor === "number"){
+        return isNaN(valor) ? 0 : valor;
+    }
 
     let texto =
         String(valor)
-            .trim()
-            .replace(/\s/g, "")
-            .replace(/^R\$/i, "");
+        .replace(/[R$\s]/g,"");
 
-
-    if (
+    if(
+        texto.includes(".") &&
         texto.includes(",")
-    ) {
+    ){
 
         texto =
             texto
-                .replace(/\./g, "")
-                .replace(",", ".");
+            .replace(/\./g,"")
+            .replace(",", ".");
+
+    }else if(texto.includes(",")){
+
+        texto =
+            texto.replace(",", ".");
 
     }
 
+    const valorFinal =
+        parseFloat(texto);
 
-    const numero =
-        Number(texto);
-
-
-    return Number.isFinite(numero)
-        ? numero
-        : 0;
+    return isNaN(valorFinal)
+        ? 0
+        : valorFinal;
 
 }
 
 
-/* =====================================================
-   🔢 FORMATAR QUANTIDADE
-===================================================== */
-
-function formatarQuantidade(valor) {
-
-    const numero =
-        numeroSeguro(valor);
-
-
-    return numero.toLocaleString(
-        "pt-BR",
-        {
-            maximumFractionDigits: 3
-        }
-    );
-
-}
-
-
-/* =====================================================
-   📅 DATA SEGURA
-===================================================== */
-
-function obterData(item) {
-
-    return (
-        item.dataHora ||
-        item.data ||
-        item.criadoEm ||
-        item.atualizadoEm ||
-        item.timestamp ||
-        item.createdAt ||
-        ""
-    );
-
-}
-
-
-/* =====================================================
-   📅 DATA FORMATADA
-===================================================== */
-
-function formatarDataHistorico(data) {
-
-    if (!data) {
-
-        return "Data não informada";
-
-    }
-
-
-    if (
-        typeof formatarDataHora === "function"
-    ) {
-
-        try {
-
-            return formatarDataHora(data);
-
-        }
-        catch (erro) {
-
-            console.warn(
-                "Erro ao usar formatarDataHora:",
-                erro
-            );
-
-        }
-
-    }
-
-
-    const objeto =
-        new Date(data);
-
-
-    if (
-        isNaN(
-            objeto.getTime()
-        )
-    ) {
-
-        return String(data);
-
-    }
-
-
-    return objeto.toLocaleString(
-        "pt-BR",
-        {
-            dateStyle: "short",
-            timeStyle: "short"
-        }
-    );
-
-}
-
-
-/* =====================================================
-   📅 DATA OBJETO
-===================================================== */
-
-function obterObjetoData(data) {
-
-    if (!data) {
-
-        return null;
-
-    }
-
-
-    let objeto;
-
-
-    if (
-        typeof data === "number"
-    ) {
-
-        objeto =
-            new Date(
-                data < 10000000000
-                    ? data * 1000
-                    : data
-            );
-
-    }
-    else {
-
-        objeto =
-            new Date(data);
-
-    }
-
-
-    if (
-        isNaN(
-            objeto.getTime()
-        )
-    ) {
-
-        return null;
-
-    }
-
-
-    return objeto;
-
-}
-
-
-/* =====================================================
-   📅 É HOJE?
-===================================================== */
-
-function ehHoje(data) {
-
-    const objeto =
-        obterObjetoData(data);
-
-
-    if (!objeto) {
-
-        return false;
-
-    }
-
-
-    const hoje =
-        new Date();
-
-
-    return (
-
-        objeto.getDate() ===
-        hoje.getDate()
-
-        &&
-
-        objeto.getMonth() ===
-        hoje.getMonth()
-
-        &&
-
-        objeto.getFullYear() ===
-        hoje.getFullYear()
-
-    );
-
-}
-
-
-/* =====================================================
-   🔎 FILTRO DE PERÍODO
-===================================================== */
-
-function pertenceAoPeriodo(
-    data,
-    periodo
-) {
-
-    if (
-        periodo === "tudo"
-    ) {
-
-        return true;
-
-    }
-
-
-    const objeto =
-        obterObjetoData(data);
-
-
-    if (!objeto) {
-
-        return false;
-
-    }
-
-
-    const agora =
-        new Date();
-
-
-    if (
-        periodo === "hoje"
-    ) {
-
-        return ehHoje(data);
-
-    }
-
-
-    if (
-        periodo === "mes"
-    ) {
-
-        return (
-
-            objeto.getMonth() ===
-            agora.getMonth()
-
-            &&
-
-            objeto.getFullYear() ===
-            agora.getFullYear()
-
-        );
-
-    }
-
-
-    if (
-        periodo === "7dias"
-    ) {
-
-        const inicio =
-            new Date();
-
-
-        inicio.setHours(
-            0,
-            0,
-            0,
-            0
-        );
-
-
-        inicio.setDate(
-            inicio.getDate() - 6
-        );
-
-
-        return objeto >= inicio;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =====================================================
-   🏷️ NORMALIZAR TIPO
-===================================================== */
-
-function normalizarTipo(item) {
+/* =========================
+   NORMALIZAR TIPO
+========================= */
+
+function normalizarTipo(item){
 
     const tipo =
         String(
-            item.tipo ||
-            item.movimento ||
-            item.operacao ||
+            item.tipo ??
+            item.movimento ??
+            item.operacao ??
             ""
         )
-        .trim()
-        .toLowerCase();
+        .toLowerCase()
+        .trim();
 
-
-    if (
-        tipo === "entrada" ||
-        tipo === "ent" ||
-        tipo === "in" ||
-        tipo === "compra" ||
-        tipo === "compras" ||
-        tipo === "entrada de estoque" ||
-        tipo === "ajuste positivo" ||
-        tipo === "ajuste+"
-    ) {
-
+    if(
+        tipo.includes("entrada") ||
+        tipo.includes("entrada")
+    ){
         return "entrada";
-
     }
 
-
-    if (
-        tipo === "saida" ||
-        tipo === "saída" ||
-        tipo === "out" ||
-        tipo === "venda" ||
-        tipo === "vendas" ||
-        tipo === "saída de estoque" ||
-        tipo === "ajuste negativo" ||
-        tipo === "ajuste-"
-    ) {
-
+    if(
+        tipo.includes("saida") ||
+        tipo.includes("saída") ||
+        tipo.includes("venda") ||
+        tipo.includes("baixa")
+    ){
         return "saida";
-
     }
-
 
     return tipo;
 
 }
 
 
-/* =====================================================
-   📦 NOME DO PRODUTO
-===================================================== */
+/* =========================
+   NOME PRODUTO
+========================= */
 
-function obterNomeProduto(item) {
+function nomeProduto(item){
 
-    let produto =
-        item.produto;
+    return String(
 
-
-    if (
-        produto &&
-        typeof produto === "object"
-    ) {
-
-        produto =
-            produto.nome ||
-            produto.mercadoria ||
-            produto.descricao;
-
-    }
-
-
-    if (
-        !produto &&
-        item.mercadoria &&
-        typeof item.mercadoria === "object"
-    ) {
-
-        produto =
-            item.mercadoria.nome ||
-            item.mercadoria.descricao;
-
-    }
-
-
-    return (
-        produto ||
-        item.produtoNome ||
-        item.nomeProduto ||
-        item.nome ||
-        item.mercadoria ||
+        item.produto ??
+        item.nomeProduto ??
+        item.nome ??
+        item.mercadoria ??
         "Produto não informado"
+
     );
 
 }
 
 
-/* =====================================================
-   📝 MOTIVO
-===================================================== */
+/* =========================
+   QUANTIDADE
+========================= */
 
-function obterMotivo(item) {
+function quantidadeMovimento(item){
 
-    return (
-        item.motivo ||
-        item.observacao ||
-        item.observação ||
-        item.descricao ||
-        item.descrição ||
-        item.origem ||
-        "-"
+    return numero(
+
+        item.quantidade ??
+        item.qtd ??
+        item.quantidadeMovimentada ??
+        item.estoque ??
+        0
+
     );
 
 }
 
 
-/* =====================================================
-   🏭 FORNECEDOR
-===================================================== */
+/* =========================
+   DATA
+========================= */
 
-function obterFornecedor(item) {
-
-    return (
-        item.fornecedor ||
-        item.ultimoFornecedor ||
-        item.nomeFornecedor ||
-        "-"
-    );
-
-}
-
-
-/* =====================================================
-   📏 UNIDADE
-===================================================== */
-
-function obterUnidade(item) {
+function dataMovimento(item){
 
     return (
-        item.unidade ||
-        item.medida ||
+
+        item.data ??
+        item.dataMovimento ??
+        item.created_at ??
+        item.criadoEm ??
+        item.timestamp ??
         ""
+
     );
 
 }
 
 
-/* =====================================================
-   📦 ESTOQUE ANTES — SEM INVENTAR DADO
-===================================================== */
+/* =========================
+   FORMATAR DATA
+========================= */
 
-function obterEstoqueAntes(item) {
+function formatarData(data){
 
-    const valores = [
-        item.estoqueAntes,
-        item.estoque_anterior,
-        item.saldoAntes,
-        item.saldoAnterior
-    ];
-
-
-    for (
-        let i = 0;
-        i < valores.length;
-        i++
-    ) {
-
-        if (
-            valores[i] !== undefined &&
-            valores[i] !== null &&
-            valores[i] !== ""
-        ) {
-
-            return formatarQuantidade(
-                valores[i]
-            );
-
-        }
-
+    if(!data){
+        return "--";
     }
 
+    const d =
+        new Date(data);
 
-    return "—";
-
-}
-
-
-/* =====================================================
-   📦 ESTOQUE DEPOIS — SEM INVENTAR DADO
-===================================================== */
-
-function obterEstoqueDepois(item) {
-
-    const valores = [
-        item.estoqueDepois,
-        item.estoque_depois,
-        item.saldoDepois,
-        item.saldoAtual,
-        item.estoqueAtual
-    ];
-
-
-    for (
-        let i = 0;
-        i < valores.length;
-        i++
-    ) {
-
-        if (
-            valores[i] !== undefined &&
-            valores[i] !== null &&
-            valores[i] !== ""
-        ) {
-
-            return formatarQuantidade(
-                valores[i]
-            );
-
-        }
-
+    if(isNaN(d.getTime())){
+        return String(data);
     }
 
-
-    return "—";
-
-}
-
-
-/* =====================================================
-   📊 RESUMO
-===================================================== */
-
-function atualizarResumo() {
-
-    const historico =
-        pegarHistorico();
-
-
-    let entradas = 0;
-
-    let saidas = 0;
-
-    let movimentosHoje = 0;
-
-
-    historico.forEach(
-        function(item) {
-
-            const tipo =
-                normalizarTipo(item);
-
-
-            if (
-                tipo === "entrada"
-            ) {
-
-                entradas++;
-
-            }
-
-
-            if (
-                tipo === "saida"
-            ) {
-
-                saidas++;
-
-            }
-
-
-            if (
-                ehHoje(
-                    obterData(item)
-                )
-            ) {
-
-                movimentosHoje++;
-
-            }
-
-        }
+    return d.toLocaleDateString(
+        "pt-BR"
     );
 
+}
 
-    const elementoEntradas =
+
+/* =========================
+   DATA PARA FILTRO
+========================= */
+
+function dataISO(data){
+
+    if(!data){
+        return "";
+    }
+
+    const d =
+        new Date(data);
+
+    if(isNaN(d.getTime())){
+        return "";
+    }
+
+    return d.toISOString()
+        .split("T")[0];
+
+}
+
+
+/* =========================
+   RENDERIZAR
+========================= */
+
+function renderizar(lista){
+
+    const area =
         document.getElementById(
-            "totalEntradas"
+            "listaMovimentos"
         );
-
-
-    const elementoSaidas =
-        document.getElementById(
-            "totalSaidas"
-        );
-
-
-    const elementoMovimentos =
-        document.getElementById(
-            "totalMovimentos"
-        );
-
-
-    const elementoHoje =
-        document.getElementById(
-            "movimentosHoje"
-        );
-
-
-    if (elementoEntradas) {
-
-        elementoEntradas.textContent =
-            entradas;
-
-    }
-
-
-    if (elementoSaidas) {
-
-        elementoSaidas.textContent =
-            saidas;
-
-    }
-
-
-    if (elementoMovimentos) {
-
-        elementoMovimentos.textContent =
-            historico.length;
-
-    }
-
-
-    if (elementoHoje) {
-
-        elementoHoje.textContent =
-            movimentosHoje;
-
-    }
-
-}
-
-
-/* =====================================================
-   🍔 CARREGAR PRODUTOS NO FILTRO
-===================================================== */
-
-function carregarFiltroProdutos() {
-
-    const select =
-        document.getElementById(
-            "filtroProduto"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    const valorAtual =
-        select.value;
-
-
-    const produtos =
-        pegarProdutos();
-
-
-    const nomes =
-        new Set();
-
-
-    produtos.forEach(
-        function(produto) {
-
-            if (
-                !produto ||
-                typeof produto !== "object"
-            ) {
-
-                return;
-
-            }
-
-
-            const nome =
-                String(
-                    produto.nome ||
-                    produto.mercadoria ||
-                    ""
-                ).trim();
-
-
-            if (nome) {
-
-                nomes.add(nome);
-
-            }
-
-        }
-    );
-
-
-    const historico =
-        pegarHistorico();
-
-
-    historico.forEach(
-        function(item) {
-
-            const nome =
-                String(
-                    obterNomeProduto(item)
-                ).trim();
-
-
-            if (
-                nome &&
-                nome !== "Produto não informado"
-            ) {
-
-                nomes.add(nome);
-
-            }
-
-        }
-    );
-
-
-    const listaNomes =
-        Array.from(nomes)
-            .sort(
-                function(a, b) {
-
-                    return a.localeCompare(
-                        b,
-                        "pt-BR",
-                        {
-                            sensitivity: "base"
-                        }
-                    );
-
-                }
-            );
-
-
-    select.innerHTML = `
-
-        <option value="">
-            Todos os produtos
-        </option>
-
-    `;
-
-
-    listaNomes.forEach(
-        function(nome) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                nome;
-
-
-            option.textContent =
-                nome;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
-
-    if (
-        valorAtual &&
-        listaNomes.includes(valorAtual)
-    ) {
-
-        select.value =
-            valorAtual;
-
-    }
-
-}
-
-
-/* =====================================================
-   🔍 FILTRAR HISTÓRICO
-===================================================== */
-
-function obterHistoricoFiltrado() {
-
-    const historico =
-        pegarHistorico();
-
-
-    const filtroProduto =
-        document.getElementById(
-            "filtroProduto"
-        )?.value || "";
-
-
-    const filtroTipo =
-        document.getElementById(
-            "filtroTipo"
-        )?.value || "";
-
-
-    const pesquisa =
-        (
-            document.getElementById(
-                "pesquisa"
-            )?.value || ""
-        )
-        .trim()
-        .toLowerCase();
-
-
-    const periodo =
-        document.getElementById(
-            "filtroPeriodo"
-        )?.value || "tudo";
-
-
-    return historico.filter(
-        function(item) {
-
-            const produto =
-                String(
-                    obterNomeProduto(item)
-                );
-
-
-            const motivo =
-                String(
-                    obterMotivo(item)
-                );
-
-
-            const fornecedor =
-                String(
-                    obterFornecedor(item)
-                );
-
-
-            const tipo =
-                normalizarTipo(item);
-
-
-            const data =
-                obterData(item);
-
-
-            if (
-                filtroProduto &&
-                produto !== filtroProduto
-            ) {
-
-                return false;
-
-            }
-
-
-            if (
-                filtroTipo &&
-                tipo !== filtroTipo
-            ) {
-
-                return false;
-
-            }
-
-
-            if (
-                !pertenceAoPeriodo(
-                    data,
-                    periodo
-                )
-            ) {
-
-                return false;
-
-            }
-
-
-            if (pesquisa) {
-
-                const texto =
-                    (
-                        produto +
-                        " " +
-                        motivo +
-                        " " +
-                        fornecedor +
-                        " " +
-                        tipo
-                    )
-                    .toLowerCase();
-
-
-                if (
-                    !texto.includes(
-                        pesquisa
-                    )
-                ) {
-
-                    return false;
-
-                }
-
-            }
-
-
-            return true;
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   ↕️ ORDENAÇÃO
-===================================================== */
-
-function ordenarHistorico(historico) {
-
-    return historico.sort(
-        function(a, b) {
-
-            const dataA =
-                obterObjetoData(
-                    obterData(a)
-                );
-
-
-            const dataB =
-                obterObjetoData(
-                    obterData(b)
-                );
-
-
-            const tempoA =
-                dataA
-                    ? dataA.getTime()
-                    : 0;
-
-
-            const tempoB =
-                dataB
-                    ? dataB.getTime()
-                    : 0;
-
-
-            if (
-                tempoB !== tempoA
-            ) {
-
-                return tempoB - tempoA;
-
-            }
-
-
-            const idA =
-                String(
-                    a.id || ""
-                );
-
-
-            const idB =
-                String(
-                    b.id || ""
-                );
-
-
-            return idB.localeCompare(
-                idA
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   📋 MOSTRAR HISTÓRICO
-===================================================== */
-
-function mostrarHistorico() {
-
-    const lista =
-        document.getElementById(
-            "listaHistorico"
-        );
-
-
-    if (!lista) {
-
-        return;
-
-    }
-
-
-    let historico =
-        obterHistoricoFiltrado();
-
-
-    ordenarHistorico(
-        historico
-    );
-
 
     const contador =
         document.getElementById(
-            "contadorResultados"
+            "contador"
         );
 
 
-    if (contador) {
+    contador.textContent =
+        lista.length +
+        (
+            lista.length === 1
+                ? " registro"
+                : " registros"
+        );
 
-        contador.textContent =
-            historico.length === 1
-                ? "1 movimentação encontrada."
-                : `${historico.length} movimentações encontradas.`;
 
-    }
+    if(lista.length === 0){
 
+        area.innerHTML = `
 
-    if (
-        historico.length === 0
-    ) {
-
-        lista.innerHTML = `
-
-            <div class="historico-vazio">
+            <div class="vazio">
 
                 <div class="icone">
-                    📭
+                    📦
                 </div>
 
                 <strong>
-                    Nenhuma movimentação encontrada.
+                    Nenhuma movimentação encontrada
                 </strong>
 
-                <p>
-                    Tente alterar os filtros ou
-                    realize uma movimentação no estoque.
-                </p>
+                <span>
+                    As entradas e saídas do estoque aparecerão aqui.
+                </span>
 
             </div>
 
@@ -3178,246 +1004,122 @@ function mostrarHistorico() {
     }
 
 
-    lista.innerHTML = "";
+    area.innerHTML = "";
 
 
-    historico.forEach(
-        function(item) {
+    lista.forEach(
+        function(item){
 
             const tipo =
                 normalizarTipo(item);
 
+            const nome =
+                nomeProduto(item);
 
-            const entrada =
-                tipo === "entrada";
+            const quantidade =
+                quantidadeMovimento(item);
+
+            const data =
+                dataMovimento(item);
+
+
+            const tipoTexto =
+                tipo === "entrada"
+                    ? "ENTRADA"
+                    : tipo === "saida"
+                        ? "SAÍDA"
+                        : String(
+                            tipo || "MOVIMENTO"
+                        ).toUpperCase();
 
 
             const classe =
-                entrada
-                    ? "entrada"
-                    : "saida";
-
-
-            const titulo =
-                entrada
-                    ? "📥 ENTRADA DE ESTOQUE"
-                    : "📤 SAÍDA DE ESTOQUE";
-
-
-            const classeTitulo =
-                entrada
-                    ? "entrada-titulo"
-                    : "saida-titulo";
-
-
-            const badgeClasse =
-                entrada
-                    ? "badge-entrada"
-                    : "badge-saida";
-
-
-            const badgeTexto =
-                entrada
-                    ? "ENTRADA"
-                    : "SAÍDA";
+                tipo === "entrada"
+                    ? "tipo-entrada"
+                    : "tipo-saida";
 
 
             const sinal =
-                entrada
+                tipo === "entrada"
                     ? "+"
-                    : "-";
-
-
-            const produto =
-                escaparTexto(
-                    obterNomeProduto(item)
-                );
-
-
-            const motivo =
-                escaparTexto(
-                    obterMotivo(item)
-                );
-
-
-            const fornecedor =
-                escaparTexto(
-                    obterFornecedor(item)
-                );
+                    : tipo === "saida"
+                        ? "-"
+                        : "";
 
 
             const unidade =
-                escaparTexto(
-                    obterUnidade(item)
+                item.unidade ??
+                item.unidadeMedida ??
+                "";
+
+
+            const fornecedor =
+                item.fornecedor ??
+                "";
+
+
+            const detalhes = [
+
+                formatarData(data),
+
+                fornecedor
+                    ? "Fornecedor: " + fornecedor
+                    : "",
+
+                unidade
+                    ? "Unidade: " + unidade
+                    : ""
+
+            ]
+            .filter(Boolean)
+            .join(" • ");
+
+
+            const div =
+                document.createElement(
+                    "div"
                 );
 
-
-            const quantidade =
-                formatarQuantidade(
-                    item.quantidade ??
-                    item.qtd ??
-                    item.quantidadeMovimentada ??
-                    0
-                );
+            div.className =
+                "movimento-item";
 
 
-            const estoqueAntes =
-                escaparTexto(
-                    obterEstoqueAntes(item)
-                );
+            div.innerHTML = `
 
+                <div class="movimento-info">
 
-            const estoqueDepois =
-                escaparTexto(
-                    obterEstoqueDepois(item)
-                );
-
-
-            const data =
-                escaparTexto(
-                    formatarDataHistorico(
-                        obterData(item)
-                    )
-                );
-
-
-            lista.innerHTML += `
-
-                <div class="movimento ${classe}">
-
-
-                    <div class="movimento-topo">
-
-                        <div>
-
-                            <h3
-                                class="movimento-titulo ${classeTitulo}"
-                            >
-
-                                ${titulo}
-
-                            </h3>
-
-                            <div class="movimento-data">
-
-                                📅 ${data}
-
-                            </div>
-
-                        </div>
-
-
-                        <span
-                            class="badge-movimento ${badgeClasse}"
-                        >
-
-                            ${badgeTexto}
-
-                        </span>
-
+                    <div class="produto">
+                        ${escapar(nome)}
                     </div>
 
-
-                    <div class="movimento-info">
-
-
-                        <div class="info-box">
-
-                            <small>
-                                🍔 Produto / Mercadoria
-                            </small>
-
-                            <strong>
-                                ${produto}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box quantidade-box">
-
-                            <small>
-                                🔢 Quantidade movimentada
-                            </small>
-
-                            <strong>
-                                ${sinal}${quantidade}
-                                ${unidade}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <small>
-                                📦 Estoque antes
-                            </small>
-
-                            <strong>
-                                ${estoqueAntes}
-                                ${unidade}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <small>
-                                📦 Estoque depois
-                            </small>
-
-                            <strong>
-                                ${estoqueDepois}
-                                ${unidade}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <small>
-                                🏭 Fornecedor
-                            </small>
-
-                            <strong>
-                                ${fornecedor}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <small>
-                                📝 Motivo
-                            </small>
-
-                            <strong>
-                                ${motivo}
-                            </strong>
-
-                        </div>
-
-
+                    <div class="detalhes">
+                        ${escapar(detalhes)}
                     </div>
 
+                </div>
 
-                    <div class="estoque-final">
 
-                        📦 Estoque registrado após o movimento:
+                <div class="movimento-direita">
 
-                        ${estoqueDepois}
-                        ${unidade}
-
+                    <div class="tipo ${classe}">
+                        ${tipoTexto}
                     </div>
 
+                    <div class="quantidade">
+                        ${sinal}${quantidade}
+                        ${escapar(unidade)}
+                    </div>
+
+                    <div class="data">
+                        ${formatarData(data)}
+                    </div>
 
                 </div>
 
             `;
+
+
+            area.appendChild(div);
 
         }
     );
@@ -3425,182 +1127,295 @@ function mostrarHistorico() {
 }
 
 
-/* =====================================================
-   🔄 ATUALIZAÇÃO COMPLETA
-===================================================== */
+/* =========================
+   ESCAPAR HTML
+========================= */
 
-function atualizarHistoricoCompleto() {
+function escapar(valor){
 
-    carregarFiltroProdutos();
-
-    atualizarResumo();
-
-    mostrarHistorico();
+    return String(valor)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-/* =====================================================
-   🗑️ LIMPAR HISTÓRICO
-===================================================== */
+/* =========================
+   FILTRAR
+========================= */
 
-function limparHistorico() {
+function aplicarFiltros(){
+
+    const produto =
+        document.getElementById(
+            "filtroProduto"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const tipo =
+        document.getElementById(
+            "filtroTipo"
+        ).value;
+
+
+    const inicial =
+        document.getElementById(
+            "dataInicial"
+        ).value;
+
+
+    const final =
+        document.getElementById(
+            "dataFinal"
+        ).value;
+
 
     const historico =
-        pegarHistorico();
+        lerHistorico();
 
 
-    if (
-        historico.length === 0
-    ) {
+    const filtrado =
+        historico.filter(
+            function(item){
 
-        alert(
-            "📭 O histórico de estoque já está vazio."
+                const nome =
+                    nomeProduto(item)
+                    .toLowerCase();
+
+
+                const tipoItem =
+                    normalizarTipo(item);
+
+
+                const data =
+                    dataISO(
+                        dataMovimento(item)
+                    );
+
+
+                if(
+                    produto &&
+                    !nome.includes(produto)
+                ){
+                    return false;
+                }
+
+
+                if(
+                    tipo &&
+                    tipoItem !== tipo
+                ){
+                    return false;
+                }
+
+
+                if(
+                    inicial &&
+                    data &&
+                    data < inicial
+                ){
+                    return false;
+                }
+
+
+                if(
+                    final &&
+                    data &&
+                    data > final
+                ){
+                    return false;
+                }
+
+
+                return true;
+
+            }
         );
 
-        return;
 
-    }
-
-
-    const confirmar =
-        confirm(
-
-            "⚠️ ATENÇÃO!\n\n" +
-
-            "Você está prestes a apagar " +
-
-            historico.length +
-
-            " movimentações do histórico.\n\n" +
-
-            "Isso NÃO irá alterar o estoque atual " +
-
-            "das mercadorias.\n\n" +
-
-            "Esta ação não poderá ser desfeita.\n\n" +
-
-            "Deseja realmente continuar?"
-
-        );
-
-
-    if (!confirmar) {
-
-        return;
-
-    }
-
-
-    if (
-        !salvarHistorico([])
-    ) {
-
-        return;
-
-    }
-
-
-    atualizarHistoricoCompleto();
-
-
-    alert(
-        "✅ Histórico de estoque apagado com sucesso."
+    renderizar(
+        ordenar(filtrado)
     );
 
 }
 
 
-/* =====================================================
-   ⌨️ ENTER NA PESQUISA
-===================================================== */
+/* =========================
+   ORDENAR
+========================= */
 
-const campoPesquisa =
-    document.getElementById(
-        "pesquisa"
+function ordenar(lista){
+
+    return [...lista].sort(
+        function(a,b){
+
+            const dataA =
+                new Date(
+                    dataMovimento(a)
+                ).getTime() || 0;
+
+
+            const dataB =
+                new Date(
+                    dataMovimento(b)
+                ).getTime() || 0;
+
+
+            return dataB - dataA;
+
+        }
     );
 
+}
 
-if (campoPesquisa) {
 
-    campoPesquisa.addEventListener(
-        "keydown",
-        function(event) {
+/* =========================
+   MÉTRICAS
+========================= */
 
-            if (
-                event.key === "Enter"
-            ) {
+function atualizarMetricas(){
 
-                mostrarHistorico();
+    const historico =
+        lerHistorico();
+
+
+    let entradas = 0;
+    let saidas = 0;
+
+
+    historico.forEach(
+        function(item){
+
+            const tipo =
+                normalizarTipo(item);
+
+
+            if(tipo === "entrada"){
+
+                entradas++;
+
+            }else if(tipo === "saida"){
+
+                saidas++;
 
             }
 
         }
     );
 
+
+    document.getElementById(
+        "totalEntradas"
+    ).textContent =
+        entradas;
+
+
+    document.getElementById(
+        "totalSaidas"
+    ).textContent =
+        saidas;
+
+
+    document.getElementById(
+        "totalMovimentos"
+    ).textContent =
+        historico.length;
+
 }
 
 
-/* =====================================================
-   🚀 INICIALIZAÇÃO
-===================================================== */
+/* =========================
+   LIMPAR
+========================= */
+
+function limparFiltros(){
+
+    document.getElementById(
+        "filtroProduto"
+    ).value = "";
+
+
+    document.getElementById(
+        "filtroTipo"
+    ).value = "";
+
+
+    document.getElementById(
+        "dataInicial"
+    ).value = "";
+
+
+    document.getElementById(
+        "dataFinal"
+    ).value = "";
+
+
+    iniciar();
+
+}
+
+
+/* =========================
+   VOLTAR
+========================= */
+
+function voltar(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
+
+function iniciar(){
+
+    const historico =
+        lerHistorico();
+
+
+    atualizarMetricas();
+
+    renderizar(
+        ordenar(historico)
+    );
+
+}
+
+
+iniciar();
+
+
+/* =========================
+   ATUALIZAR AO VOLTAR
+========================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+    "visibilitychange",
+    function(){
 
-        atualizarHistoricoCompleto();
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
 
-    }
-);
-
-
-/* =====================================================
-   🔄 QUANDO VOLTAR PARA A PÁGINA
-===================================================== */
-
-window.addEventListener(
-    "pageshow",
-    function() {
-
-        atualizarHistoricoCompleto();
-
-    }
-);
-
-
-/* =====================================================
-   💾 QUANDO OUTRA PÁGINA ALTERAR O STORAGE
-===================================================== */
-
-window.addEventListener(
-    "storage",
-    function(event) {
-
-        if (
-            event.key === "historicoEstoque" ||
-            event.key === "produtos"
-        ) {
-
-            atualizarHistoricoCompleto();
+            iniciar();
 
         }
 
     }
 );
 
-
-/* =====================================================
-   🌐 INTEGRAÇÃO GRILLCORE
-===================================================== */
-
-window.mostrarHistoricoPagina =
-    mostrarHistorico;
-
-
 </script>
 
-
 </body>
-
-</html>
+    </html>

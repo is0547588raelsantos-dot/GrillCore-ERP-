@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#0d0d0d">
+
+<title>GrillCore — Usuários</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255,115,0,.10),
+            transparent 35%
+        ),
+        #0d0d0d;
+
+    color:white;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    padding:15px;
+
+}
+
+.container{
+
+    width:100%;
+    max-width:900px;
+
+    margin:auto;
+}
+
+.topo{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.titulo{
+
+    font-size:24px;
+
+    font-weight:900;
+
+    color:#ff8a1f;
+}
+
+.subtitulo{
+
+    color:#999;
+
+    font-size:12px;
+
+    margin-top:4px;
+}
+
+.btn-voltar{
+
+    border:1px solid #49301b;
+
+    background:#191919;
+
+    color:#ff9a3d;
+
+    padding:10px 14px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.painel{
+
+    background:
+        linear-gradient(
+            145deg,
+            #21140b,
+            #111
+        );
+
+    border:1px solid
+        rgba(255,115,0,.35);
+
+    border-radius:20px;
+
+    padding:20px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.45);
+
+}
+
+.cabecalho{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+.cabecalho h2{
+
+    font-size:18px;
+}
+
+.btn-adicionar{
+
+    border:none;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff8a1f,
+            #d95700
+        );
+
+    color:#130900;
+
+    padding:12px 15px;
+
+    border-radius:11px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.lista{
+
+    display:grid;
+
+    gap:12px;
+}
+
+.usuario-card{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding:15px;
+
+    background:#181818;
+
+    border:1px solid #333;
+
+    border-radius:15px;
+}
+
+.usuario-info{
+
+    min-width:0;
+}
+
+.nome{
+
+    font-size:16px;
+
+    font-weight:900;
+
+    color:#fff;
+}
+
+.login{
+
+    color:#aaa;
+
+    font-size:12px;
+
+    margin-top:4px;
+}
+
+.tipo{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    padding:4px 8px;
+
+    border-radius:8px;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    background:#33200e;
+
+    color:#ff9a3d;
+}
+
+.acoes{
+
+    display:flex;
+
+    gap:7px;
+
+    flex-wrap:wrap;
+
+    justify-content:flex-end;
+}
+
+.btn{
+
+    border:1px solid #3c3c3c;
+
+    background:#222;
+
+    color:white;
+
+    padding:9px 11px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.btn.editar{
+
+    color:#ffb56f;
+
+    border-color:#6b3a15;
+}
+
+.btn.excluir{
+
+    color:#ff7777;
+
+    border-color:#632626;
+}
+
+.vazio{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#777;
+}
+
+
+/* MODAL */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.78);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+    z-index:1000;
+}
+
+.modal.ativo{
+
+    display:flex;
+}
+
+.modal-card{
+
+    width:100%;
+
+    max-width:430px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #24170e,
+            #111
+        );
+
+    border:1px solid
+        rgba(255,115,0,.4);
+
+    border-radius:20px;
+
+    padding:22px;
+
+}
+
+.modal-card h2{
+
+    color:#ff9a3d;
+
+    margin-bottom:18px;
+}
+
+.campo{
+
+    margin-bottom:14px;
+}
+
+.campo label{
+
+    display:block;
+
+    color:#ccc;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin-bottom:6px;
+}
+
+.campo input,
+.campo select{
+
+    width:100%;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    border:1px solid #49301b;
+
+    background:#090909;
+
+    color:white;
+
+    font-size:15px;
+
+    outline:none;
+}
+
+.campo input:focus,
+.campo select:focus{
+
+    border-color:#ff7300;
+}
+
+.modal-acoes{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:20px;
+}
+
+.modal-acoes button{
+
+    flex:1;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.cancelar{
+
+    background:#222;
+
+    border:1px solid #444;
+
+    color:#ddd;
+}
+
+.salvar{
+
+    background:#ff7300;
+
+    border:1px solid #ff9a3d;
+
+    color:#150a00;
+}
+
+.mensagem{
+
+    display:none;
+
+    padding:11px;
+
+    margin-bottom:15px;
+
+    border-radius:9px;
+
+    text-align:center;
+
+    font-size:13px;
+}
+
+.mensagem.erro{
+
+    display:block;
+
+    background:#3d1208;
+
+    border:1px solid #9d3515;
+
+    color:#ff9a7a;
+}
+
+.mensagem.ok{
+
+    display:block;
+
+    background:#123d18;
+
+    border:1px solid #287333;
+
+    color:#8cff99;
+}
+
+@media(max-width:600px){
+
+    .topo{
+
+        align-items:flex-start;
+    }
+
+    .cabecalho{
+
+        align-items:stretch;
+
+        flex-direction:column;
+    }
+
+    .btn-adicionar{
+
+        width:100%;
+    }
+
+    .usuario-card{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+    .acoes{
+
+        width:100%;
+
+        justify-content:flex-start;
+    }
+
+    .acoes .btn{
+
+        flex:1;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="topo">
+
+        <div>
+
+            <div class="titulo">
+                👥 Usuários e Acessos
+            </div>
+
+            <div class="subtitulo">
+                Gerenciamento de acesso ao GrillCore ERP
+            </div>
+
+        </div>
+
+        <button
+            class="btn-voltar"
+            onclick="voltar()">
+
+            ← Voltar
+
+        </button>
+
+    </header>
+
+
+    <div class="painel">
+
+        <div class="cabecalho">
+
+            <h2>
+                Contas cadastradas
+            </h2>
+
+            <button
+                class="btn-adicionar"
+                onclick="abrirNovo()">
+
+                ➕ Adicionar usuário
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="mensagem"
+            class="mensagem">
+        </div>
+
+
+        <div
+            id="lista"
+            class="lista">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-card">
+
+        <h2 id="tituloModal">
+            Novo usuário
+        </h2>
+
+
+        <div class="campo">
+
+            <label>
+                Nome
+            </label>
+
+            <input
+                id="nome"
+                type="text"
+                placeholder="Ex.: Cláudia">
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Usuário
+            </label>
+
+            <input
+                id="usuario"
+                type="text"
+                placeholder="Ex.: claudia"
+                autocapitalize="none">
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Senha
+            </label>
+
+            <input
+                id="senha"
+                type="text"
+                placeholder="Digite a senha">
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                Tipo de acesso
+            </label>
+
+            <select id="tipo">
+
+                <option value="usuario">
+                    👤 Usuário
+                </option>
+
+                <option value="admin">
+                    👑 Administrador
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="modal-acoes">
+
+            <button
+                class="cancelar"
+                onclick="fecharModal()">
+
+                Cancelar
+
+            </button>
+
+            <button
+                class="salvar"
+                onclick="salvarUsuario()">
+
+                💾 Salvar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   PROTEÇÃO
+===================================================== */
+
+if(
+    localStorage.getItem(
+        "grillcore_login"
+    ) !== "true"
+){
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/* =====================================================
+   SOMENTE ADMINISTRADOR
+===================================================== */
+
+const tipoUsuario =
+    localStorage.getItem(
+        "grillcore_tipo_usuario"
+    );
+
+
+if(
+    tipoUsuario !== "admin"
+){
+
+    alert(
+        "🔒 Acesso restrito ao administrador."
+    );
+
+    window.location.replace(
+        "index.html"
+    );
+
+}
+
+
+/* =====================================================
+   CHAVE
+===================================================== */
+
+const CHAVE =
+    "grillcore_usuarios";
+
+
+let editandoId = null;
+
+
+/* =====================================================
+   LER USUÁRIOS
+===================================================== */
+
+function obterUsuarios(){
+
+    try{
+
+        const dados =
+            localStorage.getItem(CHAVE);
+
+
+        if(!dados){
+
+            return [];
+
+        }
+
+
+        const usuarios =
+            JSON.parse(dados);
+
+
+        return Array.isArray(usuarios)
+            ? usuarios
+            : [];
+
+    }
+    catch(e){
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   SALVAR
+===================================================== */
+
+function salvarLista(usuarios){
+
+    localStorage.setItem(
+        CHAVE,
+        JSON.stringify(usuarios)
+    );
+
+}
+
+
+/* =====================================================
+   RENDERIZAR
+===================================================== */
+
+function renderizar(){
+
+    const lista =
+        document.getElementById(
+            "lista"
+        );
+
+
+    const usuarios =
+        obterUsuarios();
+
+
+    lista.innerHTML =
+        "";
+
+
+    if(usuarios.length === 0){
+
+        lista.innerHTML = `
+            <div class="vazio">
+                Nenhum usuário cadastrado.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    usuarios.forEach(
+        function(usuario){
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "usuario-card";
+
+
+            const tipoTexto =
+                usuario.tipo === "admin"
+                    ? "👑 ADMINISTRADOR"
+                    : "👤 USUÁRIO";
+
+
+            card.innerHTML = `
+
+                <div class="usuario-info">
+
+                    <div class="nome">
+                        ${escapar(usuario.nome || usuario.usuario)}
+                    </div>
+
+                    <div class="login">
+                        Login: <strong>
+                        ${escapar(usuario.usuario)}
+                        </strong>
+                    </div>
+
+                    <span class="tipo">
+                        ${tipoTexto}
+                    </span>
+
+                </div>
+
+                <div class="acoes">
+
+                    <button
+                        class="btn editar"
+                        onclick="editarUsuario('${usuario.id}')">
+
+                        ✏️ Editar
+
+                    </button>
+
+                    <button
+                        class="btn excluir"
+                        onclick="excluirUsuario('${usuario.id}')">
+
+                        🗑️ Excluir
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            lista.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escapar(texto){
+
+    return String(texto)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   NOVO
+===================================================== */
+
+function abrirNovo(){
+
+    editandoId =
+        null;
+
+
+    document.getElementById(
+        "tituloModal"
+    ).textContent =
+        "➕ Novo usuário";
+
+
+    document.getElementById(
+        "nome"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "usuario"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "senha"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "tipo"
+    ).value =
+        "usuario";
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add(
+        "ativo"
+    );
+
+}
+
+
+/* =====================================================
+   EDITAR
+===================================================== */
+
+function editarUsuario(id){
+
+    const usuarios =
+        obterUsuarios();
+
+
+    const usuario =
+        usuarios.find(
+            function(item){
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    editandoId =
+        id;
+
+
+    document.getElementById(
+        "tituloModal"
+    ).textContent =
+        "✏️ Editar usuário";
+
+
+    document.getElementById(
+        "nome"
+    ).value =
+        usuario.nome || "";
+
+
+    document.getElementById(
+        "usuario"
+    ).value =
+        usuario.usuario || "";
+
+
+    document.getElementById(
+        "senha"
+    ).value =
+        usuario.senha || "";
+
+
+    document.getElementById(
+        "tipo"
+    ).value =
+        usuario.tipo || "usuario";
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add(
+        "ativo"
+    );
+
+}
+
+
+/* =====================================================
+   SALVAR USUÁRIO
+===================================================== */
+
+function salvarUsuario(){
+
+    const nome =
+        document.getElementById(
+            "nome"
+        ).value.trim();
+
+
+    const usuario =
+        document.getElementById(
+            "usuario"
+        ).value.trim();
+
+
+    const senha =
+        document.getElementById(
+            "senha"
+        ).value;
+
+
+    const tipo =
+        document.getElementById(
+            "tipo"
+        ).value;
+
+
+    if(!nome){
+
+        alert(
+            "⚠️ Digite o nome."
+        );
+
+        return;
+
+    }
+
+
+    if(!usuario){
+
+        alert(
+            "⚠️ Digite o usuário."
+        );
+
+        return;
+
+    }
+
+
+    if(!senha){
+
+        alert(
+            "⚠️ Digite a senha."
+        );
+
+        return;
+
+    }
+
+
+    let usuarios =
+        obterUsuarios();
+
+
+    const usuarioDuplicado =
+        usuarios.find(
+            function(item){
+
+                return (
+
+                    item.usuario.toLowerCase() ===
+                    usuario.toLowerCase() &&
+
+                    item.id !== editandoId
+
+                );
+
+            }
+        );
+
+
+    if(usuarioDuplicado){
+
+        alert(
+            "⚠️ Esse nome de usuário já está cadastrado."
+        );
+
+        return;
+
+    }
+
+
+    if(editandoId){
+
+        const posicao =
+            usuarios.findIndex(
+                function(item){
+
+                    return item.id ===
+                        editandoId;
+
+                }
+            );
+
+
+        if(posicao !== -1){
+
+            usuarios[posicao].nome =
+                nome;
+
+            usuarios[posicao].usuario =
+                usuario;
+
+            usuarios[posicao].senha =
+                senha;
+
+            usuarios[posicao].tipo =
+                tipo;
+
+        }
+
+    }
+    else{
+
+        usuarios.push({
+
+            id:
+                "usuario-" +
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2,8),
+
+            nome:
+                nome,
+
+            usuario:
+                usuario,
+
+            senha:
+                senha,
+
+            tipo:
+                tipo,
+
+            ativo:
+                true
+
+        });
+
+    }
+
+
+    salvarLista(
+        usuarios
+    );
+
+
+    fecharModal();
+
+    mostrarMensagem(
+        "✅ Usuário salvo com sucesso!",
+        "ok"
+    );
+
+
+    renderizar();
+
+}
+
+
+/* =====================================================
+   EXCLUIR
+===================================================== */
+
+function excluirUsuario(id){
+
+    const usuarios =
+        obterUsuarios();
+
+
+    const atual =
+        localStorage.getItem(
+            "grillcore_usuario_id"
+        );
+
+
+    if(id === atual){
+
+        alert(
+            "⚠️ Você não pode excluir o usuário que está usando agora."
+        );
+
+        return;
+
+    }
+
+
+    const usuario =
+        usuarios.find(
+            function(item){
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    const admins =
+        usuarios.filter(
+            function(item){
+
+                return (
+                    item.tipo === "admin" &&
+                    item.id !== id
+                );
+
+            }
+        );
+
+
+    if(
+        usuario.tipo === "admin" &&
+        admins.length === 0
+    ){
+
+        alert(
+            "⚠️ O GrillCore precisa ter pelo menos um administrador."
+        );
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir o usuário \"" +
+            usuario.usuario +
+            "\"?"
+        );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    const novaLista =
+        usuarios.filter(
+            function(item){
+
+                return item.id !== id;
+
+            }
+        );
+
+
+    salvarLista(
+        novaLista
+    );
+
+
+    mostrarMensagem(
+        "🗑️ Usuário excluído.",
+        "ok"
+    );
+
+
+    renderizar();
+
+}
+
+
+/* =====================================================
+   FECHAR
+===================================================== */
+
+function fecharModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove(
+        "ativo"
+    );
+
+}
+
+
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
+function mostrarMensagem(
+    texto,
+    tipo
+){
+
+    const elemento =
+        document.getElementById(
+            "mensagem"
+        );
+
+
+    elemento.textContent =
+        texto;
+
+
+    elemento.className =
+        "mensagem " + tipo;
+
+
+    setTimeout(
+        function(){
+
+            elemento.className =
+                "mensagem";
+
+        },
+        2500
+    );
+
+}
+
+
+/* =====================================================
+   VOLTAR
+===================================================== */
+
+function voltar(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+renderizar();
+
+</script>
+
+</body>
+
+</html>

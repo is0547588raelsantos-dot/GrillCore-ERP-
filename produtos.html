@@ -1,1336 +1,808 @@
-<!DOCTYPE html><html lang="pt-BR"><head><script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<script>
 if(localStorage.getItem("grillcore_login") !== "true"){
     window.location.replace("login.html");
 }
-</script><meta charset="UTF-8"><meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+</script>
 
-«»
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff7300">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GrillCore">
 
-<meta
-name="theme-color"
-content="#ff7300"
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tema-laranja.css">
 
-«»
+<title>Produtos — GrillCore ERP</title>
 
-<meta
-name="apple-mobile-web-app-capable"
-content="yes"
+<style>
+*{box-sizing:border-box}
 
-«»
-
-<meta
-name="apple-mobile-web-app-status-bar-style"
-content="black-translucent"
-
-«»
-
-<meta
-name="apple-mobile-web-app-title"
-content="GrillCore"
-
-«»
-
-<link
-    rel="manifest"
-    href="manifest.json"
-><link
-    rel="stylesheet"
-    href="style.css"
-><link
-    rel="stylesheet"
-    href="tema-laranja.css"
-><title>Produtos — GrillCore ERP</title><style>
-
-/* =====================================================
-   GRILLCORE ERP
-   PRODUTOS — PREMIUM LARANJA
-===================================================== */
-
-.produtos-page{
-    width:100%;
-    max-width:1250px;
-    margin:0 auto;
-}
+.produtos-page{width:100%;max-width:1350px;margin:0 auto}
 
 .produtos-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    margin-bottom:18px;
-    flex-wrap:wrap;
+display:flex;align-items:center;justify-content:space-between;gap:16px;
+margin-bottom:18px;flex-wrap:wrap
 }
 
-.produtos-header-left{
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
+.produtos-header-left{display:flex;align-items:center;gap:13px}
 
 .produtos-header-icon{
-    width:52px;
-    height:52px;
-    border-radius:15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:27px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff7300,
-            #b94700
-        );
-
-    border:1px solid #ff9a3d;
-
-    box-shadow:
-        0 0 18px rgba(255,115,0,.22);
+width:52px;height:52px;border-radius:15px;display:flex;align-items:center;
+justify-content:center;font-size:27px;background:linear-gradient(145deg,#ff7300,#b94700);
+border:1px solid #ff9a3d;box-shadow:0 0 18px rgba(255,115,0,.22)
 }
 
-.produtos-header h2{
-    margin:0;
-    color:#fff;
-    font-size:23px;
-    font-weight:900;
-}
-
-.produtos-header p{
-    margin:4px 0 0;
-    color:#999;
-    font-size:12px;
-}
+.produtos-header h2{margin:0;color:#fff;font-size:23px;font-weight:900}
+.produtos-header p{margin:4px 0 0;color:#999;font-size:12px}
 
 .produtos-contador{
-    padding:10px 14px;
-    border-radius:11px;
-    background:#111;
-    border:1px solid rgba(255,115,0,.35);
-    color:#ff9a3d;
-    font-size:12px;
-    font-weight:800;
+padding:10px 14px;border-radius:11px;background:#111;
+border:1px solid rgba(255,115,0,.35);color:#ff9a3d;font-size:12px;font-weight:800
 }
 
+.resumo-produtos{
+display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px
+}
 
-/* =====================================================
-   GRID PRINCIPAL
-===================================================== */
+.resumo-card{
+position:relative;overflow:hidden;min-height:86px;padding:14px;border-radius:15px;
+background:linear-gradient(145deg,rgba(25,25,25,.98),rgba(8,8,8,.98));
+border:1px solid #292929;box-shadow:0 8px 22px rgba(0,0,0,.20)
+}
+
+.resumo-card::after{
+content:"";position:absolute;width:80px;height:80px;right:-25px;bottom:-35px;
+border-radius:50%;background:rgba(255,115,0,.07)
+}
+
+.resumo-topo{display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+.resumo-icone{
+width:32px;height:32px;border-radius:9px;display:flex;align-items:center;
+justify-content:center;background:#171717;border:1px solid #333;font-size:16px
+}
+
+.resumo-numero{
+color:#fff;font-size:19px;font-weight:900;font-variant-numeric:tabular-nums
+}
+
+.resumo-label{
+margin-top:8px;color:#777;font-size:9px;font-weight:800;
+text-transform:uppercase;letter-spacing:.5px
+}
+
+.resumo-card.destaque{border-color:rgba(255,115,0,.35)}
+.resumo-card.alerta{border-color:rgba(255,180,0,.30)}
 
 .produtos-grid{
-    display:grid;
-    grid-template-columns:
-        minmax(320px,.75fr)
-        minmax(0,1.35fr);
-
-    gap:16px;
-    align-items:start;
+display:grid;grid-template-columns:minmax(320px,.75fr) minmax(0,1.35fr);
+gap:16px;align-items:start
 }
-
-
-/* =====================================================
-   CARDS
-===================================================== */
 
 .produtos-card{
-    background:
-        linear-gradient(
-            145deg,
-            rgba(20,20,20,.98),
-            rgba(7,7,7,.98)
-        );
-
-    border:1px solid rgba(255,115,0,.28);
-    border-radius:18px;
-    padding:17px;
-
-    box-shadow:
-        0 12px 32px rgba(0,0,0,.28);
-
-    margin-bottom:16px;
-}
-
-.produtos-card:last-child{
-    margin-bottom:0;
+background:linear-gradient(145deg,rgba(20,20,20,.98),rgba(7,7,7,.98));
+border:1px solid rgba(255,115,0,.28);border-radius:18px;padding:17px;
+box-shadow:0 12px 32px rgba(0,0,0,.28);margin-bottom:16px
 }
 
 .produtos-card-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:16px;
+display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px
 }
 
-.produtos-card-title-left{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+.produtos-card-title-left{display:flex;align-items:center;gap:10px}
 
 .produtos-card-icon{
-    width:36px;
-    height:36px;
-    border-radius:10px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            145deg,
-            #241105,
-            #0c0805
-        );
-
-    border:1px solid rgba(255,115,0,.45);
-
-    font-size:17px;
+width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+justify-content:center;background:linear-gradient(145deg,#241105,#0c0805);
+border:1px solid rgba(255,115,0,.45);font-size:17px
 }
 
-.produtos-card-title h3{
-    margin:0;
-    color:#fff;
-    font-size:15px;
-    font-weight:900;
-}
+.produtos-card-title h3{margin:0;color:#fff;font-size:15px;font-weight:900}
+.produtos-card-title span{display:block;margin-top:3px;color:#777;font-size:10px}
 
-.produtos-card-title span{
-    display:block;
-    margin-top:3px;
-    color:#777;
-    font-size:10px;
-}
-
-
-/* =====================================================
-   FORMULÁRIO
-===================================================== */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
-
-    gap:12px;
-}
-
-.form-group{
-    min-width:0;
-}
-
-.form-group.full{
-    grid-column:1 / -1;
-}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-group{min-width:0}
+.form-group.full{grid-column:1/-1}
 
 .form-group label{
-    display:block;
-    margin-bottom:6px;
-
-    color:#cfcfcf;
-    font-size:10px;
-    font-weight:800;
-
-    text-transform:uppercase;
-    letter-spacing:.5px;
+display:block;margin-bottom:6px;color:#cfcfcf;font-size:10px;font-weight:800;
+text-transform:uppercase;letter-spacing:.5px
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea{
-
-    width:100%;
-    box-sizing:border-box;
-
-    border:1px solid #333;
-    background:#090909;
-    color:#fff;
-
-    border-radius:10px;
-    padding:11px 12px;
-
-    outline:none;
-
-    font-family:inherit;
-    font-size:13px;
-
-    transition:
-        border-color .2s,
-        box-shadow .2s,
-        background .2s;
+.form-group input,.form-group select,.form-group textarea{
+width:100%;border:1px solid #333;background:#090909;color:#fff;border-radius:10px;
+padding:11px 12px;outline:none;font-family:inherit;font-size:13px;
+transition:border-color .2s,box-shadow .2s,background .2s
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-
-    border-color:#ff7300;
-
-    box-shadow:
-        0 0 0 2px rgba(255,115,0,.10);
-
-    background:#101010;
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+border-color:#ff7300;box-shadow:0 0 0 2px rgba(255,115,0,.10);background:#101010
 }
 
-.form-group textarea{
-    min-height:80px;
-    resize:vertical;
-}
+.form-group textarea{min-height:80px;resize:vertical}
+.form-group select option{background:#111;color:#fff}
 
-.form-group select option{
-    background:#111;
-    color:#fff;
-}
-
-.form-ajuda{
-    display:block;
-    margin-top:5px;
-    color:#666;
-    font-size:9px;
-    line-height:1.4;
-}
-
-
-/* =====================================================
-   FOTO
-===================================================== */
+.form-ajuda{display:block;margin-top:5px;color:#666;font-size:9px;line-height:1.4}
 
 .foto-area{
-    display:grid;
-    grid-template-columns:95px minmax(0,1fr);
-    gap:12px;
-    align-items:center;
+display:grid;grid-template-columns:95px minmax(0,1fr);gap:12px;align-items:center
 }
 
 .foto-preview{
-    width:95px;
-    height:95px;
-    border-radius:14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #171717,
-            #090909
-        );
-
-    border:1px solid #333;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    overflow:hidden;
-
-    color:#666;
-    font-size:30px;
+width:95px;height:95px;border-radius:14px;background:linear-gradient(145deg,#171717,#090909);
+border:1px solid #333;display:flex;align-items:center;justify-content:center;
+overflow:hidden;color:#666;font-size:30px
 }
 
-.foto-preview img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
+.foto-preview img{width:100%;height:100%;object-fit:cover;display:block}
 
-
-/* =====================================================
-   TAMANHO
-===================================================== */
-
-.tamanho-box{
-    position:relative;
-}
+.tamanho-box{position:relative}
 
 .tamanho-badge{
-    position:absolute;
-    right:8px;
-    top:31px;
-
-    padding:4px 7px;
-
-    border-radius:7px;
-
-    background:rgba(255,115,0,.12);
-    border:1px solid rgba(255,115,0,.25);
-
-    color:#ff9a3d;
-    font-size:9px;
-    font-weight:800;
-
-    pointer-events:none;
+position:absolute;right:8px;top:31px;padding:4px 7px;border-radius:7px;
+background:rgba(255,115,0,.12);border:1px solid rgba(255,115,0,.25);
+color:#ff9a3d;font-size:9px;font-weight:800;pointer-events:none
 }
 
-
-/* =====================================================
-   BOTÕES
-===================================================== */
-
-.acoes-form{
-    display:grid;
-    grid-template-columns:
-        1fr 1.4fr;
-
-    gap:9px;
-    margin-top:15px;
+.status-box{
+display:flex;align-items:center;gap:9px;min-height:43px;padding:10px 12px;
+border-radius:10px;background:#090909;border:1px solid #333
 }
+
+.status-box input{width:18px;height:18px;accent-color:#ff7300}
+.status-box label{margin:0;text-transform:none;letter-spacing:0;font-size:11px;color:#ddd}
+.status-ajuda{display:block;margin-top:5px;color:#666;font-size:9px}
+
+.acoes-form{display:grid;grid-template-columns:1fr 1.4fr;gap:9px;margin-top:15px}
 
 .btn{
-    min-height:43px;
-
-    border-radius:10px;
-    padding:10px 14px;
-
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-
-    cursor:pointer;
-
-    font-family:inherit;
-    font-size:11px;
-    font-weight:900;
-
-    transition:
-        transform .15s,
-        filter .15s,
-        box-shadow .15s;
+min-height:43px;border-radius:10px;padding:10px 14px;display:inline-flex;
+align-items:center;justify-content:center;gap:7px;cursor:pointer;font-family:inherit;
+font-size:11px;font-weight:900;transition:transform .15s,filter .15s,box-shadow .15s
 }
 
-.btn:active{
-    transform:scale(.98);
-}
+.btn:active{transform:scale(.98)}
 
 .btn-primary{
-    background:
-        linear-gradient(
-            135deg,
-            #ff7300,
-            #c94e00
-        );
-
-    color:#fff;
-
-    border:1px solid #ff9a3d;
-
-    box-shadow:
-        0 6px 18px rgba(255,115,0,.18);
+background:linear-gradient(135deg,#ff7300,#c94e00);color:#fff;border:1px solid #ff9a3d;
+box-shadow:0 6px 18px rgba(255,115,0,.18)
 }
 
-.btn-primary:hover{
-    filter:brightness(1.10);
-}
+.btn-primary:hover{filter:brightness(1.10)}
+.btn-secondary{background:#151515;color:#ddd;border:1px solid #383838}
 
-.btn-secondary{
-    background:#151515;
-    color:#ddd;
-    border:1px solid #383838;
-}
-
-.btn-danger{
-    background:#230a05;
-    color:#ff8b72;
-    border:1px solid #6b2414;
-}
-
-.btn-full{
-    width:100%;
-}
-
-
-/* =====================================================
-   BUSCA
-===================================================== */
-
-.busca-produtos{
-    position:relative;
-    margin-bottom:14px;
-}
+.busca-produtos{position:relative;margin-bottom:12px}
 
 .busca-produtos input{
-    width:100%;
-    box-sizing:border-box;
-
-    min-height:44px;
-
-    padding:
-        10px
-        13px
-        10px
-        40px;
-
-    border-radius:11px;
-
-    background:#090909;
-    border:1px solid #333;
-
-    color:#fff;
-
-    outline:none;
-
-    font-family:inherit;
-    font-size:13px;
+width:100%;min-height:44px;padding:10px 13px 10px 40px;border-radius:11px;
+background:#090909;border:1px solid #333;color:#fff;outline:none;font-family:inherit;font-size:13px
 }
 
 .busca-produtos input:focus{
-    border-color:#ff7300;
-
-    box-shadow:
-        0 0 0 2px rgba(255,115,0,.09);
+border-color:#ff7300;box-shadow:0 0 0 2px rgba(255,115,0,.09)
 }
 
 .busca-icone{
-    position:absolute;
-    left:13px;
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:#ff7300;
-    font-size:17px;
-
-    pointer-events:none;
+position:absolute;left:13px;top:50%;transform:translateY(-50%);
+color:#ff7300;font-size:17px;pointer-events:none
 }
 
+.ferramentas-produtos{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}
 
-/* =====================================================
-   FILTROS
-===================================================== */
-
-.filtros-produtos{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-    margin-bottom:14px;
+.select-ordenacao{
+flex:1;min-width:160px;min-height:36px;padding:7px 10px;border-radius:9px;
+background:#101010;border:1px solid #303030;color:#bbb;font-family:inherit;
+font-size:10px;font-weight:800
 }
+
+.filtros-produtos{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
 
 .filtro-produto{
-    min-height:34px;
-    padding:7px 10px;
-
-    border-radius:9px;
-
-    border:1px solid #303030;
-    background:#101010;
-
-    color:#999;
-
-    font-family:inherit;
-    font-size:10px;
-    font-weight:800;
-
-    cursor:pointer;
+min-height:34px;padding:7px 10px;border-radius:9px;border:1px solid #303030;
+background:#101010;color:#999;font-family:inherit;font-size:10px;font-weight:800;cursor:pointer
 }
 
 .filtro-produto.ativo{
-    background:
-        linear-gradient(
-            135deg,
-            #ff7300,
-            #c94e00
-        );
-
-    color:#fff;
-    border-color:#ff9a3d;
+background:linear-gradient(135deg,#ff7300,#c94e00);color:#fff;border-color:#ff9a3d
 }
 
-
-/* =====================================================
-   LISTA
-===================================================== */
-
 .lista-produtos{
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
-
-    gap:10px;
+display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
 }
 
 .produto-card{
-    position:relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            #151515,
-            #090909
-        );
-
-    border:1px solid #292929;
-    border-radius:14px;
-
-    padding:11px;
-
-    transition:
-        transform .18s,
-        border-color .18s,
-        box-shadow .18s;
+position:relative;background:linear-gradient(145deg,#151515,#090909);
+border:1px solid #292929;border-radius:14px;padding:11px;
+transition:transform .18s,border-color .18s,box-shadow .18s
 }
 
 .produto-card:hover{
-    transform:translateY(-2px);
-
-    border-color:
-        rgba(255,115,0,.45);
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.25);
+transform:translateY(-2px);border-color:rgba(255,115,0,.45);
+box-shadow:0 8px 20px rgba(0,0,0,.25)
 }
 
-.produto-topo{
-    display:flex;
-    gap:10px;
-    align-items:flex-start;
-}
+.produto-card.indisponivel{opacity:.65}
+.produto-card.estoque-baixo{border-color:rgba(255,180,0,.45)}
+
+.produto-topo{display:flex;gap:10px;align-items:flex-start}
 
 .produto-foto{
-    width:66px;
-    height:66px;
-    flex:0 0 66px;
-
-    border-radius:11px;
-
-    background:#0b0b0b;
-    border:1px solid #303030;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    overflow:hidden;
-
-    color:#555;
-    font-size:24px;
+width:66px;height:66px;flex:0 0 66px;border-radius:11px;background:#0b0b0b;
+border:1px solid #303030;display:flex;align-items:center;justify-content:center;
+overflow:hidden;color:#555;font-size:24px
 }
 
-.produto-foto img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.produto-dados{
-    min-width:0;
-    flex:1;
-}
+.produto-foto img{width:100%;height:100%;object-fit:cover}
+.produto-dados{min-width:0;flex:1}
 
 .produto-nome{
-    color:#fff;
+color:#fff;font-size:13px;font-weight:900;line-height:1.25;overflow:hidden;
+text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical
+}
 
-    font-size:13px;
-    font-weight:900;
+.produto-tags{display:flex;gap:4px;flex-wrap:wrap}
 
-    line-height:1.25;
-
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
+.produto-categoria,.produto-tamanho,.produto-status{
+display:inline-flex;margin-top:5px;padding:3px 7px;border-radius:7px;font-size:8px;font-weight:900
 }
 
 .produto-categoria{
-    display:inline-flex;
-
-    margin-top:5px;
-
-    padding:3px 7px;
-
-    border-radius:7px;
-
-    background:
-        rgba(255,115,0,.10);
-
-    border:1px solid
-        rgba(255,115,0,.25);
-
-    color:#ff9a3d;
-
-    font-size:8px;
-    font-weight:900;
-
-    text-transform:uppercase;
+background:rgba(255,115,0,.10);border:1px solid rgba(255,115,0,.25);
+color:#ff9a3d;text-transform:uppercase
 }
 
-.produto-tamanho{
-    display:inline-flex;
+.produto-tamanho{background:#191919;border:1px solid #353535;color:#bbb}
 
-    margin-top:5px;
-    margin-left:3px;
-
-    padding:3px 7px;
-
-    border-radius:7px;
-
-    background:#191919;
-    border:1px solid #353535;
-
-    color:#bbb;
-
-    font-size:8px;
-    font-weight:800;
+.produto-status.disponivel{
+background:#082117;border:1px solid #17633d;color:#55e39a
 }
 
-.produto-preco{
-    margin-top:8px;
-
-    color:#35d07f;
-
-    font-size:15px;
-    font-weight:900;
+.produto-status.indisponivel{
+background:#270b05;border:1px solid #6b2515;color:#ff927a
 }
 
-.produto-estoque{
-    margin-top:3px;
-
-    color:#888;
-
-    font-size:9px;
-}
-
-.produto-estoque strong{
-    color:#fff;
-}
+.produto-preco{margin-top:8px;color:#35d07f;font-size:15px;font-weight:900}
+.produto-estoque{margin-top:3px;color:#888;font-size:9px}
+.produto-estoque strong{color:#fff}
+.estoque-alerta{color:#ffc45c!important}
 
 .produto-ingredientes{
-    margin-top:9px;
-
-    padding-top:8px;
-
-    border-top:1px solid #242424;
-
-    color:#999;
-
-    font-size:9px;
-    line-height:1.45;
-
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
+margin-top:9px;padding-top:8px;border-top:1px solid #242424;color:#999;font-size:9px;
+line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
 }
 
 .produto-acoes{
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:7px;
-
-    margin-top:10px;
+display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:10px
 }
 
 .btn-produto{
-    min-height:34px;
-
-    border-radius:8px;
-
-    font-family:inherit;
-    font-size:9px;
-    font-weight:900;
-
-    cursor:pointer;
+min-height:32px;border-radius:8px;font-family:inherit;font-size:9px;font-weight:900;cursor:pointer
 }
 
-.btn-editar{
-    background:#17120c;
-    color:#ffad5c;
-    border:1px solid #63370e;
+.btn-editar{background:#17120c;color:#ffad5c;border:1px solid #63370e}
+.btn-excluir{background:#1b0805;color:#ff7860;border:1px solid #5f1c10}
+.btn-visualizar{background:#0d1519;color:#7ddcff;border:1px solid #214a5b}
+.btn-duplicar{background:#11151d;color:#a8bfff;border:1px solid #303f67}
+
+.estoque-rapido{
+display:grid;grid-template-columns:36px 1fr 36px;gap:5px;align-items:center;margin-top:8px
 }
 
-.btn-excluir{
-    background:#1b0805;
-    color:#ff7860;
-    border:1px solid #5f1c10;
+.estoque-rapido button{
+height:30px;border-radius:8px;background:#141414;border:1px solid #333;color:#fff;
+font-size:15px;font-weight:900;cursor:pointer
 }
 
+.estoque-rapido button:hover{border-color:#ff7300;color:#ff9a3d}
 
-/* =====================================================
-   ESTADOS
-===================================================== */
+.estoque-valor{
+text-align:center;min-height:30px;display:flex;align-items:center;justify-content:center;
+border-radius:8px;background:#0a0a0a;border:1px solid #292929;color:#fff;font-size:11px;font-weight:900
+}
 
 .lista-vazia{
-    grid-column:1 / -1;
-
-    padding:35px 18px;
-
-    text-align:center;
-
-    border:1px dashed #383838;
-    border-radius:14px;
-
-    background:#090909;
-
-    color:#777;
-
-    font-size:12px;
-    line-height:1.6;
+grid-column:1/-1;padding:35px 18px;text-align:center;border:1px dashed #383838;
+border-radius:14px;background:#090909;color:#777;font-size:12px;line-height:1.6
 }
 
-.lista-vazia strong{
-    display:block;
-    margin-bottom:4px;
+.lista-vazia strong{display:block;margin-bottom:4px;color:#aaa;font-size:14px}
 
-    color:#aaa;
-    font-size:14px;
+.alerta-produto,.sucesso-produto{
+display:none;margin-bottom:13px;padding:11px 12px;border-radius:10px;font-size:11px;line-height:1.45
 }
 
-.alerta-produto{
-    display:none;
+.alerta-produto{background:#270b05;border:1px solid #6b2515;color:#ff927a}
+.sucesso-produto{background:#082117;border:1px solid #17633d;color:#55e39a}
+.alerta-produto.visivel,.sucesso-produto.visivel{display:block}
 
-    margin-bottom:13px;
-
-    padding:11px 12px;
-
-    border-radius:10px;
-
-    background:#270b05;
-    border:1px solid #6b2515;
-
-    color:#ff927a;
-
-    font-size:11px;
-    line-height:1.45;
+.modal-produto{
+position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(5px)
 }
 
-.alerta-produto.visivel{
-    display:block;
+.modal-produto.visivel{display:flex}
+
+.modal-conteudo{
+width:100%;max-width:480px;max-height:90vh;overflow:auto;
+background:linear-gradient(145deg,#191919,#080808);border:1px solid rgba(255,115,0,.35);
+border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:18px
 }
 
-.sucesso-produto{
-    display:none;
-
-    margin-bottom:13px;
-
-    padding:11px 12px;
-
-    border-radius:10px;
-
-    background:#082117;
-    border:1px solid #17633d;
-
-    color:#55e39a;
-
-    font-size:11px;
-    line-height:1.45;
+.modal-cabecalho{
+display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px
 }
 
-.sucesso-produto.visivel{
-    display:block;
+.modal-cabecalho h3{margin:0;color:#fff;font-size:17px}
+
+.modal-fechar{
+width:34px;height:34px;border-radius:9px;background:#151515;border:1px solid #333;
+color:#aaa;font-size:18px;cursor:pointer
 }
 
+.modal-foto{
+width:100%;height:220px;border-radius:14px;overflow:hidden;background:#0b0b0b;
+border:1px solid #292929;display:flex;align-items:center;justify-content:center;font-size:50px
+}
 
-/* =====================================================
-   RESPONSIVO
-===================================================== */
+.modal-foto img{width:100%;height:100%;object-fit:cover}
+.modal-info{margin-top:14px}
+.modal-info h2{margin:0;color:#fff;font-size:20px}
+.modal-info p{margin:8px 0;color:#aaa;font-size:12px;line-height:1.5}
 
-@media(max-width:1000px){
+.modal-linha{
+display:flex;justify-content:space-between;gap:10px;padding:10px 0;
+border-bottom:1px solid #242424;color:#999;font-size:11px
+}
 
-    .produtos-grid{
-        grid-template-columns:1fr;
-    }
+.modal-linha strong{color:#fff;text-align:right}
 
+@media(max-width:1050px){
+.produtos-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:750px){
+.resumo-produtos{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 @media(max-width:650px){
-
-    .produtos-header{
-        align-items:flex-start;
-    }
-
-    .produtos-header h2{
-        font-size:20px;
-    }
-
-    .produtos-header-icon{
-        width:47px;
-        height:47px;
-        font-size:24px;
-    }
-
-    .produtos-contador{
-        width:100%;
-        text-align:center;
-        box-sizing:border-box;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
-
-    .lista-produtos{
-        grid-template-columns:1fr;
-    }
-
+.produtos-header{align-items:flex-start}
+.produtos-header h2{font-size:20px}
+.produtos-header-icon{width:47px;height:47px;font-size:24px}
+.produtos-contador{width:100%;text-align:center}
+.form-grid{grid-template-columns:1fr}
+.form-group.full{grid-column:auto}
+.lista-produtos{grid-template-columns:1fr}
+.produto-acoes{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:430px){
-
-    .produtos-card{
-        padding:13px;
-        border-radius:15px;
-    }
-
-    .foto-area{
-        grid-template-columns:80px minmax(0,1fr);
-    }
-
-    .foto-preview{
-        width:80px;
-        height:80px;
-    }
-
-    .acoes-form{
-        grid-template-columns:1fr;
-    }
-
+.produtos-card{padding:13px;border-radius:15px}
+.foto-area{grid-template-columns:80px minmax(0,1fr)}
+.foto-preview{width:80px;height:80px}
+.acoes-form{grid-template-columns:1fr}
+.resumo-produtos{gap:7px}
+.resumo-card{min-height:78px;padding:11px}
+.resumo-numero{font-size:17px}
 }
+</style>
+</head>
 
-</style></head><body><div class="gc-fundo"></div><div class="gc-app"><aside class="gc-sidebar"><div class="gc-brand"><div class="gc-brand-logo">
-    🍔
+<body>
+
+<div class="gc-fundo"></div>
+
+<div class="gc-app">
+
+<aside class="gc-sidebar">
+
+<div class="gc-brand">
+<div class="gc-brand-logo">🍔</div>
+<h1>GrillCore</h1>
+<span>ERP • Gestão para Hamburguerias</span>
 </div>
 
-<h1>
-    GrillCore
-</h1>
+<nav class="gc-menu">
 
-<span>
-    ERP • Gestão para Hamburguerias
-</span>
-
-</div><nav class="gc-menu"><a href="index.html">
-    <span class="icone">🏠</span>
-    <span>Dashboard</span>
+<a href="index.html">
+<span class="icone">🏠</span>
+<span>Dashboard</span>
 </a>
 
 <a href="pedido2.html">
-    <span class="icone">🛒</span>
-    <span>Novo Pedido</span>
+<span class="icone">🛒</span>
+<span>Novo Pedido</span>
 </a>
 
-<a
-    href="produtos.html"
-    class="ativo"
->
-    <span class="icone">🍔</span>
-    <span>Produtos</span>
+<a href="produtos.html" class="ativo">
+<span class="icone">🍔</span>
+<span>Produtos</span>
 </a>
 
 <a href="clientes.html">
-    <span class="icone">👥</span>
-    <span>Clientes</span>
+<span class="icone">👥</span>
+<span>Clientes</span>
 </a>
 
 <a href="estoque.html">
-    <span class="icone">📦</span>
-    <span>Estoque</span>
+<span class="icone">📦</span>
+<span>Estoque</span>
 </a>
 
 <a href="financeiro.html">
-    <span class="icone">💰</span>
-    <span>Financeiro</span>
+<span class="icone">💰</span>
+<span>Financeiro</span>
 </a>
 
 <a href="compras.html">
-    <span class="icone">🛍️</span>
-    <span>Compras</span>
+<span class="icone">🛍️</span>
+<span>Compras</span>
 </a>
 
 <a href="historico.html">
-    <span class="icone">📋</span>
-    <span>Histórico</span>
+<span class="icone">📋</span>
+<span>Histórico</span>
 </a>
 
 <a href="backup.html">
-    <span class="icone">💾</span>
-    <span>Backup</span>
+<span class="icone">💾</span>
+<span>Backup</span>
 </a>
 
-<a
-    href="#"
-    class="gc-sair"
-    onclick="sairDoSistema(); return false;"
->
-    <span class="icone">🚪</span>
-    <span>Sair do sistema</span>
+<a href="#" class="gc-sair" onclick="sairDoSistema();return false;">
+<span class="icone">🚪</span>
+<span>Sair do sistema</span>
 </a>
 
-</nav></aside><main class="gc-main"><div class="produtos-page"><header class="produtos-header"><div class="produtos-header-left">
+</nav>
+</aside>
 
-    <div class="produtos-header-icon">
-        🍔
-    </div>
+<main class="gc-main">
 
-    <div>
+<div class="produtos-page">
 
-        <h2>
-            Produtos
-        </h2>
+<header class="produtos-header">
 
-        <p>
-            Cadastre e gerencie os produtos do seu cardápio.
-        </p>
+<div class="produtos-header-left">
 
-    </div>
+<div class="produtos-header-icon">🍔</div>
+
+<div>
+<h2>Produtos</h2>
+<p>Cadastre e gerencie os produtos do seu cardápio.</p>
+</div>
 
 </div>
 
-<div
-    class="produtos-contador"
-    id="contadorProdutos"
->
-    0 produtos cadastrados
+<div class="produtos-contador" id="contadorProdutos">
+0 produtos cadastrados
 </div>
 
-</header><div
-    id="alertaProduto"
-    class="alerta-produto"
-></div><div
-    id="sucessoProduto"
-    class="sucesso-produto"
-></div><div class="produtos-grid"><!-- =================================================
-     CADASTRO
-================================================= --><div><section class="produtos-card"><div class="produtos-card-title"><div class="produtos-card-title-left">
+</header>
 
-    <div class="produtos-card-icon">
-        ➕
-    </div>
+<section class="resumo-produtos">
 
-    <div>
+<div class="resumo-card destaque">
+<div class="resumo-topo">
+<div class="resumo-icone">🍔</div>
+<div class="resumo-numero" id="resumoTotal">0</div>
+</div>
+<div class="resumo-label">Total de produtos</div>
+</div>
 
-        <h3 id="tituloFormulario">
-            Novo produto
-        </h3>
+<div class="resumo-card">
+<div class="resumo-topo">
+<div class="resumo-icone">🟢</div>
+<div class="resumo-numero" id="resumoDisponiveis">0</div>
+</div>
+<div class="resumo-label">Disponíveis</div>
+</div>
 
-        <span>
-            Cadastre um item para aparecer no sistema.
-        </span>
+<div class="resumo-card alerta">
+<div class="resumo-topo">
+<div class="resumo-icone">⚠️</div>
+<div class="resumo-numero" id="resumoEstoqueBaixo">0</div>
+</div>
+<div class="resumo-label">Estoque baixo</div>
+</div>
 
-    </div>
+<div class="resumo-card">
+<div class="resumo-topo">
+<div class="resumo-icone">💰</div>
+<div class="resumo-numero" id="resumoValorEstoque">R$ 0,00</div>
+</div>
+<div class="resumo-label">Valor em estoque</div>
+</div>
+
+</section>
+
+<div id="alertaProduto" class="alerta-produto"></div>
+<div id="sucessoProduto" class="sucesso-produto"></div>
+
+<div class="produtos-grid">
+
+<div>
+
+<section class="produtos-card">
+
+<div class="produtos-card-title">
+
+<div class="produtos-card-title-left">
+
+<div class="produtos-card-icon">➕</div>
+
+<div>
+<h3 id="tituloFormulario">Novo produto</h3>
+<span>Cadastre um item para aparecer no sistema.</span>
+</div>
 
 </div>
 
-</div><form
-    id="formProduto"
-    onsubmit="salvarProduto(event)"
-><div class="form-grid"><div class="form-group full">
-
-    <label for="nomeProduto">
-        Nome do produto
-    </label>
-
-    <input
-        type="text"
-        id="nomeProduto"
-        placeholder="Ex.: X Prensado"
-        autocomplete="off"
-        required
-    >
-
 </div>
 
+<form id="formProduto" onsubmit="salvarProduto(event)">
+
+<div class="form-grid">
+
+<div class="form-group full">
+<label for="nomeProduto">Nome do produto</label>
+<input type="text" id="nomeProduto" placeholder="Ex.: X Prensado" autocomplete="off" required>
+</div>
 
 <div class="form-group">
-
-    <label for="categoriaProduto">
-        Categoria
-    </label>
-
-    <select
-        id="categoriaProduto"
-        required
-    >
-
-        <option value="">
-            Selecione
-        </option>
-
-        <option value="hamburguer">
-            🍔 Hambúrguer
-        </option>
-
-        <option value="porcao">
-            🍟 Porção
-        </option>
-
-        <option value="bebida">
-            🥤 Bebida
-        </option>
-
-        <option value="outro">
-            📦 Outro
-        </option>
-
-    </select>
-
+<label for="categoriaProduto">Categoria</label>
+<select id="categoriaProduto" required>
+<option value="">Selecione</option>
+<option value="hamburguer">🍔 Hambúrguer</option>
+<option value="porcao">🍟 Porção</option>
+<option value="bebida">🥤 Bebida</option>
+<option value="outro">📦 Outro</option>
+</select>
 </div>
-
 
 <div class="form-group">
-
-    <label for="precoProduto">
-        Preço
-    </label>
-
-    <input
-        type="number"
-        id="precoProduto"
-        min="0"
-        step="0.01"
-        placeholder="0,00"
-        inputmode="decimal"
-        required
-    >
-
+<label for="precoProduto">Preço</label>
+<input type="number" id="precoProduto" min="0" step="0.01" placeholder="0,00" inputmode="decimal" required>
 </div>
 
-
-<div
-    class="form-group tamanho-box"
-    id="grupoTamanho"
->
-
-    <label for="tamanhoProduto">
-        Tamanho / Volume
-    </label>
-
-    <input
-        type="text"
-        id="tamanhoProduto"
-        placeholder="Ex.: 500 g ou 600 ml"
-        autocomplete="off"
-    >
-
-    <span class="tamanho-badge">
-        opcional
-    </span>
-
-    <small class="form-ajuda">
-        Para porções e bebidas, informe o tamanho ou volume.
-        Ex.: 250 g, 500 g, 750 g, 1 kg, 350 ml, 600 ml, 1 L, 2 L.
-    </small>
-
+<div class="form-group tamanho-box">
+<label for="tamanhoProduto">Tamanho / Volume</label>
+<input type="text" id="tamanhoProduto" placeholder="Ex.: 500 g ou 600 ml" autocomplete="off">
+<span class="tamanho-badge">opcional</span>
+<small class="form-ajuda">Para porções e bebidas, informe o tamanho ou volume.</small>
 </div>
-
 
 <div class="form-group">
-
-    <label for="estoqueProduto">
-        Estoque inicial
-    </label>
-
-    <input
-        type="number"
-        id="estoqueProduto"
-        min="0"
-        step="1"
-        value="0"
-        inputmode="numeric"
-    >
-
-    <small class="form-ajuda">
-        Informe a quantidade disponível.
-    </small>
-
+<label for="estoqueProduto">Estoque inicial</label>
+<input type="number" id="estoqueProduto" min="0" step="1" value="0" inputmode="numeric">
+<small class="form-ajuda">Quantidade disponível.</small>
 </div>
-
 
 <div class="form-group full">
 
-    <label>
-        Foto do produto
-    </label>
+<label>Disponibilidade</label>
 
-    <div class="foto-area">
+<div class="status-box">
 
-        <div
-            class="foto-preview"
-            id="fotoPreview"
-        >
-            🍔
-        </div>
+<input type="checkbox" id="disponivelProduto" checked>
 
-        <div>
-
-            <input
-                type="file"
-                id="fotoProduto"
-                accept="image/*"
-            >
-
-            <small class="form-ajuda">
-                A imagem será salva no navegador junto com o produto.
-            </small>
-
-        </div>
-
-    </div>
+<label for="disponivelProduto">
+Produto disponível para venda
+</label>
 
 </div>
 
+<small class="status-ajuda">
+Desative quando o produto estiver temporariamente indisponível.
+</small>
+
+</div>
 
 <div class="form-group full">
 
-    <label for="ingredientesProduto">
-        Ingredientes
-    </label>
+<label>Foto do produto</label>
 
-    <textarea
-        id="ingredientesProduto"
-        placeholder="Ex.: pão, hambúrguer, queijo, bacon, molho..."
-    ></textarea>
+<div class="foto-area">
+
+<div class="foto-preview" id="fotoPreview">🍔</div>
+
+<div>
+
+<input type="file" id="fotoProduto" accept="image/*">
+
+<small class="form-ajuda">
+A imagem será salva no cadastro do produto.
+</small>
 
 </div>
 
+</div>
+
+</div>
 
 <div class="form-group full">
 
-    <label for="descricaoProduto">
-        Descrição
-    </label>
+<label for="ingredientesProduto">Ingredientes</label>
 
-    <textarea
-        id="descricaoProduto"
-        placeholder="Descrição comercial do produto..."
-    ></textarea>
+<textarea id="ingredientesProduto" placeholder="Ex.: pão, hambúrguer, queijo, bacon, molho..."></textarea>
 
 </div>
 
-</div><div class="acoes-form"><button
-    type="button"
-    class="btn btn-secondary"
-    onclick="limparFormularioProduto()"
->
-    🗑️ Limpar
-</button>
+<div class="form-group full">
 
-<button
-    type="submit"
-    class="btn btn-primary"
-    id="btnSalvarProduto"
->
-    💾 Salvar produto
-</button>
+<label for="descricaoProduto">Descrição</label>
 
-</div></form></section></div><!-- =================================================
-     LISTAGEM
-================================================= --><div><section class="produtos-card"><div class="produtos-card-title"><div class="produtos-card-title-left">
-
-    <div class="produtos-card-icon">
-        📋
-    </div>
-
-    <div>
-
-        <h3>
-            Produtos cadastrados
-        </h3>
-
-        <span>
-            Itens disponíveis no seu catálogo.
-        </span>
-
-    </div>
+<textarea id="descricaoProduto" placeholder="Descrição comercial do produto..."></textarea>
 
 </div>
 
-</div><div class="busca-produtos"><span class="busca-icone">
-    🔎
-</span>
+</div>
 
-<input
-    type="search"
-    id="buscaProduto"
-    placeholder="Buscar por nome, categoria ou tamanho..."
-    autocomplete="off"
->
+<div class="acoes-form">
 
-</div><div
-    class="filtros-produtos"
-    id="filtrosProdutos"
-><button
-    type="button"
-    class="filtro-produto ativo"
-    data-filtro="todos"
-    onclick="selecionarFiltro('todos')"
->
-    Todos
+<button type="button" class="btn btn-secondary" onclick="limparFormularioProduto()">
+🗑️ Limpar
 </button>
 
-<button
-    type="button"
-    class="filtro-produto"
-    data-filtro="hamburguer"
-    onclick="selecionarFiltro('hamburguer')"
->
-    🍔 Hambúrguer
+<button type="submit" class="btn btn-primary" id="btnSalvarProduto">
+💾 Salvar produto
 </button>
-
-<button
-    type="button"
-    class="filtro-produto"
-    data-filtro="porcao"
-    onclick="selecionarFiltro('porcao')"
->
-    🍟 Porções
-</button>
-
-<button
-    type="button"
-    class="filtro-produto"
-    data-filtro="bebida"
-    onclick="selecionarFiltro('bebida')"
->
-    🥤 Bebidas
-</button>
-
-<button
-    type="button"
-    class="filtro-produto"
-    data-filtro="outro"
-    onclick="selecionarFiltro('outro')"
->
-    📦 Outros
-</button>
-
-</div><div
-    id="listaProdutos"
-    class="lista-produtos"
-><div class="lista-vazia">
-
-    <strong>
-        🍔 Nenhum produto cadastrado
-    </strong>
-
-    Cadastre seu primeiro produto usando o formulário.
 
 </div>
 
-</div></section></div></div></div></main></div><script src="script.js"></script><script>
+</form>
+</section>
+
+</div>
+
+<div>
+
+<section class="produtos-card">
+
+<div class="produtos-card-title">
+
+<div class="produtos-card-title-left">
+
+<div class="produtos-card-icon">📋</div>
+
+<div>
+<h3>Produtos cadastrados</h3>
+<span>Itens disponíveis no seu catálogo.</span>
+</div>
+
+</div>
+
+</div>
+
+<div class="busca-produtos">
+
+<span class="busca-icone">🔎</span>
+
+<input type="search" id="buscaProduto" placeholder="Buscar por nome, categoria, tamanho..." autocomplete="off">
+
+</div>
+
+<div class="ferramentas-produtos">
+
+<select id="ordenacaoProdutos" class="select-ordenacao">
+
+<option value="recentes">↕️ Mais recentes</option>
+<option value="nome">🔤 Nome A → Z</option>
+<option value="preco-menor">💰 Menor preço</option>
+<option value="preco-maior">💰 Maior preço</option>
+<option value="estoque-menor">📦 Menor estoque</option>
+<option value="estoque-maior">📦 Maior estoque</option>
+
+</select>
+
+</div>
+
+<div class="filtros-produtos" id="filtrosProdutos">
+
+<button type="button" class="filtro-produto ativo" data-filtro="todos" onclick="selecionarFiltro('todos')">
+Todos
+</button>
+
+<button type="button" class="filtro-produto" data-filtro="hamburguer" onclick="selecionarFiltro('hamburguer')">
+🍔 Hambúrguer
+</button>
+
+<button type="button" class="filtro-produto" data-filtro="porcao" onclick="selecionarFiltro('porcao')">
+🍟 Porções
+</button>
+
+<button type="button" class="filtro-produto" data-filtro="bebida" onclick="selecionarFiltro('bebida')">
+🥤 Bebidas
+</button>
+
+<button type="button" class="filtro-produto" data-filtro="outro" onclick="selecionarFiltro('outro')">
+📦 Outros
+</button>
+
+</div>
+
+<div id="listaProdutos" class="lista-produtos">
+
+<div class="lista-vazia">
+
+<strong>🍔 Carregando produtos...</strong>
+
+Aguarde enquanto o GrillCore consulta o Supabase.
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+</div>
+
+<div id="modalProduto" class="modal-produto" onclick="fecharModalProduto(event)">
+
+<div class="modal-conteudo" onclick="event.stopPropagation()">
+
+<div class="modal-cabecalho">
+
+<h3>👁️ Visualizar produto</h3>
+
+<button type="button" class="modal-fechar" onclick="fecharModalProduto()">
+×
+</button>
+
+</div>
+
+<div id="modalProdutoConteudo"></div>
+
+</div>
+</div>
+
+<script src="script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
 
 /* =====================================================
-   GRILLCORE ERP
-   PRODUTOS — MOTOR
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://vtdfdqtjcyqbtfskwnun.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =====================================================
+   CONFIGURAÇÃO
 ===================================================== */
 
 let produtos = [];
-
 let produtoEditandoId = null;
-
 let filtroAtual = "todos";
-
 let fotoAtualBase64 = "";
+let ordenacaoAtual = "recentes";
+
+const ESTOQUE_BAIXO = 5;
 
 
 /* =====================================================
@@ -1338,100 +810,158 @@ let fotoAtualBase64 = "";
 ===================================================== */
 
 const formProduto =
-    document.getElementById("formProduto");
+document.getElementById("formProduto");
 
 const nomeProduto =
-    document.getElementById("nomeProduto");
+document.getElementById("nomeProduto");
 
 const categoriaProduto =
-    document.getElementById("categoriaProduto");
+document.getElementById("categoriaProduto");
 
 const precoProduto =
-    document.getElementById("precoProduto");
+document.getElementById("precoProduto");
 
 const tamanhoProduto =
-    document.getElementById("tamanhoProduto");
+document.getElementById("tamanhoProduto");
 
 const estoqueProduto =
-    document.getElementById("estoqueProduto");
+document.getElementById("estoqueProduto");
 
 const fotoProduto =
-    document.getElementById("fotoProduto");
+document.getElementById("fotoProduto");
 
 const fotoPreview =
-    document.getElementById("fotoPreview");
+document.getElementById("fotoPreview");
 
 const ingredientesProduto =
-    document.getElementById("ingredientesProduto");
+document.getElementById("ingredientesProduto");
 
 const descricaoProduto =
-    document.getElementById("descricaoProduto");
+document.getElementById("descricaoProduto");
+
+const disponivelProduto =
+document.getElementById("disponivelProduto");
 
 const listaProdutos =
-    document.getElementById("listaProdutos");
+document.getElementById("listaProdutos");
 
 const buscaProduto =
-    document.getElementById("buscaProduto");
+document.getElementById("buscaProduto");
 
 const contadorProdutos =
-    document.getElementById("contadorProdutos");
+document.getElementById("contadorProdutos");
 
 const alertaProduto =
-    document.getElementById("alertaProduto");
+document.getElementById("alertaProduto");
 
 const sucessoProduto =
-    document.getElementById("sucessoProduto");
+document.getElementById("sucessoProduto");
 
 const tituloFormulario =
-    document.getElementById("tituloFormulario");
+document.getElementById("tituloFormulario");
 
 const btnSalvarProduto =
-    document.getElementById("btnSalvarProduto");
+document.getElementById("btnSalvarProduto");
+
+const ordenacaoProdutos =
+document.getElementById("ordenacaoProdutos");
+
+const modalProduto =
+document.getElementById("modalProduto");
+
+const modalProdutoConteudo =
+document.getElementById("modalProdutoConteudo");
 
 
 /* =====================================================
-   STORAGE
+   STORAGE LOCAL
 ===================================================== */
 
-function lerProdutosStorage(){
+function salvarProdutosLocal(){
 
     try{
 
-        const dados =
-            localStorage.getItem("produtos");
-
-        if(!dados){
-            return [];
-        }
-
-        const lista =
-            JSON.parse(dados);
-
-        return Array.isArray(lista)
-            ? lista
-            : [];
-
-    }
-    catch(erro){
-
-        console.error(
-            "Erro ao ler produtos:",
-            erro
+        localStorage.setItem(
+            "produtos",
+            JSON.stringify(produtos)
         );
 
-        return [];
+    }catch(erro){
+
+        console.warn(
+            "Não foi possível salvar cópia local:",
+            erro
+        );
 
     }
 
 }
 
 
-function salvarProdutosStorage(){
+/* =====================================================
+   NORMALIZAÇÃO
+===================================================== */
 
-    localStorage.setItem(
-        "produtos",
-        JSON.stringify(produtos)
-    );
+function normalizarProduto(produto){
+
+    const item = produto || {};
+
+    return {
+
+        ...item,
+
+        id:
+        item.id ||
+        gerarIdProduto(),
+
+        nome:
+        String(item.nome || ""),
+
+        categoria:
+        String(
+            item.categoria ||
+            "outro"
+        ),
+
+        preco:
+        Number(item.preco) || 0,
+
+        tamanho:
+        String(item.tamanho || ""),
+
+        estoque:
+        Number(item.estoque) || 0,
+
+        ingredientes:
+        String(item.ingredientes || ""),
+
+        descricao:
+        String(item.descricao || ""),
+
+        foto:
+        String(
+            item.foto ||
+            item.imagem ||
+            ""
+        ),
+
+        disponivel:
+        item.disponivel === undefined
+        ? true
+        : Boolean(item.disponivel),
+
+        criadoEm:
+        item.criadoEm ||
+        item.created_at ||
+        new Date().toISOString(),
+
+        atualizadoEm:
+        item.atualizadoEm ||
+        item.updated_at ||
+        item.created_at ||
+        new Date().toISOString()
+
+    };
 
 }
 
@@ -1446,8 +976,8 @@ function gerarIdProduto(){
         Date.now().toString(36)
         +
         Math.random()
-            .toString(36)
-            .substring(2,8)
+        .toString(36)
+        .substring(2,8)
     );
 
 }
@@ -1479,16 +1009,15 @@ function formatarDinheiro(valor){
 function nomeCategoria(categoria){
 
     const mapa = {
-
         hamburguer:"Hambúrguer",
         porcao:"Porção",
         bebida:"Bebida",
         outro:"Outro"
-
     };
 
     return mapa[
-        String(categoria || "").toLowerCase()
+        String(categoria || "")
+        .toLowerCase()
     ] || "Outro";
 
 }
@@ -1497,16 +1026,15 @@ function nomeCategoria(categoria){
 function emojiCategoria(categoria){
 
     const mapa = {
-
         hamburguer:"🍔",
         porcao:"🍟",
         bebida:"🥤",
         outro:"📦"
-
     };
 
     return mapa[
-        String(categoria || "").toLowerCase()
+        String(categoria || "")
+        .toLowerCase()
     ] || "📦";
 
 }
@@ -1518,97 +1046,80 @@ function emojiCategoria(categoria){
 
 function mostrarAlertaProduto(mensagem){
 
-    sucessoProduto.classList.remove(
-        "visivel"
-    );
+    sucessoProduto.classList.remove("visivel");
 
-    alertaProduto.textContent =
-        mensagem;
+    alertaProduto.textContent = mensagem;
 
-    alertaProduto.classList.add(
-        "visivel"
-    );
+    alertaProduto.classList.add("visivel");
 
 }
 
 
 function mostrarSucessoProduto(mensagem){
 
-    alertaProduto.classList.remove(
-        "visivel"
-    );
+    alertaProduto.classList.remove("visivel");
 
-    sucessoProduto.textContent =
-        mensagem;
+    sucessoProduto.textContent = mensagem;
 
-    sucessoProduto.classList.add(
-        "visivel"
-    );
+    sucessoProduto.classList.add("visivel");
 
 }
 
 
 function limparAlertasProduto(){
 
-    alertaProduto.classList.remove(
-        "visivel"
-    );
+    alertaProduto.classList.remove("visivel");
 
-    sucessoProduto.classList.remove(
-        "visivel"
-    );
+    sucessoProduto.classList.remove("visivel");
 
 }
 
 
 /* =====================================================
-   TAMANHO / VOLUME
+   TAMANHO
 ===================================================== */
 
 function atualizarCampoTamanho(){
 
     const categoria =
-        categoriaProduto.value;
+    categoriaProduto.value;
 
     const obrigatorio =
-        categoria === "porcao"
-        ||
-        categoria === "bebida";
+    categoria === "porcao"
+    ||
+    categoria === "bebida";
 
     const badge =
-        document.querySelector(
-            ".tamanho-badge"
-        );
+    document.querySelector(
+        ".tamanho-badge"
+    );
 
     if(obrigatorio){
 
         tamanhoProduto.required = true;
 
         tamanhoProduto.placeholder =
-            categoria === "porcao"
-            ? "Ex.: 250 g, 500 g, 750 g, 1 kg"
-            : "Ex.: 350 ml, 600 ml, 1 L, 2 L";
+        categoria === "porcao"
+        ?
+        "Ex.: 250 g, 500 g, 750 g, 1 kg"
+        :
+        "Ex.: 350 ml, 600 ml, 1 L, 2 L";
 
         if(badge){
-
             badge.textContent =
-                "obrigatório";
-
+            "obrigatório";
         }
 
-    }
-    else{
+    }else{
 
         tamanhoProduto.required = false;
 
         tamanhoProduto.placeholder =
-            "Ex.: tamanho ou volume";
+        "Ex.: tamanho ou volume";
 
         if(badge){
-
             badge.textContent =
-                "opcional";
-
+            "opcional";
         }
 
     }
@@ -1621,56 +1132,51 @@ function atualizarCampoTamanho(){
 ===================================================== */
 
 fotoProduto.addEventListener(
-    "change",
-    function(){
+"change",
+function(){
 
-        const arquivo =
-            this.files &&
-            this.files[0];
+    const arquivo =
+    this.files &&
+    this.files[0];
 
-        if(!arquivo){
+    if(!arquivo){
+        return;
+    }
 
-            return;
+    if(!arquivo.type.startsWith("image/")){
 
-        }
-
-        if(!arquivo.type.startsWith("image/")){
-
-            mostrarAlertaProduto(
-                "Selecione um arquivo de imagem válido."
-            );
-
-            this.value = "";
-
-            return;
-
-        }
-
-        const leitor =
-            new FileReader();
-
-        leitor.onload =
-            function(event){
-
-                fotoAtualBase64 =
-                    event.target.result;
-
-                fotoPreview.innerHTML =
-                    `
-                    <img
-                        src="${fotoAtualBase64}"
-                        alt="Prévia do produto"
-                    >
-                    `;
-
-            };
-
-        leitor.readAsDataURL(
-            arquivo
+        mostrarAlertaProduto(
+            "Selecione um arquivo de imagem válido."
         );
 
+        this.value = "";
+
+        return;
+
     }
-);
+
+    const leitor =
+    new FileReader();
+
+    leitor.onload =
+    function(event){
+
+        fotoAtualBase64 =
+        event.target.result;
+
+        fotoPreview.innerHTML =
+        `
+        <img
+            src="${fotoAtualBase64}"
+            alt="Prévia do produto"
+        >
+        `;
+
+    };
+
+    leitor.readAsDataURL(arquivo);
+
+});
 
 
 /* =====================================================
@@ -1685,109 +1191,293 @@ function produtoDuplicado(
 ){
 
     const nomeNormalizado =
-        String(nome || "")
-            .trim()
-            .toLowerCase();
+    String(nome || "")
+    .trim()
+    .toLowerCase();
 
     const categoriaNormalizada =
-        String(categoria || "outro")
-            .trim()
-            .toLowerCase();
+    String(categoria || "outro")
+    .trim()
+    .toLowerCase();
 
     const tamanhoNormalizado =
-        String(tamanho || "")
-            .trim()
-            .toLowerCase();
+    String(tamanho || "")
+    .trim()
+    .toLowerCase();
 
     return produtos.some(
-        function(produto){
+    function(produto){
 
-            if(
-                idIgnorar
-                &&
-                String(produto.id)
-                ===
-                String(idIgnorar)
-            ){
-
-                return false;
-
-            }
-
-            return (
-
-                String(produto.nome || "")
-                    .trim()
-                    .toLowerCase()
-                ===
-                nomeNormalizado
-
-                &&
-
-                String(produto.categoria || "outro")
-                    .trim()
-                    .toLowerCase()
-                ===
-                categoriaNormalizada
-
-                &&
-
-                String(produto.tamanho || "")
-                    .trim()
-                    .toLowerCase()
-                ===
-                tamanhoNormalizado
-
-            );
-
+        if(
+            idIgnorar
+            &&
+            String(produto.id)
+            ===
+            String(idIgnorar)
+        ){
+            return false;
         }
-    );
+
+        return (
+
+            String(produto.nome || "")
+            .trim()
+            .toLowerCase()
+            ===
+            nomeNormalizado
+
+            &&
+
+            String(produto.categoria || "outro")
+            .trim()
+            .toLowerCase()
+            ===
+            categoriaNormalizada
+
+            &&
+
+            String(produto.tamanho || "")
+            .trim()
+            .toLowerCase()
+            ===
+            tamanhoNormalizado
+
+        );
+
+    });
 
 }
 
 
 /* =====================================================
-   SALVAR
+   SUPABASE
 ===================================================== */
 
-function salvarProduto(event){
+function prepararProdutoSupabase(produto){
+
+    return {
+
+        nome:
+        produto.nome,
+
+        preco:
+        Number(produto.preco) || 0,
+
+        disponivel:
+        produto.disponivel !== false,
+
+        categoria:
+        produto.categoria || "outro",
+
+        tamanho:
+        produto.tamanho || "",
+
+        estoque:
+        Number(produto.estoque) || 0,
+
+        ingredientes:
+        produto.ingredientes || "",
+
+        descricao:
+        produto.descricao || "",
+
+        imagem:
+        produto.foto || ""
+
+    };
+
+}
+
+
+async function carregarProdutosSupabase(){
+
+    try{
+
+        listaProdutos.innerHTML = `
+        <div class="lista-vazia">
+            <strong>☁️ Conectando ao Supabase...</strong>
+            Carregando produtos online.
+        </div>
+        `;
+
+        const resultado =
+        await supabaseClient
+        .from("produtos")
+        .select("*")
+        .order(
+            "created_at",
+            {ascending:false}
+        );
+
+        if(resultado.error){
+            console.error(
+                "Erro Supabase:",
+                resultado.error
+            );
+            throw resultado.error;
+        }
+
+        const dados =
+        Array.isArray(resultado.data)
+        ?
+        resultado.data
+        :
+        [];
+
+        produtos =
+        dados.map(
+            normalizarProduto
+        );
+
+        salvarProdutosLocal();
+
+        renderizarProdutos();
+
+        mostrarSucessoProduto(
+            "☁️ Produtos carregados do Supabase."
+        );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Falha ao carregar Supabase:",
+            erro
+        );
+
+        try{
+
+            const dadosLocais =
+            localStorage.getItem("produtos");
+
+            produtos =
+            dadosLocais
+            ?
+            JSON.parse(dadosLocais)
+            .map(normalizarProduto)
+            :
+            [];
+
+        }
+        catch(e){
+
+            produtos = [];
+
+        }
+
+        renderizarProdutos();
+
+        mostrarAlertaProduto(
+            "Não foi possível carregar o Supabase. O GrillCore exibiu a cópia local."
+        );
+
+    }
+
+}
+
+
+async function inserirProdutoSupabase(produto){
+
+    const dados =
+    prepararProdutoSupabase(produto);
+
+    const resultado =
+    await supabaseClient
+    .from("produtos")
+    .insert(dados)
+    .select()
+    .single();
+
+    if(resultado.error){
+        throw resultado.error;
+    }
+
+    return resultado.data;
+
+}
+
+
+async function atualizarProdutoSupabase(
+    id,
+    produto
+){
+
+    const dados =
+    prepararProdutoSupabase(produto);
+
+    const resultado =
+    await supabaseClient
+    .from("produtos")
+    .update(dados)
+    .eq("id",id)
+    .select()
+    .single();
+
+    if(resultado.error){
+        throw resultado.error;
+    }
+
+    return resultado.data;
+
+}
+
+
+async function excluirProdutoSupabase(id){
+
+    const resultado =
+    await supabaseClient
+    .from("produtos")
+    .delete()
+    .eq("id",id);
+
+    if(resultado.error){
+        throw resultado.error;
+    }
+
+}
+
+
+/* =====================================================
+   SALVAR PRODUTO
+===================================================== */
+
+async function salvarProduto(event){
 
     event.preventDefault();
 
     limparAlertasProduto();
 
     const nome =
-        nomeProduto.value.trim();
+    nomeProduto.value.trim();
 
     const categoria =
-        categoriaProduto.value;
+    categoriaProduto.value;
 
     const preco =
-        Number(
-            String(
-                precoProduto.value
-            ).replace(",", ".")
-        );
+    Number(
+        String(
+            precoProduto.value
+        ).replace(",",".")
+    );
 
     const tamanho =
-        tamanhoProduto.value.trim();
+    tamanhoProduto.value.trim();
 
     const estoque =
-        parseInt(
-            estoqueProduto.value,
-            10
-        );
+    parseInt(
+        estoqueProduto.value,
+        10
+    );
 
     const ingredientes =
-        ingredientesProduto.value.trim();
+    ingredientesProduto.value.trim();
 
     const descricao =
-        descricaoProduto.value.trim();
+    descricaoProduto.value.trim();
 
+    const disponivel =
+    disponivelProduto.checked;
 
-    /* ================================================
-       VALIDAÇÕES
-    ================================================= */
 
     if(!nome){
 
@@ -1833,37 +1523,35 @@ function salvarProduto(event){
 
 
     if(
-        categoria === "porcao"
-        ||
-        categoria === "bebida"
+        (
+            categoria === "porcao"
+            ||
+            categoria === "bebida"
+        )
+        &&
+        !tamanho
     ){
 
-        if(!tamanho){
+        mostrarAlertaProduto(
+            "Informe o tamanho ou volume do produto."
+        );
 
-            mostrarAlertaProduto(
-                "Informe o tamanho ou volume do produto."
-            );
+        tamanhoProduto.focus();
 
-            tamanhoProduto.focus();
-
-            return;
-
-        }
+        return;
 
     }
 
 
     const estoqueFinal =
-        Number.isFinite(estoque)
-        &&
-        estoque >= 0
-        ? estoque
-        : 0;
+    Number.isFinite(estoque)
+    &&
+    estoque >= 0
+    ?
+    estoque
+    :
+    0;
 
-
-    /* ================================================
-       DUPLICIDADE
-    ================================================= */
 
     if(
         produtoDuplicado(
@@ -1883,147 +1571,327 @@ function salvarProduto(event){
     }
 
 
-    /* ================================================
-       PRODUTO
-    ================================================= */
+    btnSalvarProduto.disabled = true;
 
-    if(produtoEditandoId){
+    btnSalvarProduto.innerHTML =
+    "⏳ Salvando...";
 
-        const indice =
+
+    try{
+
+        if(produtoEditandoId){
+
+            const indice =
             produtos.findIndex(
-                function(produto){
+            function(produto){
 
-                    return String(
-                        produto.id
-                    )
-                    ===
-                    String(
-                        produtoEditandoId
-                    );
+                return String(produto.id)
+                ===
+                String(produtoEditandoId);
 
-                }
-            );
-
-        if(indice === -1){
-
-            mostrarAlertaProduto(
-                "O produto que você está editando não foi encontrado."
-            );
-
-            return;
-
-        }
+            });
 
 
-        const produtoAnterior =
+            if(indice === -1){
+
+                throw new Error(
+                    "Produto não encontrado."
+                );
+
+            }
+
+
+            const produtoAnterior =
             produtos[indice];
 
 
-        produtos[indice] = {
+            const produtoAtualizado = {
 
-            ...produtoAnterior,
+                ...produtoAnterior,
 
-            nome:
                 nome,
-
-            categoria:
                 categoria,
-
-            preco:
                 preco,
-
-            tamanho:
                 tamanho,
-
-            estoque:
-                estoqueFinal,
-
-            ingredientes:
+                estoque:estoqueFinal,
                 ingredientes,
-
-            descricao:
                 descricao,
+                disponivel,
 
-            foto:
+                foto:
                 fotoAtualBase64
                 ||
                 produtoAnterior.foto
                 ||
                 "",
 
-            atualizadoEm:
+                atualizadoEm:
                 new Date().toISOString()
 
-        };
+            };
 
 
-        salvarProdutosStorage();
+            const dadosBanco =
+            await atualizarProdutoSupabase(
+                produtoEditandoId,
+                produtoAtualizado
+            );
 
-        mostrarSucessoProduto(
-            "Produto atualizado com sucesso!"
-        );
 
-    }
-    else{
+            produtos[indice] =
+            normalizarProduto(
+                dadosBanco
+            );
 
-        const novoProduto = {
 
-            id:
-                gerarIdProduto(),
+            salvarProdutosLocal();
 
-            nome:
+            renderizarProdutos();
+
+            mostrarSucessoProduto(
+                "☁️ Produto atualizado no Supabase!"
+            );
+
+        }
+        else{
+
+            const produtoNovo = {
+
                 nome,
-
-            categoria:
                 categoria,
-
-            preco:
                 preco,
-
-            tamanho:
                 tamanho,
-
-            estoque:
-                estoqueFinal,
-
-            ingredientes:
+                estoque:estoqueFinal,
                 ingredientes,
-
-            descricao:
                 descricao,
+                disponivel,
 
-            foto:
-                fotoAtualBase64
-                ||
-                "",
+                foto:
+                fotoAtualBase64 || "",
 
-            criadoEm:
+                criadoEm:
                 new Date().toISOString(),
 
-            atualizadoEm:
+                atualizadoEm:
                 new Date().toISOString()
 
-        };
+            };
 
 
-        produtos.unshift(
-            novoProduto
+            const dadosBanco =
+            await inserirProdutoSupabase(
+                produtoNovo
+            );
+
+
+            const produtoSalvo =
+            normalizarProduto(
+                dadosBanco
+            );
+
+
+            produtos.unshift(
+                produtoSalvo
+            );
+
+
+            salvarProdutosLocal();
+
+            renderizarProdutos();
+
+            mostrarSucessoProduto(
+                "☁️ Produto cadastrado no Supabase!"
+            );
+
+        }
+
+
+        limparFormularioProduto(false);
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao salvar produto:",
+            erro
         );
 
-        salvarProdutosStorage();
+        let mensagem =
+        "Não foi possível salvar no Supabase.";
 
-        mostrarSucessoProduto(
-            "Produto cadastrado com sucesso!"
+        if(erro && erro.message){
+
+            mensagem +=
+            " " +
+            erro.message;
+
+        }
+
+        mostrarAlertaProduto(
+            mensagem
+        );
+
+    }
+    finally{
+
+        btnSalvarProduto.disabled = false;
+
+        btnSalvarProduto.innerHTML =
+        produtoEditandoId
+        ?
+        "💾 Atualizar produto"
+        :
+        "💾 Salvar produto";
+
+    }
+
+}
+
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+function obterProdutosFiltrados(){
+
+    const busca =
+    buscaProduto.value
+    .trim()
+    .toLowerCase();
+
+    let lista =
+    produtos.filter(
+    function(produto){
+
+        const categoria =
+        String(
+            produto.categoria ||
+            "outro"
+        ).toLowerCase();
+
+        if(
+            filtroAtual !== "todos"
+            &&
+            categoria !== filtroAtual
+        ){
+            return false;
+        }
+
+        if(!busca){
+            return true;
+        }
+
+        const textoBusca =
+        [
+            produto.nome,
+            produto.tamanho,
+            produto.categoria,
+            produto.ingredientes,
+            produto.descricao
+        ]
+        .join(" ")
+        .toLowerCase();
+
+        return textoBusca.includes(busca);
+
+    });
+
+
+    return ordenarProdutos(lista);
+
+}
+
+
+/* =====================================================
+   ORDENAÇÃO
+===================================================== */
+
+function ordenarProdutos(lista){
+
+    const copia = [...lista];
+
+    if(ordenacaoAtual === "nome"){
+
+        copia.sort(
+        (a,b) =>
+        String(a.nome || "")
+        .localeCompare(
+            String(b.nome || ""),
+            "pt-BR"
+        ));
+
+    }
+
+    if(ordenacaoAtual === "preco-menor"){
+
+        copia.sort(
+        (a,b) =>
+        Number(a.preco || 0)
+        -
+        Number(b.preco || 0)
         );
 
     }
 
+    if(ordenacaoAtual === "preco-maior"){
 
-    renderizarProdutos();
+        copia.sort(
+        (a,b) =>
+        Number(b.preco || 0)
+        -
+        Number(a.preco || 0)
+        );
 
-    limparFormularioProduto(
-        false
-    );
+    }
+
+    if(ordenacaoAtual === "estoque-menor"){
+
+        copia.sort(
+        (a,b) =>
+        Number(a.estoque || 0)
+        -
+        Number(b.estoque || 0)
+        );
+
+    }
+
+    if(ordenacaoAtual === "estoque-maior"){
+
+        copia.sort(
+        (a,b) =>
+        Number(b.estoque || 0)
+        -
+        Number(a.estoque || 0)
+        );
+
+    }
+
+    if(ordenacaoAtual === "recentes"){
+
+        copia.sort(
+        function(a,b){
+
+            return (
+                new Date(
+                    b.atualizadoEm ||
+                    b.criadoEm ||
+                    b.created_at ||
+                    0
+                )
+                -
+                new Date(
+                    a.atualizadoEm ||
+                    a.criadoEm ||
+                    a.created_at ||
+                    0
+                )
+            );
+
+        });
+
+    }
+
+    return copia;
 
 }
 
@@ -2034,89 +1902,37 @@ function salvarProduto(event){
 
 function renderizarProdutos(){
 
-    const busca =
-        buscaProduto.value
-            .trim()
-            .toLowerCase();
-
-
     const filtrados =
-        produtos.filter(
-            function(produto){
-
-                const categoria =
-                    String(
-                        produto.categoria
-                        ||
-                        "outro"
-                    ).toLowerCase();
-
-                if(
-                    filtroAtual !== "todos"
-                    &&
-                    categoria !== filtroAtual
-                ){
-
-                    return false;
-
-                }
-
-
-                if(!busca){
-
-                    return true;
-
-                }
-
-
-                const textoBusca =
-                    [
-
-                        produto.nome,
-                        produto.tamanho,
-                        produto.categoria,
-                        produto.ingredientes,
-                        produto.descricao
-
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                return textoBusca.includes(
-                    busca
-                );
-
-            }
-        );
-
+    obterProdutosFiltrados();
 
     atualizarContador();
+    atualizarResumo();
 
-
-    if(
-        filtrados.length === 0
-    ){
+    if(filtrados.length === 0){
 
         listaProdutos.innerHTML = `
 
-            <div class="lista-vazia">
+        <div class="lista-vazia">
 
-                <strong>
-                    ${
-                        produtos.length === 0
-                        ? "🍔 Nenhum produto cadastrado"
-                        : "🔎 Nenhum produto encontrado"
-                    }
-                </strong>
-
+            <strong>
                 ${
                     produtos.length === 0
-                    ? "Cadastre seu primeiro produto usando o formulário."
-                    : "Tente outro nome, categoria ou tamanho."
+                    ?
+                    "🍔 Nenhum produto cadastrado"
+                    :
+                    "🔎 Nenhum produto encontrado"
                 }
+            </strong>
 
-            </div>
+            ${
+                produtos.length === 0
+                ?
+                "Cadastre seu primeiro produto usando o formulário."
+                :
+                "Tente outro nome, categoria ou tamanho."
+            }
+
+        </div>
 
         `;
 
@@ -2124,13 +1940,10 @@ function renderizarProdutos(){
 
     }
 
-
     listaProdutos.innerHTML =
-        filtrados
-            .map(
-                criarCardProduto
-            )
-            .join("");
+    filtrados
+    .map(criarCardProduto)
+    .join("");
 
 }
 
@@ -2139,157 +1952,185 @@ function renderizarProdutos(){
    CARD
 ===================================================== */
 
-function criarCardProduto(
-    produto
-){
+function criarCardProduto(produto){
+
+    const estoque =
+    Number(produto.estoque) || 0;
+
+    const disponivel =
+    produto.disponivel !== false;
+
+    const estoqueBaixo =
+    estoque <= ESTOQUE_BAIXO;
+
 
     const foto =
-        produto.foto
-        ? `
-            <img
-                src="${produto.foto}"
-                alt="${escaparTexto(produto.nome)}"
-            >
-        `
-        :
-        emojiCategoria(
-            produto.categoria
-        );
+    produto.foto
+    ?
+    `
+    <img
+        src="${escaparAtributo(produto.foto)}"
+        alt="${escaparTexto(produto.nome)}"
+    >
+    `
+    :
+    emojiCategoria(produto.categoria);
 
 
     const tamanho =
-        String(
-            produto.tamanho || ""
-        ).trim();
+    String(
+        produto.tamanho || ""
+    ).trim();
 
 
     const ingredientes =
-        String(
-            produto.ingredientes
-            ||
-            produto.descricao
-            ||
-            "Sem ingredientes ou descrição cadastrados."
-        );
-
-
-    const estoque =
-        Number(
-            produto.estoque
-        )
+    String(
+        produto.ingredientes
         ||
-        0;
+        produto.descricao
+        ||
+        "Sem ingredientes ou descrição cadastrados."
+    );
 
 
     return `
 
-        <article class="produto-card">
+    <article class="
+        produto-card
+        ${!disponivel ? "indisponivel" : ""}
+        ${estoqueBaixo ? "estoque-baixo" : ""}
+    ">
 
-            <div class="produto-topo">
+        <div class="produto-topo">
 
-                <div class="produto-foto">
+            <div class="produto-foto">
+                ${foto}
+            </div>
 
-                    ${foto}
+            <div class="produto-dados">
 
+                <div class="produto-nome">
+                    ${escaparTexto(produto.nome)}
                 </div>
 
-
-                <div class="produto-dados">
-
-                    <div class="produto-nome">
-
-                        ${escaparTexto(
-                            produto.nome
-                        )}
-
-                    </div>
-
+                <div class="produto-tags">
 
                     <span class="produto-categoria">
-
-                        ${emojiCategoria(
-                            produto.categoria
-                        )}
-
-                        ${nomeCategoria(
-                            produto.categoria
-                        )}
-
+                        ${emojiCategoria(produto.categoria)}
+                        ${nomeCategoria(produto.categoria)}
                     </span>
-
 
                     ${
                         tamanho
                         ?
                         `
                         <span class="produto-tamanho">
-
-                            ${escaparTexto(
-                                tamanho
-                            )}
-
+                            ${escaparTexto(tamanho)}
                         </span>
                         `
                         :
                         ""
                     }
 
+                    <span class="produto-status ${disponivel ? "disponivel" : "indisponivel"}">
 
-                    <div class="produto-preco">
+                        ${
+                            disponivel
+                            ?
+                            "● Disponível"
+                            :
+                            "● Indisponível"
+                        }
 
-                        ${formatarDinheiro(
-                            produto.preco
-                        )}
+                    </span>
 
-                    </div>
+                </div>
 
+                <div class="produto-preco">
+                    ${formatarDinheiro(produto.preco)}
+                </div>
 
-                    <div class="produto-estoque">
+                <div class="produto-estoque ${estoqueBaixo ? "estoque-alerta" : ""}">
 
-                        Estoque:
+                    ${
+                        estoqueBaixo
+                        ?
+                        "⚠️ Estoque:"
+                        :
+                        "Estoque:"
+                    }
 
-                        <strong>
-                            ${estoque}
-                        </strong>
-
-                    </div>
+                    <strong>${estoque}</strong>
 
                 </div>
 
             </div>
 
+        </div>
 
-            <div class="produto-ingredientes">
+        <div class="estoque-rapido">
 
-                ${escaparTexto(
-                    ingredientes
-                )}
+            <button
+                type="button"
+                onclick="alterarEstoque('${escaparAtributo(produto.id)}',-1)"
+            >
+                −
+            </button>
 
+            <div class="estoque-valor">
+                ${estoque} un.
             </div>
 
+            <button
+                type="button"
+                onclick="alterarEstoque('${escaparAtributo(produto.id)}',1)"
+            >
+                +
+            </button>
 
-            <div class="produto-acoes">
+        </div>
 
-                <button
-                    type="button"
-                    class="btn-produto btn-editar"
-                    onclick="editarProduto('${String(produto.id).replace(/'/g,"\\'")}')"
-                >
-                    ✏️ Editar
-                </button>
+        <div class="produto-ingredientes">
+            ${escaparTexto(ingredientes)}
+        </div>
 
+        <div class="produto-acoes">
 
-                <button
-                    type="button"
-                    class="btn-produto btn-excluir"
-                    onclick="excluirProduto('${String(produto.id).replace(/'/g,"\\'")}')"
-                >
-                    🗑️ Excluir
-                </button>
+            <button
+                type="button"
+                class="btn-produto btn-visualizar"
+                onclick="visualizarProduto('${escaparAtributo(produto.id)}')"
+            >
+                👁️ Ver
+            </button>
 
-            </div>
+            <button
+                type="button"
+                class="btn-produto btn-editar"
+                onclick="editarProduto('${escaparAtributo(produto.id)}')"
+            >
+                ✏️ Editar
+            </button>
 
-        </article>
+            <button
+                type="button"
+                class="btn-produto btn-duplicar"
+                onclick="duplicarProduto('${escaparAtributo(produto.id)}')"
+            >
+                📋 Duplicar
+            </button>
+
+            <button
+                type="button"
+                class="btn-produto btn-excluir"
+                onclick="excluirProduto('${escaparAtributo(produto.id)}')"
+            >
+                🗑️ Excluir
+            </button>
+
+        </div>
+
+    </article>
 
     `;
 
@@ -2297,23 +2138,117 @@ function criarCardProduto(
 
 
 /* =====================================================
-   ESCAPAR
+   ESCAPAR TEXTO
 ===================================================== */
 
 function escaparTexto(texto){
 
     const div =
-        document.createElement(
-            "div"
-        );
+    document.createElement("div");
 
     div.textContent =
-        texto == null
-        ? ""
-        :
-        String(texto);
+    texto == null
+    ?
+    ""
+    :
+    String(texto);
 
     return div.innerHTML;
+
+}
+
+
+function escaparAtributo(valor){
+
+    return String(valor)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,"&quot;");
+
+}
+
+
+/* =====================================================
+   CONTADOR
+===================================================== */
+
+function atualizarContador(){
+
+    const quantidade =
+    produtos.length;
+
+    contadorProdutos.textContent =
+    quantidade
+    +
+    (
+        quantidade === 1
+        ?
+        " produto cadastrado"
+        :
+        " produtos cadastrados"
+    );
+
+}
+
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+function atualizarResumo(){
+
+    const total =
+    produtos.length;
+
+    const disponiveis =
+    produtos.filter(
+        p => p.disponivel !== false
+    ).length;
+
+    const estoqueBaixo =
+    produtos.filter(
+        p =>
+        Number(p.estoque || 0)
+        <=
+        ESTOQUE_BAIXO
+    ).length;
+
+    const valorEstoque =
+    produtos.reduce(
+        function(total,p){
+
+            return total
+            +
+            (
+                Number(p.preco || 0)
+                *
+                Number(p.estoque || 0)
+            );
+
+        },
+        0
+    );
+
+
+    document.getElementById(
+        "resumoTotal"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "resumoDisponiveis"
+    ).textContent = disponiveis;
+
+
+    document.getElementById(
+        "resumoEstoqueBaixo"
+    ).textContent = estoqueBaixo;
+
+
+    document.getElementById(
+        "resumoValorEstoque"
+    ).textContent =
+    formatarDinheiro(valorEstoque);
 
 }
 
@@ -2325,17 +2260,14 @@ function escaparTexto(texto){
 function editarProduto(id){
 
     const produto =
-        produtos.find(
-            function(item){
+    produtos.find(
+    function(item){
 
-                return String(
-                    item.id
-                )
-                ===
-                String(id);
+        return String(item.id)
+        ===
+        String(id);
 
-            }
-        );
+    });
 
 
     if(!produto){
@@ -2350,87 +2282,73 @@ function editarProduto(id){
 
 
     produtoEditandoId =
-        produto.id;
+    produto.id;
 
 
     nomeProduto.value =
-        produto.nome
-        ||
-        "";
+    produto.nome || "";
 
 
     categoriaProduto.value =
-        produto.categoria
-        ||
-        "outro";
+    produto.categoria || "outro";
 
 
     precoProduto.value =
-        Number(
-            produto.preco
-        )
-        .toFixed(2);
+    Number(produto.preco || 0)
+    .toFixed(2);
 
 
     tamanhoProduto.value =
-        produto.tamanho
-        ||
-        "";
+    produto.tamanho || "";
 
 
     estoqueProduto.value =
-        Number(
-            produto.estoque
-        )
-        ||
-        0;
+    Number(produto.estoque || 0);
 
 
     ingredientesProduto.value =
-        produto.ingredientes
-        ||
-        "";
+    produto.ingredientes || "";
 
 
     descricaoProduto.value =
-        produto.descricao
-        ||
-        "";
+    produto.descricao || "";
+
+
+    disponivelProduto.checked =
+    produto.disponivel !== false;
 
 
     fotoAtualBase64 =
-        produto.foto
-        ||
-        "";
+    produto.foto || "";
 
 
     if(fotoAtualBase64){
 
         fotoPreview.innerHTML =
-            `
-            <img
-                src="${fotoAtualBase64}"
-                alt="Foto do produto"
-            >
-            `;
+        `
+        <img
+            src="${escaparAtributo(fotoAtualBase64)}"
+            alt="Foto do produto"
+        >
+        `;
 
     }
     else{
 
         fotoPreview.textContent =
-            emojiCategoria(
-                produto.categoria
-            );
+        emojiCategoria(
+            produto.categoria
+        );
 
     }
 
 
     tituloFormulario.textContent =
-        "Editar produto";
+    "Editar produto";
 
 
     btnSalvarProduto.innerHTML =
-        "💾 Atualizar produto";
+    "💾 Atualizar produto";
 
 
     atualizarCampoTamanho();
@@ -2448,23 +2366,230 @@ function editarProduto(id){
 
 
 /* =====================================================
+   DUPLICAR
+===================================================== */
+
+async function duplicarProduto(id){
+
+    const original =
+    produtos.find(
+    function(item){
+
+        return String(item.id)
+        ===
+        String(id);
+
+    });
+
+
+    if(!original){
+
+        mostrarAlertaProduto(
+            "Produto não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    let novoNome =
+    original.nome
+    +
+    " — Cópia";
+
+
+    let contador = 2;
+
+
+    while(
+        produtoDuplicado(
+            novoNome,
+            original.categoria,
+            original.tamanho,
+            null
+        )
+    ){
+
+        novoNome =
+        original.nome
+        +
+        " — Cópia "
+        +
+        contador;
+
+        contador++;
+
+    }
+
+
+    const novoProduto = {
+
+        ...original,
+
+        nome:novoNome,
+
+        estoque:0,
+
+        criadoEm:
+        new Date().toISOString(),
+
+        atualizadoEm:
+        new Date().toISOString()
+
+    };
+
+
+    try{
+
+        const dadosBanco =
+        await inserirProdutoSupabase(
+            novoProduto
+        );
+
+
+        const produtoSalvo =
+        normalizarProduto(
+            dadosBanco
+        );
+
+
+        produtos.unshift(
+            produtoSalvo
+        );
+
+
+        salvarProdutosLocal();
+
+        renderizarProdutos();
+
+
+        mostrarSucessoProduto(
+            "☁️ Produto duplicado no Supabase. Estoque iniciado em 0."
+        );
+
+    }
+    catch(erro){
+
+        console.error(erro);
+
+        mostrarAlertaProduto(
+            "Não foi possível duplicar no Supabase: "
+            +
+            (erro.message || "erro desconhecido")
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ALTERAR ESTOQUE
+===================================================== */
+
+async function alterarEstoque(
+    id,
+    quantidade
+){
+
+    const indice =
+    produtos.findIndex(
+    function(item){
+
+        return String(item.id)
+        ===
+        String(id);
+
+    });
+
+
+    if(indice === -1){
+
+        mostrarAlertaProduto(
+            "Produto não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    const atual =
+    Number(
+        produtos[indice].estoque
+    ) || 0;
+
+
+    const novo =
+    Math.max(
+        0,
+        atual + Number(quantidade)
+    );
+
+
+    const produtoAtualizado = {
+
+        ...produtos[indice],
+
+        estoque:novo,
+
+        atualizadoEm:
+        new Date().toISOString()
+
+    };
+
+
+    try{
+
+        const dadosBanco =
+        await atualizarProdutoSupabase(
+            produtos[indice].id,
+            produtoAtualizado
+        );
+
+
+        produtos[indice] =
+        normalizarProduto(
+            dadosBanco
+        );
+
+
+        salvarProdutosLocal();
+
+        renderizarProdutos();
+
+    }
+    catch(erro){
+
+        console.error(erro);
+
+        mostrarAlertaProduto(
+            "Não foi possível atualizar o estoque no Supabase: "
+            +
+            (erro.message || "erro desconhecido")
+        );
+
+    }
+
+}
+
+
+/* =====================================================
    EXCLUIR
 ===================================================== */
 
-function excluirProduto(id){
+async function excluirProduto(id){
 
     const produto =
-        produtos.find(
-            function(item){
+    produtos.find(
+    function(item){
 
-                return String(
-                    item.id
-                )
-                ===
-                String(id);
+        return String(item.id)
+        ===
+        String(id);
 
-            }
-        );
+    });
 
 
     if(!produto){
@@ -2479,56 +2604,71 @@ function excluirProduto(id){
 
 
     const confirmar =
-        confirm(
-            "Deseja realmente excluir o produto \"" +
-            produto.nome +
-            "\"?"
-        );
+    confirm(
+        "Deseja realmente excluir o produto \""
+        +
+        produto.nome
+        +
+        "\"?"
+    );
 
 
     if(!confirmar){
-
         return;
-
     }
 
 
-    produtos =
+    try{
+
+        await excluirProdutoSupabase(
+            produto.id
+        );
+
+
+        produtos =
         produtos.filter(
-            function(item){
+        function(item){
 
-                return String(
-                    item.id
-                )
-                !==
-                String(id);
+            return String(item.id)
+            !==
+            String(id);
 
-            }
-        );
+        });
 
 
-    salvarProdutosStorage();
+        salvarProdutosLocal();
 
 
-    if(
-        String(produtoEditandoId)
-        ===
-        String(id)
-    ){
+        if(
+            String(produtoEditandoId)
+            ===
+            String(id)
+        ){
 
-        limparFormularioProduto(
-            false
+            limparFormularioProduto(false);
+
+        }
+
+
+        renderizarProdutos();
+
+
+        mostrarSucessoProduto(
+            "☁️ Produto excluído do Supabase."
         );
 
     }
+    catch(erro){
 
+        console.error(erro);
 
-    renderizarProdutos();
+        mostrarAlertaProduto(
+            "Não foi possível excluir no Supabase: "
+            +
+            (erro.message || "erro desconhecido")
+        );
 
-
-    mostrarSucessoProduto(
-        "Produto excluído com sucesso."
-    );
+    }
 
 }
 
@@ -2544,32 +2684,31 @@ function limparFormularioProduto(
     if(confirmar){
 
         const existeConteudo =
-            nomeProduto.value.trim()
-            ||
-            categoriaProduto.value
-            ||
-            precoProduto.value
-            ||
-            tamanhoProduto.value.trim()
-            ||
-            ingredientesProduto.value.trim()
-            ||
-            descricaoProduto.value.trim()
-            ||
-            produtoEditandoId;
+        nomeProduto.value.trim()
+        ||
+        categoriaProduto.value
+        ||
+        precoProduto.value
+        ||
+        tamanhoProduto.value.trim()
+        ||
+        ingredientesProduto.value.trim()
+        ||
+        descricaoProduto.value.trim()
+        ||
+        produtoEditandoId;
 
 
         if(existeConteudo){
 
             const ok =
-                confirm(
-                    "Deseja limpar o formulário?"
-                );
+            confirm(
+                "Deseja limpar o formulário?"
+            );
+
 
             if(!ok){
-
                 return;
-
             }
 
         }
@@ -2577,32 +2716,23 @@ function limparFormularioProduto(
     }
 
 
-    produtoEditandoId =
-        null;
+    produtoEditandoId = null;
 
-
-    fotoAtualBase64 =
-        "";
-
+    fotoAtualBase64 = "";
 
     formProduto.reset();
 
+    estoqueProduto.value = "0";
 
-    estoqueProduto.value =
-        "0";
+    disponivelProduto.checked = true;
 
+    fotoProduto.value = "";
 
-    fotoPreview.textContent =
-        "🍔";
+    fotoPreview.textContent = "🍔";
 
+    tituloFormulario.textContent = "Novo produto";
 
-    tituloFormulario.textContent =
-        "Novo produto";
-
-
-    btnSalvarProduto.innerHTML =
-        "💾 Salvar produto";
-
+    btnSalvarProduto.innerHTML = "💾 Salvar produto";
 
     atualizarCampoTamanho();
 
@@ -2613,30 +2743,22 @@ function limparFormularioProduto(
    FILTRO
 ===================================================== */
 
-function selecionarFiltro(
-    filtro
-){
+function selecionarFiltro(filtro){
 
-    filtroAtual =
-        filtro;
+    filtroAtual = filtro;
 
 
     document
-        .querySelectorAll(
-            ".filtro-produto"
-        )
-        .forEach(
-            function(botao){
+    .querySelectorAll(".filtro-produto")
+    .forEach(
+    function(botao){
 
-                botao.classList.toggle(
-                    "ativo",
-                    botao.dataset.filtro
-                    ===
-                    filtro
-                );
-
-            }
+        botao.classList.toggle(
+            "ativo",
+            botao.dataset.filtro === filtro
         );
+
+    });
 
 
     renderizarProdutos();
@@ -2645,25 +2767,168 @@ function selecionarFiltro(
 
 
 /* =====================================================
-   CONTADOR
+   VISUALIZAR
 ===================================================== */
 
-function atualizarContador(){
+function visualizarProduto(id){
 
-    const quantidade =
-        produtos.length;
+    const produto =
+    produtos.find(
+    function(item){
+
+        return String(item.id)
+        ===
+        String(id);
+
+    });
 
 
-    contadorProdutos.textContent =
-        quantidade
-        +
-        (
-            quantidade === 1
-            ? " produto cadastrado"
-            : " produtos cadastrados"
+    if(!produto){
+
+        mostrarAlertaProduto(
+            "Produto não encontrado."
         );
 
+        return;
+
+    }
+
+
+    const estoque =
+    Number(produto.estoque || 0);
+
+
+    const foto =
+    produto.foto
+    ?
+    `
+    <img
+        src="${escaparAtributo(produto.foto)}"
+        alt="${escaparTexto(produto.nome)}"
+    >
+    `
+    :
+    emojiCategoria(produto.categoria);
+
+
+    modalProdutoConteudo.innerHTML = `
+
+    <div class="modal-foto">
+        ${foto}
+    </div>
+
+    <div class="modal-info">
+
+        <h2>
+            ${escaparTexto(produto.nome)}
+        </h2>
+
+        <p>
+            ${
+                escaparTexto(
+                    produto.descricao
+                    ||
+                    "Sem descrição cadastrada."
+                )
+            }
+        </p>
+
+        <div class="modal-linha">
+            <span>Categoria</span>
+            <strong>
+                ${emojiCategoria(produto.categoria)}
+                ${nomeCategoria(produto.categoria)}
+            </strong>
+        </div>
+
+        <div class="modal-linha">
+            <span>Tamanho / Volume</span>
+            <strong>
+                ${
+                    escaparTexto(
+                        produto.tamanho ||
+                        "Não informado"
+                    )
+                }
+            </strong>
+        </div>
+
+        <div class="modal-linha">
+            <span>Preço</span>
+            <strong>
+                ${formatarDinheiro(produto.preco)}
+            </strong>
+        </div>
+
+        <div class="modal-linha">
+            <span>Estoque</span>
+            <strong>
+                ${estoque} unidade(s)
+            </strong>
+        </div>
+
+        <div class="modal-linha">
+            <span>Status</span>
+            <strong>
+                ${
+                    produto.disponivel !== false
+                    ?
+                    "🟢 Disponível"
+                    :
+                    "🔴 Indisponível"
+                }
+            </strong>
+        </div>
+
+        <div class="modal-linha">
+            <span>Ingredientes</span>
+            <strong>
+                ${
+                    escaparTexto(
+                        produto.ingredientes ||
+                        "Não informado"
+                    )
+                }
+            </strong>
+        </div>
+
+    </div>
+
+    `;
+
+
+    modalProduto.classList.add("visivel");
+
 }
+
+
+/* =====================================================
+   FECHAR MODAL
+===================================================== */
+
+function fecharModalProduto(event){
+
+    if(
+        event &&
+        event.target !== modalProduto
+    ){
+        return;
+    }
+
+    modalProduto.classList.remove("visivel");
+
+}
+
+
+document.addEventListener(
+"keydown",
+function(event){
+
+    if(event.key === "Escape"){
+        fecharModalProduto();
+    }
+
+});
 
 
 /* =====================================================
@@ -2671,151 +2936,148 @@ function atualizarContador(){
 ===================================================== */
 
 categoriaProduto.addEventListener(
-    "change",
-    atualizarCampoTamanho
+"change",
+atualizarCampoTamanho
 );
 
 
 buscaProduto.addEventListener(
-    "input",
-    renderizarProdutos
+"input",
+renderizarProdutos
 );
+
+
+ordenacaoProdutos.addEventListener(
+"change",
+function(){
+
+    ordenacaoAtual =
+    this.value;
+
+    renderizarProdutos();
+
+});
 
 
 /* =====================================================
-   CORREÇÃO DOS CAMPOS NUMÉRICOS
-   Permite apagar o valor temporariamente.
+   CAMPOS NUMÉRICOS
 ===================================================== */
 
-[precoProduto, estoqueProduto]
+[precoProduto,estoqueProduto]
 .forEach(
-    function(input){
+function(input){
 
-        input.addEventListener(
-            "input",
-            function(){
+    input.addEventListener(
+    "input",
+    function(){
 
-                if(
-                    this.value === ""
-                ){
+        if(this.value === ""){
+            return;
+        }
 
-                    return;
+        if(Number(this.value) < 0){
+            this.value = "0";
+        }
 
-                }
-
-
-                if(
-                    Number(this.value) < 0
-                ){
-
-                    this.value = "0";
-
-                }
-
-            }
-        );
+    });
 
 
-        input.addEventListener(
-            "blur",
-            function(){
+    input.addEventListener(
+    "blur",
+    function(){
 
-                if(
-                    this.value.trim() === ""
-                ){
+        if(this.value.trim() === ""){
 
-                    this.value =
-                        this === estoqueProduto
-                        ? "0"
-                        : "0.00";
+            this.value =
+            this === estoqueProduto
+            ?
+            "0"
+            :
+            "0.00";
 
-                }
+        }
 
-            }
-        );
+    });
 
-    }
-);
+});
 
 
 /* =====================================================
    INICIALIZAÇÃO
 ===================================================== */
 
-function inicializarProdutos(){
-
-    produtos =
-        lerProdutosStorage();
-
+async function inicializarProdutos(){
 
     atualizarCampoTamanho();
 
-
-    renderizarProdutos();
+    await carregarProdutosSupabase();
 
 }
 
 
 document.addEventListener(
-    "DOMContentLoaded",
-    inicializarProdutos
+"DOMContentLoaded",
+inicializarProdutos
 );
 
 
 /* =====================================================
-   ATUALIZAÇÃO ENTRE TELAS
+   ATUALIZAÇÃO ENTRE ABAS
 ===================================================== */
 
 window.addEventListener(
-    "storage",
-    function(event){
+"storage",
+function(event){
 
-        if(
-            event.key === "produtos"
-        ){
+    if(event.key === "produtos"){
+
+        try{
 
             produtos =
-                lerProdutosStorage();
+            JSON.parse(
+                event.newValue || "[]"
+            )
+            .map(normalizarProduto);
 
             renderizarProdutos();
 
         }
+        catch(erro){
 
-    }
-);
-
-
-/* =====================================================
-   PROTEÇÃO AO VOLTAR
-===================================================== */
-
-window.addEventListener(
-    "pageshow",
-    function(){
-
-        if(
-            localStorage.getItem(
-                "grillcore_login"
-            )
-            !==
-            "true"
-        ){
-
-            window.location.replace(
-                "login.html"
-            );
-
-            return;
+            console.error(erro);
 
         }
 
+    }
 
-        produtos =
-            lerProdutosStorage();
+});
 
-        renderizarProdutos();
+
+/* =====================================================
+   PROTEÇÃO DE LOGIN
+===================================================== */
+
+window.addEventListener(
+"pageshow",
+function(){
+
+    if(
+        localStorage.getItem("grillcore_login")
+        !==
+        "true"
+    ){
+
+        window.location.replace(
+            "login.html"
+        );
+
+        return;
 
     }
-);
 
-</script></body></html>
+});
+
+</script>
+
+</body>
+</html>

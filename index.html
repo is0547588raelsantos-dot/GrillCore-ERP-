@@ -4,7 +4,7 @@
 <head>
 
 <script>
-if (localStorage.getItem("grillcore_login") !== "true") {
+if(localStorage.getItem("grillcore_login") !== "true"){
     window.location.replace("login.html");
 }
 </script>
@@ -21,7 +21,7 @@ if (localStorage.getItem("grillcore_login") !== "true") {
 
 :root{
     --fundo:#0d0d0d;
-    --grafite:#222222;
+    --grafite:#222;
     --grafite2:#292929;
     --grafite3:#181818;
 
@@ -29,8 +29,9 @@ if (localStorage.getItem("grillcore_login") !== "true") {
     --dourado-claro:#f0cf65;
 
     --laranja:#ff7300;
+    --laranja-claro:#ff9a3d;
 
-    --branco:#ffffff;
+    --branco:#fff;
     --cinza:#a7a7a7;
 }
 
@@ -55,7 +56,7 @@ body{
         ),
         radial-gradient(
             circle at bottom left,
-            rgba(255,115,0,.05),
+            rgba(255,115,0,.06),
             transparent 30%
         ),
         var(--fundo);
@@ -70,6 +71,10 @@ body{
 button,
 a{
     -webkit-tap-highlight-color:transparent;
+}
+
+button{
+    font-family:inherit;
 }
 
 .container{
@@ -97,7 +102,6 @@ a{
 .logo-area{
     display:flex;
     align-items:center;
-
     gap:12px;
 }
 
@@ -175,7 +179,7 @@ a{
 
 
 /* =========================
-   CABEÇALHO DOS INDICADORES
+   INDICADORES
 ========================= */
 
 .indicadores-area{
@@ -183,42 +187,27 @@ a{
 }
 
 .indicadores-cabecalho{
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
     margin-bottom:10px;
 }
 
 .indicadores-cabecalho span{
-
     color:#777;
-
     font-size:11px;
-
     font-weight:bold;
-
     text-transform:uppercase;
-
     letter-spacing:.7px;
 }
 
-
-/* BOTÃO ÚNICO */
-
 .olho-geral{
-
     width:40px;
     height:34px;
 
     border-radius:10px;
 
-    border:
-        1px solid
-        rgba(212,175,55,.45);
+    border:1px solid rgba(212,175,55,.45);
 
     background:#151515;
 
@@ -227,52 +216,30 @@ a{
     font-size:17px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     cursor:pointer;
 
-    box-shadow:
-        0 5px 15px rgba(0,0,0,.25);
-
-    transition:
-        transform .15s ease,
-        background .15s ease,
-        border-color .15s ease;
+    transition:.15s;
 }
 
 .olho-geral:hover{
-
     background:#222;
-
-    border-color:
-        var(--dourado);
+    border-color:var(--dourado);
 }
 
 .olho-geral:active{
-
     transform:scale(.90);
 }
 
-
-/* =========================
-   INDICADORES
-========================= */
-
 .indicadores{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
+    grid-template-columns:repeat(4,1fr);
     gap:14px;
 }
 
 .indicador{
-
     position:relative;
 
     min-height:125px;
@@ -288,20 +255,16 @@ a{
             #1d1d1d
         );
 
-    border:
-        1px solid
-        rgba(212,175,55,.45);
+    border:1px solid rgba(212,175,55,.45);
 
     box-shadow:
         0 8px 25px rgba(0,0,0,.35),
-        inset 0 1px 0
-        rgba(255,255,255,.04);
+        inset 0 1px 0 rgba(255,255,255,.04);
 
     overflow:hidden;
 }
 
 .indicador::after{
-
     content:"";
 
     position:absolute;
@@ -314,27 +277,19 @@ a{
     right:-30px;
     bottom:-35px;
 
-    background:
-        rgba(212,175,55,.08);
+    background:rgba(212,175,55,.08);
 }
 
 .indicador-topo{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     margin-bottom:13px;
 }
 
 .indicador-nome{
-
     color:#cfcfcf;
-
     font-size:13px;
-
     font-weight:bold;
 }
 
@@ -343,7 +298,6 @@ a{
 }
 
 .valor{
-
     font-size:23px;
 
     font-weight:900;
@@ -352,21 +306,17 @@ a{
 
     letter-spacing:.3px;
 
-    font-variant-numeric:
-        tabular-nums;
+    font-variant-numeric:tabular-nums;
 }
 
 
 /* =========================
-   TÍTULO DA SEÇÃO
+   SEÇÃO
 ========================= */
 
 .secao-titulo{
-
     display:flex;
-
     align-items:center;
-
     margin-bottom:13px;
 }
 
@@ -375,7 +325,6 @@ a{
 }
 
 .linha-dourada{
-
     height:2px;
 
     flex:1;
@@ -394,21 +343,16 @@ a{
 
 
 /* =========================
-   9 CARDS
+   CARDS
 ========================= */
 
 .cards{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:15px;
 }
 
 .card{
-
     position:relative;
 
     min-height:125px;
@@ -420,9 +364,7 @@ a{
             #202020
         );
 
-    border:
-        1px solid
-        rgba(212,175,55,.42);
+    border:1px solid rgba(212,175,55,.42);
 
     border-radius:18px;
 
@@ -438,14 +380,12 @@ a{
 
     justify-content:center;
 
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
+    transition:.18s;
+
+    cursor:pointer;
 }
 
 .card::before{
-
     content:"";
 
     position:absolute;
@@ -463,29 +403,21 @@ a{
 }
 
 .card:hover{
-
     transform:translateY(-3px);
 
-    border-color:
-        var(--dourado);
+    border-color:var(--dourado);
 
     box-shadow:
         0 12px 28px rgba(0,0,0,.4),
-        0 0 18px
-        rgba(212,175,55,.10);
+        0 0 18px rgba(212,175,55,.10);
 }
 
 .card:active{
     transform:scale(.97);
 }
 
-
-/* NOVO PEDIDO */
-
 .card.destaque{
-
-    border-color:
-        rgba(255,115,0,.7);
+    border-color:rgba(255,115,0,.7);
 
     background:
         linear-gradient(
@@ -500,15 +432,25 @@ a{
 }
 
 .card.destaque .icone-card{
-    border-color:
-        rgba(255,115,0,.55);
+    border-color:rgba(255,115,0,.55);
 }
 
+.card.usuario-card{
+    border-color:rgba(255,115,0,.65);
 
-/* ÍCONE DOS CARDS */
+    background:
+        linear-gradient(
+            145deg,
+            #2d1b10,
+            #202020
+        );
+}
+
+.card.usuario-card::before{
+    background:var(--laranja);
+}
 
 .icone-card{
-
     width:45px;
     height:45px;
 
@@ -516,14 +458,10 @@ a{
 
     background:#171717;
 
-    border:
-        1px solid
-        rgba(212,175,55,.45);
+    border:1px solid rgba(212,175,55,.45);
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     font-size:23px;
@@ -532,18 +470,13 @@ a{
 }
 
 .card h3{
-
     font-size:16px;
-
     margin-bottom:5px;
 }
 
 .card p{
-
     font-size:12px;
-
     color:#999;
-
     line-height:1.35;
 }
 
@@ -553,19 +486,16 @@ a{
 ========================= */
 
 .resumo{
-
     margin-top:28px;
 
     display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
 
     gap:14px;
 }
 
 .resumo-box{
-
     background:#191919;
 
     border:1px solid #333;
@@ -576,7 +506,6 @@ a{
 }
 
 .resumo-label{
-
     color:#999;
 
     font-size:12px;
@@ -585,7 +514,6 @@ a{
 }
 
 .resumo-numero{
-
     color:var(--dourado-claro);
 
     font-size:24px;
@@ -599,14 +527,11 @@ a{
 ========================= */
 
 .area-sair{
-
     margin-top:28px;
-
     text-align:center;
 }
 
 .btn-sair{
-
     width:100%;
 
     max-width:320px;
@@ -626,14 +551,8 @@ a{
     cursor:pointer;
 }
 
-.btn-sair:active{
-    transform:scale(.98);
-}
-
 .btn-sair:hover{
-
     border-color:#8b3333;
-
     color:#ff7777;
 }
 
@@ -643,7 +562,6 @@ a{
 ========================= */
 
 .rodape{
-
     text-align:center;
 
     color:#666;
@@ -657,28 +575,322 @@ a{
 
 
 /* =========================
-   TABLET
+   MODAL USUÁRIOS
+========================= */
+
+.modal-fundo{
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:9999;
+
+    background:rgba(0,0,0,.78);
+
+    backdrop-filter:blur(5px);
+
+    padding:18px;
+
+    overflow-y:auto;
+}
+
+.modal-fundo.ativo{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.modal{
+    width:100%;
+
+    max-width:520px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #24160c,
+            #101010
+        );
+
+    border:1px solid rgba(255,115,0,.5);
+
+    border-radius:22px;
+
+    padding:22px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.75);
+}
+
+.modal-topo{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:20px;
+}
+
+.modal-topo h2{
+    font-size:21px;
+    color:#ff9a3d;
+}
+
+.btn-fechar{
+    width:38px;
+    height:38px;
+
+    border-radius:10px;
+
+    border:1px solid #444;
+
+    background:#181818;
+
+    color:#fff;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.usuario-logado-box{
+    padding:13px;
+
+    margin-bottom:17px;
+
+    border-radius:13px;
+
+    background:#171717;
+
+    border:1px solid rgba(212,175,55,.3);
+
+    color:#bbb;
+
+    font-size:13px;
+}
+
+.usuario-logado-box strong{
+    color:#f0cf65;
+}
+
+.lista-usuarios{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+.usuario-item{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:13px;
+
+    border-radius:13px;
+
+    background:#191919;
+
+    border:1px solid #333;
+}
+
+.usuario-info{
+    min-width:0;
+}
+
+.usuario-info strong{
+    display:block;
+
+    color:#fff;
+
+    font-size:15px;
+
+    margin-bottom:3px;
+}
+
+.usuario-info span{
+    color:#888;
+
+    font-size:11px;
+}
+
+.usuario-acoes{
+    display:flex;
+
+    gap:7px;
+}
+
+.btn-mini{
+    width:38px;
+    height:36px;
+
+    border-radius:9px;
+
+    border:1px solid #444;
+
+    background:#222;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+.btn-mini.editar{
+    border-color:rgba(255,115,0,.45);
+}
+
+.btn-mini.excluir{
+    border-color:rgba(180,50,50,.45);
+}
+
+.form-usuario{
+    padding-top:17px;
+
+    border-top:1px solid rgba(255,115,0,.2);
+}
+
+.form-usuario h3{
+    font-size:16px;
+
+    color:#ff9a3d;
+
+    margin-bottom:14px;
+}
+
+.campo-modal{
+    margin-bottom:12px;
+}
+
+.campo-modal label{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#bbb;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.campo-modal input{
+    width:100%;
+
+    min-height:46px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    border:1px solid #3b3026;
+
+    background:#090909;
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:15px;
+}
+
+.campo-modal input:focus{
+    border-color:var(--laranja);
+}
+
+.acoes-form{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:9px;
+
+    margin-top:14px;
+}
+
+.btn-modal{
+    min-height:45px;
+
+    border-radius:10px;
+
+    border:1px solid #444;
+
+    background:#1b1b1b;
+
+    color:#ddd;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.btn-modal.principal{
+    border:none;
+
+    color:#150900;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff8a1f,
+            #d95700
+        );
+}
+
+.mensagem-modal{
+    display:none;
+
+    margin-top:12px;
+
+    padding:10px;
+
+    border-radius:9px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    background:#321409;
+
+    border:1px solid #7b351b;
+
+    color:#ffb18c;
+}
+
+.mensagem-modal.ativa{
+    display:block;
+}
+
+
+/* =========================
+   RESPONSIVO
 ========================= */
 
 @media(max-width:850px){
 
     .indicadores{
-
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
     .cards{
-
-        grid-template-columns:
-            repeat(3,1fr);
+        grid-template-columns:repeat(3,1fr);
     }
+
 }
-
-
-/* =========================
-   CELULAR
-========================= */
 
 @media(max-width:600px){
 
@@ -691,10 +903,8 @@ a{
     }
 
     .logo{
-
         width:43px;
         height:43px;
-
         border-radius:12px;
     }
 
@@ -703,9 +913,7 @@ a{
     }
 
     .usuario{
-
         font-size:11px;
-
         padding:8px 9px;
     }
 
@@ -718,11 +926,8 @@ a{
     }
 
     .indicador{
-
         min-height:115px;
-
         padding:14px;
-
         border-radius:15px;
     }
 
@@ -731,27 +936,18 @@ a{
     }
 
     .olho-geral{
-
         width:38px;
         height:32px;
-
-        font-size:16px;
     }
 
     .cards{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
+        grid-template-columns:repeat(2,1fr);
         gap:11px;
     }
 
     .card{
-
         min-height:120px;
-
         padding:15px;
-
         border-radius:15px;
     }
 
@@ -764,37 +960,31 @@ a{
     }
 
     .icone-card{
-
         width:40px;
         height:40px;
-
         font-size:20px;
     }
 
     .resumo{
-
-        grid-template-columns:
-            repeat(3,1fr);
-
+        grid-template-columns:repeat(3,1fr);
         gap:8px;
     }
 
     .resumo-box{
-
         padding:12px 8px;
-
         text-align:center;
     }
 
     .resumo-numero{
         font-size:19px;
     }
+
+    .modal{
+        padding:18px;
+        border-radius:18px;
+    }
+
 }
-
-
-/* =========================
-   CELULAR PEQUENO
-========================= */
 
 @media(max-width:380px){
 
@@ -803,9 +993,7 @@ a{
     }
 
     .card{
-
         padding:12px;
-
         min-height:112px;
     }
 
@@ -824,20 +1012,16 @@ a{
     .valor{
         font-size:17px;
     }
+
+    .acoes-form{
+        grid-template-columns:1fr;
+    }
+
 }
-
-
-/* =========================
-   FOCO
-========================= */
 
 a:focus-visible,
 button:focus-visible{
-
-    outline:
-        2px solid
-        var(--dourado);
-
+    outline:2px solid var(--dourado);
     outline-offset:3px;
 }
 
@@ -845,9 +1029,7 @@ button:focus-visible{
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
@@ -878,11 +1060,9 @@ button:focus-visible{
 
     </div>
 
-
     <div
         class="usuario"
-        id="nomeUsuario"
-    >
+        id="nomeUsuario">
         Usuário
     </div>
 
@@ -918,15 +1098,12 @@ button:focus-visible{
             Resumo financeiro
         </span>
 
-        <!-- UM ÚNICO BOTÃO PARA OS 4 -->
-
         <button
             class="olho-geral"
             id="btnOlhoGeral"
             type="button"
             onclick="alternarTodosValores()"
-            aria-label="Ocultar valores"
-        >
+            aria-label="Ocultar valores">
             👁
         </button>
 
@@ -935,8 +1112,6 @@ button:focus-visible{
 
     <div class="indicadores">
 
-
-        <!-- VENDAS -->
 
         <div class="indicador">
 
@@ -952,19 +1127,15 @@ button:focus-visible{
 
             </div>
 
-
             <div
                 class="valor"
                 id="valorVendas"
-                data-valor="R$ 0,00"
-            >
+                data-valor="R$ 0,00">
                 R$ 0,00
             </div>
 
         </div>
 
-
-        <!-- ENTRADAS -->
 
         <div class="indicador">
 
@@ -980,19 +1151,15 @@ button:focus-visible{
 
             </div>
 
-
             <div
                 class="valor"
                 id="valorEntradas"
-                data-valor="R$ 0,00"
-            >
+                data-valor="R$ 0,00">
                 R$ 0,00
             </div>
 
         </div>
 
-
-        <!-- ESTOQUE -->
 
         <div class="indicador">
 
@@ -1008,19 +1175,15 @@ button:focus-visible{
 
             </div>
 
-
             <div
                 class="valor"
                 id="valorEstoque"
-                data-valor="R$ 0,00"
-            >
+                data-valor="R$ 0,00">
                 R$ 0,00
             </div>
 
         </div>
 
-
-        <!-- DESPESAS -->
 
         <div class="indicador">
 
@@ -1036,12 +1199,10 @@ button:focus-visible{
 
             </div>
 
-
             <div
                 class="valor"
                 id="valorDespesas"
-                data-valor="R$ 0,00"
-            >
+                data-valor="R$ 0,00">
                 R$ 0,00
             </div>
 
@@ -1054,7 +1215,7 @@ button:focus-visible{
 
 
 <!-- =========================
-     TÍTULO
+     ACESSO RÁPIDO
 ========================= -->
 
 <div class="secao-titulo">
@@ -1068,10 +1229,6 @@ button:focus-visible{
 </div>
 
 
-<!-- =========================
-     9 CARDS
-========================= -->
-
 <section class="cards">
 
 
@@ -1079,8 +1236,7 @@ button:focus-visible{
 
     <a
         href="pedido2.html"
-        class="card destaque"
-    >
+        class="card destaque">
 
         <div class="icone-card">
             🛒
@@ -1101,8 +1257,7 @@ button:focus-visible{
 
     <a
         href="vendas.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             💰
@@ -1123,8 +1278,7 @@ button:focus-visible{
 
     <a
         href="produtos.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             🍔
@@ -1145,8 +1299,7 @@ button:focus-visible{
 
     <a
         href="clientes.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             👥
@@ -1167,8 +1320,7 @@ button:focus-visible{
 
     <a
         href="estoque.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             📦
@@ -1189,8 +1341,7 @@ button:focus-visible{
 
     <a
         href="financeiro.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             💳
@@ -1211,8 +1362,7 @@ button:focus-visible{
 
     <a
         href="compras.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             🛍️
@@ -1231,8 +1381,9 @@ button:focus-visible{
 
     <!-- 8 -->
 
-    <a href="historico-estoque.html">📋 Histórico</a>
-    >
+    <a
+        href="historico-estoque.html"
+        class="card">
 
         <div class="icone-card">
             📋
@@ -1253,8 +1404,7 @@ button:focus-visible{
 
     <a
         href="backup.html"
-        class="card"
-    >
+        class="card">
 
         <div class="icone-card">
             💾
@@ -1269,6 +1419,28 @@ button:focus-visible{
         </p>
 
     </a>
+
+
+    <!-- 10 -->
+
+    <button
+        type="button"
+        class="card usuario-card"
+        onclick="abrirUsuarios()">
+
+        <div class="icone-card">
+            👤
+        </div>
+
+        <h3>
+            Usuários e Acessos
+        </h3>
+
+        <p>
+            Adicionar e alterar usuários
+        </p>
+
+    </button>
 
 
 </section>
@@ -1289,8 +1461,7 @@ button:focus-visible{
 
         <div
             class="resumo-numero"
-            id="qtdPedidos"
-        >
+            id="qtdPedidos">
             0
         </div>
 
@@ -1305,8 +1476,7 @@ button:focus-visible{
 
         <div
             class="resumo-numero"
-            id="qtdProdutos"
-        >
+            id="qtdProdutos">
             0
         </div>
 
@@ -1321,8 +1491,7 @@ button:focus-visible{
 
         <div
             class="resumo-numero"
-            id="qtdClientes"
-        >
+            id="qtdClientes">
             0
         </div>
 
@@ -1341,9 +1510,10 @@ button:focus-visible{
     <button
         class="btn-sair"
         type="button"
-        onclick="sairSistema()"
-    >
+        onclick="sairSistema()">
+
         🚪 Sair do GrillCore
+
     </button>
 
 </div>
@@ -1355,6 +1525,127 @@ button:focus-visible{
 
 </div>
 
+
+</div>
+
+
+<!-- =====================================================
+     MODAL DE USUÁRIOS
+===================================================== -->
+
+<div
+    class="modal-fundo"
+    id="modalUsuarios"
+    onclick="fecharModalFora(event)">
+
+    <div class="modal">
+
+
+        <div class="modal-topo">
+
+            <h2>
+                👤 Usuários e Acessos
+            </h2>
+
+            <button
+                type="button"
+                class="btn-fechar"
+                onclick="fecharUsuarios()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <div class="usuario-logado-box">
+
+            Usuário conectado:
+            <strong id="usuarioAtualModal">
+                -
+            </strong>
+
+        </div>
+
+
+        <div
+            class="lista-usuarios"
+            id="listaUsuarios">
+
+        </div>
+
+
+        <div class="form-usuario">
+
+            <h3 id="tituloFormularioUsuario">
+                ➕ Adicionar usuário
+            </h3>
+
+
+            <div class="campo-modal">
+
+                <label for="novoUsuario">
+                    Usuário
+                </label>
+
+                <input
+                    id="novoUsuario"
+                    type="text"
+                    placeholder="Digite o usuário"
+                    autocomplete="off">
+
+            </div>
+
+
+            <div class="campo-modal">
+
+                <label for="novaSenha">
+                    Senha
+                </label>
+
+                <input
+                    id="novaSenha"
+                    type="password"
+                    placeholder="Digite a senha"
+                    autocomplete="new-password">
+
+            </div>
+
+
+            <div class="acoes-form">
+
+                <button
+                    type="button"
+                    class="btn-modal"
+                    onclick="cancelarEdicaoUsuario()">
+
+                    Limpar
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-modal principal"
+                    onclick="salvarUsuario()">
+
+                    💾 Salvar usuário
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="mensagem-modal"
+                id="mensagemUsuario">
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -1400,7 +1691,7 @@ function lerStorage(chave){
 
 
 /* =====================================================
-   CONVERTER PARA NÚMERO
+   NÚMERO
 ===================================================== */
 
 function numero(valor){
@@ -1410,25 +1701,16 @@ function numero(valor){
         valor === undefined ||
         valor === ""
     ){
-
         return 0;
-
     }
-
 
     if(typeof valor === "number"){
-
-        return isNaN(valor)
-            ? 0
-            : valor;
-
+        return isNaN(valor) ? 0 : valor;
     }
-
 
     let texto =
         String(valor)
         .replace(/[R$\s]/g,"");
-
 
     if(
         texto.includes(".") &&
@@ -1441,7 +1723,6 @@ function numero(valor){
             .replace(",", ".");
 
     }
-
     else if(texto.includes(",")){
 
         texto =
@@ -1449,10 +1730,8 @@ function numero(valor){
 
     }
 
-
     const resultado =
         parseFloat(texto);
-
 
     return isNaN(resultado)
         ? 0
@@ -1462,7 +1741,7 @@ function numero(valor){
 
 
 /* =====================================================
-   FORMATA DINHEIRO
+   DINHEIRO
 ===================================================== */
 
 function dinheiro(valor){
@@ -1480,7 +1759,7 @@ function dinheiro(valor){
 
 
 /* =====================================================
-   VALOR DE VENDA
+   VALOR VENDA
 ===================================================== */
 
 function valorVenda(item){
@@ -1500,7 +1779,7 @@ function valorVenda(item){
 
 
 /* =====================================================
-   VALOR DE ENTRADA
+   VALOR ENTRADA
 ===================================================== */
 
 function valorEntrada(item){
@@ -1519,7 +1798,7 @@ function valorEntrada(item){
 
 
 /* =====================================================
-   VALOR DE DESPESA
+   VALOR DESPESA
 ===================================================== */
 
 function valorDespesa(item){
@@ -1538,7 +1817,7 @@ function valorDespesa(item){
 
 
 /* =====================================================
-   CALCULAR VALOR DO ESTOQUE
+   ESTOQUE
 ===================================================== */
 
 function calcularEstoque(){
@@ -1559,32 +1838,25 @@ function calcularEstoque(){
 
                 const quantidade =
                     numero(
-
                         item.quantidade ??
                         item.qtd ??
                         item.estoque ??
                         0
-
                     );
-
 
                 const custo =
                     numero(
-
                         item.custo ??
                         item.precoCusto ??
                         item.preco ??
                         0
-
                     );
-
 
                 total +=
                     quantidade * custo;
 
             }
         );
-
 
         return total;
 
@@ -1596,25 +1868,19 @@ function calcularEstoque(){
 
             const quantidade =
                 numero(
-
                     produto.estoque ??
                     produto.quantidade ??
                     produto.qtd ??
                     0
-
                 );
-
 
             const custo =
                 numero(
-
                     produto.custo ??
                     produto.precoCusto ??
                     produto.preco ??
                     0
-
                 );
-
 
             total +=
                 quantidade * custo;
@@ -1629,7 +1895,7 @@ function calcularEstoque(){
 
 
 /* =====================================================
-   ATUALIZAR DASHBOARD
+   DASHBOARD
 ===================================================== */
 
 function atualizarDashboard(){
@@ -1650,57 +1916,36 @@ function atualizarDashboard(){
         lerStorage("clientes");
 
 
-    /* VENDAS */
-
     let totalVendas = 0;
 
     vendas.forEach(
         function(item){
-
-            totalVendas +=
-                valorVenda(item);
-
+            totalVendas += valorVenda(item);
         }
     );
 
-
-    /* ENTRADAS */
 
     let totalEntradas = 0;
 
     entradas.forEach(
         function(item){
-
-            totalEntradas +=
-                valorEntrada(item);
-
+            totalEntradas += valorEntrada(item);
         }
     );
 
-
-    /* DESPESAS */
 
     let totalDespesas = 0;
 
     despesas.forEach(
         function(item){
-
-            totalDespesas +=
-                valorDespesa(item);
-
+            totalDespesas += valorDespesa(item);
         }
     );
 
 
-    /* ESTOQUE */
-
     const totalEstoque =
         calcularEstoque();
 
-
-    /*
-       Guardar os valores
-    */
 
     document.getElementById(
         "valorVendas"
@@ -1726,16 +1971,8 @@ function atualizarDashboard(){
         dinheiro(totalDespesas);
 
 
-    /*
-       Aplicar estado atual
-    */
-
     aplicarVisibilidadeTodos();
 
-
-    /*
-       Quantidades
-    */
 
     document.getElementById(
         "qtdPedidos"
@@ -1758,7 +1995,7 @@ function atualizarDashboard(){
 
 
 /* =====================================================
-   APLICAR VISIBILIDADE NOS 4
+   VISIBILIDADE
 ===================================================== */
 
 function aplicarVisibilidadeTodos(){
@@ -1785,11 +2022,9 @@ function aplicarVisibilidadeTodos(){
             const elemento =
                 document.getElementById(id);
 
-
             if(!elemento){
                 return;
             }
-
 
             if(oculto){
 
@@ -1814,7 +2049,7 @@ function aplicarVisibilidadeTodos(){
 
 
 /* =====================================================
-   ALTERAR OS 4 AO MESMO TEMPO
+   ALTERAR VISIBILIDADE
 ===================================================== */
 
 function alternarTodosValores(){
@@ -1825,13 +2060,9 @@ function alternarTodosValores(){
         ) === "true";
 
 
-    const novoEstado =
-        !atual;
-
-
     localStorage.setItem(
         "grillcore_valores_ocultos",
-        novoEstado
+        !atual
     );
 
 
@@ -1841,7 +2072,7 @@ function alternarTodosValores(){
 
 
 /* =====================================================
-   ALTERAR ÍCONE 👁 / 😎
+   ÍCONE 👁 / 😎
 ===================================================== */
 
 function atualizarIconeGeral(oculto){
@@ -1851,7 +2082,6 @@ function atualizarIconeGeral(oculto){
             "btnOlhoGeral"
         );
 
-
     if(!botao){
         return;
     }
@@ -1859,8 +2089,7 @@ function atualizarIconeGeral(oculto){
 
     if(oculto){
 
-        botao.textContent =
-            "😎";
+        botao.textContent = "😎";
 
         botao.setAttribute(
             "aria-label",
@@ -1869,8 +2098,7 @@ function atualizarIconeGeral(oculto){
 
     }else{
 
-        botao.textContent =
-            "👁";
+        botao.textContent = "👁";
 
         botao.setAttribute(
             "aria-label",
@@ -1883,7 +2111,7 @@ function atualizarIconeGeral(oculto){
 
 
 /* =====================================================
-   CARREGAR USUÁRIO
+   USUÁRIO ATUAL
 ===================================================== */
 
 function carregarUsuario(){
@@ -1911,6 +2139,678 @@ function carregarUsuario(){
             "GrillCore";
 
     }
+
+}
+
+
+/* =====================================================
+   SISTEMA DE USUÁRIOS
+===================================================== */
+
+const CHAVE_USUARIOS =
+    "grillcore_usuarios";
+
+let indiceEdicaoUsuario = -1;
+
+
+/* =====================================================
+   OBTER USUÁRIOS
+===================================================== */
+
+function obterUsuarios(){
+
+    try{
+
+        const dados =
+            localStorage.getItem(
+                CHAVE_USUARIOS
+            );
+
+
+        if(dados){
+
+            const usuarios =
+                JSON.parse(dados);
+
+            if(Array.isArray(usuarios)){
+                return usuarios;
+            }
+
+        }
+
+    }catch(erro){
+
+        console.log(
+            "Erro ao carregar usuários:",
+            erro
+        );
+
+    }
+
+
+    /*
+       Criar usuário administrador
+       caso ainda não exista.
+    */
+
+    const padrao = [
+
+        {
+            usuario:"admin",
+            senha:"1234",
+            tipo:"Administrador",
+            protegido:true
+        }
+
+    ];
+
+
+    salvarUsuarios(padrao);
+
+    return padrao;
+
+}
+
+
+/* =====================================================
+   SALVAR USUÁRIOS
+===================================================== */
+
+function salvarUsuarios(usuarios){
+
+    localStorage.setItem(
+        CHAVE_USUARIOS,
+        JSON.stringify(usuarios)
+    );
+
+}
+
+
+/* =====================================================
+   ABRIR USUÁRIOS
+===================================================== */
+
+function abrirUsuarios(){
+
+    const modal =
+        document.getElementById(
+            "modalUsuarios"
+        );
+
+
+    modal.classList.add("ativo");
+
+
+    document.getElementById(
+        "usuarioAtualModal"
+    ).textContent =
+        localStorage.getItem(
+            "grillcore_usuario"
+        ) || "admin";
+
+
+    cancelarEdicaoUsuario();
+
+    renderizarUsuarios();
+
+}
+
+
+/* =====================================================
+   FECHAR
+===================================================== */
+
+function fecharUsuarios(){
+
+    document.getElementById(
+        "modalUsuarios"
+    ).classList.remove("ativo");
+
+}
+
+
+/* =====================================================
+   FECHAR CLICANDO FORA
+===================================================== */
+
+function fecharModalFora(event){
+
+    if(
+        event.target.id ===
+        "modalUsuarios"
+    ){
+
+        fecharUsuarios();
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDERIZAR LISTA
+===================================================== */
+
+function renderizarUsuarios(){
+
+    const lista =
+        document.getElementById(
+            "listaUsuarios"
+        );
+
+
+    const usuarios =
+        obterUsuarios();
+
+
+    lista.innerHTML = "";
+
+
+    usuarios.forEach(
+        function(item,index){
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "usuario-item";
+
+
+            const protegido =
+                item.protegido === true;
+
+
+            div.innerHTML = `
+
+                <div class="usuario-info">
+
+                    <strong>
+                        👤 ${escaparHTML(item.usuario)}
+                    </strong>
+
+                    <span>
+                        ${
+                            protegido
+                            ? "👑 Administrador principal"
+                            : "Usuário do sistema"
+                        }
+                    </span>
+
+                </div>
+
+                <div class="usuario-acoes">
+
+                    <button
+                        type="button"
+                        class="btn-mini editar"
+                        onclick="editarUsuario(${index})"
+                        title="Editar">
+                        ✏️
+                    </button>
+
+                    ${
+                        protegido
+                        ? ""
+                        : `
+                        <button
+                            type="button"
+                            class="btn-mini excluir"
+                            onclick="excluirUsuario(${index})"
+                            title="Excluir">
+                            🗑️
+                        </button>
+                        `
+                    }
+
+                </div>
+
+            `;
+
+
+            lista.appendChild(div);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SEGURANÇA HTML
+===================================================== */
+
+function escaparHTML(texto){
+
+    return String(texto)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   EDITAR USUÁRIO
+===================================================== */
+
+function editarUsuario(index){
+
+    const usuarios =
+        obterUsuarios();
+
+    const item =
+        usuarios[index];
+
+
+    if(!item){
+        return;
+    }
+
+
+    indiceEdicaoUsuario =
+        index;
+
+
+    document.getElementById(
+        "tituloFormularioUsuario"
+    ).textContent =
+        "✏️ Alterar usuário";
+
+
+    document.getElementById(
+        "novoUsuario"
+    ).value =
+        item.usuario;
+
+
+    document.getElementById(
+        "novaSenha"
+    ).value =
+        item.senha;
+
+
+    mostrarMensagem(
+        "Editando o usuário selecionado.",
+        false
+    );
+
+}
+
+
+/* =====================================================
+   CANCELAR EDIÇÃO
+===================================================== */
+
+function cancelarEdicaoUsuario(){
+
+    indiceEdicaoUsuario = -1;
+
+
+    document.getElementById(
+        "tituloFormularioUsuario"
+    ).textContent =
+        "➕ Adicionar usuário";
+
+
+    document.getElementById(
+        "novoUsuario"
+    ).value = "";
+
+
+    document.getElementById(
+        "novaSenha"
+    ).value = "";
+
+
+    esconderMensagem();
+
+}
+
+
+/* =====================================================
+   SALVAR USUÁRIO
+===================================================== */
+
+function salvarUsuario(){
+
+    const campoUsuario =
+        document.getElementById(
+            "novoUsuario"
+        );
+
+
+    const campoSenha =
+        document.getElementById(
+            "novaSenha"
+        );
+
+
+    const usuario =
+        campoUsuario.value.trim();
+
+
+    const senha =
+        campoSenha.value;
+
+
+    if(!usuario){
+
+        mostrarMensagem(
+            "⚠️ Digite o nome do usuário.",
+            true
+        );
+
+        campoUsuario.focus();
+
+        return;
+
+    }
+
+
+    if(!senha){
+
+        mostrarMensagem(
+            "⚠️ Digite uma senha.",
+            true
+        );
+
+        campoSenha.focus();
+
+        return;
+
+    }
+
+
+    if(senha.length < 4){
+
+        mostrarMensagem(
+            "⚠️ A senha precisa ter pelo menos 4 caracteres.",
+            true
+        );
+
+        campoSenha.focus();
+
+        return;
+
+    }
+
+
+    const usuarios =
+        obterUsuarios();
+
+
+    const usuarioNormalizado =
+        usuario.toLowerCase();
+
+
+    const duplicado =
+        usuarios.some(
+            function(item,index){
+
+                return (
+                    index !== indiceEdicaoUsuario &&
+                    String(item.usuario)
+                        .toLowerCase() ===
+                    usuarioNormalizado
+                );
+
+            }
+        );
+
+
+    if(duplicado){
+
+        mostrarMensagem(
+            "❌ Esse usuário já existe.",
+            true
+        );
+
+        return;
+
+    }
+
+
+    if(indiceEdicaoUsuario === -1){
+
+        usuarios.push({
+
+            usuario:usuario,
+
+            senha:senha,
+
+            tipo:"Usuário",
+
+            protegido:false
+
+        });
+
+
+        salvarUsuarios(usuarios);
+
+
+        mostrarMensagem(
+            "✅ Usuário adicionado com sucesso.",
+            false
+        );
+
+
+    }else{
+
+        const antigo =
+            usuarios[indiceEdicaoUsuario];
+
+
+        /*
+           O administrador protegido
+           pode ter o nome alterado,
+           mas continua protegido.
+        */
+
+        antigo.usuario =
+            usuario;
+
+        antigo.senha =
+            senha;
+
+
+        salvarUsuarios(usuarios);
+
+
+        /*
+           Se o usuário atualmente conectado
+           foi alterado, atualizar também.
+        */
+
+        const atual =
+            localStorage.getItem(
+                "grillcore_usuario"
+            );
+
+
+        if(
+            atual === antigo.usuario ||
+            indiceEdicaoUsuario >= 0
+        ){
+
+            /*
+               Atualizamos apenas se
+               for o usuário que está conectado.
+            */
+
+            const usuarioAntigoSalvo =
+                document.getElementById(
+                    "usuarioAtualModal"
+                ).textContent
+                .trim();
+
+
+            if(
+                usuarioAntigoSalvo ===
+                antigo.usuario
+            ){
+
+                localStorage.setItem(
+                    "grillcore_usuario",
+                    antigo.usuario
+                );
+
+            }
+
+        }
+
+
+        carregarUsuario();
+
+
+        mostrarMensagem(
+            "✅ Usuário alterado com sucesso.",
+            false
+        );
+
+    }
+
+
+    renderizarUsuarios();
+
+    setTimeout(
+        function(){
+
+            cancelarEdicaoUsuario();
+
+            renderizarUsuarios();
+
+        },
+        900
+    );
+
+}
+
+
+/* =====================================================
+   EXCLUIR USUÁRIO
+===================================================== */
+
+function excluirUsuario(index){
+
+    const usuarios =
+        obterUsuarios();
+
+
+    const item =
+        usuarios[index];
+
+
+    if(!item){
+        return;
+    }
+
+
+    if(item.protegido === true){
+
+        alert(
+            "🔒 O administrador principal não pode ser excluído."
+        );
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir o usuário \"" +
+            item.usuario +
+            "\"?"
+        );
+
+
+    if(!confirmar){
+        return;
+    }
+
+
+    usuarios.splice(
+        index,
+        1
+    );
+
+
+    salvarUsuarios(usuarios);
+
+
+    renderizarUsuarios();
+
+
+    mostrarMensagem(
+        "🗑️ Usuário excluído.",
+        false
+    );
+
+}
+
+
+/* =====================================================
+   MENSAGEM MODAL
+===================================================== */
+
+function mostrarMensagem(
+    texto,
+    erro
+){
+
+    const elemento =
+        document.getElementById(
+            "mensagemUsuario"
+        );
+
+
+    elemento.textContent =
+        texto;
+
+
+    elemento.classList.add(
+        "ativa"
+    );
+
+
+    if(erro){
+
+        elemento.style.background =
+            "#321409";
+
+        elemento.style.color =
+            "#ffb18c";
+
+    }else{
+
+        elemento.style.background =
+            "#102515";
+
+        elemento.style.color =
+            "#9dffb3";
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCONDER MENSAGEM
+===================================================== */
+
+function esconderMensagem(){
+
+    const elemento =
+        document.getElementById(
+            "mensagemUsuario"
+        );
+
+
+    elemento.classList.remove(
+        "ativa"
+    );
 
 }
 
@@ -1947,13 +2847,15 @@ function sairSistema(){
    INICIAR
 ===================================================== */
 
+obterUsuarios();
+
 carregarUsuario();
 
 atualizarDashboard();
 
 
 /* =====================================================
-   ATUALIZAR AO VOLTAR PARA A TELA
+   ATUALIZAR AO VOLTAR
 ===================================================== */
 
 document.addEventListener(
@@ -1968,6 +2870,26 @@ document.addEventListener(
             carregarUsuario();
 
             atualizarDashboard();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            fecharUsuarios();
 
         }
 
@@ -2010,4 +2932,4 @@ if(
 </script>
 
 </body>
-    </html>
+</html>

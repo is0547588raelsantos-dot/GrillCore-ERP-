@@ -3,652 +3,2907 @@
 
 <head>
 
+<script>
+if(localStorage.getItem("grillcore_login") !== "true"){
+    window.location.replace("login.html");
+}
+</script>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff7300">
+<meta name="description" content="Gestão de clientes — GrillCore ERP">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<title>Clientes — GrillCore ERP</title>
 
-<title>Rocha Forte</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tema-laranja.css">
 
 <style>
 
-/* ==============================
-   CONFIGURAÇÃO
-============================== */
-
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
+}
+
+:root{
+    --laranja:#ff7300;
+    --laranja2:#ff9800;
+    --laranja3:#ff4d00;
+    --preto:#050505;
+    --card:#111;
+    --card2:#181818;
+    --texto:#fff;
+    --cinza:#aaa;
+    --verde:#29d66f;
+    --vermelho:#ff5555;
 }
 
 body{
-    font-family:Arial, sans-serif;
-    background:#f4f4f4;
-    color:#222;
-    padding-bottom:90px;
-}
-
-
-/* ==============================
-   TOPO
-============================== */
-
-.topo{
-
-    background:#111;
-
-    color:white;
-
-    padding:18px;
-
-}
-
-.topo-conteudo{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-}
-
-.logo{
-
-    font-size:21px;
-
-    font-weight:bold;
-
-}
-
-.logo span{
-
-    color:#e50914;
-
-}
-
-.aberto{
-
-    background:#198754;
-
-    padding:6px 10px;
-
-    border-radius:20px;
-
-    font-size:12px;
-
-}
-
-
-/* ==============================
-   BANNER
-============================== */
-
-.banner{
-
-    margin:15px;
-
-    padding:25px 20px;
-
-    min-height:190px;
-
-    border-radius:20px;
-
+    margin:0;
     background:
+        radial-gradient(circle at top,
+        rgba(255,115,0,.10),
+        transparent 35%),
+        linear-gradient(180deg,#090909,#050505);
+    color:#fff;
+}
 
-    linear-gradient(
-        135deg,
-        #111,
-        #333
-    );
+.clientes-page{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:12px 12px 45px;
+}
 
-    color:white;
+/* CABEÇALHO */
 
+.clientes-header{
+    text-align:center;
+    padding:8px 0 25px;
+}
+
+.clientes-header .icone{
+    width:66px;
+    height:66px;
+    margin:0 auto 12px;
     display:flex;
-
-    flex-direction:column;
-
+    align-items:center;
     justify-content:center;
-
+    border-radius:19px;
+    background:linear-gradient(145deg,#ff9800,#ff4d00);
+    border:1px solid rgba(255,255,255,.18);
+    font-size:33px;
+    box-shadow:0 10px 30px rgba(255,115,0,.25);
 }
 
-.banner h1{
-
-    font-size:28px;
-
-    line-height:1.1;
-
-    margin-bottom:10px;
-
+.clientes-header h1{
+    margin:0;
+    color:#fff;
+    font-size:clamp(32px,7vw,46px);
+    line-height:1;
+    font-weight:950;
+    letter-spacing:-1.5px;
 }
 
-.banner p{
+.clientes-header h1::after{
+    content:"";
+    display:block;
+    width:58px;
+    height:4px;
+    margin:12px auto 0;
+    border-radius:10px;
+    background:linear-gradient(90deg,#ff4d00,#ff9800);
+}
 
-    color:#ddd;
-
+.clientes-header p{
+    margin:11px 0 0;
+    color:#929292;
     font-size:14px;
-
-    margin-bottom:18px;
-
+    font-weight:650;
 }
 
-.botao-cardapio{
+/* SEÇÕES */
 
-    border:none;
-
-    background:#e50914;
-
-    color:white;
-
-    font-weight:bold;
-
-    font-size:15px;
-
-    padding:12px 18px;
-
-    border-radius:9px;
-
-    width:max-content;
-
+.clientes-secao{
+    position:relative;
+    background:linear-gradient(145deg,#151515,#0b0b0b);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:21px;
+    padding:20px;
+    margin-bottom:16px;
+    overflow:hidden;
+    box-shadow:0 14px 35px rgba(0,0,0,.38);
 }
 
-
-/* ==============================
-   CATEGORIAS
-============================== */
-
-.titulo{
-
-    font-size:22px;
-
-    padding:5px 15px 12px;
-
+.clientes-secao::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:3px;
+    background:linear-gradient(90deg,transparent,#ff7300,transparent);
 }
 
-.categorias{
+.secao-titulo{
+    margin:0 0 19px;
+    text-align:center;
+    color:#fff;
+    font-size:clamp(20px,5vw,27px);
+    line-height:1.15;
+    font-weight:950;
+}
 
+.secao-titulo::after{
+    content:"";
+    display:block;
+    width:46px;
+    height:3px;
+    margin:9px auto 0;
+    border-radius:10px;
+    background:#ff7300;
+}
+
+/* RESUMO */
+
+.resumo-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+}
+
+.resumo-card{
+    position:relative;
+    min-width:0;
+    min-height:142px;
+    padding:14px 9px;
     display:flex;
-
-    gap:10px;
-
-    overflow-x:auto;
-
-    padding:0 15px 18px;
-
-}
-
-.categorias::-webkit-scrollbar{
-
-    display:none;
-
-}
-
-.categoria{
-
-    flex-shrink:0;
-
-    background:white;
-
-    border:none;
-
-    padding:11px 17px;
-
-    border-radius:25px;
-
-    font-weight:bold;
-
-    box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.08);
-
-}
-
-.categoria.ativa{
-
-    background:#e50914;
-
-    color:white;
-
-}
-
-
-/* ==============================
-   DESTAQUES
-============================== */
-
-.destaques{
-
-    padding:0 15px;
-
-}
-
-.produto{
-
-    background:white;
-
-    border-radius:16px;
-
-    padding:15px;
-
-    margin-bottom:14px;
-
-    display:flex;
-
-    gap:14px;
-
-    box-shadow:
-        0 2px 10px
-        rgba(0,0,0,.06);
-
-}
-
-.produto-imagem{
-
-    width:100px;
-
-    height:100px;
-
-    border-radius:12px;
-
-    background:#222;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:42px;
-
-    flex-shrink:0;
-
-}
-
-.produto-info{
-
-    flex:1;
-
-}
-
-.produto-info h3{
-
-    font-size:17px;
-
-    margin-bottom:6px;
-
-}
-
-.produto-info p{
-
-    font-size:12px;
-
-    color:#777;
-
-    line-height:1.4;
-
-    margin-bottom:9px;
-
-}
-
-.preco{
-
-    font-size:18px;
-
-    font-weight:bold;
-
-}
-
-
-/* ==============================
-   CARRINHO
-============================== */
-
-.carrinho{
-
-    position:fixed;
-
-    bottom:15px;
-
-    left:15px;
-
-    right:15px;
-
-    background:#111;
-
-    color:white;
-
-    border-radius:16px;
-
-    padding:14px 18px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.25);
-
-}
-
-.carrinho-info{
-
-    display:flex;
-
     flex-direction:column;
-
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    border-radius:18px;
+    background:linear-gradient(145deg,#ff9800,#ff7300 45%,#ff4d00);
+    border:1px solid rgba(255,255,255,.18);
+    color:#fff;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(255,115,0,.17);
 }
 
-.carrinho-info small{
-
-    color:#aaa;
-
+.resumo-icone{
+    position:relative;
+    z-index:2;
+    font-size:24px;
+    line-height:1;
+    margin-bottom:7px;
 }
 
-.carrinho-total{
-
-    font-size:18px;
-
-    font-weight:bold;
-
+.resumo-label{
+    position:relative;
+    z-index:2;
+    width:100%;
+    color:#fff;
+    font-size:11px;
+    line-height:1.2;
+    font-weight:900;
+    text-transform:uppercase;
 }
 
-.botao-carrinho{
+.resumo-numero{
+    position:relative;
+    z-index:2;
+    display:block;
+    width:100%;
+    margin-top:7px;
+    color:#fff;
+    font-size:29px !important;
+    line-height:1;
+    font-weight:950;
+    white-space:nowrap;
+    text-align:center;
+    text-shadow:0 3px 8px rgba(0,0,0,.22);
+}
 
+.resumo-numero.valor{
+    font-size:20px !important;
+}
+
+/* FORM */
+
+.formulario{
+    display:none;
+    animation:aparecer .2s ease;
+}
+
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(-8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.formulario label{
+    display:block;
+    margin:15px 0 7px;
+    color:#ddd;
+    font-size:13px;
+    font-weight:850;
+}
+
+.formulario input,
+.formulario textarea{
+    width:100%;
+}
+
+.formulario input:focus,
+.formulario textarea:focus,
+.busca-input:focus{
+    border-color:#ff7300 !important;
+    box-shadow:0 0 0 3px rgba(255,115,0,.12);
+}
+
+.botao-principal{
+    width:100%;
+    min-height:58px;
+    margin-bottom:14px;
     border:none;
+    border-radius:16px;
+    background:linear-gradient(135deg,#ff9800,#ff4d00);
+    color:#fff;
+    font-size:15px;
+    font-weight:950;
+    cursor:pointer;
+    box-shadow:0 10px 26px rgba(255,115,0,.20);
+}
 
-    background:#e50914;
+.botao-principal:active{
+    transform:scale(.98);
+}
 
-    color:white;
+.botao-cancelar{
+    width:100%;
+    min-height:52px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:15px;
+    background:#111;
+    color:#aaa;
+    font-size:13px;
+    font-weight:900;
+}
 
-    padding:11px 16px;
+/* BUSCA */
 
-    border-radius:9px;
+.busca-area{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
 
-    font-weight:bold;
+.busca-label{
+    color:#ff9800;
+    font-size:11px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:9px;
+}
 
+.busca-input{
+    width:100%;
+    max-width:650px;
+    min-height:54px;
+    padding:0 16px;
+    text-align:center;
+    border-radius:15px !important;
+    background:#080808 !important;
+}
+
+/* LISTA */
+
+.lista-titulo{
+    margin:24px 0 14px;
+    text-align:center;
+    color:#fff;
+    font-size:22px;
+    font-weight:950;
+}
+
+.lista-titulo::after{
+    content:"";
+    display:block;
+    width:42px;
+    height:3px;
+    margin:8px auto 0;
+    border-radius:10px;
+    background:#ff7300;
+}
+
+/* CLIENTE */
+
+.cliente{
+    position:relative;
+    background:linear-gradient(145deg,#181818,#0c0c0c);
+    border:1px solid rgba(255,115,0,.22);
+    border-radius:20px;
+    padding:19px;
+    margin-bottom:14px;
+    box-shadow:0 10px 28px rgba(0,0,0,.38);
+    overflow:hidden;
+}
+
+.cliente::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:4px;
+    height:100%;
+    background:linear-gradient(180deg,#ff9800,#ff4d00);
+}
+
+.cliente-topo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.cliente-avatar{
+    flex:0 0 48px;
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:linear-gradient(145deg,#ff9800,#ff4d00);
+    font-size:24px;
+}
+
+.cliente-titulo{
+    min-width:0;
+    flex:1;
+}
+
+.cliente h3{
+    margin:0;
+    color:#fff;
+    font-size:19px;
+    line-height:1.15;
+    font-weight:950;
+    word-break:break-word;
+}
+
+.cliente-status{
+    display:inline-block;
+    margin-top:5px;
+    color:#ff9800;
+    font-size:10px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+/* INFO */
+
+.cliente-info{
+    display:grid;
+    gap:8px;
+}
+
+.cliente-info p{
+    margin:0;
+    padding:9px 10px;
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+    color:#aaa;
+    font-size:13px;
+    line-height:1.45;
+}
+
+.cliente-info strong{
+    color:#ddd;
+}
+
+/* ESTATÍSTICAS */
+
+.cliente hr{
+    border:0;
+    border-top:1px solid rgba(255,115,0,.15);
+    margin:16px 0;
+}
+
+.estatisticas{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+}
+
+.estatistica{
+    min-width:0;
+    padding:12px 6px;
+    text-align:center;
+    border-radius:13px;
+    background:#101010;
+    border:1px solid rgba(255,255,255,.07);
+    color:#999;
+    font-size:9px;
+    line-height:1.2;
+    font-weight:800;
+}
+
+.estatistica strong{
+    display:block;
+    margin-top:6px;
+    color:#ff9800;
+    font-size:15px;
+    line-height:1.05;
+    font-weight:950;
+    white-space:nowrap;
+}
+
+.estatistica strong.verde{
+    color:#29d66f;
+}
+
+/* AÇÕES */
+
+.cliente-acoes{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+    margin-top:15px;
+}
+
+.cliente-acoes button{
+    min-height:47px;
+    border-radius:13px;
+    font-size:11px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.acao-whatsapp{
+    background:rgba(41,214,111,.08);
+    border:1px solid rgba(41,214,111,.35);
+    color:#29d66f;
+}
+
+.acao-historico{
+    background:rgba(255,115,0,.09);
+    border:1px solid rgba(255,115,0,.35);
+    color:#ff9800;
+}
+
+.acao-editar{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.15);
+    color:#ddd;
+}
+
+.acao-excluir{
+    background:rgba(255,77,77,.05);
+    border:1px solid rgba(255,77,77,.28);
+    color:#ff7777;
+}
+
+/* VAZIO */
+
+.vazio{
+    text-align:center;
+    padding:35px 15px;
+    color:#777;
+    font-size:14px;
+}
+
+.vazio-icon{
+    display:block;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+/* VOLTAR */
+
+.voltar-clientes{
+    width:100%;
+    min-height:55px;
+    margin-top:4px;
+    border:1px solid rgba(255,115,0,.25);
+    border-radius:15px;
+    background:#111;
+    color:#ddd;
+    font-size:13px;
+    font-weight:900;
+}
+
+/* MODAL */
+
+.modal-fundo{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    padding:10px;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(5px);
+}
+
+.modal{
+    width:100%;
+    max-width:650px;
+    max-height:92vh;
+    overflow-y:auto;
+    background:linear-gradient(145deg,#181818,#080808);
+    border:1px solid rgba(255,115,0,.35);
+    border-radius:24px 24px 14px 14px;
+    padding:20px;
+    box-shadow:0 20px 70px rgba(0,0,0,.7);
+    animation:subir .22s ease;
+}
+
+@keyframes subir{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.modal-cabecalho{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.modal-avatar{
+    width:56px;
+    height:56px;
+    flex:0 0 56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:17px;
+    background:linear-gradient(145deg,#ff9800,#ff4d00);
+    font-size:28px;
+}
+
+.modal-titulo{
+    flex:1;
+    min-width:0;
+}
+
+.modal-titulo h2{
+    margin:0;
+    font-size:23px;
+    font-weight:950;
+    word-break:break-word;
+}
+
+.modal-titulo span{
+    display:block;
+    margin-top:4px;
+    color:#ff9800;
+    font-size:10px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.fechar-modal{
+    width:42px;
+    height:42px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;
+    background:#111;
+    color:#fff;
+    font-size:18px;
+}
+
+.perfil-acoes{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.perfil-acoes button{
+    min-height:48px;
+    border-radius:12px;
+    font-size:10px;
+    font-weight:900;
+}
+
+.perfil-whats{
+    background:rgba(41,214,111,.09);
+    border:1px solid rgba(41,214,111,.3);
+    color:#29d66f;
+}
+
+.perfil-mapa{
+    background:rgba(255,115,0,.09);
+    border:1px solid rgba(255,115,0,.3);
+    color:#ff9800;
+}
+
+.perfil-copiar{
+    background:#111;
+    border:1px solid rgba(255,255,255,.12);
+    color:#ddd;
+}
+
+.perfil-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.perfil-card{
+    padding:13px 6px;
+    text-align:center;
+    border-radius:14px;
+    background:#101010;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.perfil-card span{
+    display:block;
+    color:#777;
+    font-size:9px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.perfil-card strong{
+    display:block;
+    margin-top:6px;
+    color:#ff9800;
+    font-size:15px;
+    font-weight:950;
+    white-space:nowrap;
+}
+
+.perfil-bloco{
+    margin-bottom:14px;
+    padding:14px;
+    border-radius:15px;
+    background:#101010;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.perfil-bloco-titulo{
+    margin-bottom:8px;
+    color:#ff9800;
+    font-size:11px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.perfil-bloco-conteudo{
+    color:#ccc;
+    font-size:13px;
+    line-height:1.5;
+    word-break:break-word;
+}
+
+/* HISTÓRICO */
+
+.pedido-historico{
+    padding:13px;
+    margin-bottom:9px;
+    border-radius:14px;
+    background:#0d0d0d;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.pedido-topo{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+}
+
+.pedido-data{
+    color:#aaa;
+    font-size:11px;
+}
+
+.pedido-valor{
+    color:#29d66f;
+    font-size:14px;
+    font-weight:950;
+}
+
+.pedido-itens{
+    margin-top:8px;
+    color:#ddd;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.pedido-status{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 8px;
+    border-radius:20px;
+    background:rgba(255,115,0,.1);
+    color:#ff9800;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:850px){
+    .resumo-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:600px){
+
+    .clientes-page{
+        padding:8px 8px 35px;
+    }
+
+    .clientes-header .icone{
+        width:58px;
+        height:58px;
+        font-size:29px;
+    }
+
+    .clientes-header h1{
+        font-size:34px;
+    }
+
+    .clientes-header p{
+        font-size:12px;
+    }
+
+    .clientes-secao{
+        padding:17px 12px;
+        border-radius:18px;
+    }
+
+    .resumo-grid{
+        gap:9px;
+    }
+
+    .resumo-card{
+        min-height:120px;
+        padding:12px 5px;
+        border-radius:15px;
+    }
+
+    .resumo-icone{
+        font-size:21px;
+    }
+
+    .resumo-label{
+        font-size:8.5px;
+    }
+
+    .resumo-numero{
+        font-size:25px !important;
+    }
+
+    .resumo-numero.valor{
+        font-size:16px !important;
+    }
+
+    .cliente{
+        padding:16px 13px;
+    }
+
+    .cliente h3{
+        font-size:18px;
+    }
+
+    .cliente-info p{
+        font-size:12px;
+    }
+
+    .estatistica{
+        padding:11px 4px;
+        font-size:8.5px;
+    }
+
+    .estatistica strong{
+        font-size:13px;
+    }
+
+    .cliente-acoes{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .modal{
+        padding:17px;
+    }
+
+    .perfil-grid{
+        gap:6px;
+    }
+
+    .perfil-card strong{
+        font-size:13px;
+    }
+
+}
+
+@media(max-width:380px){
+
+    .resumo-grid{
+        gap:7px;
+    }
+
+    .resumo-card{
+        min-height:113px;
+    }
+
+    .resumo-numero{
+        font-size:23px !important;
+    }
+
+    .resumo-numero.valor{
+        font-size:14px !important;
+    }
+
+    .cliente-acoes{
+        grid-template-columns:1fr;
+    }
+
+    .perfil-acoes{
+        grid-template-columns:1fr;
+    }
+
+    .perfil-grid{
+        grid-template-columns:1fr;
+    }
 }
 
 </style>
 
 </head>
 
-
 <body>
 
+<div class="container clientes-page">
 
-<!-- ==============================
-     TOPO
-============================== -->
+<header class="clientes-header">
 
-<header class="topo">
+    <div class="icone">👥</div>
 
-    <div class="topo-conteudo">
+    <h1>Clientes</h1>
 
-        <div class="logo">
-
-            ROCHA
-            <span>FORTE</span>
-
-        </div>
-
-        <div class="aberto">
-
-            ● Aberto
-
-        </div>
-
-    </div>
+    <p>Gestão profissional da sua base de clientes</p>
 
 </header>
 
 
-<!-- ==============================
-     BANNER
-============================== -->
+<!-- RESUMO -->
 
-<section class="banner">
+<section class="clientes-secao">
 
-    <h1>
+    <h2 class="secao-titulo">📊 Resumo de Clientes</h2>
 
-        Seu hambúrguer
-        <br>
-        do seu jeito! 🍔
+    <div class="resumo-grid">
 
-    </h1>
+        <div class="resumo-card">
+            <span class="resumo-icone">👥</span>
+            <span class="resumo-label">Clientes cadastrados</span>
+            <strong id="totalClientes" class="resumo-numero">0</strong>
+        </div>
 
-    <p>
+        <div class="resumo-card">
+            <span class="resumo-icone">🧾</span>
+            <span class="resumo-label">Total de pedidos</span>
+            <strong id="totalPedidos" class="resumo-numero">0</strong>
+        </div>
 
-        Hambúrguer artesanal,
-        porções caprichadas
-        e muito sabor.
+        <div class="resumo-card">
+            <span class="resumo-icone">💰</span>
+            <span class="resumo-label">Faturamento</span>
+            <strong id="faturamentoClientes" class="resumo-numero valor">R$ 0,00</strong>
+        </div>
 
-    </p>
+        <div class="resumo-card">
+            <span class="resumo-icone">📈</span>
+            <span class="resumo-label">Ticket médio</span>
+            <strong id="ticketMedioClientes" class="resumo-numero valor">R$ 0,00</strong>
+        </div>
 
-    <button
-        class="botao-cardapio"
-        onclick="mostrarCardapio()">
+    </div>
 
-        Ver cardápio
+</section>
 
+
+<!-- NOVO CLIENTE -->
+
+<button class="botao-principal" onclick="mostrarFormulario()">
+    ➕ &nbsp; NOVO CLIENTE
+</button>
+
+
+<!-- FORMULÁRIO -->
+
+<section id="formularioCliente" class="clientes-secao formulario">
+
+    <h2 id="tituloFormulario" class="secao-titulo">
+        ➕ Cadastrar Cliente
+    </h2>
+
+    <input type="hidden" id="clienteId">
+
+    <label>👤 Nome completo</label>
+
+    <input
+        type="text"
+        id="clienteNome"
+        maxlength="100"
+        autocomplete="name"
+        placeholder="Digite o nome do cliente">
+
+    <label>📱 Telefone / WhatsApp</label>
+
+    <input
+        type="tel"
+        id="clienteTelefone"
+        maxlength="20"
+        autocomplete="tel"
+        placeholder="(00) 00000-0000">
+
+    <label>🏠 Endereço</label>
+
+    <input
+        type="text"
+        id="clienteEndereco"
+        maxlength="200"
+        autocomplete="street-address"
+        placeholder="Rua, número, bairro">
+
+    <label>📝 Observações</label>
+
+    <textarea
+        id="clienteObservacoes"
+        maxlength="500"
+        rows="4"
+        placeholder="Preferências, observações ou informações importantes..."></textarea>
+
+    <button class="botao-principal" onclick="salvarCliente()">
+        💾 &nbsp; SALVAR CLIENTE
+    </button>
+
+    <button class="botao-cancelar" onclick="cancelarFormulario()">
+        ❌ &nbsp; CANCELAR
     </button>
 
 </section>
 
 
-<!-- ==============================
-     CATEGORIAS
-============================== -->
+<!-- BUSCA -->
 
-<h2 class="titulo">
+<section class="clientes-secao">
 
-    O que você quer hoje?
+    <h2 class="secao-titulo">🔎 Buscar Cliente</h2>
 
+    <div class="busca-area">
+
+        <div class="busca-label">
+            Nome ou telefone
+        </div>
+
+        <input
+            type="search"
+            id="buscaCliente"
+            class="busca-input"
+            autocomplete="off"
+            placeholder="🔎 Digite para pesquisar..."
+            oninput="mostrarClientes()">
+
+    </div>
+
+</section>
+
+
+<h2 class="lista-titulo">
+    📋 Clientes cadastrados
 </h2>
 
 
-<div class="categorias">
+<div id="listaClientes">
 
-    <button class="categoria ativa">
+    <div class="clientes-secao">
 
-        🍔 Hambúrgueres
+        <p class="vazio">
+            <span class="vazio-icon">⏳</span>
+            Carregando clientes...
+        </p>
 
-    </button>
-
-    <button class="categoria">
-
-        🍟 Porções
-
-    </button>
-
-    <button class="categoria">
-
-        🥤 Bebidas
-
-    </button>
-
-    <button class="categoria">
-
-        🔥 Combos
-
-    </button>
+    </div>
 
 </div>
 
 
-<!-- ==============================
-     DESTAQUES
-============================== -->
+<button
+    class="voltar-clientes"
+    onclick="window.location.href='index.html'">
 
-<section
-    class="destaques"
-    id="cardapio">
+    🏠 &nbsp; VOLTAR AO INÍCIO
 
-    <h2 class="titulo">
+</button>
 
-        🔥 Mais pedidos
-
-    </h2>
+</div>
 
 
-    <div class="produto">
+<!-- =====================================================
+     MODAL PERFIL
+===================================================== -->
 
-        <div class="produto-imagem">
+<div
+    id="modalPerfil"
+    class="modal-fundo"
+    onclick="fecharModalFora(event)">
 
-            🍔
+    <div class="modal">
+
+        <div class="modal-cabecalho">
+
+            <div class="modal-avatar">
+                👤
+            </div>
+
+            <div class="modal-titulo">
+
+                <h2 id="perfilNome">
+                    Cliente
+                </h2>
+
+                <span id="perfilStatus">
+                    Cliente
+                </span>
+
+            </div>
+
+            <button
+                class="fechar-modal"
+                onclick="fecharModal()">
+
+                ✕
+
+            </button>
 
         </div>
 
-        <div class="produto-info">
 
-            <h3>
+        <div class="perfil-acoes">
 
-                X Prensado
+            <button
+                class="perfil-whats"
+                id="perfilWhatsapp">
 
-            </h3>
+                📱 WHATSAPP
 
-            <p>
+            </button>
 
-                Hambúrguer artesanal
-                com queijo e ingredientes
-                selecionados.
+            <button
+                class="perfil-mapa"
+                id="perfilMapa">
 
-            </p>
+                📍 MAPA
 
-            <div class="preco">
+            </button>
 
-                R$ 30,00
+            <button
+                class="perfil-copiar"
+                id="perfilCopiar">
+
+                📋 COPIAR
+
+            </button>
+
+        </div>
+
+
+        <div class="perfil-grid">
+
+            <div class="perfil-card">
+
+                <span>Pedidos</span>
+
+                <strong id="perfilPedidos">
+                    0
+                </strong>
+
+            </div>
+
+            <div class="perfil-card">
+
+                <span>Total gasto</span>
+
+                <strong id="perfilTotal">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+            <div class="perfil-card">
+
+                <span>Ticket médio</span>
+
+                <strong id="perfilTicket">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="perfil-bloco">
+
+            <div class="perfil-bloco-titulo">
+                📱 Telefone
+            </div>
+
+            <div
+                id="perfilTelefone"
+                class="perfil-bloco-conteudo">
+
+                Não informado
+
+            </div>
+
+        </div>
+
+
+        <div class="perfil-bloco">
+
+            <div class="perfil-bloco-titulo">
+                🏠 Endereço
+            </div>
+
+            <div
+                id="perfilEndereco"
+                class="perfil-bloco-conteudo">
+
+                Não informado
+
+            </div>
+
+        </div>
+
+
+        <div class="perfil-bloco">
+
+            <div class="perfil-bloco-titulo">
+                📝 Observações
+            </div>
+
+            <div
+                id="perfilObservacoes"
+                class="perfil-bloco-conteudo">
+
+                Nenhuma
+
+            </div>
+
+        </div>
+
+
+        <div class="perfil-bloco">
+
+            <div class="perfil-bloco-titulo">
+                🕒 Último pedido
+            </div>
+
+            <div
+                id="perfilUltimoPedido"
+                class="perfil-bloco-conteudo">
+
+                Nenhum pedido encontrado.
+
+            </div>
+
+        </div>
+
+
+        <div class="perfil-bloco">
+
+            <div class="perfil-bloco-titulo">
+                🧾 Histórico de pedidos
+            </div>
+
+            <div id="perfilHistorico">
+
+                Nenhum pedido encontrado.
 
             </div>
 
         </div>
 
     </div>
-
-
-    <div class="produto">
-
-        <div class="produto-imagem">
-
-            🍔
-
-        </div>
-
-        <div class="produto-info">
-
-            <h3>
-
-                Carga Pesada
-
-            </h3>
-
-            <p>
-
-                Um hambúrguer grande,
-                recheado e preparado
-                para matar a fome.
-
-            </p>
-
-            <div class="preco">
-
-                R$ 38,00
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="produto">
-
-        <div class="produto-imagem">
-
-            🍍
-
-        </div>
-
-        <div class="produto-info">
-
-            <h3>
-
-                Rocha Tropical
-
-            </h3>
-
-            <p>
-
-                Hambúrguer artesanal
-                com uma combinação
-                tropical especial.
-
-            </p>
-
-            <div class="preco">
-
-                R$ 36,00
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==============================
-     CARRINHO
-============================== -->
-
-<div class="carrinho">
-
-    <div class="carrinho-info">
-
-        <small>
-
-            Seu pedido
-
-        </small>
-
-        <span class="carrinho-total">
-
-            R$ 0,00
-
-        </span>
-
-    </div>
-
-    <button class="botao-carrinho">
-
-        🛒 Carrinho
-
-    </button>
 
 </div>
 
 
 <script>
 
-function mostrarCardapio(){
+/* =====================================================
+   CLIENTES
+===================================================== */
 
-    document
-    .getElementById("cardapio")
-    .scrollIntoView({
+function pegarClientes(){
 
-        behavior:"smooth"
+    try{
 
+        const dados =
+            JSON.parse(
+                localStorage.getItem("clientes")
+            );
+
+        return Array.isArray(dados) ? dados : [];
+
+    }catch(e){
+
+        return [];
+
+    }
+
+}
+
+
+function salvarClientes(clientes){
+
+    try{
+
+        localStorage.setItem(
+            "clientes",
+            JSON.stringify(clientes)
+        );
+
+        return true;
+
+    }catch(e){
+
+        console.error(e);
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   VENDAS
+===================================================== */
+
+function pegarVendas(){
+
+    try{
+
+        const dados =
+            JSON.parse(
+                localStorage.getItem("vendas")
+            );
+
+        return Array.isArray(dados) ? dados : [];
+
+    }catch(e){
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   DINHEIRO
+===================================================== */
+
+function valorNumericoSeguro(valor){
+
+    if(
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ){
+
+        return 0;
+
+    }
+
+    if(typeof valor === "number"){
+
+        return Number.isFinite(valor) ? valor : 0;
+
+    }
+
+    let texto =
+        String(valor)
+        .trim()
+        .replace(/R\$/gi,"")
+        .replace(/\s/g,"");
+
+    if(!texto){
+
+        return 0;
+
+    }
+
+    if(texto.includes(",")){
+
+        texto = texto.replace(/\./g,"");
+        texto = texto.replace(",", ".");
+
+    }
+
+    texto =
+        texto.replace(
+            /[^0-9.-]/g,
+            ""
+        );
+
+    const numero = Number(texto);
+
+    return Number.isFinite(numero) ? numero : 0;
+
+}
+
+
+function dinheiro(valor){
+
+    return valorNumericoSeguro(valor)
+        .toLocaleString(
+            "pt-BR",
+            {
+                style:"currency",
+                currency:"BRL"
+            }
+        );
+
+}
+
+
+/* =====================================================
+   NORMALIZAR
+===================================================== */
+
+function normalizar(texto){
+
+    return String(texto ?? "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"");
+
+}
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escapar(texto){
+
+    return String(texto ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   ID
+===================================================== */
+
+function gerarIdCliente(){
+
+    return Date.now() +
+        Math.floor(Math.random() * 1000);
+
+}
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+function dataBonita(valor){
+
+    if(!valor){
+
+        return "Data não informada";
+
+    }
+
+    const data = new Date(valor);
+
+    if(Number.isNaN(data.getTime())){
+
+        return String(valor);
+
+    }
+
+    return data.toLocaleString(
+        "pt-BR",
+        {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TELEFONE
+===================================================== */
+
+function limparTelefone(telefone){
+
+    return String(telefone ?? "")
+        .replace(/\D/g,"");
+
+}
+
+
+function telefoneWhatsApp(telefone){
+
+    let numero =
+        limparTelefone(telefone);
+
+    if(!numero){
+
+        return "";
+
+    }
+
+    /*
+       Brasil:
+       Se o número não começar com 55,
+       adicionamos o código do país.
+    */
+
+    if(!numero.startsWith("55")){
+
+        numero = "55" + numero;
+
+    }
+
+    return numero;
+
+}
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+function abrirWhatsApp(telefone,nome){
+
+    const numero =
+        telefoneWhatsApp(telefone);
+
+    if(!numero){
+
+        alert(
+            "⚠️ Este cliente não possui telefone cadastrado."
+        );
+
+        return;
+
+    }
+
+    const mensagem =
+        "Olá, " +
+        (nome || "cliente") +
+        "! 👋\n\n" +
+        "Aqui é da GrillCore. 🍔";
+
+    const url =
+        "https://wa.me/" +
+        numero +
+        "?text=" +
+        encodeURIComponent(mensagem);
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   MAPA
+===================================================== */
+
+function abrirMapa(endereco){
+
+    if(!endereco){
+
+        alert(
+            "⚠️ Este cliente não possui endereço cadastrado."
+        );
+
+        return;
+
+    }
+
+    const url =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(endereco);
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   COPIAR
+===================================================== */
+
+function copiarTelefone(telefone){
+
+    if(!telefone){
+
+        alert(
+            "⚠️ Telefone não informado."
+        );
+
+        return;
+
+    }
+
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
+
+        navigator.clipboard
+            .writeText(telefone)
+            .then(function(){
+
+                alert(
+                    "✅ Telefone copiado!"
+                );
+
+            })
+            .catch(function(){
+
+                alert(
+                    "📋 Telefone: " +
+                    telefone
+                );
+
+            });
+
+    }else{
+
+        alert(
+            "📋 Telefone: " +
+            telefone
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+function mostrarFormulario(){
+
+    const formulario =
+        document.getElementById(
+            "formularioCliente"
+        );
+
+    formulario.style.display =
+        "block";
+
+    document.getElementById(
+        "tituloFormulario"
+    ).innerText =
+        "➕ Cadastrar Cliente";
+
+    limparFormulario();
+
+    formulario.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+    setTimeout(function(){
+
+        document
+            .getElementById("clienteNome")
+            .focus();
+
+    },250);
+
+}
+
+
+function cancelarFormulario(){
+
+    document.getElementById(
+        "formularioCliente"
+    ).style.display =
+        "none";
+
+    limparFormulario();
+
+}
+
+
+function limparFormulario(){
+
+    document.getElementById(
+        "clienteId"
+    ).value = "";
+
+    document.getElementById(
+        "clienteNome"
+    ).value = "";
+
+    document.getElementById(
+        "clienteTelefone"
+    ).value = "";
+
+    document.getElementById(
+        "clienteEndereco"
+    ).value = "";
+
+    document.getElementById(
+        "clienteObservacoes"
+    ).value = "";
+
+}
+
+
+/* =====================================================
+   SALVAR
+===================================================== */
+
+function salvarCliente(){
+
+    const id =
+        document.getElementById(
+            "clienteId"
+        ).value;
+
+    const nome =
+        document.getElementById(
+            "clienteNome"
+        ).value.trim();
+
+    const telefone =
+        document.getElementById(
+            "clienteTelefone"
+        ).value.trim();
+
+    const endereco =
+        document.getElementById(
+            "clienteEndereco"
+        ).value.trim();
+
+    const observacoes =
+        document.getElementById(
+            "clienteObservacoes"
+        ).value.trim();
+
+    if(!nome){
+
+        alert(
+            "⚠️ Informe o nome do cliente."
+        );
+
+        document
+            .getElementById("clienteNome")
+            .focus();
+
+        return;
+
+    }
+
+    let clientes =
+        pegarClientes();
+
+
+    /* EDIÇÃO */
+
+    if(id){
+
+        const indice =
+            clientes.findIndex(function(cliente){
+
+                return Number(cliente.id) === Number(id);
+
+            });
+
+        if(indice === -1){
+
+            alert(
+                "❌ Cliente não encontrado."
+            );
+
+            return;
+
+        }
+
+        clientes[indice] = {
+
+            ...clientes[indice],
+
+            nome,
+            telefone,
+            endereco,
+            observacoes,
+
+            atualizadoEm:
+                new Date().toISOString()
+
+        };
+
+    }
+
+
+    /* NOVO */
+
+    else{
+
+        const nomeNormalizado =
+            normalizar(nome);
+
+        const telefoneNormalizado =
+            normalizar(telefone);
+
+        const duplicado =
+            clientes.find(function(cliente){
+
+                const mesmoNome =
+                    nomeNormalizado &&
+                    normalizar(cliente.nome) ===
+                    nomeNormalizado;
+
+                const mesmoTelefone =
+                    telefoneNormalizado &&
+                    normalizar(cliente.telefone) ===
+                    telefoneNormalizado;
+
+                return mesmoNome || mesmoTelefone;
+
+            });
+
+        if(duplicado){
+
+            const confirmar =
+                confirm(
+                    "⚠️ Já existe um cliente parecido cadastrado.\n\n" +
+                    "Nome: " +
+                    (duplicado.nome || "Não informado") +
+                    "\nTelefone: " +
+                    (duplicado.telefone || "Não informado") +
+                    "\n\nDeseja cadastrar mesmo assim?"
+                );
+
+            if(!confirmar){
+
+                return;
+
+            }
+
+        }
+
+        const agora =
+            new Date().toISOString();
+
+        clientes.push({
+
+            id:gerarIdCliente(),
+
+            nome,
+            telefone,
+            endereco,
+            observacoes,
+
+            criadoEm:agora,
+            atualizadoEm:agora
+
+        });
+
+    }
+
+    if(!salvarClientes(clientes)){
+
+        alert(
+            "❌ Não foi possível salvar o cliente."
+        );
+
+        return;
+
+    }
+
+    cancelarFormulario();
+
+    atualizarResumo();
+
+    mostrarClientes();
+
+    alert(
+        id
+        ? "✅ Cliente atualizado com sucesso!"
+        : "✅ Cliente cadastrado com sucesso!"
+    );
+
+}
+
+
+/* =====================================================
+   EDITAR
+===================================================== */
+
+function editarCliente(id){
+
+    const cliente =
+        pegarClientes().find(function(item){
+
+            return Number(item.id) === Number(id);
+
+        });
+
+    if(!cliente){
+
+        alert(
+            "❌ Cliente não encontrado."
+        );
+
+        return;
+
+    }
+
+    document.getElementById(
+        "formularioCliente"
+    ).style.display =
+        "block";
+
+    document.getElementById(
+        "tituloFormulario"
+    ).innerText =
+        "✏️ Editar Cliente";
+
+    document.getElementById(
+        "clienteId"
+    ).value =
+        cliente.id;
+
+    document.getElementById(
+        "clienteNome"
+    ).value =
+        cliente.nome || "";
+
+    document.getElementById(
+        "clienteTelefone"
+    ).value =
+        cliente.telefone || "";
+
+    document.getElementById(
+        "clienteEndereco"
+    ).value =
+        cliente.endereco || "";
+
+    document.getElementById(
+        "clienteObservacoes"
+    ).value =
+        cliente.observacoes || "";
+
+    document.getElementById(
+        "formularioCliente"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
     });
 
 }
 
+
+/* =====================================================
+   EXCLUIR
+===================================================== */
+
+function excluirCliente(id){
+
+    let clientes =
+        pegarClientes();
+
+    const cliente =
+        clientes.find(function(item){
+
+            return Number(item.id) === Number(id);
+
+        });
+
+    if(!cliente){
+
+        return;
+
+    }
+
+    const confirmar =
+        confirm(
+            "🗑️ EXCLUIR CLIENTE?\n\n" +
+            "Cliente: " +
+            (cliente.nome || "Não informado") +
+            "\n\nO histórico de vendas NÃO será apagado."
+        );
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+    clientes =
+        clientes.filter(function(item){
+
+            return Number(item.id) !== Number(id);
+
+        });
+
+    if(!salvarClientes(clientes)){
+
+        alert(
+            "❌ Não foi possível excluir o cliente."
+        );
+
+        return;
+
+    }
+
+    atualizarResumo();
+
+    mostrarClientes();
+
+    alert(
+        "✅ Cliente excluído com sucesso."
+    );
+
+}
+
+
+/* =====================================================
+   VENDAS DO CLIENTE
+===================================================== */
+
+function vendasDoCliente(cliente){
+
+    const vendas =
+        pegarVendas();
+
+    const idCliente =
+        Number(cliente.id);
+
+    const nomeCliente =
+        normalizar(cliente.nome);
+
+    const telefoneCliente =
+        normalizar(cliente.telefone);
+
+    return vendas
+        .filter(function(venda){
+
+            const status =
+                normalizar(venda.status);
+
+            if(
+                status === "cancelado" ||
+                status === "cancelada"
+            ){
+
+                return false;
+
+            }
+
+            const idVenda =
+                Number(venda.clienteId);
+
+            if(
+                idVenda &&
+                idCliente &&
+                idVenda === idCliente
+            ){
+
+                return true;
+
+            }
+
+            const nomeVenda =
+                normalizar(venda.cliente);
+
+            if(
+                nomeVenda &&
+                nomeCliente &&
+                nomeVenda === nomeCliente
+            ){
+
+                return true;
+
+            }
+
+            const telefoneVenda =
+                normalizar(venda.telefone);
+
+            if(
+                telefoneVenda &&
+                telefoneCliente &&
+                telefoneVenda === telefoneCliente
+            ){
+
+                return true;
+
+            }
+
+            return false;
+
+        })
+        .sort(function(a,b){
+
+            const da =
+                new Date(
+                    a.data ||
+                    a.criadoEm ||
+                    a.created_at ||
+                    0
+                ).getTime();
+
+            const db =
+                new Date(
+                    b.data ||
+                    b.criadoEm ||
+                    b.created_at ||
+                    0
+                ).getTime();
+
+            return db - da;
+
+        });
+
+}
+
+
+/* =====================================================
+   ESTATÍSTICAS
+===================================================== */
+
+function estatisticasCliente(cliente){
+
+    const vendas =
+        vendasDoCliente(cliente);
+
+    let total = 0;
+
+    vendas.forEach(function(venda){
+
+        total +=
+            valorNumericoSeguro(
+                venda.total
+            );
+
+    });
+
+    return {
+
+        pedidos:vendas.length,
+
+        total,
+
+        ticket:
+            vendas.length
+            ? total / vendas.length
+            : 0,
+
+        vendas
+
+    };
+
+}
+
+
+/* =====================================================
+   STATUS DO CLIENTE
+===================================================== */
+
+function statusCliente(est){
+
+    if(est.pedidos >= 10){
+
+        return "💎 Cliente VIP";
+
+    }
+
+    if(est.pedidos >= 5){
+
+        return "🔥 Cliente frequente";
+
+    }
+
+    if(est.pedidos >= 1){
+
+        return "🛍️ Cliente ativo";
+
+    }
+
+    return "🆕 Cliente novo";
+
+}
+
+
+/* =====================================================
+   ITENS DA VENDA
+===================================================== */
+
+function textoItensVenda(venda){
+
+    const possiveis = [
+        venda.itens,
+        venda.produtos,
+        venda.listaItens
+    ];
+
+    const itens =
+        possiveis.find(function(valor){
+
+            return Array.isArray(valor);
+
+        });
+
+    if(itens){
+
+        return itens.map(function(item){
+
+            const nome =
+                item.nome ||
+                item.produto ||
+                item.descricao ||
+                "Produto";
+
+            const quantidade =
+                item.quantidade ||
+                item.qtd ||
+                1;
+
+            return quantidade + "x " + nome;
+
+        }).join(" • ");
+
+    }
+
+    if(venda.descricao){
+
+        return venda.descricao;
+
+    }
+
+    if(venda.observacao){
+
+        return venda.observacao;
+
+    }
+
+    return "Itens do pedido não informados";
+
+}
+
+
+/* =====================================================
+   ABRIR PERFIL
+===================================================== */
+
+function abrirPerfilCliente(id){
+
+    const cliente =
+        pegarClientes().find(function(item){
+
+            return Number(item.id) === Number(id);
+
+        });
+
+    if(!cliente){
+
+        alert(
+            "❌ Cliente não encontrado."
+        );
+
+        return;
+
+    }
+
+    const est =
+        estatisticasCliente(cliente);
+
+    const vendas =
+        est.vendas;
+
+    document.getElementById(
+        "perfilNome"
+    ).innerText =
+        cliente.nome || "Cliente";
+
+    document.getElementById(
+        "perfilStatus"
+    ).innerText =
+        statusCliente(est);
+
+    document.getElementById(
+        "perfilPedidos"
+    ).innerText =
+        est.pedidos;
+
+    document.getElementById(
+        "perfilTotal"
+    ).innerText =
+        dinheiro(est.total);
+
+    document.getElementById(
+        "perfilTicket"
+    ).innerText =
+        dinheiro(est.ticket);
+
+    document.getElementById(
+        "perfilTelefone"
+    ).innerText =
+        cliente.telefone ||
+        "Não informado";
+
+    document.getElementById(
+        "perfilEndereco"
+    ).innerText =
+        cliente.endereco ||
+        "Não informado";
+
+    document.getElementById(
+        "perfilObservacoes"
+    ).innerText =
+        cliente.observacoes ||
+        "Nenhuma";
+
+    const ultimo =
+        vendas.length
+        ? vendas[0]
+        : null;
+
+    document.getElementById(
+        "perfilUltimoPedido"
+    ).innerHTML =
+        ultimo
+        ?
+        `
+        <strong style="color:#29d66f">
+            ${dinheiro(ultimo.total)}
+        </strong>
+        <br>
+        ${dataBonita(
+            ultimo.data ||
+            ultimo.criadoEm ||
+            ultimo.created_at
+        )}
+        `
+        :
+        "Nenhum pedido encontrado.";
+
+    const historico =
+        document.getElementById(
+            "perfilHistorico"
+        );
+
+    if(!vendas.length){
+
+        historico.innerHTML =
+            `
+            <div class="vazio">
+                🧾<br>
+                Este cliente ainda não possui pedidos.
+            </div>
+            `;
+
+    }else{
+
+        historico.innerHTML =
+            vendas.map(function(venda){
+
+                const status =
+                    venda.status ||
+                    "Concluído";
+
+                const pagamento =
+                    venda.formaPagamento ||
+                    venda.pagamento ||
+                    "";
+
+                return `
+                    <div class="pedido-historico">
+
+                        <div class="pedido-topo">
+
+                            <span class="pedido-data">
+                                🕒
+                                ${dataBonita(
+                                    venda.data ||
+                                    venda.criadoEm ||
+                                    venda.created_at
+                                )}
+                            </span>
+
+                            <span class="pedido-valor">
+                                ${dinheiro(venda.total)}
+                            </span>
+
+                        </div>
+
+                        <div class="pedido-itens">
+
+                            🍔
+                            ${escapar(
+                                textoItensVenda(venda)
+                            )}
+
+                        </div>
+
+                        ${
+                            pagamento
+                            ?
+                            `
+                            <div style="
+                                margin-top:6px;
+                                color:#999;
+                                font-size:10px;
+                            ">
+                                💳
+                                ${escapar(pagamento)}
+                            </div>
+                            `
+                            :
+                            ""
+                        }
+
+                        <span class="pedido-status">
+
+                            ${escapar(status)}
+
+                        </span>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    }
+
+    document.getElementById(
+        "perfilWhatsapp"
+    ).onclick =
+        function(){
+
+            abrirWhatsApp(
+                cliente.telefone,
+                cliente.nome
+            );
+
+        };
+
+    document.getElementById(
+        "perfilMapa"
+    ).onclick =
+        function(){
+
+            abrirMapa(
+                cliente.endereco
+            );
+
+        };
+
+    document.getElementById(
+        "perfilCopiar"
+    ).onclick =
+        function(){
+
+            copiarTelefone(
+                cliente.telefone
+            );
+
+        };
+
+    document.getElementById(
+        "modalPerfil"
+    ).style.display =
+        "flex";
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL
+===================================================== */
+
+function fecharModal(){
+
+    document.getElementById(
+        "modalPerfil"
+    ).style.display =
+        "none";
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+function fecharModalFora(event){
+
+    if(
+        event.target.id ===
+        "modalPerfil"
+    ){
+
+        fecharModal();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            fecharModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   MOSTRAR CLIENTES
+===================================================== */
+
+function mostrarClientes(){
+
+    let clientes =
+        pegarClientes();
+
+    const campoBusca =
+        document.getElementById(
+            "buscaCliente"
+        );
+
+    const busca =
+        normalizar(
+            campoBusca
+            ? campoBusca.value
+            : ""
+        );
+
+    if(busca){
+
+        clientes =
+            clientes.filter(function(cliente){
+
+                const nome =
+                    normalizar(
+                        cliente.nome
+                    );
+
+                const telefone =
+                    normalizar(
+                        cliente.telefone
+                    );
+
+                return (
+                    nome.includes(busca) ||
+                    telefone.includes(busca)
+                );
+
+            });
+
+    }
+
+    const lista =
+        document.getElementById(
+            "listaClientes"
+        );
+
+    if(!clientes.length){
+
+        lista.innerHTML = `
+            <div class="clientes-secao">
+
+                <p class="vazio">
+
+                    <span class="vazio-icon">
+                        📭
+                    </span>
+
+                    ${
+                        busca
+                        ?
+                        "Nenhum cliente encontrado para essa busca."
+                        :
+                        "Nenhum cliente cadastrado ainda."
+                    }
+
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+    lista.innerHTML = "";
+
+    clientes
+        .slice()
+        .sort(function(a,b){
+
+            return String(a.nome || "")
+                .localeCompare(
+                    String(b.nome || ""),
+                    "pt-BR",
+                    {
+                        sensitivity:"base"
+                    }
+                );
+
+        })
+        .forEach(function(cliente){
+
+            const est =
+                estatisticasCliente(
+                    cliente
+                );
+
+            const status =
+                statusCliente(est);
+
+            const ultimo =
+                est.vendas.length
+                ? est.vendas[0]
+                : null;
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+            card.className =
+                "cliente";
+
+            card.innerHTML = `
+
+                <div class="cliente-topo">
+
+                    <div class="cliente-avatar">
+                        👤
+                    </div>
+
+                    <div class="cliente-titulo">
+
+                        <h3>
+                            ${escapar(
+                                cliente.nome
+                            )}
+                        </h3>
+
+                        <span class="cliente-status">
+                            ${status}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="cliente-info">
+
+                    <p>
+                        📱
+                        <strong>Telefone:</strong>
+                        ${escapar(
+                            cliente.telefone ||
+                            "Não informado"
+                        )}
+                    </p>
+
+                    <p>
+                        🏠
+                        <strong>Endereço:</strong>
+                        ${escapar(
+                            cliente.endereco ||
+                            "Não informado"
+                        )}
+                    </p>
+
+                    ${
+                        ultimo
+                        ?
+                        `
+                        <p>
+                            🕒
+                            <strong>Último pedido:</strong>
+                            ${dataBonita(
+                                ultimo.data ||
+                                ultimo.criadoEm ||
+                                ultimo.created_at
+                            )}
+                        </p>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="estatisticas">
+
+                    <div class="estatistica">
+
+                        🧾 Pedidos
+
+                        <strong>
+                            ${est.pedidos}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="estatistica">
+
+                        💰 Total gasto
+
+                        <strong class="verde">
+                            ${dinheiro(
+                                est.total
+                            )}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="estatistica">
+
+                        📈 Ticket médio
+
+                        <strong>
+                            ${dinheiro(
+                                est.ticket
+                            )}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="cliente-acoes">
+
+                    <button
+                        class="acao-whatsapp"
+                        onclick="abrirWhatsApp(
+                            '${escapar(
+                                cliente.telefone
+                            )}',
+                            '${escapar(
+                                cliente.nome
+                            )}'
+                        )">
+
+                        📱 WHATSAPP
+
+                    </button>
+
+
+                    <button
+                        class="acao-historico"
+                        onclick="abrirPerfilCliente(
+                            ${Number(cliente.id)}
+                        )">
+
+                        👤 VER PERFIL
+
+                    </button>
+
+
+                    <button
+                        class="acao-editar"
+                        onclick="editarCliente(
+                            ${Number(cliente.id)}
+                        )">
+
+                        ✏️ EDITAR
+
+                    </button>
+
+
+                    <button
+                        class="acao-excluir"
+                        onclick="excluirCliente(
+                            ${Number(cliente.id)}
+                        )">
+
+                        🗑️ EXCLUIR
+
+                    </button>
+
+                </div>
+
+            `;
+
+            lista.appendChild(card);
+
+        });
+
+}
+
+
+/* =====================================================
+   RESUMO GERAL
+===================================================== */
+
+function atualizarResumo(){
+
+    const clientes =
+        pegarClientes();
+
+    const vendas =
+        pegarVendas();
+
+    let totalPedidos = 0;
+
+    let faturamento = 0;
+
+    vendas.forEach(function(venda){
+
+        const status =
+            normalizar(
+                venda.status
+            );
+
+        if(
+            status === "cancelado" ||
+            status === "cancelada"
+        ){
+
+            return;
+
+        }
+
+        faturamento +=
+            valorNumericoSeguro(
+                venda.total
+            );
+
+        totalPedidos++;
+
+    });
+
+    const ticketMedio =
+        totalPedidos
+        ? faturamento / totalPedidos
+        : 0;
+
+    document.getElementById(
+        "totalClientes"
+    ).innerText =
+        clientes.length;
+
+    document.getElementById(
+        "totalPedidos"
+    ).innerText =
+        totalPedidos;
+
+    document.getElementById(
+        "faturamentoClientes"
+    ).innerText =
+        dinheiro(faturamento);
+
+    document.getElementById(
+        "ticketMedioClientes"
+    ).innerText =
+        dinheiro(ticketMedio);
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+function iniciarClientes(){
+
+    atualizarResumo();
+
+    mostrarClientes();
+
+}
+
+
+window.addEventListener(
+    "load",
+    iniciarClientes
+);
+
+
+window.addEventListener(
+    "pageshow",
+    function(){
+
+        atualizarResumo();
+
+        mostrarClientes();
+
+    }
+);
+
+
+/* =====================================================
+   ATUALIZAÇÃO ENTRE PÁGINAS
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key === "clientes" ||
+            event.key === "vendas" ||
+            event.key === null
+        ){
+
+            atualizarResumo();
+
+            mostrarClientes();
+
+        }
+
+    }
+);
+
 </script>
 
-
 </body>
-
 </html>

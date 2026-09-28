@@ -22,375 +22,1473 @@ if(localStorage.getItem("grillcore_login") !== "true"){
 <title>Produtos — GrillCore ERP</title>
 
 <style>
-*{box-sizing:border-box}
 
-.produtos-page{width:100%;max-width:1350px;margin:0 auto}
+*{
+    box-sizing:border-box;
+}
+
+.produtos-page{
+    width:100%;
+    max-width:1350px;
+    margin:0 auto;
+}
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
 
 .produtos-header{
-display:flex;align-items:center;justify-content:space-between;gap:16px;
-margin-bottom:18px;flex-wrap:wrap
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
 }
 
-.produtos-header-left{display:flex;align-items:center;gap:13px}
+.produtos-header-left{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
 
 .produtos-header-icon{
-width:52px;height:52px;border-radius:15px;display:flex;align-items:center;
-justify-content:center;font-size:27px;background:linear-gradient(145deg,#ff7300,#b94700);
-border:1px solid #ff9a3d;box-shadow:0 0 18px rgba(255,115,0,.22)
+    width:52px;
+    height:52px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    background:linear-gradient(145deg,#ff7300,#b94700);
+    border:1px solid #ff9a3d;
+    box-shadow:0 0 20px rgba(255,115,0,.20);
 }
 
-.produtos-header h2{margin:0;color:#fff;font-size:23px;font-weight:900}
-.produtos-header p{margin:4px 0 0;color:#999;font-size:12px}
+.produtos-header h2{
+    margin:0;
+    color:#fff;
+    font-size:23px;
+    font-weight:900;
+}
+
+.produtos-header p{
+    margin:4px 0 0;
+    color:#999;
+    font-size:12px;
+}
 
 .produtos-contador{
-padding:10px 14px;border-radius:11px;background:#111;
-border:1px solid rgba(255,115,0,.35);color:#ff9a3d;font-size:12px;font-weight:800
+    padding:10px 14px;
+    border-radius:11px;
+    background:#111;
+    border:1px solid rgba(255,115,0,.35);
+    color:#ff9a3d;
+    font-size:12px;
+    font-weight:800;
 }
 
+
+/* =====================================================
+   4 CARDS — NOVO VISUAL
+===================================================== */
+
 .resumo-produtos{
-display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+    margin-bottom:18px;
 }
 
 .resumo-card{
-position:relative;overflow:hidden;min-height:86px;padding:14px;border-radius:15px;
-background:linear-gradient(145deg,rgba(25,25,25,.98),rgba(8,8,8,.98));
-border:1px solid #292929;box-shadow:0 8px 22px rgba(0,0,0,.20)
+    position:relative;
+    min-width:0;
+    min-height:105px;
+    padding:14px;
+    border-radius:17px;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #181818,
+            #0b0b0b
+        );
+
+    border:1px solid #292929;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.22);
+
+    transition:
+        transform .18s,
+        border-color .18s,
+        box-shadow .18s;
+}
+
+.resumo-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,115,0,.38);
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.30);
+}
+
+.resumo-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:3px;
+    background:linear-gradient(
+        90deg,
+        #ff7300,
+        transparent
+    );
+    opacity:.8;
 }
 
 .resumo-card::after{
-content:"";position:absolute;width:80px;height:80px;right:-25px;bottom:-35px;
-border-radius:50%;background:rgba(255,115,0,.07)
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    right:-38px;
+    bottom:-45px;
+    border-radius:50%;
+    background:rgba(255,115,0,.06);
+    pointer-events:none;
 }
 
-.resumo-topo{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.resumo-card-inner{
+    position:relative;
+    z-index:2;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.resumo-card-topo{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+}
 
 .resumo-icone{
-width:32px;height:32px;border-radius:9px;display:flex;align-items:center;
-justify-content:center;background:#171717;border:1px solid #333;font-size:16px
+    width:34px;
+    height:34px;
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,115,0,.17),
+            rgba(255,115,0,.05)
+        );
+
+    border:1px solid rgba(255,115,0,.25);
+
+    font-size:17px;
+}
+
+.resumo-mini{
+    color:#666;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.5px;
 }
 
 .resumo-numero{
-color:#fff;font-size:19px;font-weight:900;font-variant-numeric:tabular-nums
+    margin-top:8px;
+
+    color:#fff;
+
+    font-size:27px;
+    font-weight:950;
+
+    line-height:1;
+
+    letter-spacing:-.7px;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .resumo-label{
-margin-top:8px;color:#777;font-size:9px;font-weight:800;
-text-transform:uppercase;letter-spacing:.5px
+    margin-top:6px;
+
+    color:#8c8c8c;
+
+    font-size:9px;
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:.6px;
 }
 
-.resumo-card.destaque{border-color:rgba(255,115,0,.35)}
-.resumo-card.alerta{border-color:rgba(255,180,0,.30)}
+.resumo-card.destaque{
+    border-color:
+        rgba(255,115,0,.30);
+}
+
+.resumo-card.destaque
+.resumo-numero{
+    color:#ff9a3d;
+}
+
+.resumo-card.alerta{
+    border-color:
+        rgba(255,180,0,.25);
+}
+
+.resumo-card.alerta
+.resumo-icone{
+    background:
+        rgba(255,180,0,.10);
+    border-color:
+        rgba(255,180,0,.22);
+}
+
+.resumo-card.valor-estoque{
+    background:
+        linear-gradient(
+            135deg,
+            #d45500,
+            #8f3900
+        );
+
+    border-color:#e66b1b;
+
+    box-shadow:
+        0 10px 28px
+        rgba(212,85,0,.16);
+}
+
+.resumo-card.valor-estoque::before{
+    background:
+        linear-gradient(
+            90deg,
+            #ffd0a8,
+            transparent
+        );
+}
+
+.resumo-card.valor-estoque
+.resumo-icone{
+    background:
+        rgba(0,0,0,.18);
+
+    border-color:
+        rgba(255,255,255,.18);
+}
+
+.resumo-card.valor-estoque
+.resumo-mini{
+    color:#ffd5b5;
+}
+
+.resumo-card.valor-estoque
+.resumo-label{
+    color:#ffe1cb;
+}
+
+.resumo-card.valor-estoque
+.resumo-numero{
+    font-size:22px;
+}
+
+
+/* =====================================================
+   CONTEÚDO
+===================================================== */
 
 .produtos-grid{
-display:grid;grid-template-columns:minmax(320px,.75fr) minmax(0,1.35fr);
-gap:16px;align-items:start
+    display:grid;
+    grid-template-columns:minmax(320px,.75fr) minmax(0,1.35fr);
+    gap:16px;
+    align-items:start;
 }
 
 .produtos-card{
-background:linear-gradient(145deg,rgba(20,20,20,.98),rgba(7,7,7,.98));
-border:1px solid rgba(255,115,0,.28);border-radius:18px;padding:17px;
-box-shadow:0 12px 32px rgba(0,0,0,.28);margin-bottom:16px
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,20,20,.98),
+            rgba(7,7,7,.98)
+        );
+
+    border:1px solid rgba(255,115,0,.28);
+
+    border-radius:18px;
+
+    padding:17px;
+
+    box-shadow:
+        0 12px 32px rgba(0,0,0,.28);
+
+    margin-bottom:16px;
 }
 
 .produtos-card-title{
-display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:16px;
 }
 
-.produtos-card-title-left{display:flex;align-items:center;gap:10px}
+.produtos-card-title-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
 .produtos-card-icon{
-width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
-justify-content:center;background:linear-gradient(145deg,#241105,#0c0805);
-border:1px solid rgba(255,115,0,.45);font-size:17px
+    width:36px;
+    height:36px;
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #241105,
+            #0c0805
+        );
+
+    border:1px solid
+        rgba(255,115,0,.45);
+
+    font-size:17px;
 }
 
-.produtos-card-title h3{margin:0;color:#fff;font-size:15px;font-weight:900}
-.produtos-card-title span{display:block;margin-top:3px;color:#777;font-size:10px}
+.produtos-card-title h3{
+    margin:0;
+    color:#fff;
+    font-size:15px;
+    font-weight:900;
+}
 
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.form-group{min-width:0}
-.form-group.full{grid-column:1/-1}
+.produtos-card-title span{
+    display:block;
+    margin-top:3px;
+    color:#777;
+    font-size:10px;
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+}
+
+.form-group{
+    min-width:0;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
 
 .form-group label{
-display:block;margin-bottom:6px;color:#cfcfcf;font-size:10px;font-weight:800;
-text-transform:uppercase;letter-spacing:.5px
+    display:block;
+    margin-bottom:6px;
+    color:#cfcfcf;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
 }
 
-.form-group input,.form-group select,.form-group textarea{
-width:100%;border:1px solid #333;background:#090909;color:#fff;border-radius:10px;
-padding:11px 12px;outline:none;font-family:inherit;font-size:13px;
-transition:border-color .2s,box-shadow .2s,background .2s
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+
+    border:1px solid #333;
+
+    background:#090909;
+
+    color:#fff;
+
+    border-radius:10px;
+
+    padding:11px 12px;
+
+    outline:none;
+
+    font-family:inherit;
+
+    font-size:13px;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
 }
 
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
-border-color:#ff7300;box-shadow:0 0 0 2px rgba(255,115,0,.10);background:#101010
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#ff7300;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255,115,0,.10);
+
+    background:#101010;
 }
 
-.form-group textarea{min-height:80px;resize:vertical}
-.form-group select option{background:#111;color:#fff}
+.form-group textarea{
+    min-height:80px;
+    resize:vertical;
+}
 
-.form-ajuda{display:block;margin-top:5px;color:#666;font-size:9px;line-height:1.4}
+.form-group select option{
+    background:#111;
+    color:#fff;
+}
+
+.form-ajuda{
+    display:block;
+    margin-top:5px;
+    color:#666;
+    font-size:9px;
+    line-height:1.4;
+}
+
+
+/* =====================================================
+   FOTO
+===================================================== */
 
 .foto-area{
-display:grid;grid-template-columns:95px minmax(0,1fr);gap:12px;align-items:center
+    display:grid;
+    grid-template-columns:95px minmax(0,1fr);
+    gap:12px;
+    align-items:center;
 }
 
 .foto-preview{
-width:95px;height:95px;border-radius:14px;background:linear-gradient(145deg,#171717,#090909);
-border:1px solid #333;display:flex;align-items:center;justify-content:center;
-overflow:hidden;color:#666;font-size:30px
+    width:95px;
+    height:95px;
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #090909
+        );
+
+    border:1px solid #333;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    color:#666;
+
+    font-size:30px;
 }
 
-.foto-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.foto-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
 
-.tamanho-box{position:relative}
+
+/* =====================================================
+   TAMANHO
+===================================================== */
+
+.tamanho-box{
+    position:relative;
+}
 
 .tamanho-badge{
-position:absolute;right:8px;top:31px;padding:4px 7px;border-radius:7px;
-background:rgba(255,115,0,.12);border:1px solid rgba(255,115,0,.25);
-color:#ff9a3d;font-size:9px;font-weight:800;pointer-events:none
+    position:absolute;
+    right:8px;
+    top:31px;
+
+    padding:4px 7px;
+
+    border-radius:7px;
+
+    background:
+        rgba(255,115,0,.12);
+
+    border:1px solid
+        rgba(255,115,0,.25);
+
+    color:#ff9a3d;
+
+    font-size:9px;
+    font-weight:800;
+
+    pointer-events:none;
 }
+
+
+/* =====================================================
+   STATUS
+===================================================== */
 
 .status-box{
-display:flex;align-items:center;gap:9px;min-height:43px;padding:10px 12px;
-border-radius:10px;background:#090909;border:1px solid #333
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    min-height:43px;
+
+    padding:10px 12px;
+
+    border-radius:10px;
+
+    background:#090909;
+
+    border:1px solid #333;
 }
 
-.status-box input{width:18px;height:18px;accent-color:#ff7300}
-.status-box label{margin:0;text-transform:none;letter-spacing:0;font-size:11px;color:#ddd}
-.status-ajuda{display:block;margin-top:5px;color:#666;font-size:9px}
+.status-box input{
+    width:18px;
+    height:18px;
+    accent-color:#ff7300;
+}
 
-.acoes-form{display:grid;grid-template-columns:1fr 1.4fr;gap:9px;margin-top:15px}
+.status-box label{
+    margin:0;
+    text-transform:none;
+    letter-spacing:0;
+    font-size:11px;
+    color:#ddd;
+}
+
+.status-ajuda{
+    display:block;
+    margin-top:5px;
+    color:#666;
+    font-size:9px;
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+.acoes-form{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:9px;
+    margin-top:15px;
+}
 
 .btn{
-min-height:43px;border-radius:10px;padding:10px 14px;display:inline-flex;
-align-items:center;justify-content:center;gap:7px;cursor:pointer;font-family:inherit;
-font-size:11px;font-weight:900;transition:transform .15s,filter .15s,box-shadow .15s
+    min-height:43px;
+
+    border-radius:10px;
+
+    padding:10px 14px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:7px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:11px;
+    font-weight:900;
+
+    transition:
+        transform .15s,
+        filter .15s,
+        box-shadow .15s;
 }
 
-.btn:active{transform:scale(.98)}
+.btn:active{
+    transform:scale(.98);
+}
 
 .btn-primary{
-background:linear-gradient(135deg,#ff7300,#c94e00);color:#fff;border:1px solid #ff9a3d;
-box-shadow:0 6px 18px rgba(255,115,0,.18)
+    background:
+        linear-gradient(
+            135deg,
+            #ff7300,
+            #c94e00
+        );
+
+    color:#fff;
+
+    border:1px solid #ff9a3d;
+
+    box-shadow:
+        0 6px 18px
+        rgba(255,115,0,.18);
 }
 
-.btn-primary:hover{filter:brightness(1.10)}
-.btn-secondary{background:#151515;color:#ddd;border:1px solid #383838}
+.btn-primary:hover{
+    filter:brightness(1.10);
+}
 
-.busca-produtos{position:relative;margin-bottom:12px}
+.btn-secondary{
+    background:#151515;
+    color:#ddd;
+    border:1px solid #383838;
+}
+
+
+/* =====================================================
+   BUSCA
+===================================================== */
+
+.busca-produtos{
+    position:relative;
+    margin-bottom:12px;
+}
 
 .busca-produtos input{
-width:100%;min-height:44px;padding:10px 13px 10px 40px;border-radius:11px;
-background:#090909;border:1px solid #333;color:#fff;outline:none;font-family:inherit;font-size:13px
+    width:100%;
+    min-height:44px;
+
+    padding:
+        10px 13px 10px 40px;
+
+    border-radius:11px;
+
+    background:#090909;
+
+    border:1px solid #333;
+
+    color:#fff;
+
+    outline:none;
+
+    font-family:inherit;
+
+    font-size:13px;
 }
 
 .busca-produtos input:focus{
-border-color:#ff7300;box-shadow:0 0 0 2px rgba(255,115,0,.09)
+    border-color:#ff7300;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255,115,0,.09);
 }
 
 .busca-icone{
-position:absolute;left:13px;top:50%;transform:translateY(-50%);
-color:#ff7300;font-size:17px;pointer-events:none
+    position:absolute;
+    left:13px;
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:#ff7300;
+    font-size:17px;
+
+    pointer-events:none;
 }
 
-.ferramentas-produtos{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}
+
+/* =====================================================
+   FERRAMENTAS
+===================================================== */
+
+.ferramentas-produtos{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:13px;
+}
 
 .select-ordenacao{
-flex:1;min-width:160px;min-height:36px;padding:7px 10px;border-radius:9px;
-background:#101010;border:1px solid #303030;color:#bbb;font-family:inherit;
-font-size:10px;font-weight:800
+    flex:1;
+
+    min-width:160px;
+    min-height:36px;
+
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    background:#101010;
+
+    border:1px solid #303030;
+
+    color:#bbb;
+
+    font-family:inherit;
+
+    font-size:10px;
+    font-weight:800;
 }
 
-.filtros-produtos{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+.filtros-produtos{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+}
 
 .filtro-produto{
-min-height:34px;padding:7px 10px;border-radius:9px;border:1px solid #303030;
-background:#101010;color:#999;font-family:inherit;font-size:10px;font-weight:800;cursor:pointer
+    min-height:34px;
+
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    border:1px solid #303030;
+
+    background:#101010;
+
+    color:#999;
+
+    font-family:inherit;
+
+    font-size:10px;
+    font-weight:800;
+
+    cursor:pointer;
 }
 
 .filtro-produto.ativo{
-background:linear-gradient(135deg,#ff7300,#c94e00);color:#fff;border-color:#ff9a3d
+    background:
+        linear-gradient(
+            135deg,
+            #ff7300,
+            #c94e00
+        );
+
+    color:#fff;
+
+    border-color:#ff9a3d;
 }
 
+
+/* =====================================================
+   LISTA
+===================================================== */
+
 .lista-produtos{
-display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
 }
 
 .produto-card{
-position:relative;background:linear-gradient(145deg,#151515,#090909);
-border:1px solid #292929;border-radius:14px;padding:11px;
-transition:transform .18s,border-color .18s,box-shadow .18s
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #090909
+        );
+
+    border:1px solid #292929;
+
+    border-radius:14px;
+
+    padding:11px;
+
+    transition:
+        transform .18s,
+        border-color .18s,
+        box-shadow .18s;
 }
 
 .produto-card:hover{
-transform:translateY(-2px);border-color:rgba(255,115,0,.45);
-box-shadow:0 8px 20px rgba(0,0,0,.25)
+    transform:translateY(-2px);
+
+    border-color:
+        rgba(255,115,0,.45);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.25);
 }
 
-.produto-card.indisponivel{opacity:.65}
-.produto-card.estoque-baixo{border-color:rgba(255,180,0,.45)}
+.produto-card.indisponivel{
+    opacity:.65;
+}
 
-.produto-topo{display:flex;gap:10px;align-items:flex-start}
+.produto-card.estoque-baixo{
+    border-color:
+        rgba(255,180,0,.45);
+}
+
+.produto-topo{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+}
 
 .produto-foto{
-width:66px;height:66px;flex:0 0 66px;border-radius:11px;background:#0b0b0b;
-border:1px solid #303030;display:flex;align-items:center;justify-content:center;
-overflow:hidden;color:#555;font-size:24px
+    width:66px;
+    height:66px;
+
+    flex:0 0 66px;
+
+    border-radius:11px;
+
+    background:#0b0b0b;
+
+    border:1px solid #303030;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    color:#555;
+    font-size:24px;
 }
 
-.produto-foto img{width:100%;height:100%;object-fit:cover}
-.produto-dados{min-width:0;flex:1}
+.produto-foto img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.produto-dados{
+    min-width:0;
+    flex:1;
+}
 
 .produto-nome{
-color:#fff;font-size:13px;font-weight:900;line-height:1.25;overflow:hidden;
-text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical
+    color:#fff;
+
+    font-size:13px;
+    font-weight:900;
+
+    line-height:1.25;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    display:-webkit-box;
+
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
 }
 
-.produto-tags{display:flex;gap:4px;flex-wrap:wrap}
+.produto-tags{
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+}
 
-.produto-categoria,.produto-tamanho,.produto-status{
-display:inline-flex;margin-top:5px;padding:3px 7px;border-radius:7px;font-size:8px;font-weight:900
+.produto-categoria,
+.produto-tamanho,
+.produto-status{
+    display:inline-flex;
+
+    margin-top:5px;
+
+    padding:3px 7px;
+
+    border-radius:7px;
+
+    font-size:8px;
+    font-weight:900;
 }
 
 .produto-categoria{
-background:rgba(255,115,0,.10);border:1px solid rgba(255,115,0,.25);
-color:#ff9a3d;text-transform:uppercase
+    background:
+        rgba(255,115,0,.10);
+
+    border:
+        1px solid
+        rgba(255,115,0,.25);
+
+    color:#ff9a3d;
+
+    text-transform:uppercase;
 }
 
-.produto-tamanho{background:#191919;border:1px solid #353535;color:#bbb}
+.produto-tamanho{
+    background:#191919;
+
+    border:1px solid #353535;
+
+    color:#bbb;
+}
 
 .produto-status.disponivel{
-background:#082117;border:1px solid #17633d;color:#55e39a
+    background:#082117;
+
+    border:1px solid #17633d;
+
+    color:#55e39a;
 }
 
 .produto-status.indisponivel{
-background:#270b05;border:1px solid #6b2515;color:#ff927a
+    background:#270b05;
+
+    border:1px solid #6b2515;
+
+    color:#ff927a;
 }
 
-.produto-preco{margin-top:8px;color:#35d07f;font-size:15px;font-weight:900}
-.produto-estoque{margin-top:3px;color:#888;font-size:9px}
-.produto-estoque strong{color:#fff}
-.estoque-alerta{color:#ffc45c!important}
+.produto-preco{
+    margin-top:8px;
+
+    color:#35d07f;
+
+    font-size:15px;
+    font-weight:900;
+}
+
+.produto-estoque{
+    margin-top:3px;
+
+    color:#888;
+
+    font-size:9px;
+}
+
+.produto-estoque strong{
+    color:#fff;
+}
+
+.estoque-alerta{
+    color:#ffc45c!important;
+}
 
 .produto-ingredientes{
-margin-top:9px;padding-top:8px;border-top:1px solid #242424;color:#999;font-size:9px;
-line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+    margin-top:9px;
+
+    padding-top:8px;
+
+    border-top:1px solid #242424;
+
+    color:#999;
+
+    font-size:9px;
+
+    line-height:1.45;
+
+    display:-webkit-box;
+
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+
+    overflow:hidden;
 }
 
-.produto-acoes{
-display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:10px
-}
 
-.btn-produto{
-min-height:32px;border-radius:8px;font-family:inherit;font-size:9px;font-weight:900;cursor:pointer
-}
-
-.btn-editar{background:#17120c;color:#ffad5c;border:1px solid #63370e}
-.btn-excluir{background:#1b0805;color:#ff7860;border:1px solid #5f1c10}
-.btn-visualizar{background:#0d1519;color:#7ddcff;border:1px solid #214a5b}
-.btn-duplicar{background:#11151d;color:#a8bfff;border:1px solid #303f67}
+/* =====================================================
+   ESTOQUE RÁPIDO
+===================================================== */
 
 .estoque-rapido{
-display:grid;grid-template-columns:36px 1fr 36px;gap:5px;align-items:center;margin-top:8px
+    display:grid;
+
+    grid-template-columns:36px 1fr 36px;
+
+    gap:5px;
+
+    align-items:center;
+
+    margin-top:8px;
 }
 
 .estoque-rapido button{
-height:30px;border-radius:8px;background:#141414;border:1px solid #333;color:#fff;
-font-size:15px;font-weight:900;cursor:pointer
+    height:30px;
+
+    border-radius:8px;
+
+    background:#141414;
+
+    border:1px solid #333;
+
+    color:#fff;
+
+    font-size:15px;
+    font-weight:900;
+
+    cursor:pointer;
 }
 
-.estoque-rapido button:hover{border-color:#ff7300;color:#ff9a3d}
+.estoque-rapido button:hover{
+    border-color:#ff7300;
+    color:#ff9a3d;
+}
 
 .estoque-valor{
-text-align:center;min-height:30px;display:flex;align-items:center;justify-content:center;
-border-radius:8px;background:#0a0a0a;border:1px solid #292929;color:#fff;font-size:11px;font-weight:900
+    text-align:center;
+
+    min-height:30px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:#0a0a0a;
+
+    border:1px solid #292929;
+
+    color:#fff;
+
+    font-size:11px;
+    font-weight:900;
 }
+
+
+/* =====================================================
+   AÇÕES PRODUTO
+===================================================== */
+
+.produto-acoes{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:5px;
+
+    margin-top:10px;
+}
+
+.btn-produto{
+    min-height:32px;
+
+    border-radius:8px;
+
+    font-family:inherit;
+
+    font-size:9px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.btn-editar{
+    background:#17120c;
+
+    color:#ffad5c;
+
+    border:1px solid #63370e;
+}
+
+.btn-excluir{
+    background:#1b0805;
+
+    color:#ff7860;
+
+    border:1px solid #5f1c10;
+}
+
+.btn-visualizar{
+    background:#0d1519;
+
+    color:#7ddcff;
+
+    border:1px solid #214a5b;
+}
+
+.btn-duplicar{
+    background:#11151d;
+
+    color:#a8bfff;
+
+    border:1px solid #303f67;
+}
+
+
+/* =====================================================
+   LISTA VAZIA
+===================================================== */
 
 .lista-vazia{
-grid-column:1/-1;padding:35px 18px;text-align:center;border:1px dashed #383838;
-border-radius:14px;background:#090909;color:#777;font-size:12px;line-height:1.6
+    grid-column:1/-1;
+
+    padding:35px 18px;
+
+    text-align:center;
+
+    border:1px dashed #383838;
+
+    border-radius:14px;
+
+    background:#090909;
+
+    color:#777;
+
+    font-size:12px;
+
+    line-height:1.6;
 }
 
-.lista-vazia strong{display:block;margin-bottom:4px;color:#aaa;font-size:14px}
+.lista-vazia strong{
+    display:block;
 
-.alerta-produto,.sucesso-produto{
-display:none;margin-bottom:13px;padding:11px 12px;border-radius:10px;font-size:11px;line-height:1.45
+    margin-bottom:4px;
+
+    color:#aaa;
+
+    font-size:14px;
 }
 
-.alerta-produto{background:#270b05;border:1px solid #6b2515;color:#ff927a}
-.sucesso-produto{background:#082117;border:1px solid #17633d;color:#55e39a}
-.alerta-produto.visivel,.sucesso-produto.visivel{display:block}
+
+/* =====================================================
+   ALERTAS
+===================================================== */
+
+.alerta-produto,
+.sucesso-produto{
+    display:none;
+
+    margin-bottom:13px;
+
+    padding:11px 12px;
+
+    border-radius:10px;
+
+    font-size:11px;
+
+    line-height:1.45;
+}
+
+.alerta-produto{
+    background:#270b05;
+
+    border:1px solid #6b2515;
+
+    color:#ff927a;
+}
+
+.sucesso-produto{
+    background:#082117;
+
+    border:1px solid #17633d;
+
+    color:#55e39a;
+}
+
+.alerta-produto.visivel,
+.sucesso-produto.visivel{
+    display:block;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
 
 .modal-produto{
-position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
-padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(5px)
+    position:fixed;
+
+    inset:0;
+
+    z-index:9999;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:18px;
+
+    background:
+        rgba(0,0,0,.78);
+
+    backdrop-filter:blur(5px);
 }
 
-.modal-produto.visivel{display:flex}
+.modal-produto.visivel{
+    display:flex;
+}
 
 .modal-conteudo{
-width:100%;max-width:480px;max-height:90vh;overflow:auto;
-background:linear-gradient(145deg,#191919,#080808);border:1px solid rgba(255,115,0,.35);
-border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:18px
+    width:100%;
+
+    max-width:480px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #191919,
+            #080808
+        );
+
+    border:
+        1px solid
+        rgba(255,115,0,.35);
+
+    border-radius:18px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.55);
+
+    padding:18px;
 }
 
 .modal-cabecalho{
-display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:15px;
 }
 
-.modal-cabecalho h3{margin:0;color:#fff;font-size:17px}
+.modal-cabecalho h3{
+    margin:0;
+
+    color:#fff;
+
+    font-size:17px;
+}
 
 .modal-fechar{
-width:34px;height:34px;border-radius:9px;background:#151515;border:1px solid #333;
-color:#aaa;font-size:18px;cursor:pointer
+    width:34px;
+    height:34px;
+
+    border-radius:9px;
+
+    background:#151515;
+
+    border:1px solid #333;
+
+    color:#aaa;
+
+    font-size:18px;
+
+    cursor:pointer;
 }
 
 .modal-foto{
-width:100%;height:220px;border-radius:14px;overflow:hidden;background:#0b0b0b;
-border:1px solid #292929;display:flex;align-items:center;justify-content:center;font-size:50px
+    width:100%;
+
+    height:220px;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:#0b0b0b;
+
+    border:1px solid #292929;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:50px;
 }
 
-.modal-foto img{width:100%;height:100%;object-fit:cover}
-.modal-info{margin-top:14px}
-.modal-info h2{margin:0;color:#fff;font-size:20px}
-.modal-info p{margin:8px 0;color:#aaa;font-size:12px;line-height:1.5}
+.modal-foto img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.modal-info{
+    margin-top:14px;
+}
+
+.modal-info h2{
+    margin:0;
+
+    color:#fff;
+
+    font-size:20px;
+}
+
+.modal-info p{
+    margin:8px 0;
+
+    color:#aaa;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
 
 .modal-linha{
-display:flex;justify-content:space-between;gap:10px;padding:10px 0;
-border-bottom:1px solid #242424;color:#999;font-size:11px
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #242424;
+
+    color:#999;
+
+    font-size:11px;
 }
 
-.modal-linha strong{color:#fff;text-align:right}
+.modal-linha strong{
+    color:#fff;
+
+    text-align:right;
+}
+
+
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
 
 @media(max-width:1050px){
-.produtos-grid{grid-template-columns:1fr}
-}
 
-@media(max-width:750px){
-.resumo-produtos{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .produtos-grid{
+        grid-template-columns:1fr;
+    }
+
+    .resumo-produtos{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
 }
 
 @media(max-width:650px){
-.produtos-header{align-items:flex-start}
-.produtos-header h2{font-size:20px}
-.produtos-header-icon{width:47px;height:47px;font-size:24px}
-.produtos-contador{width:100%;text-align:center}
-.form-grid{grid-template-columns:1fr}
-.form-group.full{grid-column:auto}
-.lista-produtos{grid-template-columns:1fr}
-.produto-acoes{grid-template-columns:repeat(2,1fr)}
+
+    .produtos-header{
+        align-items:flex-start;
+    }
+
+    .produtos-header h2{
+        font-size:20px;
+    }
+
+    .produtos-header-icon{
+        width:47px;
+        height:47px;
+        font-size:24px;
+    }
+
+    .produtos-contador{
+        width:100%;
+        text-align:center;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .lista-produtos{
+        grid-template-columns:1fr;
+    }
+
+    .produto-acoes{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
 }
 
 @media(max-width:430px){
-.produtos-card{padding:13px;border-radius:15px}
-.foto-area{grid-template-columns:80px minmax(0,1fr)}
-.foto-preview{width:80px;height:80px}
-.acoes-form{grid-template-columns:1fr}
-.resumo-produtos{gap:7px}
-.resumo-card{min-height:78px;padding:11px}
-.resumo-numero{font-size:17px}
+
+    .produtos-card{
+        padding:13px;
+        border-radius:15px;
+    }
+
+    .foto-area{
+        grid-template-columns:
+            80px minmax(0,1fr);
+    }
+
+    .foto-preview{
+        width:80px;
+        height:80px;
+    }
+
+    .acoes-form{
+        grid-template-columns:1fr;
+    }
+
+    .resumo-produtos{
+        gap:8px;
+    }
+
+    .resumo-card{
+        min-height:108px;
+        padding:11px;
+        border-radius:14px;
+    }
+
+    .resumo-numero{
+        font-size:23px;
+    }
+
+    .resumo-card.valor-estoque
+    .resumo-numero{
+        font-size:18px;
+    }
+
+    .resumo-label{
+        font-size:8px;
+    }
+
+    .resumo-mini{
+        font-size:8px;
+    }
+
+    .resumo-icone{
+        width:30px;
+        height:30px;
+        font-size:15px;
+    }
+
 }
+
 </style>
 </head>
 
@@ -455,13 +1553,16 @@ border-bottom:1px solid #242424;color:#999;font-size:11px
 <span>Backup</span>
 </a>
 
-<a href="#" class="gc-sair" onclick="sairDoSistema();return false;">
+<a href="#"
+class="gc-sair"
+onclick="sairDoSistema();return false;">
 <span class="icone">🚪</span>
 <span>Sair do sistema</span>
 </a>
 
 </nav>
 </aside>
+
 
 <main class="gc-main">
 
@@ -471,61 +1572,177 @@ border-bottom:1px solid #242424;color:#999;font-size:11px
 
 <div class="produtos-header-left">
 
-<div class="produtos-header-icon">🍔</div>
+<div class="produtos-header-icon">
+🍔
+</div>
 
 <div>
+
 <h2>Produtos</h2>
-<p>Cadastre e gerencie os produtos do seu cardápio.</p>
-</div>
+
+<p>
+Cadastre e gerencie os produtos do seu cardápio.
+</p>
 
 </div>
 
-<div class="produtos-contador" id="contadorProdutos">
+</div>
+
+<div
+class="produtos-contador"
+id="contadorProdutos">
 0 produtos cadastrados
 </div>
 
 </header>
 
+
+<!-- =====================================================
+     4 CARDS
+===================================================== -->
+
 <section class="resumo-produtos">
 
+
 <div class="resumo-card destaque">
-<div class="resumo-topo">
-<div class="resumo-icone">🍔</div>
-<div class="resumo-numero" id="resumoTotal">0</div>
-</div>
-<div class="resumo-label">Total de produtos</div>
+
+<div class="resumo-card-inner">
+
+<div class="resumo-card-topo">
+
+<div class="resumo-icone">
+🍔
 </div>
 
+<div class="resumo-mini">
+Catálogo
+</div>
+
+</div>
+
+<div
+class="resumo-numero"
+id="resumoTotal">
+0
+</div>
+
+<div class="resumo-label">
+Total de Produtos
+</div>
+
+</div>
+
+</div>
+
+
 <div class="resumo-card">
-<div class="resumo-topo">
-<div class="resumo-icone">🟢</div>
-<div class="resumo-numero" id="resumoDisponiveis">0</div>
+
+<div class="resumo-card-inner">
+
+<div class="resumo-card-topo">
+
+<div class="resumo-icone">
+🟢
 </div>
-<div class="resumo-label">Disponíveis</div>
+
+<div class="resumo-mini">
+Ativos
 </div>
+
+</div>
+
+<div
+class="resumo-numero"
+id="resumoDisponiveis">
+0
+</div>
+
+<div class="resumo-label">
+Disponíveis
+</div>
+
+</div>
+
+</div>
+
 
 <div class="resumo-card alerta">
-<div class="resumo-topo">
-<div class="resumo-icone">⚠️</div>
-<div class="resumo-numero" id="resumoEstoqueBaixo">0</div>
-</div>
-<div class="resumo-label">Estoque baixo</div>
+
+<div class="resumo-card-inner">
+
+<div class="resumo-card-topo">
+
+<div class="resumo-icone">
+⚠️
 </div>
 
-<div class="resumo-card">
-<div class="resumo-topo">
-<div class="resumo-icone">💰</div>
-<div class="resumo-numero" id="resumoValorEstoque">R$ 0,00</div>
+<div class="resumo-mini">
+Atenção
 </div>
-<div class="resumo-label">Valor em estoque</div>
+
+</div>
+
+<div
+class="resumo-numero"
+id="resumoEstoqueBaixo">
+0
+</div>
+
+<div class="resumo-label">
+Estoque Baixo
+</div>
+
+</div>
+
+</div>
+
+
+<div class="resumo-card valor-estoque">
+
+<div class="resumo-card-inner">
+
+<div class="resumo-card-topo">
+
+<div class="resumo-icone">
+💰
+</div>
+
+<div class="resumo-mini">
+Inventário
+</div>
+
+</div>
+
+<div
+class="resumo-numero"
+id="resumoValorEstoque">
+R$ 0,00
+</div>
+
+<div class="resumo-label">
+Valor em Estoque
+</div>
+
+</div>
+
 </div>
 
 </section>
 
-<div id="alertaProduto" class="alerta-produto"></div>
-<div id="sucessoProduto" class="sucesso-produto"></div>
+
+<div
+id="alertaProduto"
+class="alerta-produto">
+</div>
+
+<div
+id="sucessoProduto"
+class="sucesso-produto">
+</div>
+
 
 <div class="produtos-grid">
+
 
 <div>
 
@@ -535,62 +1752,166 @@ border-bottom:1px solid #242424;color:#999;font-size:11px
 
 <div class="produtos-card-title-left">
 
-<div class="produtos-card-icon">➕</div>
+<div class="produtos-card-icon">
+➕
+</div>
 
 <div>
-<h3 id="tituloFormulario">Novo produto</h3>
-<span>Cadastre um item para aparecer no sistema.</span>
-</div>
+
+<h3 id="tituloFormulario">
+Novo produto
+</h3>
+
+<span>
+Cadastre um item para aparecer no sistema.
+</span>
 
 </div>
 
 </div>
 
-<form id="formProduto" onsubmit="salvarProduto(event)">
+</div>
+
+
+<form
+id="formProduto"
+onsubmit="salvarProduto(event)"
+>
 
 <div class="form-grid">
 
+
 <div class="form-group full">
-<label for="nomeProduto">Nome do produto</label>
-<input type="text" id="nomeProduto" placeholder="Ex.: X Prensado" autocomplete="off" required>
+
+<label for="nomeProduto">
+Nome do produto
+</label>
+
+<input
+type="text"
+id="nomeProduto"
+placeholder="Ex.: X Prensado"
+autocomplete="off"
+required
+>
+
 </div>
 
+
 <div class="form-group">
-<label for="categoriaProduto">Categoria</label>
-<select id="categoriaProduto" required>
-<option value="">Selecione</option>
-<option value="hamburguer">🍔 Hambúrguer</option>
-<option value="porcao">🍟 Porção</option>
-<option value="bebida">🥤 Bebida</option>
-<option value="outro">📦 Outro</option>
+
+<label for="categoriaProduto">
+Categoria
+</label>
+
+<select
+id="categoriaProduto"
+required
+>
+
+<option value="">
+Selecione
+</option>
+
+<option value="hamburguer">
+🍔 Hambúrguer
+</option>
+
+<option value="porcao">
+🍟 Porção
+</option>
+
+<option value="bebida">
+🥤 Bebida
+</option>
+
+<option value="outro">
+📦 Outro
+</option>
+
 </select>
+
 </div>
 
+
 <div class="form-group">
-<label for="precoProduto">Preço</label>
-<input type="number" id="precoProduto" min="0" step="0.01" placeholder="0,00" inputmode="decimal" required>
+
+<label for="precoProduto">
+Preço
+</label>
+
+<input
+type="number"
+id="precoProduto"
+min="0"
+step="0.01"
+placeholder="0,00"
+inputmode="decimal"
+required
+>
+
 </div>
+
 
 <div class="form-group tamanho-box">
-<label for="tamanhoProduto">Tamanho / Volume</label>
-<input type="text" id="tamanhoProduto" placeholder="Ex.: 500 g ou 600 ml" autocomplete="off">
-<span class="tamanho-badge">opcional</span>
-<small class="form-ajuda">Para porções e bebidas, informe o tamanho ou volume.</small>
+
+<label for="tamanhoProduto">
+Tamanho / Volume
+</label>
+
+<input
+type="text"
+id="tamanhoProduto"
+placeholder="Ex.: 500 g ou 600 ml"
+autocomplete="off"
+>
+
+<span class="tamanho-badge">
+opcional
+</span>
+
+<small class="form-ajuda">
+Para porções e bebidas, informe o tamanho ou volume.
+</small>
+
 </div>
 
+
 <div class="form-group">
-<label for="estoqueProduto">Estoque inicial</label>
-<input type="number" id="estoqueProduto" min="0" step="1" value="0" inputmode="numeric">
-<small class="form-ajuda">Quantidade disponível.</small>
+
+<label for="estoqueProduto">
+Estoque inicial
+</label>
+
+<input
+type="number"
+id="estoqueProduto"
+min="0"
+step="1"
+value="0"
+inputmode="numeric"
+>
+
+<small class="form-ajuda">
+Quantidade disponível.
+</small>
+
 </div>
+
 
 <div class="form-group full">
 
-<label>Disponibilidade</label>
+<label>
+Disponibilidade
+</label>
 
 <div class="status-box">
 
-<input type="checkbox" id="disponivelProduto" checked>
+<input
+type="checkbox"
+id="disponivelProduto"
+checked
+>
 
 <label for="disponivelProduto">
 Produto disponível para venda
@@ -604,17 +1925,28 @@ Desative quando o produto estiver temporariamente indisponível.
 
 </div>
 
+
 <div class="form-group full">
 
-<label>Foto do produto</label>
+<label>
+Foto do produto
+</label>
 
 <div class="foto-area">
 
-<div class="foto-preview" id="fotoPreview">🍔</div>
+<div
+class="foto-preview"
+id="fotoPreview">
+🍔
+</div>
 
 <div>
 
-<input type="file" id="fotoProduto" accept="image/*">
+<input
+type="file"
+id="fotoProduto"
+accept="image/*"
+>
 
 <small class="form-ajuda">
 A imagem será salva no cadastro do produto.
@@ -626,40 +1958,63 @@ A imagem será salva no cadastro do produto.
 
 </div>
 
-<div class="form-group full">
-
-<label for="ingredientesProduto">Ingredientes</label>
-
-<textarea id="ingredientesProduto" placeholder="Ex.: pão, hambúrguer, queijo, bacon, molho..."></textarea>
-
-</div>
 
 <div class="form-group full">
 
-<label for="descricaoProduto">Descrição</label>
+<label for="ingredientesProduto">
+Ingredientes
+</label>
 
-<textarea id="descricaoProduto" placeholder="Descrição comercial do produto..."></textarea>
+<textarea
+id="ingredientesProduto"
+placeholder="Ex.: pão, hambúrguer, queijo, bacon, molho..."
+></textarea>
+
+</div>
+
+
+<div class="form-group full">
+
+<label for="descricaoProduto">
+Descrição
+</label>
+
+<textarea
+id="descricaoProduto"
+placeholder="Descrição comercial do produto..."
+></textarea>
 
 </div>
 
 </div>
+
 
 <div class="acoes-form">
 
-<button type="button" class="btn btn-secondary" onclick="limparFormularioProduto()">
+<button
+type="button"
+class="btn btn-secondary"
+onclick="limparFormularioProduto()"
+>
 🗑️ Limpar
 </button>
 
-<button type="submit" class="btn btn-primary" id="btnSalvarProduto">
+<button
+type="submit"
+class="btn btn-primary"
+id="btnSalvarProduto"
+>
 💾 Salvar produto
 </button>
 
 </div>
 
 </form>
+
 </section>
 
 </div>
+
 
 <div>
 
@@ -669,69 +2024,135 @@ A imagem será salva no cadastro do produto.
 
 <div class="produtos-card-title-left">
 
-<div class="produtos-card-icon">📋</div>
+<div class="produtos-card-icon">
+📋
+</div>
 
 <div>
-<h3>Produtos cadastrados</h3>
-<span>Itens disponíveis no seu catálogo.</span>
-</div>
+
+<h3>
+Produtos cadastrados
+</h3>
+
+<span>
+Itens disponíveis no seu catálogo.
+</span>
 
 </div>
 
 </div>
+
+</div>
+
 
 <div class="busca-produtos">
 
-<span class="busca-icone">🔎</span>
+<span class="busca-icone">
+🔎
+</span>
 
-<input type="search" id="buscaProduto" placeholder="Buscar por nome, categoria, tamanho..." autocomplete="off">
+<input
+type="search"
+id="buscaProduto"
+placeholder="Buscar por nome, categoria, tamanho..."
+autocomplete="off"
+>
 
 </div>
 
+
 <div class="ferramentas-produtos">
 
-<select id="ordenacaoProdutos" class="select-ordenacao">
+<select
+id="ordenacaoProdutos"
+class="select-ordenacao"
+>
 
-<option value="recentes">↕️ Mais recentes</option>
-<option value="nome">🔤 Nome A → Z</option>
-<option value="preco-menor">💰 Menor preço</option>
-<option value="preco-maior">💰 Maior preço</option>
-<option value="estoque-menor">📦 Menor estoque</option>
-<option value="estoque-maior">📦 Maior estoque</option>
+<option value="recentes">
+↕️ Mais recentes
+</option>
+
+<option value="nome">
+🔤 Nome A → Z
+</option>
+
+<option value="preco-menor">
+💰 Menor preço
+</option>
+
+<option value="preco-maior">
+💰 Maior preço
+</option>
+
+<option value="estoque-menor">
+📦 Menor estoque
+</option>
+
+<option value="estoque-maior">
+📦 Maior estoque
+</option>
 
 </select>
 
 </div>
 
-<div class="filtros-produtos" id="filtrosProdutos">
 
-<button type="button" class="filtro-produto ativo" data-filtro="todos" onclick="selecionarFiltro('todos')">
+<div
+class="filtros-produtos"
+id="filtrosProdutos">
+
+<button
+type="button"
+class="filtro-produto ativo"
+data-filtro="todos"
+onclick="selecionarFiltro('todos')">
 Todos
 </button>
 
-<button type="button" class="filtro-produto" data-filtro="hamburguer" onclick="selecionarFiltro('hamburguer')">
+<button
+type="button"
+class="filtro-produto"
+data-filtro="hamburguer"
+onclick="selecionarFiltro('hamburguer')">
 🍔 Hambúrguer
 </button>
 
-<button type="button" class="filtro-produto" data-filtro="porcao" onclick="selecionarFiltro('porcao')">
+<button
+type="button"
+class="filtro-produto"
+data-filtro="porcao"
+onclick="selecionarFiltro('porcao')">
 🍟 Porções
 </button>
 
-<button type="button" class="filtro-produto" data-filtro="bebida" onclick="selecionarFiltro('bebida')">
+<button
+type="button"
+class="filtro-produto"
+data-filtro="bebida"
+onclick="selecionarFiltro('bebida')">
 🥤 Bebidas
 </button>
 
-<button type="button" class="filtro-produto" data-filtro="outro" onclick="selecionarFiltro('outro')">
+<button
+type="button"
+class="filtro-produto"
+data-filtro="outro"
+onclick="selecionarFiltro('outro')">
 📦 Outros
 </button>
 
 </div>
 
-<div id="listaProdutos" class="lista-produtos">
+
+<div
+id="listaProdutos"
+class="lista-produtos">
 
 <div class="lista-vazia">
 
-<strong>🍔 Carregando produtos...</strong>
+<strong>
+🍔 Carregando produtos...
+</strong>
 
 Aguarde enquanto o GrillCore consulta o Supabase.
 
@@ -748,26 +2169,48 @@ Aguarde enquanto o GrillCore consulta o Supabase.
 </div>
 
 </main>
+
 </div>
 
-<div id="modalProduto" class="modal-produto" onclick="fecharModalProduto(event)">
 
-<div class="modal-conteudo" onclick="event.stopPropagation()">
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+id="modalProduto"
+class="modal-produto"
+onclick="fecharModalProduto(event)"
+>
+
+<div
+class="modal-conteudo"
+onclick="event.stopPropagation()"
+>
 
 <div class="modal-cabecalho">
 
-<h3>👁️ Visualizar produto</h3>
+<h3>
+👁️ Visualizar produto
+</h3>
 
-<button type="button" class="modal-fechar" onclick="fecharModalProduto()">
+<button
+type="button"
+class="modal-fechar"
+onclick="fecharModalProduto()">
 ×
 </button>
 
 </div>
 
-<div id="modalProdutoConteudo"></div>
+<div
+id="modalProdutoConteudo">
+</div>
 
 </div>
+
 </div>
+
 
 <script src="script.js"></script>
 
@@ -797,9 +2240,13 @@ window.supabase.createClient(
 ===================================================== */
 
 let produtos = [];
+
 let produtoEditandoId = null;
+
 let filtroAtual = "todos";
+
 let fotoAtualBase64 = "";
+
 let ordenacaoAtual = "recentes";
 
 const ESTOQUE_BAIXO = 5;
@@ -886,7 +2333,8 @@ function salvarProdutosLocal(){
             JSON.stringify(produtos)
         );
 
-    }catch(erro){
+    }
+    catch(erro){
 
         console.warn(
             "Não foi possível salvar cópia local:",
@@ -904,7 +2352,8 @@ function salvarProdutosLocal(){
 
 function normalizarProduto(produto){
 
-    const item = produto || {};
+    const item =
+    produto || {};
 
     return {
 
@@ -947,8 +2396,10 @@ function normalizarProduto(produto){
 
         disponivel:
         item.disponivel === undefined
-        ? true
-        : Boolean(item.disponivel),
+        ?
+        true
+        :
+        Boolean(item.disponivel),
 
         criadoEm:
         item.criadoEm ||
@@ -1009,16 +2460,23 @@ function formatarDinheiro(valor){
 function nomeCategoria(categoria){
 
     const mapa = {
+
         hamburguer:"Hambúrguer",
+
         porcao:"Porção",
+
         bebida:"Bebida",
+
         outro:"Outro"
+
     };
 
     return mapa[
         String(categoria || "")
         .toLowerCase()
-    ] || "Outro";
+    ]
+    ||
+    "Outro";
 
 }
 
@@ -1026,16 +2484,23 @@ function nomeCategoria(categoria){
 function emojiCategoria(categoria){
 
     const mapa = {
+
         hamburguer:"🍔",
+
         porcao:"🍟",
+
         bebida:"🥤",
+
         outro:"📦"
+
     };
 
     return mapa[
         String(categoria || "")
         .toLowerCase()
-    ] || "📦";
+    ]
+    ||
+    "📦";
 
 }
 
@@ -1046,31 +2511,45 @@ function emojiCategoria(categoria){
 
 function mostrarAlertaProduto(mensagem){
 
-    sucessoProduto.classList.remove("visivel");
+    sucessoProduto.classList.remove(
+        "visivel"
+    );
 
-    alertaProduto.textContent = mensagem;
+    alertaProduto.textContent =
+    mensagem;
 
-    alertaProduto.classList.add("visivel");
+    alertaProduto.classList.add(
+        "visivel"
+    );
 
 }
 
 
 function mostrarSucessoProduto(mensagem){
 
-    alertaProduto.classList.remove("visivel");
+    alertaProduto.classList.remove(
+        "visivel"
+    );
 
-    sucessoProduto.textContent = mensagem;
+    sucessoProduto.textContent =
+    mensagem;
 
-    sucessoProduto.classList.add("visivel");
+    sucessoProduto.classList.add(
+        "visivel"
+    );
 
 }
 
 
 function limparAlertasProduto(){
 
-    alertaProduto.classList.remove("visivel");
+    alertaProduto.classList.remove(
+        "visivel"
+    );
 
-    sucessoProduto.classList.remove("visivel");
+    sucessoProduto.classList.remove(
+        "visivel"
+    );
 
 }
 
@@ -1096,7 +2575,8 @@ function atualizarCampoTamanho(){
 
     if(obrigatorio){
 
-        tamanhoProduto.required = true;
+        tamanhoProduto.required =
+        true;
 
         tamanhoProduto.placeholder =
         categoria === "porcao"
@@ -1106,20 +2586,26 @@ function atualizarCampoTamanho(){
         "Ex.: 350 ml, 600 ml, 1 L, 2 L";
 
         if(badge){
+
             badge.textContent =
             "obrigatório";
+
         }
 
-    }else{
+    }
+    else{
 
-        tamanhoProduto.required = false;
+        tamanhoProduto.required =
+        false;
 
         tamanhoProduto.placeholder =
         "Ex.: tamanho ou volume";
 
         if(badge){
+
             badge.textContent =
             "opcional";
+
         }
 
     }
@@ -1140,16 +2626,21 @@ function(){
     this.files[0];
 
     if(!arquivo){
+
         return;
+
     }
 
-    if(!arquivo.type.startsWith("image/")){
+    if(
+        !arquivo.type.startsWith("image/")
+    ){
 
         mostrarAlertaProduto(
             "Selecione um arquivo de imagem válido."
         );
 
-        this.value = "";
+        this.value =
+        "";
 
         return;
 
@@ -1174,7 +2665,9 @@ function(){
 
     };
 
-    leitor.readAsDataURL(arquivo);
+    leitor.readAsDataURL(
+        arquivo
+    );
 
 });
 
@@ -1215,7 +2708,9 @@ function produtoDuplicado(
             ===
             String(idIgnorar)
         ){
+
             return false;
+
         }
 
         return (
@@ -1228,7 +2723,10 @@ function produtoDuplicado(
 
             &&
 
-            String(produto.categoria || "outro")
+            String(
+                produto.categoria ||
+                "outro"
+            )
             .trim()
             .toLowerCase()
             ===
@@ -1236,7 +2734,9 @@ function produtoDuplicado(
 
             &&
 
-            String(produto.tamanho || "")
+            String(
+                produto.tamanho || ""
+            )
             .trim()
             .toLowerCase()
             ===
@@ -1295,8 +2795,13 @@ async function carregarProdutosSupabase(){
 
         listaProdutos.innerHTML = `
         <div class="lista-vazia">
-            <strong>☁️ Conectando ao Supabase...</strong>
+
+            <strong>
+                ☁️ Conectando ao Supabase...
+            </strong>
+
             Carregando produtos online.
+
         </div>
         `;
 
@@ -1306,15 +2811,20 @@ async function carregarProdutosSupabase(){
         .select("*")
         .order(
             "created_at",
-            {ascending:false}
+            {
+                ascending:false
+            }
         );
 
         if(resultado.error){
+
             console.error(
                 "Erro Supabase:",
                 resultado.error
             );
+
             throw resultado.error;
+
         }
 
         const dados =
@@ -1348,13 +2858,18 @@ async function carregarProdutosSupabase(){
         try{
 
             const dadosLocais =
-            localStorage.getItem("produtos");
+            localStorage.getItem(
+                "produtos"
+            );
 
             produtos =
             dadosLocais
             ?
-            JSON.parse(dadosLocais)
-            .map(normalizarProduto)
+            JSON.parse(
+                dadosLocais
+            ).map(
+                normalizarProduto
+            )
             :
             [];
 
@@ -1376,10 +2891,14 @@ async function carregarProdutosSupabase(){
 }
 
 
-async function inserirProdutoSupabase(produto){
+async function inserirProdutoSupabase(
+    produto
+){
 
     const dados =
-    prepararProdutoSupabase(produto);
+    prepararProdutoSupabase(
+        produto
+    );
 
     const resultado =
     await supabaseClient
@@ -1389,7 +2908,9 @@ async function inserirProdutoSupabase(produto){
     .single();
 
     if(resultado.error){
+
         throw resultado.error;
+
     }
 
     return resultado.data;
@@ -1403,7 +2924,9 @@ async function atualizarProdutoSupabase(
 ){
 
     const dados =
-    prepararProdutoSupabase(produto);
+    prepararProdutoSupabase(
+        produto
+    );
 
     const resultado =
     await supabaseClient
@@ -1414,7 +2937,9 @@ async function atualizarProdutoSupabase(
     .single();
 
     if(resultado.error){
+
         throw resultado.error;
+
     }
 
     return resultado.data;
@@ -1431,7 +2956,9 @@ async function excluirProdutoSupabase(id){
     .eq("id",id);
 
     if(resultado.error){
+
         throw resultado.error;
+
     }
 
 }
@@ -1571,7 +3098,8 @@ async function salvarProduto(event){
     }
 
 
-    btnSalvarProduto.disabled = true;
+    btnSalvarProduto.disabled =
+    true;
 
     btnSalvarProduto.innerHTML =
     "⏳ Salvando...";
@@ -1585,9 +3113,11 @@ async function salvarProduto(event){
             produtos.findIndex(
             function(produto){
 
-                return String(produto.id)
-                ===
-                String(produtoEditandoId);
+                return (
+                    String(produto.id)
+                    ===
+                    String(produtoEditandoId)
+                );
 
             });
 
@@ -1610,12 +3140,20 @@ async function salvarProduto(event){
                 ...produtoAnterior,
 
                 nome,
+
                 categoria,
+
                 preco,
+
                 tamanho,
-                estoque:estoqueFinal,
+
+                estoque:
+                estoqueFinal,
+
                 ingredientes,
+
                 descricao,
+
                 disponivel,
 
                 foto:
@@ -1658,12 +3196,20 @@ async function salvarProduto(event){
             const produtoNovo = {
 
                 nome,
+
                 categoria,
+
                 preco,
+
                 tamanho,
-                estoque:estoqueFinal,
+
+                estoque:
+                estoqueFinal,
+
                 ingredientes,
+
                 descricao,
+
                 disponivel,
 
                 foto:
@@ -1719,7 +3265,10 @@ async function salvarProduto(event){
         let mensagem =
         "Não foi possível salvar no Supabase.";
 
-        if(erro && erro.message){
+        if(
+            erro &&
+            erro.message
+        ){
 
             mensagem +=
             " " +
@@ -1734,7 +3283,8 @@ async function salvarProduto(event){
     }
     finally{
 
-        btnSalvarProduto.disabled = false;
+        btnSalvarProduto.disabled =
+        false;
 
         btnSalvarProduto.innerHTML =
         produtoEditandoId
@@ -1774,11 +3324,15 @@ function obterProdutosFiltrados(){
             &&
             categoria !== filtroAtual
         ){
+
             return false;
+
         }
 
         if(!busca){
+
             return true;
+
         }
 
         const textoBusca =
@@ -1792,12 +3346,16 @@ function obterProdutosFiltrados(){
         .join(" ")
         .toLowerCase();
 
-        return textoBusca.includes(busca);
+        return textoBusca.includes(
+            busca
+        );
 
     });
 
 
-    return ordenarProdutos(lista);
+    return ordenarProdutos(
+        lista
+    );
 
 }
 
@@ -1808,9 +3366,12 @@ function obterProdutosFiltrados(){
 
 function ordenarProdutos(lista){
 
-    const copia = [...lista];
+    const copia =
+    [...lista];
 
-    if(ordenacaoAtual === "nome"){
+    if(
+        ordenacaoAtual === "nome"
+    ){
 
         copia.sort(
         (a,b) =>
@@ -1822,7 +3383,9 @@ function ordenarProdutos(lista){
 
     }
 
-    if(ordenacaoAtual === "preco-menor"){
+    if(
+        ordenacaoAtual === "preco-menor"
+    ){
 
         copia.sort(
         (a,b) =>
@@ -1833,7 +3396,9 @@ function ordenarProdutos(lista){
 
     }
 
-    if(ordenacaoAtual === "preco-maior"){
+    if(
+        ordenacaoAtual === "preco-maior"
+    ){
 
         copia.sort(
         (a,b) =>
@@ -1844,7 +3409,9 @@ function ordenarProdutos(lista){
 
     }
 
-    if(ordenacaoAtual === "estoque-menor"){
+    if(
+        ordenacaoAtual === "estoque-menor"
+    ){
 
         copia.sort(
         (a,b) =>
@@ -1855,7 +3422,9 @@ function ordenarProdutos(lista){
 
     }
 
-    if(ordenacaoAtual === "estoque-maior"){
+    if(
+        ordenacaoAtual === "estoque-maior"
+    ){
 
         copia.sort(
         (a,b) =>
@@ -1866,7 +3435,9 @@ function ordenarProdutos(lista){
 
     }
 
-    if(ordenacaoAtual === "recentes"){
+    if(
+        ordenacaoAtual === "recentes"
+    ){
 
         copia.sort(
         function(a,b){
@@ -1906,7 +3477,9 @@ function renderizarProdutos(){
     obterProdutosFiltrados();
 
     atualizarContador();
+
     atualizarResumo();
+
 
     if(filtrados.length === 0){
 
@@ -1915,6 +3488,7 @@ function renderizarProdutos(){
         <div class="lista-vazia">
 
             <strong>
+
                 ${
                     produtos.length === 0
                     ?
@@ -1922,6 +3496,7 @@ function renderizarProdutos(){
                     :
                     "🔎 Nenhum produto encontrado"
                 }
+
             </strong>
 
             ${
@@ -1940,16 +3515,19 @@ function renderizarProdutos(){
 
     }
 
+
     listaProdutos.innerHTML =
     filtrados
-    .map(criarCardProduto)
+    .map(
+        criarCardProduto
+    )
     .join("");
 
 }
 
 
 /* =====================================================
-   CARD
+   CARD PRODUTO
 ===================================================== */
 
 function criarCardProduto(produto){
@@ -1974,7 +3552,9 @@ function criarCardProduto(produto){
     >
     `
     :
-    emojiCategoria(produto.categoria);
+    emojiCategoria(
+        produto.categoria
+    );
 
 
     const tamanho =
@@ -2016,8 +3596,11 @@ function criarCardProduto(produto){
                 <div class="produto-tags">
 
                     <span class="produto-categoria">
+
                         ${emojiCategoria(produto.categoria)}
+
                         ${nomeCategoria(produto.categoria)}
+
                     </span>
 
                     ${
@@ -2032,7 +3615,18 @@ function criarCardProduto(produto){
                         ""
                     }
 
-                    <span class="produto-status ${disponivel ? "disponivel" : "indisponivel"}">
+                    <span
+                        class="
+                            produto-status
+                            ${
+                                disponivel
+                                ?
+                                "disponivel"
+                                :
+                                "indisponivel"
+                            }
+                        "
+                    >
 
                         ${
                             disponivel
@@ -2050,7 +3644,18 @@ function criarCardProduto(produto){
                     ${formatarDinheiro(produto.preco)}
                 </div>
 
-                <div class="produto-estoque ${estoqueBaixo ? "estoque-alerta" : ""}">
+                <div
+                    class="
+                        produto-estoque
+                        ${
+                            estoqueBaixo
+                            ?
+                            "estoque-alerta"
+                            :
+                            ""
+                        }
+                    "
+                >
 
                     ${
                         estoqueBaixo
@@ -2060,13 +3665,16 @@ function criarCardProduto(produto){
                         "Estoque:"
                     }
 
-                    <strong>${estoque}</strong>
+                    <strong>
+                        ${estoque}
+                    </strong>
 
                 </div>
 
             </div>
 
         </div>
+
 
         <div class="estoque-rapido">
 
@@ -2090,9 +3698,13 @@ function criarCardProduto(produto){
 
         </div>
 
+
         <div class="produto-ingredientes">
+
             ${escaparTexto(ingredientes)}
+
         </div>
+
 
         <div class="produto-acoes">
 
@@ -2144,7 +3756,9 @@ function criarCardProduto(produto){
 function escaparTexto(texto){
 
     const div =
-    document.createElement("div");
+    document.createElement(
+        "div"
+    );
 
     div.textContent =
     texto == null
@@ -2161,9 +3775,18 @@ function escaparTexto(texto){
 function escaparAtributo(valor){
 
     return String(valor)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,"&quot;");
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    );
 
 }
 
@@ -2192,7 +3815,7 @@ function atualizarContador(){
 
 
 /* =====================================================
-   RESUMO
+   RESUMO DOS 4 CARDS
 ===================================================== */
 
 function atualizarResumo(){
@@ -2200,29 +3823,51 @@ function atualizarResumo(){
     const total =
     produtos.length;
 
+
     const disponiveis =
     produtos.filter(
-        p => p.disponivel !== false
+        function(produto){
+
+            return (
+                produto.disponivel !== false
+            );
+
+        }
     ).length;
+
 
     const estoqueBaixo =
     produtos.filter(
-        p =>
-        Number(p.estoque || 0)
-        <=
-        ESTOQUE_BAIXO
+        function(produto){
+
+            return (
+                Number(
+                    produto.estoque || 0
+                )
+                <=
+                ESTOQUE_BAIXO
+            );
+
+        }
     ).length;
+
 
     const valorEstoque =
     produtos.reduce(
         function(total,p){
 
-            return total
-            +
-            (
-                Number(p.preco || 0)
-                *
-                Number(p.estoque || 0)
+            return (
+                total
+                +
+                (
+                    Number(
+                        p.preco || 0
+                    )
+                    *
+                    Number(
+                        p.estoque || 0
+                    )
+                )
             );
 
         },
@@ -2232,23 +3877,28 @@ function atualizarResumo(){
 
     document.getElementById(
         "resumoTotal"
-    ).textContent = total;
+    ).textContent =
+    total;
 
 
     document.getElementById(
         "resumoDisponiveis"
-    ).textContent = disponiveis;
+    ).textContent =
+    disponiveis;
 
 
     document.getElementById(
         "resumoEstoqueBaixo"
-    ).textContent = estoqueBaixo;
+    ).textContent =
+    estoqueBaixo;
 
 
     document.getElementById(
         "resumoValorEstoque"
     ).textContent =
-    formatarDinheiro(valorEstoque);
+    formatarDinheiro(
+        valorEstoque
+    );
 
 }
 
@@ -2263,9 +3913,11 @@ function editarProduto(id){
     produtos.find(
     function(item){
 
-        return String(item.id)
-        ===
-        String(id);
+        return (
+            String(item.id)
+            ===
+            String(id)
+        );
 
     });
 
@@ -2294,8 +3946,9 @@ function editarProduto(id){
 
 
     precoProduto.value =
-    Number(produto.preco || 0)
-    .toFixed(2);
+    Number(
+        produto.preco || 0
+    ).toFixed(2);
 
 
     tamanhoProduto.value =
@@ -2303,7 +3956,9 @@ function editarProduto(id){
 
 
     estoqueProduto.value =
-    Number(produto.estoque || 0);
+    Number(
+        produto.estoque || 0
+    );
 
 
     ingredientesProduto.value =
@@ -2355,8 +4010,11 @@ function editarProduto(id){
 
 
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 
@@ -2375,9 +4033,11 @@ async function duplicarProduto(id){
     produtos.find(
     function(item){
 
-        return String(item.id)
-        ===
-        String(id);
+        return (
+            String(item.id)
+            ===
+            String(id)
+        );
 
     });
 
@@ -2427,9 +4087,11 @@ async function duplicarProduto(id){
 
         ...original,
 
-        nome:novoNome,
+        nome:
+        novoNome,
 
-        estoque:0,
+        estoque:
+        0,
 
         criadoEm:
         new Date().toISOString(),
@@ -2471,12 +4133,17 @@ async function duplicarProduto(id){
     }
     catch(erro){
 
-        console.error(erro);
+        console.error(
+            erro
+        );
 
         mostrarAlertaProduto(
             "Não foi possível duplicar no Supabase: "
             +
-            (erro.message || "erro desconhecido")
+            (
+                erro.message ||
+                "erro desconhecido"
+            )
         );
 
     }
@@ -2497,9 +4164,11 @@ async function alterarEstoque(
     produtos.findIndex(
     function(item){
 
-        return String(item.id)
-        ===
-        String(id);
+        return (
+            String(item.id)
+            ===
+            String(id)
+        );
 
     });
 
@@ -2532,7 +4201,8 @@ async function alterarEstoque(
 
         ...produtos[indice],
 
-        estoque:novo,
+        estoque:
+        novo,
 
         atualizadoEm:
         new Date().toISOString()
@@ -2562,12 +4232,17 @@ async function alterarEstoque(
     }
     catch(erro){
 
-        console.error(erro);
+        console.error(
+            erro
+        );
 
         mostrarAlertaProduto(
             "Não foi possível atualizar o estoque no Supabase: "
             +
-            (erro.message || "erro desconhecido")
+            (
+                erro.message ||
+                "erro desconhecido"
+            )
         );
 
     }
@@ -2585,9 +4260,11 @@ async function excluirProduto(id){
     produtos.find(
     function(item){
 
-        return String(item.id)
-        ===
-        String(id);
+        return (
+            String(item.id)
+            ===
+            String(id)
+        );
 
     });
 
@@ -2614,7 +4291,9 @@ async function excluirProduto(id){
 
 
     if(!confirmar){
+
         return;
+
     }
 
 
@@ -2629,9 +4308,11 @@ async function excluirProduto(id){
         produtos.filter(
         function(item){
 
-            return String(item.id)
-            !==
-            String(id);
+            return (
+                String(item.id)
+                !==
+                String(id)
+            );
 
         });
 
@@ -2645,7 +4326,9 @@ async function excluirProduto(id){
             String(id)
         ){
 
-            limparFormularioProduto(false);
+            limparFormularioProduto(
+                false
+            );
 
         }
 
@@ -2660,12 +4343,17 @@ async function excluirProduto(id){
     }
     catch(erro){
 
-        console.error(erro);
+        console.error(
+            erro
+        );
 
         mostrarAlertaProduto(
             "Não foi possível excluir no Supabase: "
             +
-            (erro.message || "erro desconhecido")
+            (
+                erro.message ||
+                "erro desconhecido"
+            )
         );
 
     }
@@ -2708,7 +4396,9 @@ function limparFormularioProduto(
 
 
             if(!ok){
+
                 return;
+
             }
 
         }
@@ -2716,23 +4406,31 @@ function limparFormularioProduto(
     }
 
 
-    produtoEditandoId = null;
+    produtoEditandoId =
+    null;
 
-    fotoAtualBase64 = "";
+    fotoAtualBase64 =
+    "";
 
     formProduto.reset();
 
-    estoqueProduto.value = "0";
+    estoqueProduto.value =
+    "0";
 
-    disponivelProduto.checked = true;
+    disponivelProduto.checked =
+    true;
 
-    fotoProduto.value = "";
+    fotoProduto.value =
+    "";
 
-    fotoPreview.textContent = "🍔";
+    fotoPreview.textContent =
+    "🍔";
 
-    tituloFormulario.textContent = "Novo produto";
+    tituloFormulario.textContent =
+    "Novo produto";
 
-    btnSalvarProduto.innerHTML = "💾 Salvar produto";
+    btnSalvarProduto.innerHTML =
+    "💾 Salvar produto";
 
     atualizarCampoTamanho();
 
@@ -2745,11 +4443,14 @@ function limparFormularioProduto(
 
 function selecionarFiltro(filtro){
 
-    filtroAtual = filtro;
+    filtroAtual =
+    filtro;
 
 
     document
-    .querySelectorAll(".filtro-produto")
+    .querySelectorAll(
+        ".filtro-produto"
+    )
     .forEach(
     function(botao){
 
@@ -2776,9 +4477,11 @@ function visualizarProduto(id){
     produtos.find(
     function(item){
 
-        return String(item.id)
-        ===
-        String(id);
+        return (
+            String(item.id)
+            ===
+            String(id)
+        );
 
     });
 
@@ -2795,7 +4498,9 @@ function visualizarProduto(id){
 
 
     const estoque =
-    Number(produto.estoque || 0);
+    Number(
+        produto.estoque || 0
+    );
 
 
     const foto =
@@ -2808,7 +4513,9 @@ function visualizarProduto(id){
     >
     `
     :
-    emojiCategoria(produto.categoria);
+    emojiCategoria(
+        produto.categoria
+    );
 
 
     modalProdutoConteudo.innerHTML = `
@@ -2834,15 +4541,24 @@ function visualizarProduto(id){
         </p>
 
         <div class="modal-linha">
-            <span>Categoria</span>
+
+            <span>
+                Categoria
+            </span>
+
             <strong>
                 ${emojiCategoria(produto.categoria)}
                 ${nomeCategoria(produto.categoria)}
             </strong>
+
         </div>
 
         <div class="modal-linha">
-            <span>Tamanho / Volume</span>
+
+            <span>
+                Tamanho / Volume
+            </span>
+
             <strong>
                 ${
                     escaparTexto(
@@ -2851,25 +4567,41 @@ function visualizarProduto(id){
                     )
                 }
             </strong>
+
         </div>
 
         <div class="modal-linha">
-            <span>Preço</span>
+
+            <span>
+                Preço
+            </span>
+
             <strong>
                 ${formatarDinheiro(produto.preco)}
             </strong>
+
         </div>
 
         <div class="modal-linha">
-            <span>Estoque</span>
+
+            <span>
+                Estoque
+            </span>
+
             <strong>
                 ${estoque} unidade(s)
             </strong>
+
         </div>
 
         <div class="modal-linha">
-            <span>Status</span>
+
+            <span>
+                Status
+            </span>
+
             <strong>
+
                 ${
                     produto.disponivel !== false
                     ?
@@ -2877,11 +4609,17 @@ function visualizarProduto(id){
                     :
                     "🔴 Indisponível"
                 }
+
             </strong>
+
         </div>
 
         <div class="modal-linha">
-            <span>Ingredientes</span>
+
+            <span>
+                Ingredientes
+            </span>
+
             <strong>
                 ${
                     escaparTexto(
@@ -2890,6 +4628,7 @@ function visualizarProduto(id){
                     )
                 }
             </strong>
+
         </div>
 
     </div>
@@ -2897,7 +4636,9 @@ function visualizarProduto(id){
     `;
 
 
-    modalProduto.classList.add("visivel");
+    modalProduto.classList.add(
+        "visivel"
+    );
 
 }
 
@@ -2912,10 +4653,14 @@ function fecharModalProduto(event){
         event &&
         event.target !== modalProduto
     ){
+
         return;
+
     }
 
-    modalProduto.classList.remove("visivel");
+    modalProduto.classList.remove(
+        "visivel"
+    );
 
 }
 
@@ -2924,8 +4669,12 @@ document.addEventListener(
 "keydown",
 function(event){
 
-    if(event.key === "Escape"){
+    if(
+        event.key === "Escape"
+    ){
+
         fecharModalProduto();
+
     }
 
 });
@@ -2963,7 +4712,10 @@ function(){
    CAMPOS NUMÉRICOS
 ===================================================== */
 
-[precoProduto,estoqueProduto]
+[
+    precoProduto,
+    estoqueProduto
+]
 .forEach(
 function(input){
 
@@ -2971,12 +4723,21 @@ function(input){
     "input",
     function(){
 
-        if(this.value === ""){
+        if(
+            this.value === ""
+        ){
+
             return;
+
         }
 
-        if(Number(this.value) < 0){
-            this.value = "0";
+        if(
+            Number(this.value) < 0
+        ){
+
+            this.value =
+            "0";
+
         }
 
     });
@@ -2986,7 +4747,9 @@ function(input){
     "blur",
     function(){
 
-        if(this.value.trim() === ""){
+        if(
+            this.value.trim() === ""
+        ){
 
             this.value =
             this === estoqueProduto
@@ -3029,22 +4792,29 @@ window.addEventListener(
 "storage",
 function(event){
 
-    if(event.key === "produtos"){
+    if(
+        event.key === "produtos"
+    ){
 
         try{
 
             produtos =
             JSON.parse(
-                event.newValue || "[]"
+                event.newValue ||
+                "[]"
             )
-            .map(normalizarProduto);
+            .map(
+                normalizarProduto
+            );
 
             renderizarProdutos();
 
         }
         catch(erro){
 
-            console.error(erro);
+            console.error(
+                erro
+            );
 
         }
 
@@ -3062,7 +4832,9 @@ window.addEventListener(
 function(){
 
     if(
-        localStorage.getItem("grillcore_login")
+        localStorage.getItem(
+            "grillcore_login"
+        )
         !==
         "true"
     ){

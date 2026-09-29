@@ -10,864 +10,741 @@ if(localStorage.getItem("grillcore_login") !== "true"){
 </script>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#ff7300">
-<meta name="description" content="Gestão de clientes — GrillCore ERP">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#ff7300">
+
+<meta name="description"
+      content="Gestão de clientes — GrillCore ERP">
 
 <title>Clientes — GrillCore ERP</title>
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="tema-laranja.css">
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+/* =====================================================
+   BASE
+===================================================== */
 
 *{
     box-sizing:border-box;
 }
 
-:root{
-    --laranja:#ff7300;
-    --laranja2:#ff9800;
-    --laranja3:#ff4d00;
-    --preto:#050505;
-    --card:#111;
-    --card2:#181818;
-    --texto:#fff;
-    --cinza:#aaa;
-    --verde:#29d66f;
-    --vermelho:#ff5555;
+html,
+body{
+    margin:0;
+    padding:0;
+    min-height:100%;
 }
 
 body{
-    margin:0;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background:
-        radial-gradient(circle at top,
-        rgba(255,115,0,.10),
-        transparent 35%),
-        linear-gradient(180deg,#090909,#050505);
+        linear-gradient(
+            180deg,
+            #0b0b0b,
+            #151515
+        );
+
     color:#fff;
 }
 
-.clientes-page{
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
     width:100%;
     max-width:1100px;
-    margin:auto;
-    padding:12px 12px 45px;
+
+    margin:0 auto;
+
+    padding:
+        16px
+        14px
+        40px;
 }
 
-/* CABEÇALHO */
+/* =====================================================
+   TOPO
+===================================================== */
 
-.clientes-header{
-    text-align:center;
-    padding:8px 0 25px;
-}
-
-.clientes-header .icone{
-    width:66px;
-    height:66px;
-    margin:0 auto 12px;
+.topo{
     display:flex;
+
     align-items:center;
-    justify-content:center;
-    border-radius:19px;
-    background:linear-gradient(145deg,#ff9800,#ff4d00);
-    border:1px solid rgba(255,255,255,.18);
-    font-size:33px;
-    box-shadow:0 10px 30px rgba(255,115,0,.25);
-}
+    justify-content:space-between;
 
-.clientes-header h1{
-    margin:0;
-    color:#fff;
-    font-size:clamp(32px,7vw,46px);
-    line-height:1;
-    font-weight:950;
-    letter-spacing:-1.5px;
-}
-
-.clientes-header h1::after{
-    content:"";
-    display:block;
-    width:58px;
-    height:4px;
-    margin:12px auto 0;
-    border-radius:10px;
-    background:linear-gradient(90deg,#ff4d00,#ff9800);
-}
-
-.clientes-header p{
-    margin:11px 0 0;
-    color:#929292;
-    font-size:14px;
-    font-weight:650;
-}
-
-/* SEÇÕES */
-
-.clientes-secao{
-    position:relative;
-    background:linear-gradient(145deg,#151515,#0b0b0b);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:21px;
-    padding:20px;
-    margin-bottom:16px;
-    overflow:hidden;
-    box-shadow:0 14px 35px rgba(0,0,0,.38);
-}
-
-.clientes-secao::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:3px;
-    background:linear-gradient(90deg,transparent,#ff7300,transparent);
-}
-
-.secao-titulo{
-    margin:0 0 19px;
-    text-align:center;
-    color:#fff;
-    font-size:clamp(20px,5vw,27px);
-    line-height:1.15;
-    font-weight:950;
-}
-
-.secao-titulo::after{
-    content:"";
-    display:block;
-    width:46px;
-    height:3px;
-    margin:9px auto 0;
-    border-radius:10px;
-    background:#ff7300;
-}
-
-/* RESUMO */
-
-.resumo-grid{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
     gap:12px;
+
+    margin-bottom:18px;
+
+    padding:16px;
+
+    background:#111;
+
+    border:
+        1px solid
+        #292929;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.35);
 }
 
-.resumo-card{
-    position:relative;
-    min-width:0;
-    min-height:142px;
-    padding:14px 9px;
-    display:flex;
-    flex-direction:column;
+.btn-voltar{
+    display:inline-flex;
+
     align-items:center;
     justify-content:center;
+
+    min-height:42px;
+
+    padding:
+        0 14px;
+
+    border-radius:12px;
+
+    background:#222;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-weight:800;
+
+    border:
+        1px solid
+        #333;
+}
+
+.btn-voltar:active{
+    transform:scale(.97);
+}
+
+.topo-centro{
     text-align:center;
-    border-radius:18px;
-    background:linear-gradient(145deg,#ff9800,#ff7300 45%,#ff4d00);
-    border:1px solid rgba(255,255,255,.18);
-    color:#fff;
-    overflow:hidden;
-    box-shadow:0 10px 25px rgba(255,115,0,.17);
+
+    flex:1;
 }
 
-.resumo-icone{
-    position:relative;
-    z-index:2;
-    font-size:24px;
-    line-height:1;
-    margin-bottom:7px;
-}
+.topo h1{
+    margin:0;
 
-.resumo-label{
-    position:relative;
-    z-index:2;
-    width:100%;
-    color:#fff;
-    font-size:11px;
-    line-height:1.2;
+    font-size:
+        clamp(22px,5vw,34px);
+
     font-weight:900;
-    text-transform:uppercase;
+
+    letter-spacing:.5px;
 }
 
-.resumo-numero{
-    position:relative;
-    z-index:2;
-    display:block;
-    width:100%;
-    margin-top:7px;
-    color:#fff;
-    font-size:29px !important;
-    line-height:1;
-    font-weight:950;
-    white-space:nowrap;
-    text-align:center;
-    text-shadow:0 3px 8px rgba(0,0,0,.22);
+.topo h1 span{
+    color:#ff7300;
 }
 
-.resumo-numero.valor{
-    font-size:20px !important;
-}
+.subtitulo{
+    margin-top:5px;
 
-/* FORM */
-
-.formulario{
-    display:none;
-    animation:aparecer .2s ease;
-}
-
-@keyframes aparecer{
-    from{
-        opacity:0;
-        transform:translateY(-8px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.formulario label{
-    display:block;
-    margin:15px 0 7px;
-    color:#ddd;
-    font-size:13px;
-    font-weight:850;
-}
-
-.formulario input,
-.formulario textarea{
-    width:100%;
-}
-
-.formulario input:focus,
-.formulario textarea:focus,
-.busca-input:focus{
-    border-color:#ff7300 !important;
-    box-shadow:0 0 0 3px rgba(255,115,0,.12);
-}
-
-.botao-principal{
-    width:100%;
-    min-height:58px;
-    margin-bottom:14px;
-    border:none;
-    border-radius:16px;
-    background:linear-gradient(135deg,#ff9800,#ff4d00);
-    color:#fff;
-    font-size:15px;
-    font-weight:950;
-    cursor:pointer;
-    box-shadow:0 10px 26px rgba(255,115,0,.20);
-}
-
-.botao-principal:active{
-    transform:scale(.98);
-}
-
-.botao-cancelar{
-    width:100%;
-    min-height:52px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:15px;
-    background:#111;
     color:#aaa;
+
     font-size:13px;
-    font-weight:900;
 }
 
-/* BUSCA */
-
-.busca-area{
+.status{
     display:flex;
-    flex-direction:column;
+
     align-items:center;
+
+    gap:7px;
+
+    padding:
+        9px 12px;
+
+    border-radius:999px;
+
+    background:#171717;
+
+    color:#ddd;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    white-space:nowrap;
 }
 
-.busca-label{
-    color:#ff9800;
-    font-size:11px;
+.status-ponto{
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:#28c76f;
+
+    box-shadow:
+        0 0 8px
+        rgba(40,199,111,.7);
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+    background:#111;
+
+    border:
+        1px solid
+        #292929;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin-bottom:16px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.28);
+}
+
+.titulo-secao{
+    margin:
+        0 0 16px;
+
+    font-size:19px;
+
     font-weight:900;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    margin-bottom:9px;
 }
 
-.busca-input{
+.titulo-secao span{
+    color:#ff7300;
+}
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:14px;
+}
+
+.campo{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+}
+
+.campo-full{
+    grid-column:
+        1 / -1;
+}
+
+label{
+    color:#ddd;
+
+    font-size:13px;
+
+    font-weight:800;
+}
+
+input,
+textarea{
     width:100%;
-    max-width:650px;
-    min-height:54px;
-    padding:0 16px;
-    text-align:center;
-    border-radius:15px !important;
-    background:#080808 !important;
-}
 
-/* LISTA */
+    border:
+        1px solid
+        #353535;
 
-.lista-titulo{
-    margin:24px 0 14px;
-    text-align:center;
+    background:#080808;
+
     color:#fff;
-    font-size:22px;
-    font-weight:950;
+
+    border-radius:12px;
+
+    padding:
+        13px;
+
+    outline:none;
+
+    font-size:15px;
 }
 
-.lista-titulo::after{
-    content:"";
-    display:block;
-    width:42px;
-    height:3px;
-    margin:8px auto 0;
-    border-radius:10px;
+input:focus,
+textarea:focus{
+    border-color:#ff7300;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255,115,0,.12);
+}
+
+textarea{
+    min-height:95px;
+
+    resize:vertical;
+}
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+.acoes{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:16px;
+}
+
+.btn{
+    min-height:46px;
+
+    border:0;
+
+    border-radius:12px;
+
+    padding:
+        0 18px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    font-size:14px;
+}
+
+.btn-salvar{
     background:#ff7300;
+
+    color:#fff;
+
+    flex:1;
 }
 
-/* CLIENTE */
+.btn-salvar:hover{
+    background:#ff861f;
+}
+
+.btn-cancelar{
+    background:#292929;
+
+    color:#fff;
+
+    display:none;
+}
+
+.btn-cancelar.mostrar{
+    display:block;
+}
+
+/* =====================================================
+   PESQUISA
+===================================================== */
+
+.pesquisa-box{
+    margin-bottom:16px;
+}
+
+.pesquisa{
+    position:relative;
+}
+
+.pesquisa input{
+    padding-left:42px;
+}
+
+.icone-pesquisa{
+    position:absolute;
+
+    left:14px;
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size:17px;
+
+    color:#888;
+
+    pointer-events:none;
+}
+
+/* =====================================================
+   CABEÇALHO LISTA
+===================================================== */
+
+.lista-topo{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:12px;
+}
+
+.contador{
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    min-width:34px;
+    height:30px;
+
+    padding:
+        0 10px;
+
+    border-radius:999px;
+
+    background:#ff7300;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:900;
+}
+
+/* =====================================================
+   CLIENTE
+===================================================== */
+
+.lista-clientes{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
 
 .cliente{
-    position:relative;
-    background:linear-gradient(145deg,#181818,#0c0c0c);
-    border:1px solid rgba(255,115,0,.22);
-    border-radius:20px;
-    padding:19px;
-    margin-bottom:14px;
-    box-shadow:0 10px 28px rgba(0,0,0,.38);
-    overflow:hidden;
+    background:#181818;
+
+    border:
+        1px solid
+        #2d2d2d;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    transition:.2s;
 }
 
-.cliente::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    width:4px;
-    height:100%;
-    background:linear-gradient(180deg,#ff9800,#ff4d00);
+.cliente:hover{
+    border-color:
+        rgba(255,115,0,.55);
 }
 
 .cliente-topo{
     display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:15px;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+
+    gap:10px;
 }
 
-.cliente-avatar{
-    flex:0 0 48px;
-    width:48px;
-    height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:14px;
-    background:linear-gradient(145deg,#ff9800,#ff4d00);
-    font-size:24px;
-}
+.cliente-nome{
+    font-size:17px;
 
-.cliente-titulo{
-    min-width:0;
-    flex:1;
-}
+    font-weight:900;
 
-.cliente h3{
-    margin:0;
     color:#fff;
-    font-size:19px;
-    line-height:1.15;
-    font-weight:950;
+
     word-break:break-word;
 }
 
-.cliente-status{
-    display:inline-block;
-    margin-top:5px;
-    color:#ff9800;
-    font-size:10px;
-    font-weight:900;
-    text-transform:uppercase;
-    letter-spacing:.7px;
-}
+.cliente-data{
+    color:#777;
 
-/* INFO */
+    font-size:11px;
+
+    white-space:nowrap;
+}
 
 .cliente-info{
-    display:grid;
-    gap:8px;
-}
+    display:flex;
 
-.cliente-info p{
-    margin:0;
-    padding:9px 10px;
-    border-radius:10px;
-    background:rgba(255,255,255,.025);
-    color:#aaa;
+    flex-direction:column;
+
+    gap:6px;
+
+    margin-top:10px;
+
+    color:#ccc;
+
     font-size:13px;
-    line-height:1.45;
+
+    line-height:1.4;
 }
 
 .cliente-info strong{
-    color:#ddd;
+    color:#fff;
 }
 
-/* ESTATÍSTICAS */
+.cliente-observacoes{
+    margin-top:9px;
 
-.cliente hr{
-    border:0;
-    border-top:1px solid rgba(255,115,0,.15);
-    margin:16px 0;
-}
+    padding:
+        9px 10px;
 
-.estatisticas{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:8px;
-}
+    border-left:
+        3px solid
+        #ff7300;
 
-.estatistica{
-    min-width:0;
-    padding:12px 6px;
-    text-align:center;
-    border-radius:13px;
     background:#101010;
-    border:1px solid rgba(255,255,255,.07);
-    color:#999;
-    font-size:9px;
-    line-height:1.2;
-    font-weight:800;
-}
 
-.estatistica strong{
-    display:block;
-    margin-top:6px;
-    color:#ff9800;
-    font-size:15px;
-    line-height:1.05;
-    font-weight:950;
-    white-space:nowrap;
-}
+    border-radius:
+        0 8px 8px 0;
 
-.estatistica strong.verde{
-    color:#29d66f;
-}
+    color:#bbb;
 
-/* AÇÕES */
+    font-size:12px;
+
+    line-height:1.45;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+}
 
 .cliente-acoes{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:9px;
-    margin-top:15px;
+    display:flex;
+
+    gap:8px;
+
+    margin-top:13px;
 }
 
-.cliente-acoes button{
-    min-height:47px;
-    border-radius:13px;
-    font-size:11px;
-    font-weight:900;
+.btn-editar,
+.btn-excluir{
+    min-height:38px;
+
+    padding:
+        0 13px;
+
+    border-radius:10px;
+
+    border:0;
+
+    font-weight:800;
+
     cursor:pointer;
 }
 
-.acao-whatsapp{
-    background:rgba(41,214,111,.08);
-    border:1px solid rgba(41,214,111,.35);
-    color:#29d66f;
-}
+.btn-editar{
+    background:#292929;
 
-.acao-historico{
-    background:rgba(255,115,0,.09);
-    border:1px solid rgba(255,115,0,.35);
-    color:#ff9800;
-}
-
-.acao-editar{
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.15);
-    color:#ddd;
-}
-
-.acao-excluir{
-    background:rgba(255,77,77,.05);
-    border:1px solid rgba(255,77,77,.28);
-    color:#ff7777;
-}
-
-/* VAZIO */
-
-.vazio{
-    text-align:center;
-    padding:35px 15px;
-    color:#777;
-    font-size:14px;
-}
-
-.vazio-icon{
-    display:block;
-    font-size:42px;
-    margin-bottom:10px;
-}
-
-/* VOLTAR */
-
-.voltar-clientes{
-    width:100%;
-    min-height:55px;
-    margin-top:4px;
-    border:1px solid rgba(255,115,0,.25);
-    border-radius:15px;
-    background:#111;
-    color:#ddd;
-    font-size:13px;
-    font-weight:900;
-}
-
-/* MODAL */
-
-.modal-fundo{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    padding:10px;
-    background:rgba(0,0,0,.78);
-    backdrop-filter:blur(5px);
-}
-
-.modal{
-    width:100%;
-    max-width:650px;
-    max-height:92vh;
-    overflow-y:auto;
-    background:linear-gradient(145deg,#181818,#080808);
-    border:1px solid rgba(255,115,0,.35);
-    border-radius:24px 24px 14px 14px;
-    padding:20px;
-    box-shadow:0 20px 70px rgba(0,0,0,.7);
-    animation:subir .22s ease;
-}
-
-@keyframes subir{
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.modal-cabecalho{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:18px;
-}
-
-.modal-avatar{
-    width:56px;
-    height:56px;
-    flex:0 0 56px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:17px;
-    background:linear-gradient(145deg,#ff9800,#ff4d00);
-    font-size:28px;
-}
-
-.modal-titulo{
-    flex:1;
-    min-width:0;
-}
-
-.modal-titulo h2{
-    margin:0;
-    font-size:23px;
-    font-weight:950;
-    word-break:break-word;
-}
-
-.modal-titulo span{
-    display:block;
-    margin-top:4px;
-    color:#ff9800;
-    font-size:10px;
-    font-weight:900;
-    text-transform:uppercase;
-}
-
-.fechar-modal{
-    width:42px;
-    height:42px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:12px;
-    background:#111;
     color:#fff;
-    font-size:18px;
 }
 
-.perfil-acoes{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:8px;
-    margin-bottom:18px;
+.btn-excluir{
+    background:#3a1717;
+
+    color:#ff8585;
 }
 
-.perfil-acoes button{
-    min-height:48px;
-    border-radius:12px;
-    font-size:10px;
-    font-weight:900;
+.btn-editar:active,
+.btn-excluir:active{
+    transform:scale(.97);
 }
 
-.perfil-whats{
-    background:rgba(41,214,111,.09);
-    border:1px solid rgba(41,214,111,.3);
-    color:#29d66f;
-}
+/* =====================================================
+   VAZIO / CARREGANDO
+===================================================== */
 
-.perfil-mapa{
-    background:rgba(255,115,0,.09);
-    border:1px solid rgba(255,115,0,.3);
-    color:#ff9800;
-}
+.estado{
+    padding:28px 15px;
 
-.perfil-copiar{
-    background:#111;
-    border:1px solid rgba(255,255,255,.12);
-    color:#ddd;
-}
-
-.perfil-grid{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:8px;
-    margin-bottom:18px;
-}
-
-.perfil-card{
-    padding:13px 6px;
     text-align:center;
-    border-radius:14px;
-    background:#101010;
-    border:1px solid rgba(255,255,255,.07);
-}
 
-.perfil-card span{
-    display:block;
-    color:#777;
-    font-size:9px;
-    font-weight:800;
-    text-transform:uppercase;
-}
+    color:#888;
 
-.perfil-card strong{
-    display:block;
-    margin-top:6px;
-    color:#ff9800;
-    font-size:15px;
-    font-weight:950;
-    white-space:nowrap;
-}
-
-.perfil-bloco{
-    margin-bottom:14px;
-    padding:14px;
-    border-radius:15px;
-    background:#101010;
-    border:1px solid rgba(255,255,255,.07);
-}
-
-.perfil-bloco-titulo{
-    margin-bottom:8px;
-    color:#ff9800;
-    font-size:11px;
-    font-weight:900;
-    text-transform:uppercase;
-}
-
-.perfil-bloco-conteudo{
-    color:#ccc;
-    font-size:13px;
-    line-height:1.5;
-    word-break:break-word;
-}
-
-/* HISTÓRICO */
-
-.pedido-historico{
-    padding:13px;
-    margin-bottom:9px;
-    border-radius:14px;
-    background:#0d0d0d;
-    border:1px solid rgba(255,255,255,.07);
-}
-
-.pedido-topo{
-    display:flex;
-    justify-content:space-between;
-    gap:8px;
-}
-
-.pedido-data{
-    color:#aaa;
-    font-size:11px;
-}
-
-.pedido-valor{
-    color:#29d66f;
     font-size:14px;
-    font-weight:950;
+
+    background:#0d0d0d;
+
+    border:
+        1px dashed
+        #333;
+
+    border-radius:14px;
 }
 
-.pedido-itens{
-    margin-top:8px;
+.estado strong{
+    display:block;
+
+    margin-bottom:5px;
+
     color:#ddd;
-    font-size:12px;
-    line-height:1.5;
+
+    font-size:16px;
 }
 
-.pedido-status{
-    display:inline-block;
-    margin-top:8px;
-    padding:4px 8px;
-    border-radius:20px;
-    background:rgba(255,115,0,.1);
-    color:#ff9800;
-    font-size:9px;
-    font-weight:900;
-    text-transform:uppercase;
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
+.mensagem{
+    min-height:20px;
+
+    margin-top:12px;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    text-align:center;
 }
 
-/* RESPONSIVO */
-
-@media(max-width:850px){
-    .resumo-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
+.mensagem.sucesso{
+    color:#4ade80;
 }
 
-@media(max-width:600px){
+.mensagem.erro{
+    color:#ff6b6b;
+}
 
-    .clientes-page{
-        padding:8px 8px 35px;
+.mensagem.info{
+    color:#ffb36b;
+}
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media(max-width:700px){
+
+    .container{
+        padding:
+            10px
+            10px
+            30px;
     }
 
-    .clientes-header .icone{
-        width:58px;
-        height:58px;
-        font-size:29px;
-    }
+    .topo{
+        padding:12px;
 
-    .clientes-header h1{
-        font-size:34px;
-    }
-
-    .clientes-header p{
-        font-size:12px;
-    }
-
-    .clientes-secao{
-        padding:17px 12px;
-        border-radius:18px;
-    }
-
-    .resumo-grid{
-        gap:9px;
-    }
-
-    .resumo-card{
-        min-height:120px;
-        padding:12px 5px;
         border-radius:15px;
     }
 
-    .resumo-icone{
+    .topo h1{
         font-size:21px;
     }
 
-    .resumo-label{
-        font-size:8.5px;
+    .subtitulo{
+        display:none;
     }
 
-    .resumo-numero{
-        font-size:25px !important;
+    .status{
+        font-size:10px;
+
+        padding:
+            7px 9px;
     }
 
-    .resumo-numero.valor{
-        font-size:16px !important;
+    .status-ponto{
+        width:7px;
+        height:7px;
     }
 
-    .cliente{
-        padding:16px 13px;
+    .form-grid{
+        grid-template-columns:1fr;
     }
 
-    .cliente h3{
-        font-size:18px;
+    .campo-full{
+        grid-column:auto;
     }
 
-    .cliente-info p{
-        font-size:12px;
+    .card{
+        padding:14px;
+
+        border-radius:15px;
     }
 
-    .estatistica{
-        padding:11px 4px;
-        font-size:8.5px;
+    .cliente-topo{
+        flex-direction:column;
     }
 
-    .estatistica strong{
-        font-size:13px;
-    }
-
-    .cliente-acoes{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .modal{
-        padding:17px;
-    }
-
-    .perfil-grid{
-        gap:6px;
-    }
-
-    .perfil-card strong{
-        font-size:13px;
+    .cliente-data{
+        white-space:normal;
     }
 
 }
 
-@media(max-width:380px){
+@media(max-width:430px){
 
-    .resumo-grid{
+    .btn-voltar{
+        padding:
+            0 10px;
+
+        font-size:12px;
+    }
+
+    .topo{
         gap:7px;
     }
 
-    .resumo-card{
-        min-height:113px;
+    .topo-centro{
+        min-width:0;
     }
 
-    .resumo-numero{
-        font-size:23px !important;
+    .topo h1{
+        font-size:18px;
     }
 
-    .resumo-numero.valor{
-        font-size:14px !important;
+    .status{
+        display:none;
+    }
+
+    .acoes{
+        flex-direction:column;
+    }
+
+    .btn-salvar,
+    .btn-cancelar{
+        width:100%;
     }
 
     .cliente-acoes{
-        grid-template-columns:1fr;
+        flex-direction:column;
     }
 
-    .perfil-acoes{
-        grid-template-columns:1fr;
+    .btn-editar,
+    .btn-excluir{
+        width:100%;
     }
 
-    .perfil-grid{
-        grid-template-columns:1fr;
-    }
 }
 
 </style>
@@ -876,361 +753,209 @@ body{
 
 <body>
 
-<div class="container clientes-page">
+<div class="container">
 
-<header class="clientes-header">
+<!-- =====================================================
+     TOPO
+===================================================== -->
 
-    <div class="icone">👥</div>
+<header class="topo">
 
-    <h1>Clientes</h1>
+    <a
+        href="index.html"
+        class="btn-voltar"
+    >
+        ← Voltar
+    </a>
 
-    <p>Gestão profissional da sua base de clientes</p>
+    <div class="topo-centro">
+
+        <h1>
+            CLIENT<span>ES</span>
+        </h1>
+
+        <div class="subtitulo">
+            Cadastro e gerenciamento de clientes
+        </div>
+
+    </div>
+
+    <div class="status">
+
+        <span class="status-ponto"></span>
+
+        Supabase
+
+    </div>
 
 </header>
 
 
-<!-- RESUMO -->
+<!-- =====================================================
+     CADASTRO
+===================================================== -->
 
-<section class="clientes-secao">
+<section class="card">
 
-    <h2 class="secao-titulo">📊 Resumo de Clientes</h2>
-
-    <div class="resumo-grid">
-
-        <div class="resumo-card">
-            <span class="resumo-icone">👥</span>
-            <span class="resumo-label">Clientes cadastrados</span>
-            <strong id="totalClientes" class="resumo-numero">0</strong>
-        </div>
-
-        <div class="resumo-card">
-            <span class="resumo-icone">🧾</span>
-            <span class="resumo-label">Total de pedidos</span>
-            <strong id="totalPedidos" class="resumo-numero">0</strong>
-        </div>
-
-        <div class="resumo-card">
-            <span class="resumo-icone">💰</span>
-            <span class="resumo-label">Faturamento</span>
-            <strong id="faturamentoClientes" class="resumo-numero valor">R$ 0,00</strong>
-        </div>
-
-        <div class="resumo-card">
-            <span class="resumo-icone">📈</span>
-            <span class="resumo-label">Ticket médio</span>
-            <strong id="ticketMedioClientes" class="resumo-numero valor">R$ 0,00</strong>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- NOVO CLIENTE -->
-
-<button class="botao-principal" onclick="mostrarFormulario()">
-    ➕ &nbsp; NOVO CLIENTE
-</button>
-
-
-<!-- FORMULÁRIO -->
-
-<section id="formularioCliente" class="clientes-secao formulario">
-
-    <h2 id="tituloFormulario" class="secao-titulo">
-        ➕ Cadastrar Cliente
+    <h2 class="titulo-secao">
+        👤 <span>Novo cliente</span>
     </h2>
 
-    <input type="hidden" id="clienteId">
+    <div class="form-grid">
 
-    <label>👤 Nome completo</label>
+        <div class="campo">
 
-    <input
-        type="text"
-        id="clienteNome"
-        maxlength="100"
-        autocomplete="name"
-        placeholder="Digite o nome do cliente">
+            <label for="nomeCliente">
+                Nome do cliente
+            </label>
 
-    <label>📱 Telefone / WhatsApp</label>
+            <input
+                type="text"
+                id="nomeCliente"
+                placeholder="Digite o nome"
+                autocomplete="off"
+            >
 
-    <input
-        type="tel"
-        id="clienteTelefone"
-        maxlength="20"
-        autocomplete="tel"
-        placeholder="(00) 00000-0000">
-
-    <label>🏠 Endereço</label>
-
-    <input
-        type="text"
-        id="clienteEndereco"
-        maxlength="200"
-        autocomplete="street-address"
-        placeholder="Rua, número, bairro">
-
-    <label>📝 Observações</label>
-
-    <textarea
-        id="clienteObservacoes"
-        maxlength="500"
-        rows="4"
-        placeholder="Preferências, observações ou informações importantes..."></textarea>
-
-    <button class="botao-principal" onclick="salvarCliente()">
-        💾 &nbsp; SALVAR CLIENTE
-    </button>
-
-    <button class="botao-cancelar" onclick="cancelarFormulario()">
-        ❌ &nbsp; CANCELAR
-    </button>
-
-</section>
-
-
-<!-- BUSCA -->
-
-<section class="clientes-secao">
-
-    <h2 class="secao-titulo">🔎 Buscar Cliente</h2>
-
-    <div class="busca-area">
-
-        <div class="busca-label">
-            Nome ou telefone
         </div>
 
-        <input
-            type="search"
-            id="buscaCliente"
-            class="busca-input"
-            autocomplete="off"
-            placeholder="🔎 Digite para pesquisar..."
-            oninput="mostrarClientes()">
+
+        <div class="campo">
+
+            <label for="telefoneCliente">
+                Telefone / WhatsApp
+            </label>
+
+            <input
+                type="tel"
+                id="telefoneCliente"
+                placeholder="(00) 00000-0000"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="campo campo-full">
+
+            <label for="enderecoCliente">
+                Endereço
+            </label>
+
+            <input
+                type="text"
+                id="enderecoCliente"
+                placeholder="Rua, número, bairro..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="campo campo-full">
+
+            <label for="observacoesCliente">
+                Observações
+            </label>
+
+            <textarea
+                id="observacoesCliente"
+                placeholder="Observações sobre o cliente..."
+            ></textarea>
+
+        </div>
 
     </div>
+
+
+    <div class="acoes">
+
+        <button
+            type="button"
+            class="btn btn-salvar"
+            id="btnSalvar"
+        >
+            💾 SALVAR CLIENTE
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-cancelar"
+            id="btnCancelar"
+        >
+            ✕ CANCELAR EDIÇÃO
+        </button>
+
+    </div>
+
+
+    <div
+        id="mensagem"
+        class="mensagem"
+    ></div>
 
 </section>
-
-
-<h2 class="lista-titulo">
-    📋 Clientes cadastrados
-</h2>
-
-
-<div id="listaClientes">
-
-    <div class="clientes-secao">
-
-        <p class="vazio">
-            <span class="vazio-icon">⏳</span>
-            Carregando clientes...
-        </p>
-
-    </div>
-
-</div>
-
-
-<button
-    class="voltar-clientes"
-    onclick="window.location.href='index.html'">
-
-    🏠 &nbsp; VOLTAR AO INÍCIO
-
-</button>
-
-</div>
 
 
 <!-- =====================================================
-     MODAL PERFIL
+     LISTA
 ===================================================== -->
 
-<div
-    id="modalPerfil"
-    class="modal-fundo"
-    onclick="fecharModalFora(event)">
+<section class="card">
 
-    <div class="modal">
+    <div class="lista-topo">
 
-        <div class="modal-cabecalho">
+        <h2 class="titulo-secao">
+            📋 Clientes cadastrados
+        </h2>
 
-            <div class="modal-avatar">
-                👤
-            </div>
+        <span
+            class="contador"
+            id="contadorClientes"
+        >
+            0
+        </span>
 
-            <div class="modal-titulo">
+    </div>
 
-                <h2 id="perfilNome">
-                    Cliente
-                </h2>
 
-                <span id="perfilStatus">
-                    Cliente
-                </span>
+    <div class="pesquisa-box">
 
-            </div>
+        <div class="pesquisa">
 
-            <button
-                class="fechar-modal"
-                onclick="fecharModal()">
+            <span class="icone-pesquisa">
+                🔎
+            </span>
 
-                ✕
-
-            </button>
-
-        </div>
-
-
-        <div class="perfil-acoes">
-
-            <button
-                class="perfil-whats"
-                id="perfilWhatsapp">
-
-                📱 WHATSAPP
-
-            </button>
-
-            <button
-                class="perfil-mapa"
-                id="perfilMapa">
-
-                📍 MAPA
-
-            </button>
-
-            <button
-                class="perfil-copiar"
-                id="perfilCopiar">
-
-                📋 COPIAR
-
-            </button>
-
-        </div>
-
-
-        <div class="perfil-grid">
-
-            <div class="perfil-card">
-
-                <span>Pedidos</span>
-
-                <strong id="perfilPedidos">
-                    0
-                </strong>
-
-            </div>
-
-            <div class="perfil-card">
-
-                <span>Total gasto</span>
-
-                <strong id="perfilTotal">
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-            <div class="perfil-card">
-
-                <span>Ticket médio</span>
-
-                <strong id="perfilTicket">
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div class="perfil-bloco">
-
-            <div class="perfil-bloco-titulo">
-                📱 Telefone
-            </div>
-
-            <div
-                id="perfilTelefone"
-                class="perfil-bloco-conteudo">
-
-                Não informado
-
-            </div>
-
-        </div>
-
-
-        <div class="perfil-bloco">
-
-            <div class="perfil-bloco-titulo">
-                🏠 Endereço
-            </div>
-
-            <div
-                id="perfilEndereco"
-                class="perfil-bloco-conteudo">
-
-                Não informado
-
-            </div>
-
-        </div>
-
-
-        <div class="perfil-bloco">
-
-            <div class="perfil-bloco-titulo">
-                📝 Observações
-            </div>
-
-            <div
-                id="perfilObservacoes"
-                class="perfil-bloco-conteudo">
-
-                Nenhuma
-
-            </div>
-
-        </div>
-
-
-        <div class="perfil-bloco">
-
-            <div class="perfil-bloco-titulo">
-                🕒 Último pedido
-            </div>
-
-            <div
-                id="perfilUltimoPedido"
-                class="perfil-bloco-conteudo">
-
-                Nenhum pedido encontrado.
-
-            </div>
-
-        </div>
-
-
-        <div class="perfil-bloco">
-
-            <div class="perfil-bloco-titulo">
-                🧾 Histórico de pedidos
-            </div>
-
-            <div id="perfilHistorico">
-
-                Nenhum pedido encontrado.
-
-            </div>
+            <input
+                type="search"
+                id="pesquisaCliente"
+                placeholder="Pesquisar por nome, telefone ou endereço..."
+                autocomplete="off"
+            >
 
         </div>
 
     </div>
+
+
+    <div
+        id="listaClientes"
+        class="lista-clientes"
+    >
+
+        <div class="estado">
+
+            <strong>
+                Carregando clientes...
+            </strong>
+
+            Aguarde um momento.
+
+        </div>
+
+    </div>
+
+</section>
 
 </div>
 
@@ -1238,155 +963,120 @@ body{
 <script>
 
 /* =====================================================
-   CLIENTES
+   SUPABASE
 ===================================================== */
 
-function pegarClientes(){
+"use strict";
 
-    try{
+const SUPABASE_URL =
+    "https://vtdfdqtjcyqbtfskwnun.supabase.co";
 
-        const dados =
-            JSON.parse(
-                localStorage.getItem("clientes")
-            );
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
 
-        return Array.isArray(dados) ? dados : [];
-
-    }catch(e){
-
-        return [];
-
-    }
-
-}
-
-
-function salvarClientes(clientes){
-
-    try{
-
-        localStorage.setItem(
-            "clientes",
-            JSON.stringify(clientes)
-        );
-
-        return true;
-
-    }catch(e){
-
-        console.error(e);
-
-        return false;
-
-    }
-
-}
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
 /* =====================================================
-   VENDAS
+   ESTADO
 ===================================================== */
 
-function pegarVendas(){
+let clientes = [];
 
-    try{
-
-        const dados =
-            JSON.parse(
-                localStorage.getItem("vendas")
-            );
-
-        return Array.isArray(dados) ? dados : [];
-
-    }catch(e){
-
-        return [];
-
-    }
-
-}
+let clienteEditandoId = null;
 
 
 /* =====================================================
-   DINHEIRO
+   ELEMENTOS
 ===================================================== */
 
-function valorNumericoSeguro(valor){
+const nomeCliente =
+    document.getElementById(
+        "nomeCliente"
+    );
 
-    if(
-        valor === null ||
-        valor === undefined ||
-        valor === ""
-    ){
+const telefoneCliente =
+    document.getElementById(
+        "telefoneCliente"
+    );
 
-        return 0;
+const enderecoCliente =
+    document.getElementById(
+        "enderecoCliente"
+    );
 
-    }
+const observacoesCliente =
+    document.getElementById(
+        "observacoesCliente"
+    );
 
-    if(typeof valor === "number"){
+const btnSalvar =
+    document.getElementById(
+        "btnSalvar"
+    );
 
-        return Number.isFinite(valor) ? valor : 0;
+const btnCancelar =
+    document.getElementById(
+        "btnCancelar"
+    );
 
-    }
+const mensagem =
+    document.getElementById(
+        "mensagem"
+    );
 
-    let texto =
-        String(valor)
-        .trim()
-        .replace(/R\$/gi,"")
-        .replace(/\s/g,"");
+const listaClientes =
+    document.getElementById(
+        "listaClientes"
+    );
 
-    if(!texto){
+const contadorClientes =
+    document.getElementById(
+        "contadorClientes"
+    );
 
-        return 0;
-
-    }
-
-    if(texto.includes(",")){
-
-        texto = texto.replace(/\./g,"");
-        texto = texto.replace(",", ".");
-
-    }
-
-    texto =
-        texto.replace(
-            /[^0-9.-]/g,
-            ""
-        );
-
-    const numero = Number(texto);
-
-    return Number.isFinite(numero) ? numero : 0;
-
-}
-
-
-function dinheiro(valor){
-
-    return valorNumericoSeguro(valor)
-        .toLocaleString(
-            "pt-BR",
-            {
-                style:"currency",
-                currency:"BRL"
-            }
-        );
-
-}
+const pesquisaCliente =
+    document.getElementById(
+        "pesquisaCliente"
+    );
 
 
 /* =====================================================
-   NORMALIZAR
+   MENSAGEM
 ===================================================== */
 
-function normalizar(texto){
+function mostrarMensagem(
+    texto,
+    tipo = "info"
+){
 
-    return String(texto ?? "")
-        .trim()
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g,"");
+    mensagem.textContent =
+        texto;
 
+    mensagem.className =
+        "mensagem " + tipo;
+
+    clearTimeout(
+        mostrarMensagem.timer
+    );
+
+    mostrarMensagem.timer =
+        setTimeout(
+            function(){
+
+                mensagem.textContent =
+                    "";
+
+                mensagem.className =
+                    "mensagem";
+
+            },
+            4000
+        );
 }
 
 
@@ -1394,26 +1084,31 @@ function normalizar(texto){
    ESCAPAR HTML
 ===================================================== */
 
-function escapar(texto){
+function escapar(valor){
 
-    return String(texto ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   ID
-===================================================== */
-
-function gerarIdCliente(){
-
-    return Date.now() +
-        Math.floor(Math.random() * 1000);
+    return String(
+        valor ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -1422,30 +1117,33 @@ function gerarIdCliente(){
    DATA
 ===================================================== */
 
-function dataBonita(valor){
+function formatarData(data){
 
-    if(!valor){
+    if(!data){
 
-        return "Data não informada";
-
-    }
-
-    const data = new Date(valor);
-
-    if(Number.isNaN(data.getTime())){
-
-        return String(valor);
+        return "-";
 
     }
 
-    return data.toLocaleString(
+    const dataObj =
+        new Date(data);
+
+    if(
+        Number.isNaN(
+            dataObj.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+    return dataObj.toLocaleDateString(
         "pt-BR",
         {
             day:"2-digit",
             month:"2-digit",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
+            year:"numeric"
         }
     );
 
@@ -1453,156 +1151,89 @@ function dataBonita(valor){
 
 
 /* =====================================================
-   TELEFONE
+   CARREGAR CLIENTES
 ===================================================== */
 
-function limparTelefone(telefone){
+async function carregarClientes(){
 
-    return String(telefone ?? "")
-        .replace(/\D/g,"");
+    listaClientes.innerHTML = `
 
-}
+        <div class="estado">
 
+            <strong>
+                Carregando clientes...
+            </strong>
 
-function telefoneWhatsApp(telefone){
+            Aguarde.
 
-    let numero =
-        limparTelefone(telefone);
+        </div>
 
-    if(!numero){
+    `;
 
-        return "";
+    try{
 
-    }
-
-    /*
-       Brasil:
-       Se o número não começar com 55,
-       adicionamos o código do país.
-    */
-
-    if(!numero.startsWith("55")){
-
-        numero = "55" + numero;
-
-    }
-
-    return numero;
-
-}
-
-
-/* =====================================================
-   WHATSAPP
-===================================================== */
-
-function abrirWhatsApp(telefone,nome){
-
-    const numero =
-        telefoneWhatsApp(telefone);
-
-    if(!numero){
-
-        alert(
-            "⚠️ Este cliente não possui telefone cadastrado."
-        );
-
-        return;
-
-    }
-
-    const mensagem =
-        "Olá, " +
-        (nome || "cliente") +
-        "! 👋\n\n" +
-        "Aqui é da GrillCore. 🍔";
-
-    const url =
-        "https://wa.me/" +
-        numero +
-        "?text=" +
-        encodeURIComponent(mensagem);
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-/* =====================================================
-   MAPA
-===================================================== */
-
-function abrirMapa(endereco){
-
-    if(!endereco){
-
-        alert(
-            "⚠️ Este cliente não possui endereço cadastrado."
-        );
-
-        return;
-
-    }
-
-    const url =
-        "https://www.google.com/maps/search/?api=1&query=" +
-        encodeURIComponent(endereco);
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-/* =====================================================
-   COPIAR
-===================================================== */
-
-function copiarTelefone(telefone){
-
-    if(!telefone){
-
-        alert(
-            "⚠️ Telefone não informado."
-        );
-
-        return;
-
-    }
-
-    if(
-        navigator.clipboard &&
-        navigator.clipboard.writeText
-    ){
-
-        navigator.clipboard
-            .writeText(telefone)
-            .then(function(){
-
-                alert(
-                    "✅ Telefone copiado!"
+        const resposta =
+            await supabase
+                .from("clientes")
+                .select(
+                    "id,created_at,nome,telefone,endereco,observacoes"
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
                 );
 
-            })
-            .catch(function(){
 
-                alert(
-                    "📋 Telefone: " +
-                    telefone
-                );
+        if(resposta.error){
 
-            });
+            console.error(
+                resposta.error
+            );
 
-    }else{
+            throw resposta.error;
 
-        alert(
-            "📋 Telefone: " +
-            telefone
+        }
+
+
+        clientes =
+            Array.isArray(
+                resposta.data
+            )
+                ?
+                resposta.data
+                :
+                [];
+
+
+        renderizarClientes();
+
+
+    }catch(erro){
+
+        console.error(
+            "Erro ao carregar clientes:",
+            erro
+        );
+
+        listaClientes.innerHTML = `
+
+            <div class="estado">
+
+                <strong>
+                    ⚠️ Não foi possível carregar os clientes.
+                </strong>
+
+                Verifique a conexão com o Supabase e as políticas RLS da tabela <b>clientes</b>.
+
+            </div>
+
+        `;
+
+        mostrarMensagem(
+            "Erro ao carregar clientes.",
+            "erro"
         );
 
     }
@@ -1611,321 +1242,474 @@ function copiarTelefone(telefone){
 
 
 /* =====================================================
-   FORMULÁRIO
+   RENDERIZAR
 ===================================================== */
 
-function mostrarFormulario(){
+function renderizarClientes(){
 
-    const formulario =
-        document.getElementById(
-            "formularioCliente"
+    const pesquisa =
+        String(
+            pesquisaCliente.value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const filtrados =
+        clientes.filter(
+            function(cliente){
+
+                if(!pesquisa){
+
+                    return true;
+
+                }
+
+                const texto =
+                    [
+                        cliente.nome,
+                        cliente.telefone,
+                        cliente.endereco,
+                        cliente.observacoes
+                    ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
+
+                return texto.includes(
+                    pesquisa
+                );
+
+            }
         );
 
-    formulario.style.display =
-        "block";
 
-    document.getElementById(
-        "tituloFormulario"
-    ).innerText =
-        "➕ Cadastrar Cliente";
+    contadorClientes.textContent =
+        filtrados.length;
 
-    limparFormulario();
 
-    formulario.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
+    if(filtrados.length === 0){
 
-    setTimeout(function(){
+        listaClientes.innerHTML = `
 
-        document
-            .getElementById("clienteNome")
-            .focus();
+            <div class="estado">
 
-    },250);
+                <strong>
+                    Nenhum cliente encontrado.
+                </strong>
+
+                Cadastre um cliente acima ou altere a pesquisa.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    listaClientes.innerHTML =
+        filtrados
+            .map(
+                function(cliente){
+
+                    return `
+
+                        <article
+                            class="cliente"
+                        >
+
+                            <div
+                                class="cliente-topo"
+                            >
+
+                                <div
+                                    class="cliente-nome"
+                                >
+                                    👤
+                                    ${escapar(
+                                        cliente.nome
+                                        ||
+                                        "Cliente sem nome"
+                                    )}
+                                </div>
+
+                                <div
+                                    class="cliente-data"
+                                >
+                                    Cadastro:
+                                    ${formatarData(
+                                        cliente.created_at
+                                    )}
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="cliente-info"
+                            >
+
+                                ${
+                                    cliente.telefone
+                                    ?
+                                    `
+                                    <div>
+                                        📱
+                                        <strong>Telefone:</strong>
+                                        ${escapar(
+                                            cliente.telefone
+                                        )}
+                                    </div>
+                                    `
+                                    :
+                                    ""
+                                }
+
+
+                                ${
+                                    cliente.endereco
+                                    ?
+                                    `
+                                    <div>
+                                        🏠
+                                        <strong>Endereço:</strong>
+                                        ${escapar(
+                                            cliente.endereco
+                                        )}
+                                    </div>
+                                    `
+                                    :
+                                    ""
+                                }
+
+                            </div>
+
+
+                            ${
+                                cliente.observacoes
+                                ?
+                                `
+                                <div
+                                    class="cliente-observacoes"
+                                >
+                                    <strong>
+                                        📝 Observações
+                                    </strong>
+
+                                    <br>
+
+                                    ${escapar(
+                                        cliente.observacoes
+                                    )}
+                                </div>
+                                `
+                                :
+                                ""
+                            }
+
+
+                            <div
+                                class="cliente-acoes"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="btn-editar"
+                                    onclick="editarCliente('${escapar(cliente.id)}')"
+                                >
+                                    ✏️ EDITAR
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="btn-excluir"
+                                    onclick="excluirCliente('${escapar(cliente.id)}')"
+                                >
+                                    🗑️ EXCLUIR
+                                </button>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+            )
+            .join("");
 
 }
 
 
-function cancelarFormulario(){
-
-    document.getElementById(
-        "formularioCliente"
-    ).style.display =
-        "none";
-
-    limparFormulario();
-
-}
-
+/* =====================================================
+   LIMPAR FORMULÁRIO
+===================================================== */
 
 function limparFormulario(){
 
-    document.getElementById(
-        "clienteId"
-    ).value = "";
+    nomeCliente.value =
+        "";
 
-    document.getElementById(
-        "clienteNome"
-    ).value = "";
+    telefoneCliente.value =
+        "";
 
-    document.getElementById(
-        "clienteTelefone"
-    ).value = "";
+    enderecoCliente.value =
+        "";
 
-    document.getElementById(
-        "clienteEndereco"
-    ).value = "";
+    observacoesCliente.value =
+        "";
 
-    document.getElementById(
-        "clienteObservacoes"
-    ).value = "";
+    clienteEditandoId =
+        null;
+
+    btnSalvar.textContent =
+        "💾 SALVAR CLIENTE";
+
+    btnCancelar.classList.remove(
+        "mostrar"
+    );
 
 }
+
+
+/* =====================================================
+   EDITAR CLIENTE
+===================================================== */
+
+function editarCliente(id){
+
+    const cliente =
+        clientes.find(
+            function(item){
+
+                return String(
+                    item.id
+                )
+                ===
+                String(id);
+
+            }
+        );
+
+
+    if(!cliente){
+
+        mostrarMensagem(
+            "Cliente não encontrado.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    clienteEditandoId =
+        cliente.id;
+
+
+    nomeCliente.value =
+        cliente.nome || "";
+
+    telefoneCliente.value =
+        cliente.telefone || "";
+
+    enderecoCliente.value =
+        cliente.endereco || "";
+
+    observacoesCliente.value =
+        cliente.observacoes || "";
+
+
+    btnSalvar.textContent =
+        "💾 ATUALIZAR CLIENTE";
+
+
+    btnCancelar.classList.add(
+        "mostrar"
+    );
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    nomeCliente.focus();
+
+
+    mostrarMensagem(
+        "Cliente carregado para edição.",
+        "info"
+    );
+
+}
+
+
+/* =====================================================
+   CANCELAR EDIÇÃO
+===================================================== */
+
+btnCancelar.addEventListener(
+    "click",
+    function(){
+
+        limparFormulario();
+
+        mostrarMensagem(
+            "Edição cancelada.",
+            "info"
+        );
+
+    }
+);
 
 
 /* =====================================================
    SALVAR
 ===================================================== */
 
-function salvarCliente(){
-
-    const id =
-        document.getElementById(
-            "clienteId"
-        ).value;
+async function salvarCliente(){
 
     const nome =
-        document.getElementById(
-            "clienteNome"
-        ).value.trim();
+        nomeCliente.value.trim();
 
     const telefone =
-        document.getElementById(
-            "clienteTelefone"
-        ).value.trim();
+        telefoneCliente.value.trim();
 
     const endereco =
-        document.getElementById(
-            "clienteEndereco"
-        ).value.trim();
+        enderecoCliente.value.trim();
 
     const observacoes =
-        document.getElementById(
-            "clienteObservacoes"
-        ).value.trim();
+        observacoesCliente.value.trim();
+
 
     if(!nome){
 
-        alert(
-            "⚠️ Informe o nome do cliente."
+        mostrarMensagem(
+            "Digite o nome do cliente.",
+            "erro"
         );
 
-        document
-            .getElementById("clienteNome")
-            .focus();
+        nomeCliente.focus();
 
         return;
 
     }
 
-    let clientes =
-        pegarClientes();
+
+    btnSalvar.disabled =
+        true;
+
+    btnSalvar.textContent =
+        clienteEditandoId
+            ?
+            "⏳ ATUALIZANDO..."
+            :
+            "⏳ SALVANDO...";
 
 
-    /* EDIÇÃO */
+    try{
 
-    if(id){
+        if(clienteEditandoId){
 
-        const indice =
-            clientes.findIndex(function(cliente){
-
-                return Number(cliente.id) === Number(id);
-
-            });
-
-        if(indice === -1){
-
-            alert(
-                "❌ Cliente não encontrado."
-            );
-
-            return;
-
-        }
-
-        clientes[indice] = {
-
-            ...clientes[indice],
-
-            nome,
-            telefone,
-            endereco,
-            observacoes,
-
-            atualizadoEm:
-                new Date().toISOString()
-
-        };
-
-    }
+            const resposta =
+                await supabase
+                    .from("clientes")
+                    .update({
+                        nome,
+                        telefone,
+                        endereco,
+                        observacoes
+                    })
+                    .eq(
+                        "id",
+                        clienteEditandoId
+                    );
 
 
-    /* NOVO */
+            if(resposta.error){
 
-    else{
-
-        const nomeNormalizado =
-            normalizar(nome);
-
-        const telefoneNormalizado =
-            normalizar(telefone);
-
-        const duplicado =
-            clientes.find(function(cliente){
-
-                const mesmoNome =
-                    nomeNormalizado &&
-                    normalizar(cliente.nome) ===
-                    nomeNormalizado;
-
-                const mesmoTelefone =
-                    telefoneNormalizado &&
-                    normalizar(cliente.telefone) ===
-                    telefoneNormalizado;
-
-                return mesmoNome || mesmoTelefone;
-
-            });
-
-        if(duplicado){
-
-            const confirmar =
-                confirm(
-                    "⚠️ Já existe um cliente parecido cadastrado.\n\n" +
-                    "Nome: " +
-                    (duplicado.nome || "Não informado") +
-                    "\nTelefone: " +
-                    (duplicado.telefone || "Não informado") +
-                    "\n\nDeseja cadastrar mesmo assim?"
-                );
-
-            if(!confirmar){
-
-                return;
+                throw resposta.error;
 
             }
 
+
+            mostrarMensagem(
+                "Cliente atualizado com sucesso!",
+                "sucesso"
+            );
+
+
+        }else{
+
+            const resposta =
+                await supabase
+                    .from("clientes")
+                    .insert([
+                        {
+                            nome,
+                            telefone,
+                            endereco,
+                            observacoes
+                        }
+                    ]);
+
+
+            if(resposta.error){
+
+                throw resposta.error;
+
+            }
+
+
+            mostrarMensagem(
+                "Cliente cadastrado com sucesso!",
+                "sucesso"
+            );
+
         }
 
-        const agora =
-            new Date().toISOString();
 
-        clientes.push({
+        limparFormulario();
 
-            id:gerarIdCliente(),
+        await carregarClientes();
 
-            nome,
-            telefone,
-            endereco,
-            observacoes,
 
-            criadoEm:agora,
-            atualizadoEm:agora
+    }catch(erro){
 
-        });
-
-    }
-
-    if(!salvarClientes(clientes)){
-
-        alert(
-            "❌ Não foi possível salvar o cliente."
+        console.error(
+            "Erro ao salvar cliente:",
+            erro
         );
 
-        return;
-
-    }
-
-    cancelarFormulario();
-
-    atualizarResumo();
-
-    mostrarClientes();
-
-    alert(
-        id
-        ? "✅ Cliente atualizado com sucesso!"
-        : "✅ Cliente cadastrado com sucesso!"
-    );
-
-}
-
-
-/* =====================================================
-   EDITAR
-===================================================== */
-
-function editarCliente(id){
-
-    const cliente =
-        pegarClientes().find(function(item){
-
-            return Number(item.id) === Number(id);
-
-        });
-
-    if(!cliente){
-
-        alert(
-            "❌ Cliente não encontrado."
+        mostrarMensagem(
+            "Não foi possível salvar o cliente. Verifique as permissões da tabela no Supabase.",
+            "erro"
         );
 
-        return;
+    }finally{
+
+        btnSalvar.disabled =
+            false;
+
+        if(clienteEditandoId){
+
+            btnSalvar.textContent =
+                "💾 ATUALIZAR CLIENTE";
+
+        }else{
+
+            btnSalvar.textContent =
+                "💾 SALVAR CLIENTE";
+
+        }
 
     }
-
-    document.getElementById(
-        "formularioCliente"
-    ).style.display =
-        "block";
-
-    document.getElementById(
-        "tituloFormulario"
-    ).innerText =
-        "✏️ Editar Cliente";
-
-    document.getElementById(
-        "clienteId"
-    ).value =
-        cliente.id;
-
-    document.getElementById(
-        "clienteNome"
-    ).value =
-        cliente.nome || "";
-
-    document.getElementById(
-        "clienteTelefone"
-    ).value =
-        cliente.telefone || "";
-
-    document.getElementById(
-        "clienteEndereco"
-    ).value =
-        cliente.endereco || "";
-
-    document.getElementById(
-        "clienteObservacoes"
-    ).value =
-        cliente.observacoes || "";
-
-    document.getElementById(
-        "formularioCliente"
-    ).scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
 
 }
 
@@ -1934,971 +1718,162 @@ function editarCliente(id){
    EXCLUIR
 ===================================================== */
 
-function excluirCliente(id){
-
-    let clientes =
-        pegarClientes();
+async function excluirCliente(id){
 
     const cliente =
-        clientes.find(function(item){
+        clientes.find(
+            function(item){
 
-            return Number(item.id) === Number(id);
+                return String(
+                    item.id
+                )
+                ===
+                String(id);
 
-        });
+            }
+        );
+
 
     if(!cliente){
+
+        mostrarMensagem(
+            "Cliente não encontrado.",
+            "erro"
+        );
 
         return;
 
     }
 
-    const confirmar =
+
+    const confirmou =
         confirm(
-            "🗑️ EXCLUIR CLIENTE?\n\n" +
-            "Cliente: " +
-            (cliente.nome || "Não informado") +
-            "\n\nO histórico de vendas NÃO será apagado."
+            `Deseja realmente excluir o cliente "${cliente.nome}"?`
         );
 
-    if(!confirmar){
+
+    if(!confirmou){
 
         return;
 
     }
 
-    clientes =
-        clientes.filter(function(item){
 
-            return Number(item.id) !== Number(id);
+    try{
 
-        });
+        const resposta =
+            await supabase
+                .from("clientes")
+                .delete()
+                .eq(
+                    "id",
+                    id
+                );
 
-    if(!salvarClientes(clientes)){
 
-        alert(
-            "❌ Não foi possível excluir o cliente."
+        if(resposta.error){
+
+            throw resposta.error;
+
+        }
+
+
+        if(
+            String(
+                clienteEditandoId
+            )
+            ===
+            String(id)
+        ){
+
+            limparFormulario();
+
+        }
+
+
+        mostrarMensagem(
+            "Cliente excluído com sucesso.",
+            "sucesso"
         );
 
-        return;
 
-    }
+        await carregarClientes();
 
-    atualizarResumo();
 
-    mostrarClientes();
+    }catch(erro){
 
-    alert(
-        "✅ Cliente excluído com sucesso."
-    );
-
-}
-
-
-/* =====================================================
-   VENDAS DO CLIENTE
-===================================================== */
-
-function vendasDoCliente(cliente){
-
-    const vendas =
-        pegarVendas();
-
-    const idCliente =
-        Number(cliente.id);
-
-    const nomeCliente =
-        normalizar(cliente.nome);
-
-    const telefoneCliente =
-        normalizar(cliente.telefone);
-
-    return vendas
-        .filter(function(venda){
-
-            const status =
-                normalizar(venda.status);
-
-            if(
-                status === "cancelado" ||
-                status === "cancelada"
-            ){
-
-                return false;
-
-            }
-
-            const idVenda =
-                Number(venda.clienteId);
-
-            if(
-                idVenda &&
-                idCliente &&
-                idVenda === idCliente
-            ){
-
-                return true;
-
-            }
-
-            const nomeVenda =
-                normalizar(venda.cliente);
-
-            if(
-                nomeVenda &&
-                nomeCliente &&
-                nomeVenda === nomeCliente
-            ){
-
-                return true;
-
-            }
-
-            const telefoneVenda =
-                normalizar(venda.telefone);
-
-            if(
-                telefoneVenda &&
-                telefoneCliente &&
-                telefoneVenda === telefoneCliente
-            ){
-
-                return true;
-
-            }
-
-            return false;
-
-        })
-        .sort(function(a,b){
-
-            const da =
-                new Date(
-                    a.data ||
-                    a.criadoEm ||
-                    a.created_at ||
-                    0
-                ).getTime();
-
-            const db =
-                new Date(
-                    b.data ||
-                    b.criadoEm ||
-                    b.created_at ||
-                    0
-                ).getTime();
-
-            return db - da;
-
-        });
-
-}
-
-
-/* =====================================================
-   ESTATÍSTICAS
-===================================================== */
-
-function estatisticasCliente(cliente){
-
-    const vendas =
-        vendasDoCliente(cliente);
-
-    let total = 0;
-
-    vendas.forEach(function(venda){
-
-        total +=
-            valorNumericoSeguro(
-                venda.total
-            );
-
-    });
-
-    return {
-
-        pedidos:vendas.length,
-
-        total,
-
-        ticket:
-            vendas.length
-            ? total / vendas.length
-            : 0,
-
-        vendas
-
-    };
-
-}
-
-
-/* =====================================================
-   STATUS DO CLIENTE
-===================================================== */
-
-function statusCliente(est){
-
-    if(est.pedidos >= 10){
-
-        return "💎 Cliente VIP";
-
-    }
-
-    if(est.pedidos >= 5){
-
-        return "🔥 Cliente frequente";
-
-    }
-
-    if(est.pedidos >= 1){
-
-        return "🛍️ Cliente ativo";
-
-    }
-
-    return "🆕 Cliente novo";
-
-}
-
-
-/* =====================================================
-   ITENS DA VENDA
-===================================================== */
-
-function textoItensVenda(venda){
-
-    const possiveis = [
-        venda.itens,
-        venda.produtos,
-        venda.listaItens
-    ];
-
-    const itens =
-        possiveis.find(function(valor){
-
-            return Array.isArray(valor);
-
-        });
-
-    if(itens){
-
-        return itens.map(function(item){
-
-            const nome =
-                item.nome ||
-                item.produto ||
-                item.descricao ||
-                "Produto";
-
-            const quantidade =
-                item.quantidade ||
-                item.qtd ||
-                1;
-
-            return quantidade + "x " + nome;
-
-        }).join(" • ");
-
-    }
-
-    if(venda.descricao){
-
-        return venda.descricao;
-
-    }
-
-    if(venda.observacao){
-
-        return venda.observacao;
-
-    }
-
-    return "Itens do pedido não informados";
-
-}
-
-
-/* =====================================================
-   ABRIR PERFIL
-===================================================== */
-
-function abrirPerfilCliente(id){
-
-    const cliente =
-        pegarClientes().find(function(item){
-
-            return Number(item.id) === Number(id);
-
-        });
-
-    if(!cliente){
-
-        alert(
-            "❌ Cliente não encontrado."
+        console.error(
+            "Erro ao excluir cliente:",
+            erro
         );
 
-        return;
-
-    }
-
-    const est =
-        estatisticasCliente(cliente);
-
-    const vendas =
-        est.vendas;
-
-    document.getElementById(
-        "perfilNome"
-    ).innerText =
-        cliente.nome || "Cliente";
-
-    document.getElementById(
-        "perfilStatus"
-    ).innerText =
-        statusCliente(est);
-
-    document.getElementById(
-        "perfilPedidos"
-    ).innerText =
-        est.pedidos;
-
-    document.getElementById(
-        "perfilTotal"
-    ).innerText =
-        dinheiro(est.total);
-
-    document.getElementById(
-        "perfilTicket"
-    ).innerText =
-        dinheiro(est.ticket);
-
-    document.getElementById(
-        "perfilTelefone"
-    ).innerText =
-        cliente.telefone ||
-        "Não informado";
-
-    document.getElementById(
-        "perfilEndereco"
-    ).innerText =
-        cliente.endereco ||
-        "Não informado";
-
-    document.getElementById(
-        "perfilObservacoes"
-    ).innerText =
-        cliente.observacoes ||
-        "Nenhuma";
-
-    const ultimo =
-        vendas.length
-        ? vendas[0]
-        : null;
-
-    document.getElementById(
-        "perfilUltimoPedido"
-    ).innerHTML =
-        ultimo
-        ?
-        `
-        <strong style="color:#29d66f">
-            ${dinheiro(ultimo.total)}
-        </strong>
-        <br>
-        ${dataBonita(
-            ultimo.data ||
-            ultimo.criadoEm ||
-            ultimo.created_at
-        )}
-        `
-        :
-        "Nenhum pedido encontrado.";
-
-    const historico =
-        document.getElementById(
-            "perfilHistorico"
+        mostrarMensagem(
+            "Não foi possível excluir o cliente. Verifique as políticas RLS.",
+            "erro"
         );
 
-    if(!vendas.length){
-
-        historico.innerHTML =
-            `
-            <div class="vazio">
-                🧾<br>
-                Este cliente ainda não possui pedidos.
-            </div>
-            `;
-
-    }else{
-
-        historico.innerHTML =
-            vendas.map(function(venda){
-
-                const status =
-                    venda.status ||
-                    "Concluído";
-
-                const pagamento =
-                    venda.formaPagamento ||
-                    venda.pagamento ||
-                    "";
-
-                return `
-                    <div class="pedido-historico">
-
-                        <div class="pedido-topo">
-
-                            <span class="pedido-data">
-                                🕒
-                                ${dataBonita(
-                                    venda.data ||
-                                    venda.criadoEm ||
-                                    venda.created_at
-                                )}
-                            </span>
-
-                            <span class="pedido-valor">
-                                ${dinheiro(venda.total)}
-                            </span>
-
-                        </div>
-
-                        <div class="pedido-itens">
-
-                            🍔
-                            ${escapar(
-                                textoItensVenda(venda)
-                            )}
-
-                        </div>
-
-                        ${
-                            pagamento
-                            ?
-                            `
-                            <div style="
-                                margin-top:6px;
-                                color:#999;
-                                font-size:10px;
-                            ">
-                                💳
-                                ${escapar(pagamento)}
-                            </div>
-                            `
-                            :
-                            ""
-                        }
-
-                        <span class="pedido-status">
-
-                            ${escapar(status)}
-
-                        </span>
-
-                    </div>
-                `;
-
-            }).join("");
-
     }
-
-    document.getElementById(
-        "perfilWhatsapp"
-    ).onclick =
-        function(){
-
-            abrirWhatsApp(
-                cliente.telefone,
-                cliente.nome
-            );
-
-        };
-
-    document.getElementById(
-        "perfilMapa"
-    ).onclick =
-        function(){
-
-            abrirMapa(
-                cliente.endereco
-            );
-
-        };
-
-    document.getElementById(
-        "perfilCopiar"
-    ).onclick =
-        function(){
-
-            copiarTelefone(
-                cliente.telefone
-            );
-
-        };
-
-    document.getElementById(
-        "modalPerfil"
-    ).style.display =
-        "flex";
-
-    document.body.style.overflow =
-        "hidden";
 
 }
 
 
 /* =====================================================
-   FECHAR MODAL
+   EVENTOS
 ===================================================== */
 
-function fecharModal(){
-
-    document.getElementById(
-        "modalPerfil"
-    ).style.display =
-        "none";
-
-    document.body.style.overflow =
-        "";
-
-}
+btnSalvar.addEventListener(
+    "click",
+    salvarCliente
+);
 
 
-function fecharModalFora(event){
+pesquisaCliente.addEventListener(
+    "input",
+    renderizarClientes
+);
 
-    if(
-        event.target.id ===
-        "modalPerfil"
-    ){
 
-        fecharModal();
+/* =====================================================
+   ENTER NO FORMULÁRIO
+===================================================== */
+
+[
+    nomeCliente,
+    telefoneCliente,
+    enderecoCliente
+].forEach(
+    function(campo){
+
+        campo.addEventListener(
+            "keydown",
+            function(event){
+
+                if(
+                    event.key === "Enter"
+                ){
+
+                    event.preventDefault();
+
+                    salvarCliente();
+
+                }
+
+            }
+        );
 
     }
+);
 
-}
 
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
 
 document.addEventListener(
-    "keydown",
-    function(event){
-
-        if(event.key === "Escape"){
-
-            fecharModal();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   MOSTRAR CLIENTES
-===================================================== */
-
-function mostrarClientes(){
-
-    let clientes =
-        pegarClientes();
-
-    const campoBusca =
-        document.getElementById(
-            "buscaCliente"
-        );
-
-    const busca =
-        normalizar(
-            campoBusca
-            ? campoBusca.value
-            : ""
-        );
-
-    if(busca){
-
-        clientes =
-            clientes.filter(function(cliente){
-
-                const nome =
-                    normalizar(
-                        cliente.nome
-                    );
-
-                const telefone =
-                    normalizar(
-                        cliente.telefone
-                    );
-
-                return (
-                    nome.includes(busca) ||
-                    telefone.includes(busca)
-                );
-
-            });
-
-    }
-
-    const lista =
-        document.getElementById(
-            "listaClientes"
-        );
-
-    if(!clientes.length){
-
-        lista.innerHTML = `
-            <div class="clientes-secao">
-
-                <p class="vazio">
-
-                    <span class="vazio-icon">
-                        📭
-                    </span>
-
-                    ${
-                        busca
-                        ?
-                        "Nenhum cliente encontrado para essa busca."
-                        :
-                        "Nenhum cliente cadastrado ainda."
-                    }
-
-                </p>
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-    lista.innerHTML = "";
-
-    clientes
-        .slice()
-        .sort(function(a,b){
-
-            return String(a.nome || "")
-                .localeCompare(
-                    String(b.nome || ""),
-                    "pt-BR",
-                    {
-                        sensitivity:"base"
-                    }
-                );
-
-        })
-        .forEach(function(cliente){
-
-            const est =
-                estatisticasCliente(
-                    cliente
-                );
-
-            const status =
-                statusCliente(est);
-
-            const ultimo =
-                est.vendas.length
-                ? est.vendas[0]
-                : null;
-
-            const card =
-                document.createElement(
-                    "article"
-                );
-
-            card.className =
-                "cliente";
-
-            card.innerHTML = `
-
-                <div class="cliente-topo">
-
-                    <div class="cliente-avatar">
-                        👤
-                    </div>
-
-                    <div class="cliente-titulo">
-
-                        <h3>
-                            ${escapar(
-                                cliente.nome
-                            )}
-                        </h3>
-
-                        <span class="cliente-status">
-                            ${status}
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="cliente-info">
-
-                    <p>
-                        📱
-                        <strong>Telefone:</strong>
-                        ${escapar(
-                            cliente.telefone ||
-                            "Não informado"
-                        )}
-                    </p>
-
-                    <p>
-                        🏠
-                        <strong>Endereço:</strong>
-                        ${escapar(
-                            cliente.endereco ||
-                            "Não informado"
-                        )}
-                    </p>
-
-                    ${
-                        ultimo
-                        ?
-                        `
-                        <p>
-                            🕒
-                            <strong>Último pedido:</strong>
-                            ${dataBonita(
-                                ultimo.data ||
-                                ultimo.criadoEm ||
-                                ultimo.created_at
-                            )}
-                        </p>
-                        `
-                        :
-                        ""
-                    }
-
-                </div>
-
-
-                <hr>
-
-
-                <div class="estatisticas">
-
-                    <div class="estatistica">
-
-                        🧾 Pedidos
-
-                        <strong>
-                            ${est.pedidos}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="estatistica">
-
-                        💰 Total gasto
-
-                        <strong class="verde">
-                            ${dinheiro(
-                                est.total
-                            )}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="estatistica">
-
-                        📈 Ticket médio
-
-                        <strong>
-                            ${dinheiro(
-                                est.ticket
-                            )}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="cliente-acoes">
-
-                    <button
-                        class="acao-whatsapp"
-                        onclick="abrirWhatsApp(
-                            '${escapar(
-                                cliente.telefone
-                            )}',
-                            '${escapar(
-                                cliente.nome
-                            )}'
-                        )">
-
-                        📱 WHATSAPP
-
-                    </button>
-
-
-                    <button
-                        class="acao-historico"
-                        onclick="abrirPerfilCliente(
-                            ${Number(cliente.id)}
-                        )">
-
-                        👤 VER PERFIL
-
-                    </button>
-
-
-                    <button
-                        class="acao-editar"
-                        onclick="editarCliente(
-                            ${Number(cliente.id)}
-                        )">
-
-                        ✏️ EDITAR
-
-                    </button>
-
-
-                    <button
-                        class="acao-excluir"
-                        onclick="excluirCliente(
-                            ${Number(cliente.id)}
-                        )">
-
-                        🗑️ EXCLUIR
-
-                    </button>
-
-                </div>
-
-            `;
-
-            lista.appendChild(card);
-
-        });
-
-}
-
-
-/* =====================================================
-   RESUMO GERAL
-===================================================== */
-
-function atualizarResumo(){
-
-    const clientes =
-        pegarClientes();
-
-    const vendas =
-        pegarVendas();
-
-    let totalPedidos = 0;
-
-    let faturamento = 0;
-
-    vendas.forEach(function(venda){
-
-        const status =
-            normalizar(
-                venda.status
-            );
-
-        if(
-            status === "cancelado" ||
-            status === "cancelada"
-        ){
-
-            return;
-
-        }
-
-        faturamento +=
-            valorNumericoSeguro(
-                venda.total
-            );
-
-        totalPedidos++;
-
-    });
-
-    const ticketMedio =
-        totalPedidos
-        ? faturamento / totalPedidos
-        : 0;
-
-    document.getElementById(
-        "totalClientes"
-    ).innerText =
-        clientes.length;
-
-    document.getElementById(
-        "totalPedidos"
-    ).innerText =
-        totalPedidos;
-
-    document.getElementById(
-        "faturamentoClientes"
-    ).innerText =
-        dinheiro(faturamento);
-
-    document.getElementById(
-        "ticketMedioClientes"
-    ).innerText =
-        dinheiro(ticketMedio);
-
-}
-
-
-/* =====================================================
-   INICIAR
-===================================================== */
-
-function iniciarClientes(){
-
-    atualizarResumo();
-
-    mostrarClientes();
-
-}
-
-
-window.addEventListener(
-    "load",
-    iniciarClientes
-);
-
-
-window.addEventListener(
-    "pageshow",
+    "DOMContentLoaded",
     function(){
 
-        atualizarResumo();
-
-        mostrarClientes();
-
-    }
-);
-
-
-/* =====================================================
-   ATUALIZAÇÃO ENTRE PÁGINAS
-===================================================== */
-
-window.addEventListener(
-    "storage",
-    function(event){
-
-        if(
-            event.key === "clientes" ||
-            event.key === "vendas" ||
-            event.key === null
-        ){
-
-            atualizarResumo();
-
-            mostrarClientes();
-
-        }
+        carregarClientes();
 
     }
 );
@@ -2906,4 +1881,5 @@ window.addEventListener(
 </script>
 
 </body>
+
 </html>

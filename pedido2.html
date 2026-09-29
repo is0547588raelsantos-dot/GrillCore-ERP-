@@ -1,12 +1,34 @@
-<!DOCTYPE html><html lang="pt-BR"><head><script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<script>
 if(localStorage.getItem("grillcore_login") !== "true"){
     window.location.replace("login.html");
 }
-</script><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#ff7300">
-<meta name="description" content="Novo Pedido — GrillCore ERP"><title>Novo Pedido — GrillCore ERP</title><link rel="manifest" href="manifest.json">
+</script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#ff7300">
+
+<meta name="description"
+      content="Novo Pedido — GrillCore ERP">
+
+<title>Novo Pedido — GrillCore ERP</title>
+
+<link rel="manifest" href="manifest.json">
+
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="tema-laranja.css"><style>
+
+<link rel="stylesheet" href="tema-laranja.css">
+
+<style>
 
 /* =========================================================
    GRILLCORE ERP
@@ -39,15 +61,12 @@ body{
         );
 
     color:#fff;
+
     font-family:
         Arial,
         Helvetica,
         sans-serif;
 }
-
-/* =========================================================
-   CONTAINER
-========================================================= */
 
 .container{
     width:100%;
@@ -62,8 +81,12 @@ body{
 
 .topo{
     display:grid;
-    grid-template-columns:auto 1fr auto;
+
+    grid-template-columns:
+        auto 1fr auto;
+
     align-items:center;
+
     gap:15px;
 
     margin-bottom:20px;
@@ -71,14 +94,18 @@ body{
 
 .btn-voltar{
     display:inline-flex;
+
     align-items:center;
     justify-content:center;
+
     gap:6px;
 
     min-height:42px;
+
     padding:10px 15px;
 
     border:1px solid rgba(255,115,0,.55);
+
     border-radius:11px;
 
     background:
@@ -89,7 +116,9 @@ body{
         );
 
     color:#ff9a45;
+
     text-decoration:none;
+
     font-size:13px;
     font-weight:800;
 
@@ -126,19 +155,24 @@ body{
     color:#999;
 
     font-size:11px;
+
     letter-spacing:.3px;
 }
 
 .status-pedido{
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     gap:7px;
 
     min-height:38px;
+
     padding:8px 12px;
 
     border:1px solid #3b2415;
+
     border-radius:10px;
 
     background:#0e0b09;
@@ -154,6 +188,7 @@ body{
     height:7px;
 
     border-radius:50%;
+
     background:#ff7300;
 
     box-shadow:
@@ -173,9 +208,11 @@ body{
         );
 
     border:1px solid rgba(255,115,0,.23);
+
     border-radius:17px;
 
     padding:18px;
+
     margin-bottom:18px;
 
     box-shadow:
@@ -184,13 +221,15 @@ body{
 }
 
 /* =========================================================
-   TÍTULOS DE SEÇÃO
+   TÍTULOS
 ========================================================= */
 
 .titulo-secao{
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     gap:9px;
 
     margin:0 0 17px;
@@ -206,6 +245,7 @@ body{
 .titulo-secao::before,
 .titulo-secao::after{
     content:"";
+
     width:28px;
     height:1px;
 
@@ -227,7 +267,7 @@ body{
 }
 
 /* =========================================================
-   FORMULÁRIO CLIENTE
+   FORMULÁRIO
 ========================================================= */
 
 .form-grid{
@@ -241,7 +281,9 @@ body{
 
 .campo{
     display:flex;
+
     flex-direction:column;
+
     gap:7px;
 }
 
@@ -302,6 +344,7 @@ body{
 
 .campo textarea{
     min-height:76px;
+
     resize:vertical;
 }
 
@@ -331,6 +374,7 @@ body{
 
 .categorias{
     display:grid;
+
     gap:13px;
 }
 
@@ -340,6 +384,7 @@ body{
     padding:15px;
 
     border:1px solid #332015;
+
     border-radius:15px;
 
     background:
@@ -363,8 +408,10 @@ body{
 
 .categoria h3{
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     gap:7px;
 
     margin:0 0 13px;
@@ -380,7 +427,7 @@ body{
 }
 
 /* =========================================================
-   SELEÇÃO DO PRODUTO
+   PRODUTO
 ========================================================= */
 
 .linha-produto{
@@ -400,6 +447,7 @@ body{
 
 .quantidade{
     text-align:center;
+
     font-weight:800;
 }
 
@@ -407,19 +455,23 @@ body{
     min-height:42px;
 
     margin-top:9px;
+
     padding:9px 11px;
 
     display:flex;
+
     align-items:center;
 
     background:#0d0c0b;
 
     border:1px solid #2e2119;
+
     border-radius:10px;
 
     color:#aaa;
 
     font-size:12px;
+
     line-height:1.4;
 }
 
@@ -439,6 +491,7 @@ body{
     min-height:43px;
 
     border:1px solid #ff7b19;
+
     border-radius:10px;
 
     background:
@@ -451,6 +504,7 @@ body{
     color:#fff;
 
     font-size:12px;
+
     font-weight:900;
 
     letter-spacing:.3px;
@@ -465,6 +519,7 @@ body{
 
 .btn-adicionar:hover{
     filter:brightness(1.08);
+
     transform:translateY(-1px);
 }
 
@@ -478,17 +533,21 @@ body{
 
 .pedido-atual{
     position:sticky;
+
     top:12px;
 
     margin-bottom:0;
 
-    border-color:rgba(255,115,0,.32);
+    border-color:
+        rgba(255,115,0,.32);
 }
 
 .pedido-cabecalho{
     display:flex;
+
     align-items:center;
     justify-content:space-between;
+
     gap:10px;
 
     margin-bottom:14px;
@@ -500,9 +559,11 @@ body{
 
 .contador-itens{
     min-width:30px;
+
     height:28px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -511,11 +572,13 @@ body{
     border-radius:20px;
 
     background:#211107;
+
     border:1px solid #66310c;
 
     color:#ff8b28;
 
     font-size:11px;
+
     font-weight:900;
 }
 
@@ -525,7 +588,9 @@ body{
 
 .lista-pedido{
     display:flex;
+
     flex-direction:column;
+
     gap:9px;
 
     max-height:520px;
@@ -545,6 +610,7 @@ body{
 
 .lista-pedido::-webkit-scrollbar-thumb{
     background:#573018;
+
     border-radius:10px;
 }
 
@@ -554,6 +620,7 @@ body{
     padding:32px 15px;
 
     border:1px dashed #452817;
+
     border-radius:12px;
 
     background:#0c0c0c;
@@ -561,6 +628,7 @@ body{
     color:#777;
 
     font-size:12px;
+
     line-height:1.5;
 }
 
@@ -577,6 +645,7 @@ body{
         );
 
     border:1px solid #302117;
+
     border-radius:12px;
 
     padding:12px;
@@ -590,7 +659,9 @@ body{
 
 .item-topo{
     display:flex;
+
     justify-content:space-between;
+
     align-items:flex-start;
 
     gap:10px;
@@ -598,9 +669,11 @@ body{
 
 .item-nome{
     font-weight:900;
+
     color:#f5f5f5;
 
     line-height:1.3;
+
     font-size:13px;
 }
 
@@ -616,6 +689,7 @@ body{
     color:#ff9a35;
 
     font-size:12px;
+
     font-weight:900;
 
     white-space:nowrap;
@@ -623,17 +697,21 @@ body{
 
 .item-detalhes{
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
     gap:8px;
 
     margin-top:10px;
+
     padding-top:9px;
 
     border-top:1px solid #211811;
 
     font-size:11px;
+
     color:#999;
 }
 
@@ -645,44 +723,13 @@ body{
     color:#fff;
 
     font-size:13px;
+
     font-weight:900;
-}
-
-.item-preview{
-    border-color:#ff7300;
-
-    background:
-        linear-gradient(
-            145deg,
-            #211208,
-            #0d0d0d
-        );
-
-    box-shadow:
-        0 0 15px rgba(255,115,0,.08);
-}
-
-.badge-preview{
-    display:inline-flex;
-
-    margin-top:6px;
-
-    padding:3px 7px;
-
-    border-radius:20px;
-
-    background:#ff7300;
-
-    color:#fff;
-
-    font-size:9px;
-    font-weight:900;
-
-    letter-spacing:.3px;
 }
 
 .btn-remover{
     min-width:30px;
+
     min-height:29px;
 
     border:1px solid #5c2110;
@@ -698,6 +745,7 @@ body{
     cursor:pointer;
 
     font-size:12px;
+
     font-weight:900;
 
     transition:.2s;
@@ -705,6 +753,7 @@ body{
 
 .btn-remover:hover{
     background:#321007;
+
     border-color:#a33b16;
 }
 
@@ -714,6 +763,7 @@ body{
 
 .total-box{
     margin-top:13px;
+
     padding:14px;
 
     border-radius:13px;
@@ -733,7 +783,9 @@ body{
 
 .total-superior{
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
     margin-bottom:4px;
@@ -743,6 +795,7 @@ body{
     color:#b98258;
 
     font-size:10px;
+
     font-weight:900;
 
     letter-spacing:1px;
@@ -760,6 +813,7 @@ body{
     color:#ff941f;
 
     font-size:27px;
+
     font-weight:900;
 
     line-height:1.1;
@@ -793,6 +847,7 @@ body{
     padding:11px;
 
     font-size:11px;
+
     font-weight:900;
 
     letter-spacing:.2px;
@@ -820,6 +875,7 @@ body{
 
 .btn-finalizar:hover{
     filter:brightness(1.08);
+
     transform:translateY(-1px);
 }
 
@@ -851,13 +907,49 @@ body{
 
 .btn-imprimir:hover{
     border-color:#ff7300;
+
     color:#ff9a35;
 }
 
-.btn:disabled{
-    opacity:.4;
-    cursor:not-allowed;
-    transform:none !important;
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+.btn-whatsapp{
+    width:100%;
+
+    min-height:43px;
+
+    margin-top:9px;
+
+    border:1px solid #238b45;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #128c4a,
+            #075d30
+        );
+
+    color:#fff;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    letter-spacing:.2px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.btn-whatsapp:hover{
+    filter:brightness(1.08);
+
+    transform:translateY(-1px);
 }
 
 /* =========================================================
@@ -876,6 +968,7 @@ body{
     display:none;
 
     font-size:11px;
+
     font-weight:700;
 }
 
@@ -883,6 +976,7 @@ body{
     display:block;
 
     background:#0d2115;
+
     border:1px solid #217b3c;
 
     color:#6ee78b;
@@ -892,6 +986,7 @@ body{
     display:block;
 
     background:#2b0d08;
+
     border:1px solid #9d3b18;
 
     color:#ff9273;
@@ -933,6 +1028,7 @@ body{
 
     .topo{
         grid-template-columns:auto 1fr;
+
         gap:10px;
     }
 
@@ -954,17 +1050,21 @@ body{
 
     .card{
         padding:14px;
+
         border-radius:15px;
+
         margin-bottom:13px;
     }
 
     .titulo-secao{
         font-size:15px;
+
         margin-bottom:14px;
     }
 
     .form-grid{
         grid-template-columns:1fr;
+
         gap:11px;
     }
 
@@ -996,14 +1096,16 @@ body{
 
     .btn-voltar{
         min-height:39px;
+
         padding:8px 11px;
+
         font-size:11px;
     }
 
 }
 
 /* =========================================================
-   IMPRESSÃO
+   IMPRESSÃO 80MM
 ========================================================= */
 
 @media print{
@@ -1070,69 +1172,87 @@ body{
 
     .impressao-titulo{
         font-size:18px !important;
+
         font-weight:900 !important;
+
         margin:0 !important;
     }
 
     .impressao-subtitulo{
         font-size:12px !important;
+
         margin:2px 0 8px !important;
     }
 
     .impressao-linha{
         display:flex !important;
+
         justify-content:space-between !important;
+
         align-items:flex-start !important;
+
         gap:5px !important;
     }
 
     .impressao-info{
         margin:8px 0 !important;
+
         padding:7px 0 !important;
 
         border-top:1px dashed #000 !important;
+
         border-bottom:1px dashed #000 !important;
 
         line-height:1.45 !important;
+
         word-break:break-word !important;
     }
 
     .impressao-item{
         padding:7px 0 !important;
+
         border-bottom:1px dashed #000 !important;
     }
 
     .impressao-item-nome{
         font-weight:900 !important;
+
         line-height:1.25 !important;
     }
 
     .impressao-item-sub{
         font-size:10px !important;
+
         margin-top:2px !important;
     }
 
     .impressao-total{
         display:flex !important;
+
         justify-content:space-between !important;
+
         gap:5px !important;
 
         margin-top:10px !important;
+
         padding-top:8px !important;
 
         border-top:2px solid #000 !important;
 
         font-size:17px !important;
+
         font-weight:900 !important;
     }
 
     .impressao-obs{
         margin-top:9px !important;
+
         padding-top:7px !important;
 
         border-top:1px dashed #000 !important;
 
         line-height:1.4 !important;
+
         word-break:break-word !important;
     }
 
@@ -1146,7 +1266,13 @@ body{
 
 }
 
-</style></head><body><div class="container">
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
 
 <!-- =====================================================
      CABEÇALHO
@@ -1174,8 +1300,11 @@ body{
     </div>
 
     <div class="status-pedido">
+
         <span class="status-ponto"></span>
+
         Pedido aberto
+
     </div>
 
 </div>
@@ -1294,314 +1423,325 @@ body{
 
 <section class="produtos-pedido">
 
-
-    <div class="categorias">
-
-
-        <!-- HAMBÚRGUER -->
-
-        <div class="categoria">
-
-            <h3>
-                🍔 Hambúrguer
-            </h3>
-
-            <div class="linha-produto">
-
-                <select id="produtoHamburguer">
-
-                    <option value="">
-                        Selecionar hambúrguer
-                    </option>
-
-                </select>
-
-                <input
-                    class="quantidade"
-                    type="number"
-                    id="quantidadeHamburguer"
-                    min="1"
-                    step="1"
-                    value="1"
-                    inputmode="numeric"
-                >
-
-            </div>
-
-            <div
-                class="info-produto"
-                id="infoHamburguer"
-            >
-                Selecione um produto para visualizar o preço.
-            </div>
-
-            <button
-                type="button"
-                class="btn-adicionar"
-                id="btnAdicionarHamburguer"
-            >
-                ➕ ADICIONAR AO PEDIDO
-            </button>
-
-        </div>
+<div class="categorias">
 
 
-        <!-- PORÇÃO -->
+<!-- HAMBÚRGUER -->
 
-        <div class="categoria">
+<div class="categoria">
 
-            <h3>
-                🍟 Porção
-            </h3>
+    <h3>
+        🍔 Hambúrguer
+    </h3>
 
-            <div class="linha-produto">
+    <div class="linha-produto">
 
-                <select id="produtoPorcao">
+        <select id="produtoHamburguer">
 
-                    <option value="">
-                        Selecionar porção
-                    </option>
+            <option value="">
+                Selecionar hambúrguer
+            </option>
 
-                </select>
+        </select>
 
-                <input
-                    class="quantidade"
-                    type="number"
-                    id="quantidadePorcao"
-                    min="1"
-                    step="1"
-                    value="1"
-                    inputmode="numeric"
-                >
+        <input
+            class="quantidade"
+            type="number"
+            id="quantidadeHamburguer"
+            min="1"
+            step="1"
+            value="1"
+            inputmode="numeric"
+        >
 
-            </div>
+    </div>
 
-            <div
-                class="info-produto"
-                id="infoPorcao"
-            >
-                Selecione um produto para visualizar o preço.
-            </div>
+    <div
+        class="info-produto"
+        id="infoHamburguer"
+    >
+        Selecione um produto para visualizar o preço.
+    </div>
 
-            <button
-                type="button"
-                class="btn-adicionar"
-                id="btnAdicionarPorcao"
-            >
-                ➕ ADICIONAR AO PEDIDO
-            </button>
+    <button
+        type="button"
+        class="btn-adicionar"
+        id="btnAdicionarHamburguer"
+    >
+        ➕ ADICIONAR AO PEDIDO
+    </button>
 
-        </div>
-
-
-        <!-- BEBIDA -->
-
-        <div class="categoria">
-
-            <h3>
-                🥤 Bebida
-            </h3>
-
-            <div class="linha-produto">
-
-                <select id="produtoBebida">
-
-                    <option value="">
-                        Selecionar bebida
-                    </option>
-
-                </select>
-
-                <input
-                    class="quantidade"
-                    type="number"
-                    id="quantidadeBebida"
-                    min="1"
-                    step="1"
-                    value="1"
-                    inputmode="numeric"
-                >
-
-            </div>
-
-            <div
-                class="info-produto"
-                id="infoBebida"
-            >
-                Selecione um produto para visualizar o preço.
-            </div>
-
-            <button
-                type="button"
-                class="btn-adicionar"
-                id="btnAdicionarBebida"
-            >
-                ➕ ADICIONAR AO PEDIDO
-            </button>
-
-        </div>
+</div>
 
 
-        <!-- OUTRO -->
+<!-- PORÇÃO -->
 
-        <div class="categoria">
+<div class="categoria">
 
-            <h3>
-                📦 Outro
-            </h3>
+    <h3>
+        🍟 Porção
+    </h3>
 
-            <div class="linha-produto">
+    <div class="linha-produto">
 
-                <select id="produtoOutro">
+        <select id="produtoPorcao">
 
-                    <option value="">
-                        Selecionar produto
-                    </option>
+            <option value="">
+                Selecionar porção
+            </option>
 
-                </select>
+        </select>
 
-                <input
-                    class="quantidade"
-                    type="number"
-                    id="quantidadeOutro"
-                    min="1"
-                    step="1"
-                    value="1"
-                    inputmode="numeric"
-                >
+        <input
+            class="quantidade"
+            type="number"
+            id="quantidadePorcao"
+            min="1"
+            step="1"
+            value="1"
+            inputmode="numeric"
+        >
 
-            </div>
+    </div>
 
-            <div
-                class="info-produto"
-                id="infoOutro"
-            >
-                Selecione um produto para visualizar o preço.
-            </div>
+    <div
+        class="info-produto"
+        id="infoPorcao"
+    >
+        Selecione um produto para visualizar o preço.
+    </div>
 
-            <button
-                type="button"
-                class="btn-adicionar"
-                id="btnAdicionarOutro"
-            >
-                ➕ ADICIONAR AO PEDIDO
-            </button>
+    <button
+        type="button"
+        class="btn-adicionar"
+        id="btnAdicionarPorcao"
+    >
+        ➕ ADICIONAR AO PEDIDO
+    </button>
 
+</div>
+
+
+<!-- BEBIDA -->
+
+<div class="categoria">
+
+    <h3>
+        🥤 Bebida
+    </h3>
+
+    <div class="linha-produto">
+
+        <select id="produtoBebida">
+
+            <option value="">
+                Selecionar bebida
+            </option>
+
+        </select>
+
+        <input
+            class="quantidade"
+            type="number"
+            id="quantidadeBebida"
+            min="1"
+            step="1"
+            value="1"
+            inputmode="numeric"
+        >
+
+    </div>
+
+    <div
+        class="info-produto"
+        id="infoBebida"
+    >
+        Selecione um produto para visualizar o preço.
+    </div>
+
+    <button
+        type="button"
+        class="btn-adicionar"
+        id="btnAdicionarBebida"
+    >
+        ➕ ADICIONAR AO PEDIDO
+    </button>
+
+</div>
+
+
+<!-- OUTRO -->
+
+<div class="categoria">
+
+    <h3>
+        📦 Outro
+    </h3>
+
+    <div class="linha-produto">
+
+        <select id="produtoOutro">
+
+            <option value="">
+                Selecionar produto
+            </option>
+
+        </select>
+
+        <input
+            class="quantidade"
+            type="number"
+            id="quantidadeOutro"
+            min="1"
+            step="1"
+            value="1"
+            inputmode="numeric"
+        >
+
+    </div>
+
+    <div
+        class="info-produto"
+        id="infoOutro"
+    >
+        Selecione um produto para visualizar o preço.
+    </div>
+
+    <button
+        type="button"
+        class="btn-adicionar"
+        id="btnAdicionarOutro"
+    >
+        ➕ ADICIONAR AO PEDIDO
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PEDIDO ATUAL
+====================================================== -->
+
+<div class="card pedido-atual">
+
+    <div class="pedido-cabecalho">
+
+        <h2 class="titulo-secao">
+            Pedido atual
+        </h2>
+
+        <span
+            class="contador-itens"
+            id="contadorItens"
+        >
+            0
+        </span>
+
+    </div>
+
+
+    <div
+        id="listaPedido"
+        class="lista-pedido"
+    >
+
+        <div class="vazio">
+            Nenhum produto selecionado.<br>
+            Escolha um produto ao lado para começar.
         </div>
 
     </div>
 
 
-    <!-- =================================================
-         PEDIDO ATUAL
-    ================================================== -->
+    <div class="total-box">
 
-    <div class="card pedido-atual">
+        <div class="total-superior">
 
-        <div class="pedido-cabecalho">
-
-            <h2 class="titulo-secao">
-                Pedido atual
-            </h2>
+            <span class="total-label">
+                TOTAL DO PEDIDO
+            </span>
 
             <span
-                class="contador-itens"
-                id="contadorItens"
+                class="total-itens"
+                id="totalItensTexto"
             >
-                0
+                0 itens
             </span>
 
         </div>
 
-
-        <div
-            id="listaPedido"
-            class="lista-pedido"
+        <span
+            class="total-valor"
+            id="totalPedido"
         >
+            R$ 0,00
+        </span>
 
-            <div class="vazio">
-                Nenhum produto selecionado.<br>
-                Escolha um produto ao lado para começar.
-            </div>
-
-        </div>
+    </div>
 
 
-        <div class="total-box">
-
-            <div class="total-superior">
-
-                <span class="total-label">
-                    TOTAL DO PEDIDO
-                </span>
-
-                <span
-                    class="total-itens"
-                    id="totalItensTexto"
-                >
-                    0 itens
-                </span>
-
-            </div>
-
-            <span
-                class="total-valor"
-                id="totalPedido"
-            >
-                R$ 0,00
-            </span>
-
-        </div>
-
-
-        <div class="acoes">
-
-            <button
-                type="button"
-                class="btn btn-finalizar"
-                id="btnFinalizar"
-                disabled
-            >
-                ✅ FINALIZAR PEDIDO
-            </button>
-
-            <button
-                type="button"
-                class="btn btn-limpar"
-                id="btnLimparPedido"
-            >
-                🗑️ LIMPAR PEDIDO
-            </button>
-
-        </div>
-
+    <div class="acoes">
 
         <button
             type="button"
-            class="btn btn-imprimir"
-            id="btnImprimir"
-            style="display:none;"
+            class="btn btn-finalizar"
+            id="btnFinalizar"
+            disabled
         >
-            🖨️ IMPRIMIR COMANDA
+            ✅ FINALIZAR PEDIDO
         </button>
 
-
-        <div
-            id="mensagemPedido"
-            class="mensagem"
-        ></div>
+        <button
+            type="button"
+            class="btn btn-limpar"
+            id="btnLimparPedido"
+        >
+            🗑️ LIMPAR PEDIDO
+        </button>
 
     </div>
+
+
+    <button
+        type="button"
+        class="btn btn-imprimir"
+        id="btnImprimir"
+        style="display:none;"
+    >
+        🖨️ IMPRIMIR COMANDA
+    </button>
+
+
+    <button
+        type="button"
+        class="btn-whatsapp"
+        id="btnWhatsApp"
+        style="display:none;"
+    >
+        📲 ENVIAR PEDIDO PELO WHATSAPP
+    </button>
+
+
+    <div
+        id="mensagemPedido"
+        class="mensagem"
+    ></div>
+
+</div>
 
 </section>
 
 </div>
 
+
 <!-- =========================================================
-     ÁREA EXCLUSIVA PARA IMPRESSÃO
+     ÁREA DE IMPRESSÃO
 ========================================================= -->
 
 <div id="areaImpressao"></div>
+
 
 <script>
 
@@ -1609,7 +1749,7 @@ body{
 
 
 /* =========================================================
-   DADOS DO PEDIDO
+   DADOS
 ========================================================= */
 
 let pedido = [];
@@ -1627,7 +1767,7 @@ let ultimoPedidoFinalizado = null;
 
 
 /* =========================================================
-   CONFIGURAÇÕES
+   CONFIGURAÇÕES DAS CATEGORIAS
 ========================================================= */
 
 const configuracoesCategoria = {
@@ -1667,13 +1807,13 @@ const configuracoesCategoria = {
    STORAGE
 ========================================================= */
 
-function lerProdutos(){
+function lerStorage(chave){
 
     try{
 
         const dados =
             JSON.parse(
-                localStorage.getItem("produtos")
+                localStorage.getItem(chave)
                 || "[]"
             );
 
@@ -1684,13 +1824,47 @@ function lerProdutos(){
     }catch(erro){
 
         console.error(
-            "Erro ao ler produtos:",
+            "Erro ao ler:",
+            chave,
             erro
         );
 
         return [];
 
     }
+
+}
+
+
+function salvarStorage(chave,dados){
+
+    try{
+
+        localStorage.setItem(
+            chave,
+            JSON.stringify(dados)
+        );
+
+        return true;
+
+    }catch(erro){
+
+        console.error(
+            "Erro ao salvar:",
+            chave,
+            erro
+        );
+
+        return false;
+
+    }
+
+}
+
+
+function lerProdutos(){
+
+    return lerStorage("produtos");
 
 }
 
@@ -1795,6 +1969,17 @@ function gerarID(){
 
 
 /* =========================================================
+   DATA
+========================================================= */
+
+function dataAtual(){
+
+    return new Date().toISOString();
+
+}
+
+
+/* =========================================================
    MENSAGEM
 ========================================================= */
 
@@ -1831,7 +2016,7 @@ function mostrarMensagem(
                     "mensagem";
 
             },
-            3000
+            4000
         );
 
 }
@@ -2046,7 +2231,11 @@ function carregarProdutos(){
                                 produto.estoque
                             );
 
-                        if(estoque <= 0){
+                        if(
+                            produto.hasOwnProperty("estoque")
+                            &&
+                            estoque <= 0
+                        ){
 
                             option.disabled =
                                 true;
@@ -2106,12 +2295,10 @@ function carregarProdutos(){
 
 
 /* =========================================================
-   INFO DO PRODUTO
+   INFORMAÇÕES DO PRODUTO
 ========================================================= */
 
-function atualizarInfoCategoria(
-    categoria
-){
+function atualizarInfoCategoria(categoria){
 
     const config =
         configuracoesCategoria[
@@ -2147,105 +2334,32 @@ function atualizarInfoCategoria(
     }
 
     const preco =
-        numero(
-            produto.preco
-        );
+        numero(produto.preco);
 
-    const estoque =
-        numero(
-            produto.estoque
-        );
-
-    let html =
-        `<strong>Preço:</strong> ${dinheiro(preco)}`;
-
-    if(produto.tamanho){
-
-        html +=
-            ` &nbsp;•&nbsp; <strong>Tamanho:</strong> ${escapar(produto.tamanho)}`;
-
-    }
-
-    html +=
-        ` &nbsp;•&nbsp; <strong>Estoque:</strong> ${estoque}`;
+    const estoqueTexto =
+        produto.hasOwnProperty("estoque")
+            ?
+            ` • Estoque: ${numero(produto.estoque)}`
+            :
+            "";
 
     info.innerHTML =
-        html;
+        `<strong>${escapar(produto.nome)}</strong>
+         &nbsp;•&nbsp;
+         ${dinheiro(preco)}
+         ${produto.tamanho ? ` • ${escapar(produto.tamanho)}` : ""}
+         ${estoqueTexto}`;
 
 }
 
 
 /* =========================================================
-   QUANTIDADE
-========================================================= */
-
-function obterQuantidade(
-    categoria
-){
-
-    const config =
-        configuracoesCategoria[
-            categoria
-        ];
-
-    if(!config){
-
-        return 1;
-
-    }
-
-    const campo =
-        document.getElementById(
-            config.quantidade
-        );
-
-    if(!campo){
-
-        return 1;
-
-    }
-
-    const valor =
-        String(
-            campo.value || ""
-        ).trim();
-
-    if(valor === ""){
-
-        return 1;
-
-    }
-
-    const quantidade =
-        parseInt(
-            valor,
-            10
-        );
-
-    if(
-        !Number.isFinite(
-            quantidade
-        )
-        ||
-        quantidade < 1
-    ){
-
-        return 1;
-
-    }
-
-    return quantidade;
-
-}
-
-
-/* =========================================================
-   ATUALIZAR PREVIEW
+   PREVIEW
 ========================================================= */
 
 function atualizarPreviewCategoria(
     categoria,
-    mostrarAviso=true
+    mostrar=true
 ){
 
     const config =
@@ -2260,12 +2374,12 @@ function atualizarPreviewCategoria(
             config.select
         );
 
-    const campoQuantidade =
+    const quantidadeInput =
         document.getElementById(
             config.quantidade
         );
 
-    if(!select) return;
+    if(!select || !quantidadeInput) return;
 
     const produto =
         buscarProduto(
@@ -2277,235 +2391,37 @@ function atualizarPreviewCategoria(
         previewsPedido[categoria] =
             null;
 
-        renderizarPedido();
-
         return;
 
     }
 
-    const estoque =
-        numero(
-            produto.estoque
+    const quantidade =
+        Math.max(
+            1,
+            parseInt(
+                quantidadeInput.value,
+                10
+            ) || 1
         );
-
-    if(estoque <= 0){
-
-        previewsPedido[categoria] =
-            null;
-
-        renderizarPedido();
-
-        if(mostrarAviso){
-
-            mostrarMensagem(
-                "Este produto está sem estoque.",
-                "erro"
-            );
-
-        }
-
-        return;
-
-    }
-
-    let quantidade =
-        obterQuantidade(
-            categoria
-        );
-
-    if(quantidade > estoque){
-
-        quantidade =
-            Math.floor(
-                estoque
-            );
-
-        if(campoQuantidade){
-
-            campoQuantidade.value =
-                String(quantidade);
-
-        }
-
-        if(mostrarAviso){
-
-            mostrarMensagem(
-                `Estoque disponível: ${estoque}.`,
-                "erro"
-            );
-
-        }
-
-    }
-
-    if(quantidade < 1){
-
-        quantidade =
-            1;
-
-    }
 
     previewsPedido[categoria] = {
 
-        id:
-            "preview-" + categoria,
+        id:produto.id,
 
-        produtoId:
-            produto.id,
+        nome:produto.nome,
 
-        nome:
-            produto.nome || "Produto",
+        tamanho:produto.tamanho || "",
 
-        categoria:
-            normalizarCategoria(
-                produto
-            ),
+        preco:numero(produto.preco),
 
-        tamanho:
-            produto.tamanho || "",
+        quantidade:quantidade,
 
-        preco:
-            numero(
-                produto.preco
-            ),
-
-        quantidade,
-
-        foto:
-            produto.foto || "",
-
-        preview:
-            true,
-
-        categoriaPreview:
-            categoria
+        subtotal:
+            numero(produto.preco)
+            *
+            quantidade
 
     };
-
-    renderizarPedido();
-
-}
-
-
-/* =========================================================
-   ITENS VISUAIS
-========================================================= */
-
-function obterItensVisualizacao(){
-
-    const itens =
-        pedido.map(
-            item=>({
-                ...item,
-                preview:false
-            })
-        );
-
-    Object.keys(
-        previewsPedido
-    ).forEach(
-        categoria=>{
-
-            const preview =
-                previewsPedido[
-                    categoria
-                ];
-
-            if(preview){
-
-                itens.push({
-                    ...preview,
-                    preview:true
-                });
-
-            }
-
-        }
-    );
-
-    return itens;
-
-}
-
-
-/* =========================================================
-   ITENS FINAIS
-========================================================= */
-
-function obterItensDoPedido(){
-
-    const itens = [];
-
-    function adicionarOuSomar(
-        item
-    ){
-
-        const produtoId =
-            String(
-                item.produtoId
-            );
-
-        const existente =
-            itens.find(
-                outro =>
-                    String(
-                        outro.produtoId
-                    )
-                    ===
-                    produtoId
-            );
-
-        if(existente){
-
-            existente.quantidade =
-                numero(
-                    existente.quantidade
-                )
-                +
-                numero(
-                    item.quantidade
-                );
-
-        }else{
-
-            itens.push({
-                ...item,
-                quantidade:
-                    numero(
-                        item.quantidade
-                    )
-            });
-
-        }
-
-    }
-
-    pedido.forEach(
-        adicionarOuSomar
-    );
-
-    Object.keys(
-        previewsPedido
-    ).forEach(
-        categoria=>{
-
-            const preview =
-                previewsPedido[
-                    categoria
-                ];
-
-            if(preview){
-
-                adicionarOuSomar(
-                    preview
-                );
-
-            }
-
-        }
-    );
-
-    return itens;
 
 }
 
@@ -2514,9 +2430,7 @@ function obterItensDoPedido(){
    ADICIONAR PRODUTO
 ========================================================= */
 
-function adicionarProduto(
-    categoria
-){
+function adicionarProduto(categoria){
 
     const config =
         configuracoesCategoria[
@@ -2530,20 +2444,14 @@ function adicionarProduto(
             config.select
         );
 
-    if(!select){
-
-        mostrarMensagem(
-            "Campo de produto não encontrado.",
-            "erro"
+    const quantidadeInput =
+        document.getElementById(
+            config.quantidade
         );
-
-        return;
-
-    }
 
     const produto =
         buscarProduto(
-            select.value
+            select?.value
         );
 
     if(!produto){
@@ -2557,88 +2465,87 @@ function adicionarProduto(
 
     }
 
-    atualizarPreviewCategoria(
-        categoria,
-        false
-    );
+    let quantidade =
+        parseInt(
+            quantidadeInput?.value,
+            10
+        );
 
-    const preview =
-        previewsPedido[
-            categoria
-        ];
+    if(
+        !Number.isFinite(quantidade)
+        ||
+        quantidade < 1
+    ){
 
-    if(!preview){
+        quantidade = 1;
+
+    }
+
+    quantidade =
+        Math.floor(
+            quantidade
+        );
+
+    if(
+        produto.hasOwnProperty("estoque")
+        &&
+        numero(produto.estoque) < quantidade
+    ){
 
         mostrarMensagem(
-            "Não foi possível adicionar o produto.",
+            `Estoque insuficiente para ${produto.nome}.`,
             "erro"
         );
 
         return;
 
     }
-
-    const estoque =
-        numero(
-            produto.estoque
-        );
 
     const existente =
         pedido.find(
             item =>
-                String(
-                    item.produtoId
-                )
+                String(item.produtoId)
                 ===
-                String(
-                    produto.id
-                )
+                String(produto.id)
         );
-
-    const quantidadeExistente =
-        existente
-            ?
-            numero(
-                existente.quantidade
-            )
-            :
-            0;
-
-    const quantidadeAdicionar =
-        numero(
-            preview.quantidade
-        );
-
-    if(
-        quantidadeExistente
-        +
-        quantidadeAdicionar
-        >
-        estoque
-    ){
-
-        mostrarMensagem(
-            `Estoque insuficiente. Disponível: ${estoque}.`,
-            "erro"
-        );
-
-        return;
-
-    }
 
     if(existente){
 
-        existente.quantidade =
-            quantidadeExistente
+        const novaQuantidade =
+            existente.quantidade
             +
-            quantidadeAdicionar;
+            quantidade;
+
+        if(
+            produto.hasOwnProperty("estoque")
+            &&
+            numero(produto.estoque)
+            <
+            novaQuantidade
+        ){
+
+            mostrarMensagem(
+                `Estoque insuficiente para adicionar ${novaQuantidade} unidades.`,
+                "erro"
+            );
+
+            return;
+
+        }
+
+        existente.quantidade =
+            novaQuantidade;
+
+        existente.subtotal =
+            existente.preco
+            *
+            existente.quantidade;
 
     }else{
 
         pedido.push({
 
-            id:
-                gerarID(),
+            id:gerarID(),
 
             produtoId:
                 produto.id,
@@ -2660,41 +2567,31 @@ function adicionarProduto(
                 ),
 
             quantidade:
-                quantidadeAdicionar,
+                quantidade,
 
-            foto:
-                produto.foto || ""
+            subtotal:
+                numero(
+                    produto.preco
+                )
+                *
+                quantidade
 
         });
 
     }
 
-    previewsPedido[categoria] =
-        null;
+    quantidadeInput.value =
+        1;
 
-    select.value =
-        "";
-
-    const campoQuantidade =
-        document.getElementById(
-            config.quantidade
-        );
-
-    if(campoQuantidade){
-
-        campoQuantidade.value =
-            "1";
-
-    }
-
-    atualizarInfoCategoria(
-        categoria
+    atualizarPreviewCategoria(
+        categoria,
+        false
     );
 
     renderizarPedido();
 
     mostrarMensagem(
-        "Produto adicionado ao pedido.",
+        `${produto.nome} adicionado ao pedido.`,
         "sucesso"
     );
 
@@ -2710,68 +2607,10 @@ function removerItem(id){
     pedido =
         pedido.filter(
             item =>
-                String(
-                    item.id
-                )
+                String(item.id)
                 !==
                 String(id)
         );
-
-    renderizarPedido();
-
-    mostrarMensagem(
-        "Produto removido do pedido.",
-        "sucesso"
-    );
-
-}
-
-
-/* =========================================================
-   REMOVER PREVIEW
-========================================================= */
-
-function removerPreview(
-    categoria
-){
-
-    const config =
-        configuracoesCategoria[
-            categoria
-        ];
-
-    if(!config) return;
-
-    previewsPedido[categoria] =
-        null;
-
-    const select =
-        document.getElementById(
-            config.select
-        );
-
-    const quantidade =
-        document.getElementById(
-            config.quantidade
-        );
-
-    if(select){
-
-        select.value =
-            "";
-
-    }
-
-    if(quantidade){
-
-        quantidade.value =
-            "1";
-
-    }
-
-    atualizarInfoCategoria(
-        categoria
-    );
 
     renderizarPedido();
 
@@ -2784,25 +2623,26 @@ function removerPreview(
 
 function calcularTotal(){
 
-    return obterItensVisualizacao()
-        .reduce(
-            (
-                total,
-                item
-            ) =>
-                total
-                +
-                (
-                    numero(
-                        item.preco
-                    )
-                    *
-                    numero(
-                        item.quantidade
-                    )
-                ),
-            0
-        );
+    return pedido.reduce(
+        (total,item)=>
+            total
+            +
+            numero(item.subtotal),
+        0
+    );
+
+}
+
+
+function calcularQuantidadeItens(){
+
+    return pedido.reduce(
+        (total,item)=>
+            total
+            +
+            numero(item.quantidade),
+        0
+    );
 
 }
 
@@ -2818,19 +2658,14 @@ function renderizarPedido(){
             "listaPedido"
         );
 
-    const totalElemento =
-        document.getElementById(
-            "totalPedido"
-        );
-
-    const btnFinalizar =
-        document.getElementById(
-            "btnFinalizar"
-        );
-
     const contador =
         document.getElementById(
             "contadorItens"
+        );
+
+    const totalTexto =
+        document.getElementById(
+            "totalPedido"
         );
 
     const totalItensTexto =
@@ -2838,12 +2673,14 @@ function renderizarPedido(){
             "totalItensTexto"
         );
 
+    const btnFinalizar =
+        document.getElementById(
+            "btnFinalizar"
+        );
+
     if(!lista) return;
 
-    const itens =
-        obterItensVisualizacao();
-
-    if(itens.length === 0){
+    if(pedido.length === 0){
 
         lista.innerHTML = `
             <div class="vazio">
@@ -2855,169 +2692,105 @@ function renderizarPedido(){
     }else{
 
         lista.innerHTML =
-            itens.map(
-                item=>{
+            pedido.map(
+                item => `
 
-                    const subtotal =
-                        numero(
-                            item.preco
-                        )
-                        *
-                        numero(
-                            item.quantidade
-                        );
+                <div class="item-pedido">
 
-                    const categoriaPreview =
-                        item.categoriaPreview;
+                    <div class="item-topo">
 
-                    const botaoRemover =
-                        item.preview
-                            ?
-                            `
-                            <button
-                                type="button"
-                                class="btn-remover"
-                                onclick="removerPreview('${escapar(categoriaPreview)}')"
-                                title="Cancelar seleção"
-                            >
-                                ✕
-                            </button>
-                            `
-                            :
-                            `
-                            <button
-                                type="button"
-                                class="btn-remover"
-                                onclick="removerItem('${escapar(item.id)}')"
-                                title="Remover item"
-                            >
-                                ✕
-                            </button>
-                            `;
+                        <div>
 
-                    return `
-
-                        <div
-                            class="item-pedido ${
-                                item.preview
-                                    ? "item-preview"
-                                    : ""
-                            }"
-                        >
-
-                            <div class="item-topo">
-
-                                <div>
-
-                                    <div class="item-nome">
-                                        ${escapar(item.nome)}
-                                    </div>
-
-                                    ${
-                                        item.tamanho
-                                            ?
-                                            `
-                                            <div class="item-tamanho">
-                                                ${escapar(item.tamanho)}
-                                            </div>
-                                            `
-                                            :
-                                            ""
-                                    }
-
-                                    ${
-                                        item.preview
-                                            ?
-                                            `
-                                            <span class="badge-preview">
-                                                SELECIONADO
-                                            </span>
-                                            `
-                                            :
-                                            ""
-                                    }
-
-                                </div>
-
-                                <div class="item-preco">
-                                    ${dinheiro(item.preco)}
-                                </div>
-
+                            <div class="item-nome">
+                                ${escapar(item.nome)}
                             </div>
 
-
-                            <div class="item-detalhes">
-
-                                <span>
-                                    Qtd:
-                                    <strong>
-                                        ${numero(item.quantidade)}
-                                    </strong>
-                                </span>
-
-                                <span class="item-subtotal">
-                                    ${dinheiro(subtotal)}
-                                </span>
-
-                                ${botaoRemover}
-
-                            </div>
+                            ${
+                                item.tamanho
+                                ?
+                                `
+                                <div class="item-tamanho">
+                                    ${escapar(item.tamanho)}
+                                </div>
+                                `
+                                :
+                                ""
+                            }
 
                         </div>
 
-                    `;
+                        <div class="item-preco">
+                            ${dinheiro(item.preco)}
+                        </div>
 
-                }
+                    </div>
+
+
+                    <div class="item-detalhes">
+
+                        <span>
+                            Quantidade:
+                            <strong>
+                                ${item.quantidade}
+                            </strong>
+                        </span>
+
+                        <span class="item-subtotal">
+                            ${dinheiro(item.subtotal)}
+                        </span>
+
+                        <button
+                            type="button"
+                            class="btn-remover"
+                            onclick="removerItem('${item.id}')"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `
             ).join("");
 
     }
 
+    const quantidade =
+        calcularQuantidadeItens();
+
     const total =
         calcularTotal();
-
-    const quantidadeTotal =
-        itens.reduce(
-            (
-                soma,
-                item
-            ) =>
-                soma
-                +
-                numero(
-                    item.quantidade
-                ),
-            0
-        );
-
-    if(totalElemento){
-
-        totalElemento.textContent =
-            dinheiro(total);
-
-    }
 
     if(contador){
 
         contador.textContent =
-            quantidadeTotal;
+            quantidade;
+
+    }
+
+    if(totalTexto){
+
+        totalTexto.textContent =
+            dinheiro(total);
 
     }
 
     if(totalItensTexto){
 
         totalItensTexto.textContent =
-            quantidadeTotal === 1
-                ?
-                "1 item"
-                :
-                `${quantidadeTotal} itens`;
+            `${quantidade} ${
+                quantidade === 1
+                ? "item"
+                : "itens"
+            }`;
 
     }
 
     if(btnFinalizar){
 
         btnFinalizar.disabled =
-            itens.length === 0;
+            pedido.length === 0;
 
     }
 
@@ -3025,369 +2798,469 @@ function renderizarPedido(){
 
 
 /* =========================================================
-   QUANTIDADE
+   NORMALIZAR TELEFONE
 ========================================================= */
 
-function prepararQuantidade(
-    elementoId,
-    categoria
-){
+function normalizarTelefone(telefone){
 
-    const campo =
-        document.getElementById(
-            elementoId
-        );
-
-    if(!campo) return;
-
-    campo.addEventListener(
-        "input",
-        function(){
-
-            const valor =
-                String(
-                    this.value || ""
-                ).trim();
-
-            if(valor === ""){
-
-                if(
-                    previewsPedido[
-                        categoria
-                    ]
-                ){
-
-                    previewsPedido[
-                        categoria
-                    ].quantidade =
-                        1;
-
-                }
-
-                renderizarPedido();
-
-                return;
-
-            }
-
-            let quantidade =
-                parseInt(
-                    valor,
-                    10
-                );
-
-            if(
-                !Number.isFinite(
-                    quantidade
-                )
-                ||
-                quantidade < 1
-            ){
-
-                renderizarPedido();
-
-                return;
-
-            }
-
-            const config =
-                configuracoesCategoria[
-                    categoria
-                ];
-
-            const select =
-                document.getElementById(
-                    config.select
-                );
-
-            const produto =
-                buscarProduto(
-                    select?.value
-                );
-
-            if(produto){
-
-                const estoque =
-                    numero(
-                        produto.estoque
-                    );
-
-                if(
-                    estoque > 0
-                    &&
-                    quantidade > estoque
-                ){
-
-                    quantidade =
-                        Math.floor(
-                            estoque
-                        );
-
-                    this.value =
-                        String(
-                            quantidade
-                        );
-
-                    mostrarMensagem(
-                        `Estoque disponível: ${estoque}.`,
-                        "erro"
-                    );
-
-                }
-
-                if(
-                    previewsPedido[
-                        categoria
-                    ]
-                ){
-
-                    previewsPedido[
-                        categoria
-                    ].quantidade =
-                        quantidade;
-
-                }else{
-
-                    atualizarPreviewCategoria(
-                        categoria,
-                        false
-                    );
-
-                }
-
-            }
-
-            renderizarPedido();
-
-        }
-    );
-
-    campo.addEventListener(
-        "blur",
-        function(){
-
-            let quantidade =
-                parseInt(
-                    String(
-                        this.value || ""
-                    ),
-                    10
-                );
-
-            if(
-                !Number.isFinite(
-                    quantidade
-                )
-                ||
-                quantidade < 1
-            ){
-
-                quantidade =
-                    1;
-
-                this.value =
-                    "1";
-
-            }
-
-            const config =
-                configuracoesCategoria[
-                    categoria
-                ];
-
-            const select =
-                document.getElementById(
-                    config.select
-                );
-
-            const produto =
-                buscarProduto(
-                    select?.value
-                );
-
-            if(produto){
-
-                const estoque =
-                    numero(
-                        produto.estoque
-                    );
-
-                if(
-                    estoque > 0
-                    &&
-                    quantidade > estoque
-                ){
-
-                    quantidade =
-                        Math.floor(
-                            estoque
-                        );
-
-                    this.value =
-                        String(
-                            quantidade
-                        );
-
-                }
-
-                if(
-                    previewsPedido[
-                        categoria
-                    ]
-                ){
-
-                    previewsPedido[
-                        categoria
-                    ].quantidade =
-                        quantidade;
-
-                }else{
-
-                    atualizarPreviewCategoria(
-                        categoria,
-                        false
-                    );
-
-                }
-
-            }
-
-            renderizarPedido();
-
-        }
-    );
+    return String(
+        telefone || ""
+    )
+    .replace(/\D/g,"");
 
 }
 
 
 /* =========================================================
-   CRIAR DADOS DO PEDIDO
+   FORMATAR TELEFONE
 ========================================================= */
 
-function criarDadosPedido(){
+function formatarTelefone(telefone){
+
+    let numeroTelefone =
+        normalizarTelefone(
+            telefone
+        );
+
+    if(
+        numeroTelefone.length === 11
+    ){
+
+        return (
+            "("
+            +
+            numeroTelefone.substring(0,2)
+            +
+            ") "
+            +
+            numeroTelefone.substring(2,7)
+            +
+            "-"
+            +
+            numeroTelefone.substring(7)
+        );
+
+    }
+
+    return telefone || "";
+
+}
+
+
+/* =========================================================
+   BUSCAR CLIENTE
+========================================================= */
+
+function encontrarCliente(
+    nome,
+    telefone
+){
+
+    const clientes =
+        lerStorage(
+            "clientes"
+        );
+
+    const telefoneLimpo =
+        normalizarTelefone(
+            telefone
+        );
+
+    const nomeLimpo =
+        String(
+            nome || ""
+        )
+        .trim()
+        .toLowerCase();
+
+    return clientes.find(
+        cliente => {
+
+            const telCliente =
+                normalizarTelefone(
+                    cliente.telefone
+                    ||
+                    cliente.whatsapp
+                    ||
+                    cliente.celular
+                    ||
+                    ""
+                );
+
+            const nomeCliente =
+                String(
+                    cliente.nome
+                    ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+            if(
+                telefoneLimpo
+                &&
+                telCliente
+                &&
+                telefoneLimpo === telCliente
+            ){
+
+                return true;
+
+            }
+
+            if(
+                nomeLimpo
+                &&
+                nomeCliente
+                &&
+                nomeLimpo === nomeCliente
+            ){
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+    ) || null;
+
+}
+
+
+/* =========================================================
+   SALVAR / ATUALIZAR CLIENTE
+========================================================= */
+
+function salvarCliente(){
+
+    const nome =
+        document.getElementById(
+            "clientePedido"
+        )?.value.trim();
+
+    const telefone =
+        document.getElementById(
+            "telefonePedido"
+        )?.value.trim();
+
+    const endereco =
+        document.getElementById(
+            "enderecoPedido"
+        )?.value.trim();
+
+    if(!nome && !telefone){
+
+        return null;
+
+    }
+
+    let clientes =
+        lerStorage(
+            "clientes"
+        );
+
+    let cliente =
+        encontrarCliente(
+            nome,
+            telefone
+        );
+
+    if(cliente){
+
+        if(nome){
+            cliente.nome =
+                nome;
+        }
+
+        if(telefone){
+
+            cliente.telefone =
+                telefone;
+
+            cliente.whatsapp =
+                telefone;
+
+        }
+
+        if(endereco){
+
+            cliente.endereco =
+                endereco;
+
+        }
+
+        if(!cliente.id){
+
+            cliente.id =
+                gerarID();
+
+        }
+
+        salvarStorage(
+            "clientes",
+            clientes
+        );
+
+        return cliente;
+
+    }
+
+    cliente = {
+
+        id:
+            gerarID(),
+
+        nome:
+            nome || "Cliente",
+
+        telefone:
+            telefone || "",
+
+        whatsapp:
+            telefone || "",
+
+        endereco:
+            endereco || "",
+
+        criadoEm:
+            dataAtual(),
+
+        atualizadoEm:
+            dataAtual()
+
+    };
+
+    clientes.push(
+        cliente
+    );
+
+    salvarStorage(
+        "clientes",
+        clientes
+    );
+
+    return cliente;
+
+}
+
+
+/* =========================================================
+   PREENCHER CLIENTE EXISTENTE
+========================================================= */
+
+function verificarClienteExistente(){
+
+    const telefoneInput =
+        document.getElementById(
+            "telefonePedido"
+        );
+
+    const nomeInput =
+        document.getElementById(
+            "clientePedido"
+        );
+
+    const enderecoInput =
+        document.getElementById(
+            "enderecoPedido"
+        );
+
+    const telefone =
+        telefoneInput?.value || "";
+
+    const nome =
+        nomeInput?.value || "";
 
     const cliente =
+        encontrarCliente(
+            nome,
+            telefone
+        );
+
+    if(!cliente) return;
+
+    if(
+        telefoneInput
+        &&
+        !telefoneInput.value
+        &&
+        cliente.telefone
+    ){
+
+        telefoneInput.value =
+            formatarTelefone(
+                cliente.telefone
+            );
+
+    }
+
+    if(
+        nomeInput
+        &&
+        !nomeInput.value
+        &&
+        cliente.nome
+    ){
+
+        nomeInput.value =
+            cliente.nome;
+
+    }
+
+    if(
+        enderecoInput
+        &&
+        !enderecoInput.value
+        &&
+        cliente.endereco
+    ){
+
+        enderecoInput.value =
+            cliente.endereco;
+
+    }
+
+}
+
+
+/* =========================================================
+   MONTAR DADOS DO PEDIDO
+========================================================= */
+
+function montarDadosPedido(){
+
+    const cliente =
+        salvarCliente();
+
+    const nome =
         document.getElementById(
             "clientePedido"
         )?.value.trim()
-        ||
-        "";
+        || "";
 
     const telefone =
         document.getElementById(
             "telefonePedido"
         )?.value.trim()
-        ||
-        "";
+        || "";
 
     const endereco =
         document.getElementById(
             "enderecoPedido"
         )?.value.trim()
-        ||
-        "";
+        || "";
 
-    const tipoPedido =
+    const tipo =
         document.getElementById(
             "formaEntregaPedido"
         )?.value
-        ||
-        "Balcão";
+        || "Balcão";
 
     const observacao =
         document.getElementById(
             "observacaoPedido"
         )?.value.trim()
-        ||
-        "";
-
-    const itensPedido =
-        obterItensDoPedido();
+        || "";
 
     const total =
-        itensPedido.reduce(
-            (
-                soma,
-                item
-            ) =>
-                soma
-                +
-                numero(
-                    item.preco
-                )
-                *
-                numero(
-                    item.quantidade
-                ),
-            0
-        );
+        calcularTotal();
+
+    const quantidadeItens =
+        calcularQuantidadeItens();
+
+    const agora =
+        dataAtual();
 
     return {
 
         id:
             gerarID(),
 
-        data:
-            new Date().toISOString(),
+        clienteId:
+            cliente?.id
+            ||
+            null,
 
-        dataVenda:
-            new Date().toISOString(),
+        cliente:
+            nome
+            ||
+            cliente?.nome
+            ||
+            "Cliente",
 
-        cliente,
+        nomeCliente:
+            nome
+            ||
+            cliente?.nome
+            ||
+            "Cliente",
 
-        telefone,
+        telefone:
+            telefone
+            ||
+            cliente?.telefone
+            ||
+            "",
 
-        endereco,
+        whatsapp:
+            telefone
+            ||
+            cliente?.whatsapp
+            ||
+            cliente?.telefone
+            ||
+            "",
 
-        tipoPedido,
+        endereco:
+            endereco
+            ||
+            cliente?.endereco
+            ||
+            "",
 
-        observacao,
+        tipoPedido:
+            tipo,
+
+        tipo:
+            tipo,
+
+        formaEntrega:
+            tipo,
+
+        observacao:
+            observacao,
 
         itens:
-            itensPedido.map(
-                item=>({
-
-                    produtoId:
-                        item.produtoId,
-
-                    nome:
-                        item.nome,
-
-                    categoria:
-                        item.categoria,
-
-                    tamanho:
-                        item.tamanho || "",
-
-                    preco:
-                        numero(
-                            item.preco
-                        ),
-
-                    quantidade:
-                        numero(
-                            item.quantidade
-                        ),
-
-                    subtotal:
-                        numero(
-                            item.preco
-                        )
-                        *
-                        numero(
-                            item.quantidade
-                        )
-
+            pedido.map(
+                item => ({
+                    ...item
                 })
             ),
 
-        total,
+        total:
+            total,
 
         valor:
             total,
 
+        quantidadeItens:
+            quantidadeItens,
+
+        data:
+            agora,
+
+        dataVenda:
+            agora,
+
+        criadoEm:
+            agora,
+
         status:
-            "finalizado"
+            "finalizado",
+
+        origem:
+            "pedido2.html"
 
     };
 
@@ -3395,160 +3268,19 @@ function criarDadosPedido(){
 
 
 /* =========================================================
-   FINALIZAR PEDIDO
+   BAIXAR ESTOQUE
 ========================================================= */
 
-function finalizarPedidoTela(){
-
-    const itensFinais =
-        obterItensDoPedido();
-
-    if(
-        itensFinais.length === 0
-    ){
-
-        mostrarMensagem(
-            "Adicione pelo menos um produto ao pedido.",
-            "erro"
-        );
-
-        return;
-
-    }
+function baixarEstoquePedido(){
 
     const produtos =
         lerProdutos();
 
-    for(
-        const item of itensFinais
-    ){
+    let alterou =
+        false;
 
-        const produto =
-            produtos.find(
-                p =>
-                    String(p.id)
-                    ===
-                    String(item.produtoId)
-            );
-
-        if(!produto){
-
-            mostrarMensagem(
-                `O produto "${item.nome}" não existe mais no cadastro.`,
-                "erro"
-            );
-
-            return;
-
-        }
-
-        const estoque =
-            numero(
-                produto.estoque
-            );
-
-        const quantidade =
-            numero(
-                item.quantidade
-            );
-
-        if(
-            quantidade > estoque
-        ){
-
-            mostrarMensagem(
-                `Estoque insuficiente para "${item.nome}". Disponível: ${estoque}.`,
-                "erro"
-            );
-
-            return;
-
-        }
-
-    }
-
-    const dadosPedido =
-        criarDadosPedido();
-
-    ultimoPedidoFinalizado =
-        JSON.parse(
-            JSON.stringify(
-                dadosPedido
-            )
-        );
-
-    if(
-        typeof window.finalizarPedido
-        ===
-        "function"
-    ){
-
-        try{
-
-            window.finalizarPedido(
-                dadosPedido
-            );
-
-        }catch(erro){
-
-            console.error(
-                "Erro na função central:",
-                erro
-            );
-
-            finalizarPedidoFallback(
-                dadosPedido
-            );
-
-        }
-
-    }else{
-
-        finalizarPedidoFallback(
-            dadosPedido
-        );
-
-    }
-
-    mostrarMensagem(
-        "Pedido finalizado com sucesso!",
-        "sucesso"
-    );
-
-    limparFormularioNovoPedido(
-        true
-    );
-
-    carregarProdutos();
-
-    const btnImprimir =
-        document.getElementById(
-            "btnImprimir"
-        );
-
-    if(btnImprimir){
-
-        btnImprimir.style.display =
-            "block";
-
-    }
-
-}
-
-
-/* =========================================================
-   FALLBACK
-========================================================= */
-
-function finalizarPedidoFallback(
-    dadosPedido
-){
-
-    const produtos =
-        lerProdutos();
-
-    dadosPedido.itens.forEach(
-        item=>{
+    pedido.forEach(
+        item => {
 
             const produto =
                 produtos.find(
@@ -3558,71 +3290,661 @@ function finalizarPedidoFallback(
                         String(item.produtoId)
                 );
 
-            if(produto){
+            if(!produto) return;
 
-                produto.estoque =
-                    Math.max(
-                        0,
-                        numero(
-                            produto.estoque
-                        )
-                        -
-                        numero(
-                            item.quantidade
-                        )
-                    );
+            if(
+                !Object.prototype.hasOwnProperty.call(
+                    produto,
+                    "estoque"
+                )
+            ){
+
+                return;
 
             }
+
+            const estoqueAtual =
+                numero(
+                    produto.estoque
+                );
+
+            produto.estoque =
+                Math.max(
+                    0,
+                    estoqueAtual
+                    -
+                    numero(item.quantidade)
+                );
+
+            alterou =
+                true;
 
         }
     );
 
-    localStorage.setItem(
-        "produtos",
-        JSON.stringify(
-            produtos
-        )
-    );
+    if(alterou){
 
-    const vendas =
-        JSON.parse(
-            localStorage.getItem(
-                "vendas"
-            )
-            ||
-            "[]"
+        salvarStorage(
+            "produtos",
+            produtos
         );
 
-    const lista =
-        Array.isArray(vendas)
-            ?
-            vendas
-            :
-            [];
+    }
 
-    lista.push(
+}
+
+
+/* =========================================================
+   SALVAR VENDA
+========================================================= */
+
+function salvarVenda(dadosPedido){
+
+    const vendas =
+        lerStorage(
+            "vendas"
+        );
+
+    vendas.push(
         dadosPedido
     );
 
-    localStorage.setItem(
+    return salvarStorage(
         "vendas",
-        JSON.stringify(
-            lista
-        )
+        vendas
     );
 
 }
 
 
 /* =========================================================
-   LIMPAR FORMULÁRIO
+   FINALIZAR PEDIDO
 ========================================================= */
 
-function limparFormularioNovoPedido(
-    manterUltimaImpressao=false
+function finalizarPedidoAtual(){
+
+    if(pedido.length === 0){
+
+        mostrarMensagem(
+            "Adicione pelo menos um produto.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+    const btn =
+        document.getElementById(
+            "btnFinalizar"
+        );
+
+    if(btn){
+
+        btn.disabled =
+            true;
+
+    }
+
+    try{
+
+        const dadosPedido =
+            montarDadosPedido();
+
+        /*
+         * Se o GrillCore já possuir uma função
+         * global de finalização, damos prioridade
+         * a ela para manter compatibilidade.
+         */
+
+        if(
+            typeof window.finalizarPedido
+            ===
+            "function"
+        ){
+
+            try{
+
+                window.finalizarPedido(
+                    dadosPedido
+                );
+
+            }catch(erroERP){
+
+                console.warn(
+                    "Função finalizarPedido externa apresentou erro. Salvando pelo pedido2.",
+                    erroERP
+                );
+
+                salvarVenda(
+                    dadosPedido
+                );
+
+            }
+
+        }else{
+
+            salvarVenda(
+                dadosPedido
+            );
+
+        }
+
+        /*
+         * Atualiza estoque localmente.
+         *
+         * O controle é feito aqui apenas quando
+         * a função externa não estiver disponível.
+         */
+
+        if(
+            typeof window.finalizarPedido
+            !==
+            "function"
+        ){
+
+            baixarEstoquePedido();
+
+        }
+
+        ultimoPedidoFinalizado =
+            dadosPedido;
+
+        localStorage.setItem(
+            "grillcore_ultimo_pedido",
+            JSON.stringify(
+                dadosPedido
+            )
+        );
+
+        prepararImpressao(
+            dadosPedido
+        );
+
+        const btnImprimir =
+            document.getElementById(
+                "btnImprimir"
+            );
+
+        const btnWhatsApp =
+            document.getElementById(
+                "btnWhatsApp"
+            );
+
+        if(btnImprimir){
+
+            btnImprimir.style.display =
+                "block";
+
+        }
+
+        if(btnWhatsApp){
+
+            btnWhatsApp.style.display =
+                "block";
+
+        }
+
+        mostrarMensagem(
+            "Pedido finalizado e salvo no histórico.",
+            "sucesso"
+        );
+
+        /*
+         * Mantemos o pedido na tela para permitir
+         * impressão e WhatsApp.
+         */
+
+        renderizarPedido();
+
+    }catch(erro){
+
+        console.error(
+            "Erro ao finalizar pedido:",
+            erro
+        );
+
+        mostrarMensagem(
+            "Não foi possível finalizar o pedido.",
+            "erro"
+        );
+
+        if(btn){
+
+            btn.disabled =
+                false;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   TEXTO WHATSAPP
+========================================================= */
+
+function montarMensagemWhatsApp(
+    dados
 ){
 
+    if(!dados) return "";
+
+    let texto =
+        "🍔 *ROCHA FORTE HAMBÚRGUERIA*%0A";
+
+    texto +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+    texto +=
+        "📋 *PEDIDO*%0A";
+
+    if(dados.cliente){
+
+        texto +=
+            `👤 Cliente: ${dados.cliente}%0A`;
+
+    }
+
+    if(dados.tipo){
+
+        texto +=
+            `📦 Tipo: ${dados.tipo}%0A`;
+
+    }
+
+    if(dados.endereco){
+
+        texto +=
+            `📍 Local/Endereço: ${dados.endereco}%0A`;
+
+    }
+
+    texto +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+    dados.itens.forEach(
+        item => {
+
+            texto +=
+                `🍔 ${item.quantidade}x ${item.nome}`;
+
+            if(item.tamanho){
+
+                texto +=
+                    ` (${item.tamanho})`;
+
+            }
+
+            texto +=
+                ` — ${dinheiro(item.subtotal)}%0A`;
+
+        }
+    );
+
+    texto +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+    texto +=
+        `💰 *TOTAL: ${dinheiro(dados.total)}*%0A`;
+
+    if(dados.observacao){
+
+        texto +=
+            `📝 Observação: ${dados.observacao}%0A`;
+
+    }
+
+    texto +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+    texto +=
+        "Obrigado pela preferência! 🍔🔥";
+
+    return texto;
+
+}
+
+
+/* =========================================================
+   ENVIAR WHATSAPP
+========================================================= */
+
+function enviarWhatsApp(){
+
+    const dados =
+        ultimoPedidoFinalizado;
+
+    if(!dados){
+
+        mostrarMensagem(
+            "Finalize o pedido antes de enviar pelo WhatsApp.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+    const telefone =
+        normalizarTelefone(
+            dados.whatsapp
+            ||
+            dados.telefone
+        );
+
+    if(!telefone){
+
+        mostrarMensagem(
+            "Informe o telefone/WhatsApp do cliente.",
+            "erro"
+        );
+
+        document
+            .getElementById(
+                "telefonePedido"
+            )
+            ?.focus();
+
+        return;
+
+    }
+
+    let numeroWhatsApp =
+        telefone;
+
+    /*
+     * Se o telefone possuir somente 10 ou 11
+     * dígitos, acrescentamos o código do Brasil.
+     */
+
+    if(
+        numeroWhatsApp.length === 10
+        ||
+        numeroWhatsApp.length === 11
+    ){
+
+        numeroWhatsApp =
+            "55"
+            +
+            numeroWhatsApp;
+
+    }
+
+    const mensagem =
+        montarMensagemWhatsApp(
+            dados
+        );
+
+    const url =
+        "https://wa.me/"
+        +
+        numeroWhatsApp
+        +
+        "?text="
+        +
+        mensagem;
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   PREPARAR COMANDA
+========================================================= */
+
+function prepararImpressao(
+    dados
+){
+
+    const area =
+        document.getElementById(
+            "areaImpressao"
+        );
+
+    if(!area || !dados) return;
+
+    const dataFormatada =
+        new Date(
+            dados.data
+        ).toLocaleString(
+            "pt-BR"
+        );
+
+    const itensHTML =
+        dados.itens
+            .map(
+                item => `
+
+                <div class="impressao-item">
+
+                    <div class="impressao-item-nome">
+                        ${escapar(item.quantidade)}
+                        x
+                        ${escapar(item.nome)}
+                    </div>
+
+                    ${
+                        item.tamanho
+                        ?
+                        `
+                        <div class="impressao-item-sub">
+                            ${escapar(item.tamanho)}
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+                    <div class="impressao-linha impressao-item-sub">
+
+                        <span>
+                            ${dinheiro(item.preco)}
+                        </span>
+
+                        <strong>
+                            ${dinheiro(item.subtotal)}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                `
+            )
+            .join("");
+
+    area.innerHTML = `
+
+        <div class="impressao-centro">
+
+            <div class="impressao-titulo">
+                ROCHA FORTE
+            </div>
+
+            <div class="impressao-subtitulo">
+                HAMBÚRGUERIA
+            </div>
+
+        </div>
+
+
+        <div class="impressao-info">
+
+            <div>
+                <strong>Pedido:</strong>
+                ${escapar(dados.id)}
+            </div>
+
+            <div>
+                <strong>Data:</strong>
+                ${escapar(dataFormatada)}
+            </div>
+
+            <div>
+                <strong>Cliente:</strong>
+                ${escapar(dados.cliente)}
+            </div>
+
+            ${
+                dados.telefone
+                ?
+                `
+                <div>
+                    <strong>WhatsApp:</strong>
+                    ${escapar(dados.telefone)}
+                </div>
+                `
+                :
+                ""
+            }
+
+            ${
+                dados.tipo
+                ?
+                `
+                <div>
+                    <strong>Tipo:</strong>
+                    ${escapar(dados.tipo)}
+                </div>
+                `
+                :
+                ""
+            }
+
+            ${
+                dados.endereco
+                ?
+                `
+                <div>
+                    <strong>Endereço/Mesa:</strong>
+                    ${escapar(dados.endereco)}
+                </div>
+                `
+                :
+                ""
+            }
+
+        </div>
+
+
+        <div>
+
+            ${itensHTML}
+
+        </div>
+
+
+        <div class="impressao-total">
+
+            <span>
+                TOTAL
+            </span>
+
+            <span>
+                ${dinheiro(dados.total)}
+            </span>
+
+        </div>
+
+
+        ${
+            dados.observacao
+            ?
+            `
+            <div class="impressao-obs">
+
+                <strong>OBSERVAÇÃO</strong><br>
+
+                ${escapar(dados.observacao)}
+
+            </div>
+            `
+            :
+            ""
+        }
+
+
+        <div class="impressao-rodape">
+
+            Obrigado pela preferência!<br>
+
+            Rocha Forte Hambúrgueria 🍔
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   IMPRIMIR
+========================================================= */
+
+function imprimirComanda(){
+
+    if(!ultimoPedidoFinalizado){
+
+        mostrarMensagem(
+            "Finalize o pedido antes de imprimir.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+    prepararImpressao(
+        ultimoPedidoFinalizado
+    );
+
+    setTimeout(
+        ()=>{
+
+            window.print();
+
+        },
+        100
+    );
+
+}
+
+
+/* =========================================================
+   LIMPAR PEDIDO
+========================================================= */
+
+function limparPedido(){
+
+    if(
+        pedido.length === 0
+    ){
+
+        return;
+
+    }
+
+    const confirmar =
+        window.confirm(
+            "Deseja realmente limpar o pedido atual?"
+        );
+
+    if(!confirmar){
+
+        return;
+
+    }
+
     pedido = [];
+
+    ultimoPedidoFinalizado =
+        null;
 
     previewsPedido = {
 
@@ -3633,70 +3955,62 @@ function limparFormularioNovoPedido(
 
     };
 
-    if(
-        !manterUltimaImpressao
-    ){
-
-        ultimoPedidoFinalizado =
-            null;
-
-        const btnImprimir =
-            document.getElementById(
-                "btnImprimir"
-            );
-
-        if(btnImprimir){
-
-            btnImprimir.style.display =
-                "none";
-
-        }
-
-    }
-
-    const campos = [
-
-        "clientePedido",
-        "telefonePedido",
-        "enderecoPedido",
-        "observacaoPedido"
-
-    ];
-
-    campos.forEach(
-        id=>{
-
-            const elemento =
-                document.getElementById(
-                    id
-                );
-
-            if(elemento){
-
-                elemento.value =
-                    "";
-
-            }
-
-        }
-    );
-
-    const tipo =
+    const btnImprimir =
         document.getElementById(
-            "formaEntregaPedido"
+            "btnImprimir"
         );
 
-    if(tipo){
+    const btnWhatsApp =
+        document.getElementById(
+            "btnWhatsApp"
+        );
 
-        tipo.value =
-            "Balcão";
+    if(btnImprimir){
+
+        btnImprimir.style.display =
+            "none";
 
     }
+
+    if(btnWhatsApp){
+
+        btnWhatsApp.style.display =
+            "none";
+
+    }
+
+    const area =
+        document.getElementById(
+            "areaImpressao"
+        );
+
+    if(area){
+
+        area.innerHTML =
+            "";
+
+    }
+
+    renderizarPedido();
+
+    mostrarMensagem(
+        "Pedido limpo.",
+        "sucesso"
+    );
+
+}
+
+
+/* =========================================================
+   EVENTOS DAS CATEGORIAS
+========================================================= */
+
+function configurarEventos(){
 
     Object.keys(
         configuracoesCategoria
     ).forEach(
-        categoria=>{
+        categoria => {
 
             const config =
                 configuracoesCategoria[
@@ -3713,1120 +4027,326 @@ function limparFormularioNovoPedido(
                     config.quantidade
                 );
 
+            const botao =
+                document.getElementById(
+                    config.botao
+                );
+
             if(select){
 
-                select.value =
-                    "";
+                select.addEventListener(
+                    "change",
+                    ()=>{
+
+                        atualizarInfoCategoria(
+                            categoria
+                        );
+
+                        atualizarPreviewCategoria(
+                            categoria
+                        );
+
+                    }
+                );
 
             }
 
             if(quantidade){
 
-                quantidade.value =
-                    "1";
+                quantidade.addEventListener(
+                    "input",
+                    ()=>{
 
-            }
+                        atualizarPreviewCategoria(
+                            categoria
+                        );
 
-            atualizarInfoCategoria(
-                categoria
-            );
+                    }
+                );
 
-        }
-    );
+                quantidade.addEventListener(
+                    "change",
+                    ()=>{
 
-    renderizarPedido();
+                        let valor =
+                            parseInt(
+                                quantidade.value,
+                                10
+                            );
 
-}
+                        if(
+                            !Number.isFinite(valor)
+                            ||
+                            valor < 1
+                        ){
 
+                            quantidade.value =
+                                1;
 
-/* =========================================================
-   PREPARAR COMANDA
-========================================================= */
-
-function prepararComanda(){
-
-    if(
-        !ultimoPedidoFinalizado
-    ){
-
-        return false;
-
-    }
-
-    const pedidoImpressao =
-        ultimoPedidoFinalizado;
-
-    const itens =
-        Array.isArray(
-            pedidoImpressao.itens
-        )
-            ?
-            pedidoImpressao.itens
-            :
-            [];
-
-    if(itens.length === 0){
-
-        return false;
-
-    }
-
-    const data =
-        new Date(
-            pedidoImpressao.data
-        );
-
-    const dataValida =
-        Number.isNaN(
-            data.getTime()
-        )
-            ?
-            new Date()
-            :
-            data;
-
-    const dataFormatada =
-        dataValida.toLocaleDateString(
-            "pt-BR"
-        );
-
-    const horaFormatada =
-        dataValida.toLocaleTimeString(
-            "pt-BR",
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-    const area =
-        document.getElementById(
-            "areaImpressao"
-        );
-
-    if(!area){
-
-        return false;
-
-    }
-
-    const itensHTML =
-        itens.map(
-            item=>{
-
-                const subtotal =
-                    numero(
-                        item.preco
-                    )
-                    *
-                    numero(
-                        item.quantidade
-                    );
-
-                return `
-
-                    <div class="impressao-item">
-
-                        <div class="impressao-linha">
-
-                            <div
-                                class="impressao-item-nome"
-                            >
-                                ${escapar(item.quantidade)}x
-                                ${escapar(item.nome)}
-                            </div>
-
-                            <strong>
-                                ${dinheiro(subtotal)}
-                            </strong>
-
-                        </div>
-
-                        ${
-                            item.tamanho
-                                ?
-                                `
-                                <div class="impressao-item-sub">
-                                    ${escapar(item.tamanho)}
-                                </div>
-                                `
-                                :
-                                ""
                         }
 
-                        <div class="impressao-item-sub">
-                            ${dinheiro(item.preco)}
-                            unidade
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-        ).join("");
-
-    area.innerHTML = `
-
-        <div class="impressao-centro">
-
-            <div class="impressao-titulo">
-                RF ROCHA FORTE
-            </div>
-
-            <div class="impressao-subtitulo">
-                HAMBÚRGUERIA
-            </div>
-
-            <strong>
-                COMANDA
-            </strong>
-
-        </div>
-
-        <div class="impressao-info">
-
-            <div>
-                <strong>Pedido:</strong>
-                ${escapar(pedidoImpressao.id)}
-            </div>
-
-            <div>
-                <strong>Data:</strong>
-                ${dataFormatada}
-            </div>
-
-            <div>
-                <strong>Hora:</strong>
-                ${horaFormatada}
-            </div>
-
-            <div>
-                <strong>Cliente:</strong>
-                ${escapar(
-                    pedidoImpressao.cliente
-                    ||
-                    "Não informado"
-                )}
-            </div>
-
-            <div>
-                <strong>Telefone:</strong>
-                ${escapar(
-                    pedidoImpressao.telefone
-                    ||
-                    "-"
-                )}
-            </div>
-
-            <div>
-                <strong>Endereço/Mesa:</strong>
-                ${escapar(
-                    pedidoImpressao.endereco
-                    ||
-                    "-"
-                )}
-            </div>
-
-            <div>
-                <strong>Tipo:</strong>
-                ${escapar(
-                    pedidoImpressao.tipoPedido
-                    ||
-                    "Balcão"
-                )}
-            </div>
-
-        </div>
-
-        ${itensHTML}
-
-        <div class="impressao-total">
-
-            <span>
-                TOTAL
-            </span>
-
-            <span>
-                ${dinheiro(
-                    pedidoImpressao.total
-                )}
-            </span>
-
-        </div>
-
-        ${
-            pedidoImpressao.observacao
-                ?
-                `
-                <div class="impressao-obs">
-
-                    <strong>
-                        OBSERVAÇÃO
-                    </strong>
-
-                    <div>
-                        ${escapar(
-                            pedidoImpressao.observacao
-                        )}
-                    </div>
-
-                </div>
-                `
-                :
-                ""
-        }
-
-        <div class="impressao-rodape">
-
-            Obrigado pela preferência!<br>
-
-            Rocha Forte Hambúrgueria<br>
-
-            GrillCore ERP
-
-        </div>
-
-    `;
-
-    return true;
-
-}
-
-
-/* =========================================================
-   🖨️ IMPRESSÃO TÉRMICA BLUETOOTH
-   CLEANter + ESC/POS
-========================================================= */
-
-async function imprimirComandaTermica(){
-
-    if(!ultimoPedidoFinalizado){
-
-        return false;
-
-    }
-
-    const pedidoImpressao =
-        ultimoPedidoFinalizado;
-
-    const itens =
-        Array.isArray(
-            pedidoImpressao.itens
-        )
-            ?
-            pedidoImpressao.itens
-            :
-            [];
-
-    if(itens.length === 0){
-
-        return false;
-
-    }
-
-
-    /* =====================================================
-       DATA E HORA
-    ====================================================== */
-
-    const data =
-        new Date(
-            pedidoImpressao.data
-        );
-
-    const dataValida =
-        Number.isNaN(
-            data.getTime()
-        )
-            ?
-            new Date()
-            :
-            data;
-
-    const dataFormatada =
-        dataValida.toLocaleDateString(
-            "pt-BR"
-        );
-
-    const horaFormatada =
-        dataValida.toLocaleTimeString(
-            "pt-BR",
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-
-    /* =====================================================
-       CONTEÚDO DA COMANDA
-       PADRÃO ESC/POS / CLEANter
-    ====================================================== */
-
-    const conteudo = [];
-
-
-    /* CABEÇALHO */
-
-    conteudo.push({
-
-        type:"text",
-
-        text:"RF ROCHA FORTE",
-
-        align:"center",
-
-        bold:true,
-
-        size:"large"
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:"HAMBURGUERIA",
-
-        align:"center",
-
-        bold:true
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:"COMANDA",
-
-        align:"center",
-
-        bold:true
-
-    });
-
-
-    conteudo.push({
-
-        type:"divider"
-
-    });
-
-
-    /* =====================================================
-       DADOS DO PEDIDO
-    ====================================================== */
-
-    conteudo.push({
-
-        type:"row",
-
-        left:"Pedido",
-
-        right:String(
-            pedidoImpressao.id || ""
-        )
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Data: "
-            +
-            dataFormatada
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Hora: "
-            +
-            horaFormatada
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Cliente: "
-            +
-            (
-                pedidoImpressao.cliente
-                ||
-                "Nao informado"
-            )
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Telefone: "
-            +
-            (
-                pedidoImpressao.telefone
-                ||
-                "-"
-            )
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Endereco/Mesa: "
-            +
-            (
-                pedidoImpressao.endereco
-                ||
-                "-"
-            )
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Tipo: "
-            +
-            (
-                pedidoImpressao.tipoPedido
-                ||
-                "Balcao"
-            )
-
-    });
-
-
-    conteudo.push({
-
-        type:"divider"
-
-    });
-
-
-    /* =====================================================
-       PRODUTOS
-    ====================================================== */
-
-    itens.forEach(
-        function(item){
-
-            const quantidade =
-                numero(
-                    item.quantidade
+                        atualizarPreviewCategoria(
+                            categoria
+                        );
+
+                    }
                 );
-
-            const preco =
-                numero(
-                    item.preco
-                );
-
-            const subtotal =
-                preco
-                *
-                quantidade;
-
-            const nome =
-                String(
-                    item.nome
-                    ||
-                    "Produto"
-                );
-
-
-            conteudo.push({
-
-                type:"row",
-
-                left:
-                    `${quantidade}x ${nome}`,
-
-                right:
-                    dinheiro(
-                        subtotal
-                    )
-                    .replace(
-                        "R$",
-                        ""
-                    )
-                    .trim()
-
-            });
-
-
-            if(item.tamanho){
-
-                conteudo.push({
-
-                    type:"text",
-
-                    text:
-                        "  "
-                        +
-                        String(
-                            item.tamanho
-                        )
-
-                });
 
             }
 
+            if(botao){
 
-            conteudo.push({
+                botao.addEventListener(
+                    "click",
+                    ()=>{
 
-                type:"text",
+                        adicionarProduto(
+                            categoria
+                        );
 
-                text:
-                    "  "
-                    +
-                    dinheiro(
-                        preco
-                    )
-                    +
-                    " unidade"
+                    }
+                );
 
-            });
+            }
 
         }
     );
 
 
-    /* =====================================================
-       TOTAL
-    ====================================================== */
+    const btnFinalizar =
+        document.getElementById(
+            "btnFinalizar"
+        );
 
-    conteudo.push({
+    if(btnFinalizar){
 
-        type:"divider"
-
-    });
-
-
-    conteudo.push({
-
-        type:"row",
-
-        left:"TOTAL",
-
-        right:
-            dinheiro(
-                pedidoImpressao.total
-            )
-            .replace(
-                "R$",
-                ""
-            )
-            .trim(),
-
-        bold:true,
-
-        size:"large"
-
-    });
-
-
-    /* =====================================================
-       OBSERVAÇÃO
-    ====================================================== */
-
-    if(
-        pedidoImpressao.observacao
-    ){
-
-        conteudo.push({
-
-            type:"divider"
-
-        });
-
-
-        conteudo.push({
-
-            type:"text",
-
-            text:"OBSERVACAO",
-
-            bold:true
-
-        });
-
-
-        conteudo.push({
-
-            type:"text",
-
-            text:
-                String(
-                    pedidoImpressao.observacao
-                )
-
-        });
+        btnFinalizar.addEventListener(
+            "click",
+            finalizarPedidoAtual
+        );
 
     }
 
 
-    /* =====================================================
-       RODAPÉ
-    ====================================================== */
+    const btnLimpar =
+        document.getElementById(
+            "btnLimparPedido"
+        );
 
-    conteudo.push({
+    if(btnLimpar){
 
-        type:"feed",
+        btnLimpar.addEventListener(
+            "click",
+            limparPedido
+        );
 
-        lines:1
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "Obrigado pela preferencia!",
-
-        align:"center"
-
-    });
+    }
 
 
-    conteudo.push({
+    const btnImprimir =
+        document.getElementById(
+            "btnImprimir"
+        );
 
-        type:"text",
+    if(btnImprimir){
 
-        text:
-            "Rocha Forte Hamburgueria",
+        btnImprimir.addEventListener(
+            "click",
+            imprimirComanda
+        );
 
-        align:"center"
-
-    });
-
-
-    conteudo.push({
-
-        type:"text",
-
-        text:
-            "GrillCore ERP",
-
-        align:"center"
-
-    });
+    }
 
 
-    conteudo.push({
+    const btnWhatsApp =
+        document.getElementById(
+            "btnWhatsApp"
+        );
 
-        type:"feed",
+    if(btnWhatsApp){
 
-        lines:3
+        btnWhatsApp.addEventListener(
+            "click",
+            enviarWhatsApp
+        );
 
-    });
+    }
 
 
-    /* =====================================================
-       ENVIO PARA O CLEANTER
-       CELULAR → LOCALHOST → BLUETOOTH → ZJ
-    ====================================================== */
+    const telefone =
+        document.getElementById(
+            "telefonePedido"
+        );
+
+    if(telefone){
+
+        telefone.addEventListener(
+            "blur",
+            verificarClienteExistente
+        );
+
+        telefone.addEventListener(
+            "change",
+            verificarClienteExistente
+        );
+
+    }
+
+
+    const nome =
+        document.getElementById(
+            "clientePedido"
+        );
+
+    if(nome){
+
+        nome.addEventListener(
+            "blur",
+            verificarClienteExistente
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FORMATAÇÃO DO TELEFONE
+========================================================= */
+
+function configurarTelefone(){
+
+    const campo =
+        document.getElementById(
+            "telefonePedido"
+        );
+
+    if(!campo) return;
+
+    campo.addEventListener(
+        "input",
+        function(){
+
+            let valor =
+                normalizarTelefone(
+                    this.value
+                );
+
+            if(
+                valor.length > 11
+            ){
+
+                valor =
+                    valor.substring(
+                        0,
+                        11
+                    );
+
+            }
+
+            if(
+                valor.length <= 10
+            ){
+
+                if(valor.length >= 7){
+
+                    this.value =
+                        "("
+                        +
+                        valor.substring(0,2)
+                        +
+                        ") "
+                        +
+                        valor.substring(2,6)
+                        +
+                        "-"
+                        +
+                        valor.substring(6);
+
+                }else if(
+                    valor.length >= 3
+                ){
+
+                    this.value =
+                        "("
+                        +
+                        valor.substring(0,2)
+                        +
+                        ") "
+                        +
+                        valor.substring(2);
+
+                }else{
+
+                    this.value =
+                        valor;
+
+                }
+
+            }else{
+
+                this.value =
+                    "("
+                    +
+                    valor.substring(0,2)
+                    +
+                    ") "
+                    +
+                    valor.substring(2,7)
+                    +
+                    "-"
+                    +
+                    valor.substring(7);
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CARREGAR PEDIDO ANTERIOR TEMPORÁRIO
+========================================================= */
+
+function carregarUltimoPedidoSalvo(){
 
     try{
 
-        const resposta =
-            await fetch(
-                "http://localhost:9100/print",
-                {
-
-                    method:"POST",
-
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            cut:true,
-
-                            content:
-                                conteudo
-
-                        })
-
-                }
+        const salvo =
+            localStorage.getItem(
+                "grillcore_ultimo_pedido"
             );
 
+        if(!salvo) return;
 
-        const resultado =
-            await resposta
-                .json()
-                .catch(
-                    ()=>({})
-                );
-
-
-        if(!resposta.ok){
-
-            const motivo =
-                resultado?.fix
-                ||
-                resultado?.error
-                ||
-                "Impressora não conectada.";
-
-            console.warn(
-                "Cleanter:",
-                motivo
+        const dados =
+            JSON.parse(
+                salvo
             );
 
-            mostrarMensagem(
-                "Impressora não conectada. Abrindo impressão alternativa...",
-                "erro"
-            );
+        if(
+            dados
+            &&
+            dados.status === "finalizado"
+        ){
 
-            return false;
+            ultimoPedidoFinalizado =
+                dados;
 
         }
-
-
-        mostrarMensagem(
-            "Comanda enviada para a impressora!",
-            "sucesso"
-        );
-
-
-        return true;
-
 
     }catch(erro){
 
         console.warn(
-            "Cleanter não disponível:",
+            "Não foi possível carregar último pedido.",
             erro
         );
 
-        return false;
-
     }
 
 }
-
-
-/* =========================================================
-   🖨️ IMPRIMIR PEDIDO
-   PRIMEIRO: IMPRESSORA TÉRMICA
-   SEGUNDO: IMPRESSÃO DO CELULAR
-========================================================= */
-
-async function imprimirPedido(){
-
-    if(
-        !ultimoPedidoFinalizado
-    ){
-
-        mostrarMensagem(
-            "Nenhum pedido finalizado para imprimir.",
-            "erro"
-        );
-
-        return;
-
-    }
-
-
-    /* =====================================================
-       PRIMEIRA TENTATIVA:
-       CLEANter + BLUETOOTH
-    ====================================================== */
-
-    const impresso =
-        await imprimirComandaTermica();
-
-
-    if(impresso){
-
-        return;
-
-    }
-
-
-    /* =====================================================
-       SEGUNDA TENTATIVA:
-       IMPRESSÃO NORMAL DO CELULAR
-    ====================================================== */
-
-    const preparado =
-        prepararComanda();
-
-
-    if(!preparado){
-
-        mostrarMensagem(
-            "Não foi possível preparar a comanda.",
-            "erro"
-        );
-
-        return;
-
-    }
-
-
-    setTimeout(
-        function(){
-
-            window.print();
-
-        },
-        150
-    );
-
-}
-
-
-/* =========================================================
-   SELECTS
-========================================================= */
-
-Object.keys(
-    configuracoesCategoria
-).forEach(
-    categoria=>{
-
-        const config =
-            configuracoesCategoria[
-                categoria
-            ];
-
-        const select =
-            document.getElementById(
-                config.select
-            );
-
-        const botao =
-            document.getElementById(
-                config.botao
-            );
-
-        if(select){
-
-            select.addEventListener(
-                "change",
-                function(){
-
-                    atualizarInfoCategoria(
-                        categoria
-                    );
-
-                    atualizarPreviewCategoria(
-                        categoria,
-                        true
-                    );
-
-                }
-            );
-
-        }
-
-        if(botao){
-
-            botao.addEventListener(
-                "click",
-                function(){
-
-                    adicionarProduto(
-                        categoria
-                    );
-
-                }
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   QUANTIDADES
-========================================================= */
-
-prepararQuantidade(
-    "quantidadeHamburguer",
-    "hamburguer"
-);
-
-prepararQuantidade(
-    "quantidadePorcao",
-    "porcao"
-);
-
-prepararQuantidade(
-    "quantidadeBebida",
-    "bebida"
-);
-
-prepararQuantidade(
-    "quantidadeOutro",
-    "outro"
-);
-
-
-/* =========================================================
-   FINALIZAR
-========================================================= */
-
-document
-    .getElementById(
-        "btnFinalizar"
-    )
-    ?.addEventListener(
-        "click",
-        finalizarPedidoTela
-    );
-
-
-/* =========================================================
-   LIMPAR
-========================================================= */
-
-document
-    .getElementById(
-        "btnLimparPedido"
-    )
-    ?.addEventListener(
-        "click",
-        function(){
-
-            const existemItens =
-                pedido.length > 0
-                ||
-                Object.values(
-                    previewsPedido
-                ).some(
-                    Boolean
-                );
-
-            if(existemItens){
-
-                const confirmar =
-                    confirm(
-                        "Deseja realmente limpar o pedido atual?"
-                    );
-
-                if(!confirmar){
-
-                    return;
-
-                }
-
-            }
-
-            limparFormularioNovoPedido(
-                false
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   IMPRIMIR
-========================================================= */
-
-document
-    .getElementById(
-        "btnImprimir"
-    )
-    ?.addEventListener(
-        "click",
-        imprimirPedido
-    );
-
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-window.addEventListener(
-    "storage",
-    function(event){
-
-        if(
-            event.key === "produtos"
-        ){
-
-            carregarProdutos();
-
-            renderizarPedido();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   PAGE SHOW
-========================================================= */
-
-window.addEventListener(
-    "pageshow",
-    function(){
-
-        carregarProdutos();
-
-        renderizarPedido();
-
-    }
-);
-
-
-/* =========================================================
-   VISIBILIDADE
-========================================================= */
-
-document.addEventListener(
-    "visibilitychange",
-    function(){
-
-        if(
-            document.visibilityState
-            ===
-            "visible"
-        ){
-
-            carregarProdutos();
-
-            renderizarPedido();
-
-        }
-
-    }
-);
 
 
 /* =========================================================
@@ -4835,14 +4355,59 @@ document.addEventListener(
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    ()=>{
 
         carregarProdutos();
+
+        configurarEventos();
+
+        configurarTelefone();
+
+        carregarUltimoPedidoSalvo();
 
         renderizarPedido();
 
     }
 );
 
-</script></body>
+
+/* =========================================================
+   ATUALIZA PRODUTOS SE A PÁGINA VOLTAR AO FOCO
+========================================================= */
+
+window.addEventListener(
+    "focus",
+    ()=>{
+
+        carregarProdutos();
+
+    }
+);
+
+
+/* =========================================================
+   DISPONIBILIZA FUNÇÕES
+========================================================= */
+
+window.removerItem =
+    removerItem;
+
+window.adicionarProduto =
+    adicionarProduto;
+
+window.finalizarPedidoAtual =
+    finalizarPedidoAtual;
+
+window.imprimirComanda =
+    imprimirComanda;
+
+window.enviarWhatsApp =
+    enviarWhatsApp;
+
+window.limparPedido =
+    limparPedido;
+
+</script>
+
+</body>
 </html>

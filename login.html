@@ -269,6 +269,71 @@ input::placeholder{
     background:#241207;
 }
 
+.opcoes-login{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-top:-5px;
+
+    margin-bottom:16px;
+}
+
+.checkbox-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#aaa;
+
+    font-size:13px;
+
+    cursor:pointer;
+}
+
+.checkbox-area input{
+
+    width:17px;
+    height:17px;
+
+    min-height:auto;
+
+    padding:0;
+
+    accent-color:#ff7300;
+
+    cursor:pointer;
+}
+
+.status-login{
+
+    display:none;
+
+    margin-bottom:15px;
+
+    padding:11px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    background:#16100b;
+
+    border:1px solid rgba(255,115,0,.25);
+
+    color:#ffb56f;
+
+    font-size:13px;
+}
+
 .btn-entrar{
 
     width:100%;
@@ -300,6 +365,10 @@ input::placeholder{
 
     box-shadow:
         0 8px 20px rgba(0,0,0,.4);
+
+    transition:
+        transform .15s,
+        opacity .2s;
 }
 
 .btn-entrar:active{
@@ -333,6 +402,8 @@ input::placeholder{
     color:#ff9a7a;
 
     font-size:14px;
+
+    line-height:1.4;
 }
 
 .acoes-login{
@@ -403,6 +474,21 @@ input::placeholder{
     color:#ff8a1f;
 }
 
+.ultimo-acesso{
+
+    display:none;
+
+    margin-top:13px;
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
 .info{
 
     text-align:center;
@@ -433,6 +519,7 @@ input::placeholder{
     .logo-area h1{
         font-size:34px;
     }
+
 }
 
 @media(max-width:350px){
@@ -442,7 +529,17 @@ input::placeholder{
         flex-direction:column;
 
         gap:7px;
+
     }
+
+    .opcoes-login{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+    }
+
 }
 
 </style>
@@ -524,6 +621,32 @@ input::placeholder{
         </div>
 
 
+        <div class="opcoes-login">
+
+            <label class="checkbox-area">
+
+                <input
+                    type="checkbox"
+                    id="lembrarUsuario">
+
+                <span>
+                    Lembrar usuário
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <div
+            id="statusLogin"
+            class="status-login">
+
+            ⏳ Verificando acesso...
+
+        </div>
+
+
         <button
             type="button"
             class="btn-entrar"
@@ -579,6 +702,13 @@ input::placeholder{
 
         </div>
 
+
+        <div
+            id="ultimoAcesso"
+            class="ultimo-acesso">
+
+        </div>
+
     </div>
 
 
@@ -597,12 +727,12 @@ input::placeholder{
 
 /* =====================================================
    GRILLCORE ERP
-   SISTEMA DE LOGIN MULTIUSUÁRIO
+   LOGIN — VERSÃO CORRIGIDA
 ===================================================== */
 
 
 /* =====================================================
-   CONFIGURAÇÃO
+   CHAVES
 ===================================================== */
 
 const CHAVE_USUARIOS =
@@ -614,15 +744,38 @@ const CHAVE_USUARIO_ANTIGA =
 const CHAVE_SENHA_ANTIGA =
     "grillcore_senha_login";
 
+const CHAVE_LEMBRAR =
+    "grillcore_lembrar_usuario";
+
+const CHAVE_ULTIMO_ACESSO =
+    "grillcore_ultimo_acesso";
+
+const CHAVE_HISTORICO =
+    "grillcore_historico_acessos";
+
+const CHAVE_TENTATIVAS =
+    "grillcore_tentativas_login";
+
+const CHAVE_BLOQUEIO =
+    "grillcore_bloqueio_login";
+
 
 /* =====================================================
-   CRIAR USUÁRIO ADMIN PADRÃO
+   CONFIGURAÇÕES
+===================================================== */
+
+const MAX_TENTATIVAS = 5;
+
+const TEMPO_BLOQUEIO = 60 * 1000;
+
+
+/* =====================================================
+   INICIALIZAR SISTEMA
 ===================================================== */
 
 function inicializarUsuarios(){
 
     let usuarios = [];
-
 
     try{
 
@@ -631,75 +784,205 @@ function inicializarUsuarios(){
                 CHAVE_USUARIOS
             );
 
-
         if(salvo){
 
-            usuarios =
-                JSON.parse(salvo);
+            usuarios = JSON.parse(salvo);
 
         }
 
-    }catch(e){
+    }
+    catch(e){
 
         usuarios = [];
 
     }
 
 
+    if(!Array.isArray(usuarios)){
+
+        usuarios = [];
+
+    }
+
+
+    /*
+       -------------------------------------------------
+       MIGRAÇÃO DO LOGIN ANTIGO
+       -------------------------------------------------
+
+       Se existia um usuário antigo, tentamos
+       aproveitá-lo sem apagar nada.
+    */
+
+    const usuarioAntigo =
+        localStorage.getItem(
+            CHAVE_USUARIO_ANTIGA
+        );
+
+    const senhaAntiga =
+        localStorage.getItem(
+            CHAVE_SENHA_ANTIGA
+        );
+
+
     if(
-        !Array.isArray(usuarios) ||
-        usuarios.length === 0
+        usuarioAntigo &&
+        senhaAntiga
     ){
 
-        let usuarioAntigo =
-            localStorage.getItem(
-                CHAVE_USUARIO_ANTIGA
+        const existeAntigo =
+            usuarios.some(
+                function(item){
+
+                    if(!item){
+                        return false;
+                    }
+
+                    return String(
+                        item.usuario || ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    ===
+                    String(
+                        usuarioAntigo
+                    )
+                    .trim()
+                    .toLowerCase();
+
+                }
             );
 
-        let senhaAntiga =
-            localStorage.getItem(
-                CHAVE_SENHA_ANTIGA
-            );
 
+        if(!existeAntigo){
 
-        const usuario =
-            usuarioAntigo ||
-            "admin";
+            usuarios.push({
 
-        const senha =
-            senhaAntiga ||
-            "1234";
-
-
-        usuarios = [
-
-            {
                 id:
-                    "admin-" +
+                    "migrado-" +
                     Date.now(),
 
                 usuario:
-                    usuario,
+                    usuarioAntigo,
 
                 senha:
-                    senha,
+                    senhaAntiga,
 
                 nome:
-                    "Administrador",
+                    usuarioAntigo,
 
                 tipo:
-                    "admin",
+                    "usuario",
 
                 ativo:
                     true
+
+            });
+
+        }
+
+    }
+
+
+    /*
+       -------------------------------------------------
+       ADMIN PADRÃO
+       -------------------------------------------------
+
+       Só cria admin / 1234 se NÃO existir admin.
+
+       Se já existir, sua senha permanece intacta.
+    */
+
+    const indiceAdmin =
+        usuarios.findIndex(
+            function(item){
+
+                return (
+                    item &&
+                    String(
+                        item.usuario || ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    ===
+                    "admin"
+                );
+
             }
+        );
 
-        ];
 
+    if(indiceAdmin === -1){
+
+        usuarios.push({
+
+            id:
+                "admin-" +
+                Date.now(),
+
+            usuario:
+                "admin",
+
+            senha:
+                "1234",
+
+            nome:
+                "Administrador",
+
+            tipo:
+                "admin",
+
+            ativo:
+                true
+
+        });
+
+    }
+    else{
+
+        usuarios[indiceAdmin].nome =
+            usuarios[indiceAdmin].nome ||
+            "Administrador";
+
+        usuarios[indiceAdmin].tipo =
+            usuarios[indiceAdmin].tipo ||
+            "admin";
+
+        if(
+            typeof usuarios[indiceAdmin].ativo
+            ===
+            "undefined"
+        ){
+
+            usuarios[indiceAdmin].ativo =
+                true;
+
+        }
+
+    }
+
+
+    /*
+       Salva somente a estrutura atualizada.
+       Não apaga usuários existentes.
+    */
+
+    try{
 
         localStorage.setItem(
             CHAVE_USUARIOS,
-            JSON.stringify(usuarios)
+            JSON.stringify(
+                usuarios
+            )
+        );
+
+    }
+    catch(e){
+
+        console.error(
+            "Erro ao salvar usuários:",
+            e
         );
 
     }
@@ -731,14 +1014,29 @@ function obterUsuarios(){
 
 
         const usuarios =
-            JSON.parse(dados);
+            JSON.parse(
+                dados
+            );
 
 
-        return Array.isArray(usuarios)
-            ? usuarios
-            : [];
+        if(!Array.isArray(usuarios)){
 
-    }catch(e){
+            inicializarUsuarios();
+
+            return obterUsuarios();
+
+        }
+
+
+        return usuarios;
+
+    }
+    catch(e){
+
+        console.error(
+            "Erro ao obter usuários:",
+            e
+        );
 
         return [];
 
@@ -754,7 +1052,9 @@ function obterUsuarios(){
 function alternarSenha(){
 
     const campo =
-        document.getElementById("senha");
+        document.getElementById(
+            "senha"
+        );
 
     const botao =
         document.getElementById(
@@ -762,9 +1062,13 @@ function alternarSenha(){
         );
 
 
-    if(campo.type === "password"){
+    if(
+        campo.type ===
+        "password"
+    ){
 
-        campo.type = "text";
+        campo.type =
+            "text";
 
         botao.textContent =
             "😎";
@@ -777,7 +1081,8 @@ function alternarSenha(){
     }
     else{
 
-        campo.type = "password";
+        campo.type =
+            "password";
 
         botao.textContent =
             "👁️";
@@ -793,22 +1098,563 @@ function alternarSenha(){
 
 
 /* =====================================================
+   LEMBRAR USUÁRIO
+===================================================== */
+
+function carregarUsuarioLembrado(){
+
+    try{
+
+        const lembrar =
+            localStorage.getItem(
+                CHAVE_LEMBRAR
+            );
+
+        const usuarioSalvo =
+            localStorage.getItem(
+                CHAVE_USUARIO_ANTIGA
+            );
+
+
+        if(
+            lembrar === "true" &&
+            usuarioSalvo
+        ){
+
+            document.getElementById(
+                "usuario"
+            ).value =
+                usuarioSalvo;
+
+            document.getElementById(
+                "lembrarUsuario"
+            ).checked =
+                true;
+
+            document.getElementById(
+                "senha"
+            ).focus();
+
+        }
+
+    }
+    catch(e){
+
+        console.warn(e);
+
+    }
+
+}
+
+
+/* =====================================================
+   SALVAR PREFERÊNCIA
+===================================================== */
+
+function salvarPreferenciaUsuario(
+    usuario
+){
+
+    const lembrar =
+        document.getElementById(
+            "lembrarUsuario"
+        ).checked;
+
+
+    try{
+
+        if(lembrar){
+
+            localStorage.setItem(
+                CHAVE_LEMBRAR,
+                "true"
+            );
+
+            localStorage.setItem(
+                CHAVE_USUARIO_ANTIGA,
+                usuario
+            );
+
+        }
+        else{
+
+            localStorage.removeItem(
+                CHAVE_LEMBRAR
+            );
+
+            localStorage.removeItem(
+                CHAVE_USUARIO_ANTIGA
+            );
+
+        }
+
+    }
+    catch(e){
+
+        console.warn(e);
+
+    }
+
+}
+
+
+/* =====================================================
+   VERIFICAR BLOQUEIO
+===================================================== */
+
+function verificarBloqueio(){
+
+    try{
+
+        const bloqueio =
+            Number(
+                localStorage.getItem(
+                    CHAVE_BLOQUEIO
+                )
+            ) || 0;
+
+
+        if(!bloqueio){
+
+            return false;
+
+        }
+
+
+        const restante =
+            bloqueio -
+            Date.now();
+
+
+        if(restante <= 0){
+
+            limparTentativas();
+
+            return false;
+
+        }
+
+
+        mostrarBloqueio(
+            restante
+        );
+
+        return true;
+
+    }
+    catch(e){
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   MOSTRAR BLOQUEIO
+===================================================== */
+
+function mostrarBloqueio(
+    restante
+){
+
+    const erro =
+        document.getElementById(
+            "erro"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnEntrar"
+        );
+
+
+    botao.disabled =
+        true;
+
+
+    function atualizar(){
+
+        const bloqueio =
+            Number(
+                localStorage.getItem(
+                    CHAVE_BLOQUEIO
+                )
+            ) || 0;
+
+
+        const tempo =
+            bloqueio -
+            Date.now();
+
+
+        if(tempo <= 0){
+
+            botao.disabled =
+                false;
+
+            botao.textContent =
+                "🔓 ENTRAR NO GRILLCORE";
+
+            erro.style.display =
+                "none";
+
+            localStorage.removeItem(
+                CHAVE_BLOQUEIO
+            );
+
+            localStorage.removeItem(
+                CHAVE_TENTATIVAS
+            );
+
+            return;
+
+        }
+
+
+        const segundos =
+            Math.ceil(
+                tempo / 1000
+            );
+
+
+        erro.textContent =
+            "🔒 Muitas tentativas incorretas. Aguarde " +
+            segundos +
+            " segundos.";
+
+        erro.style.display =
+            "block";
+
+        botao.textContent =
+            "🔒 AGUARDE " +
+            segundos +
+            "s";
+
+
+        setTimeout(
+            atualizar,
+            1000
+        );
+
+    }
+
+
+    atualizar();
+
+}
+
+
+/* =====================================================
+   REGISTRAR ERRO
+===================================================== */
+
+function registrarTentativaErrada(){
+
+    let tentativas =
+        Number(
+            localStorage.getItem(
+                CHAVE_TENTATIVAS
+            )
+        ) || 0;
+
+
+    tentativas++;
+
+
+    localStorage.setItem(
+        CHAVE_TENTATIVAS,
+        String(tentativas)
+    );
+
+
+    if(
+        tentativas >=
+        MAX_TENTATIVAS
+    ){
+
+        const bloqueio =
+            Date.now() +
+            TEMPO_BLOQUEIO;
+
+
+        localStorage.setItem(
+            CHAVE_BLOQUEIO,
+            String(bloqueio)
+        );
+
+
+        mostrarBloqueio(
+            TEMPO_BLOQUEIO
+        );
+
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* =====================================================
+   LIMPAR TENTATIVAS
+===================================================== */
+
+function limparTentativas(){
+
+    localStorage.removeItem(
+        CHAVE_TENTATIVAS
+    );
+
+    localStorage.removeItem(
+        CHAVE_BLOQUEIO
+    );
+
+}
+
+
+/* =====================================================
+   REGISTRAR ACESSO
+===================================================== */
+
+function registrarAcesso(
+    usuario
+){
+
+    try{
+
+        const agora =
+            new Date();
+
+
+        const registro = {
+
+            usuario:
+                usuario.usuario,
+
+            nome:
+                usuario.nome ||
+                usuario.usuario,
+
+            tipo:
+                usuario.tipo ||
+                "usuario",
+
+            data:
+                agora.toLocaleDateString(
+                    "pt-BR"
+                ),
+
+            hora:
+                agora.toLocaleTimeString(
+                    "pt-BR"
+                ),
+
+            timestamp:
+                agora.getTime()
+
+        };
+
+
+        let historico = [];
+
+
+        const salvo =
+            localStorage.getItem(
+                CHAVE_HISTORICO
+            );
+
+
+        if(salvo){
+
+            historico =
+                JSON.parse(
+                    salvo
+                );
+
+        }
+
+
+        if(!Array.isArray(historico)){
+
+            historico = [];
+
+        }
+
+
+        historico.unshift(
+            registro
+        );
+
+
+        historico =
+            historico.slice(
+                0,
+                50
+            );
+
+
+        localStorage.setItem(
+            CHAVE_HISTORICO,
+            JSON.stringify(
+                historico
+            )
+        );
+
+
+        localStorage.setItem(
+            CHAVE_ULTIMO_ACESSO,
+            JSON.stringify(
+                registro
+            )
+        );
+
+    }
+    catch(e){
+
+        console.warn(
+            "Erro ao registrar acesso:",
+            e
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ÚLTIMO ACESSO
+===================================================== */
+
+function mostrarUltimoAcesso(){
+
+    const elemento =
+        document.getElementById(
+            "ultimoAcesso"
+        );
+
+
+    try{
+
+        const salvo =
+            localStorage.getItem(
+                CHAVE_ULTIMO_ACESSO
+            );
+
+
+        if(!salvo){
+
+            return;
+
+        }
+
+
+        const acesso =
+            JSON.parse(
+                salvo
+            );
+
+
+        if(!acesso){
+
+            return;
+
+        }
+
+
+        elemento.innerHTML =
+            "🕐 Último acesso registrado: " +
+            acesso.data +
+            " às " +
+            acesso.hora;
+
+
+        elemento.style.display =
+            "block";
+
+    }
+    catch(e){
+
+        console.warn(e);
+
+    }
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function mostrarStatus(
+    mensagem
+){
+
+    const status =
+        document.getElementById(
+            "statusLogin"
+        );
+
+
+    status.textContent =
+        mensagem;
+
+    status.style.display =
+        "block";
+
+}
+
+
+function esconderStatus(){
+
+    const status =
+        document.getElementById(
+            "statusLogin"
+        );
+
+
+    status.style.display =
+        "none";
+
+}
+
+
+/* =====================================================
    ENTRAR
 ===================================================== */
 
 function entrar(){
 
+    if(verificarBloqueio()){
+
+        return;
+
+    }
+
+
     const campoUsuario =
-        document.getElementById("usuario");
+        document.getElementById(
+            "usuario"
+        );
 
     const campoSenha =
-        document.getElementById("senha");
+        document.getElementById(
+            "senha"
+        );
 
     const erro =
-        document.getElementById("erro");
+        document.getElementById(
+            "erro"
+        );
 
     const botao =
-        document.getElementById("btnEntrar");
+        document.getElementById(
+            "btnEntrar"
+        );
 
 
     const usuario =
@@ -821,6 +1667,12 @@ function entrar(){
     erro.style.display =
         "none";
 
+    esconderStatus();
+
+
+    /* -----------------------------------------------
+       USUÁRIO
+    ------------------------------------------------ */
 
     if(!usuario){
 
@@ -837,6 +1689,10 @@ function entrar(){
     }
 
 
+    /* -----------------------------------------------
+       SENHA
+    ------------------------------------------------ */
+
     if(!senha){
 
         erro.textContent =
@@ -852,21 +1708,62 @@ function entrar(){
     }
 
 
+    /* -----------------------------------------------
+       USUÁRIOS
+    ------------------------------------------------ */
+
     const usuarios =
         obterUsuarios();
 
+
+    /* -----------------------------------------------
+       PROCURAR
+    ------------------------------------------------ */
 
     const encontrado =
         usuarios.find(
             function(item){
 
+                if(!item){
+
+                    return false;
+
+                }
+
+
+                const usuarioBanco =
+                    String(
+                        item.usuario || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const usuarioDigitado =
+                    usuario
+                    .trim()
+                    .toLowerCase();
+
+
+                const senhaBanco =
+                    String(
+                        item.senha || ""
+                    );
+
+
                 return (
 
-                    item.usuario ===
-                    usuario &&
+                    usuarioBanco ===
+                    usuarioDigitado
 
-                    item.senha ===
-                    senha &&
+                    &&
+
+                    senhaBanco ===
+                    String(
+                        senha
+                    )
+
+                    &&
 
                     item.ativo !== false
 
@@ -876,9 +1773,21 @@ function entrar(){
         );
 
 
+    /* -----------------------------------------------
+       LOGIN CORRETO
+    ------------------------------------------------ */
+
     if(encontrado){
 
+        limparTentativas();
+
+
         try{
+
+            salvarPreferenciaUsuario(
+                encontrado.usuario
+            );
+
 
             localStorage.setItem(
                 "grillcore_login",
@@ -908,14 +1817,33 @@ function entrar(){
 
             localStorage.setItem(
                 "grillcore_usuario_id",
-                encontrado.id
+                String(
+                    encontrado.id || ""
+                )
+            );
+
+
+            localStorage.setItem(
+                "grillcore_sessao_inicio",
+                String(
+                    Date.now()
+                )
+            );
+
+
+            registrarAcesso(
+                encontrado
             );
 
         }
         catch(erroStorage){
 
+            console.error(
+                erroStorage
+            );
+
             erro.textContent =
-                "❌ Não foi possível salvar o acesso.";
+                "❌ Não foi possível salvar o acesso neste aparelho.";
 
             erro.style.display =
                 "block";
@@ -925,6 +1853,16 @@ function entrar(){
         }
 
 
+        mostrarStatus(
+            "✅ Acesso autorizado. Bem-vindo, " +
+            (
+                encontrado.nome ||
+                encontrado.usuario
+            ) +
+            "!"
+        );
+
+
         botao.disabled =
             true;
 
@@ -932,17 +1870,68 @@ function entrar(){
             "✅ ACESSANDO GRILLCORE...";
 
 
-        window.location.replace(
-            "index.html"
+        campoSenha.value =
+            "";
+
+
+        setTimeout(
+            function(){
+
+                window.location.replace(
+                    "index.html"
+                );
+
+            },
+            500
         );
+
 
         return;
 
     }
 
 
+    /* -----------------------------------------------
+       LOGIN INCORRETO
+    ------------------------------------------------ */
+
+    const bloqueou =
+        registrarTentativaErrada();
+
+
+    if(bloqueou){
+
+        return;
+
+    }
+
+
+    const tentativas =
+        Number(
+            localStorage.getItem(
+                CHAVE_TENTATIVAS
+            )
+        ) || 0;
+
+
+    const restantes =
+        MAX_TENTATIVAS -
+        tentativas;
+
+
     erro.textContent =
         "❌ Usuário ou senha incorretos.";
+
+
+    if(restantes > 0){
+
+        erro.textContent +=
+            " Restam " +
+            restantes +
+            " tentativa(s).";
+
+    }
+
 
     erro.style.display =
         "block";
@@ -957,7 +1946,7 @@ function entrar(){
 
 
 /* =====================================================
-   RECUPERAR
+   RECUPERAR ACESSO
 ===================================================== */
 
 function recuperarAcesso(){
@@ -989,7 +1978,11 @@ document.addEventListener(
     "keydown",
     function(event){
 
-        if(event.key === "Enter"){
+        if(
+            event.key === "Enter"
+            &&
+            !event.repeat
+        ){
 
             event.preventDefault();
 
@@ -1007,34 +2000,30 @@ document.addEventListener(
 
 inicializarUsuarios();
 
+carregarUsuarioLembrado();
 
-/* =====================================================
-   VERIFICAR SESSÃO
-===================================================== */
+mostrarUltimoAcesso();
 
-(function(){
+verificarBloqueio();
 
-    try{
 
-        if(
-            localStorage.getItem(
-                "grillcore_login"
-            ) === "true"
-        ){
+/*
+   IMPORTANTE:
 
-            window.location.replace(
-                "index.html"
-            );
+   NÃO fazemos mais isto:
 
-        }
+   if(grillcore_login === "true"){
+       window.location.replace("index.html");
+   }
 
-    }catch(e){
+   Assim você consegue abrir o login
+   normalmente para testar ou trocar
+   de usuário.
 
-        console.warn(e);
-
-    }
-
-})();
+   O próprio index.html continua sendo
+   responsável por impedir acesso ao
+   sistema quando não houver login.
+*/
 
 
 /* =====================================================
@@ -1050,8 +2039,21 @@ window.addEventListener(
                 "usuario"
             );
 
+        const senha =
+            document.getElementById(
+                "senha"
+            );
 
-        if(usuario){
+
+        if(
+            usuario &&
+            usuario.value
+        ){
+
+            senha.focus();
+
+        }
+        else if(usuario){
 
             usuario.focus();
 

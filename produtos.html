@@ -185,13 +185,6 @@ const SUPABASE_URL="https://vtdfdqtjcyqbtfskwnun.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY
 );
-  supabaseClient.auth.getSession().then(({ data, error }) => {
-    console.log("TESTE DE SESSÃO:", {
-        email: data.session?.user?.email ?? null,
-        usuarioId: data.session?.user?.id ?? null,
-        erro: error?.message ?? null
-    });
-
   
 let produtos=[],produtoEditandoId=null,filtroAtual="todos",fotoAtualBase64="",ordenacaoAtual="recentes";
 const ESTOQUE_BAIXO=5;

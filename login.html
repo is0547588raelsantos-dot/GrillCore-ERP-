@@ -1,2069 +1,785 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff7300">
+<meta name="description" content="Acesso seguro ao GrillCore ERP">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<title>GrillCore ERP | Login</title>
 
-<meta name="theme-color"
-      content="#080808">
-
-<link rel="stylesheet"
-      href="tema-laranja.css">
-
-<meta name="apple-mobile-web-app-capable"
-      content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent">
-
-<title>GrillCore ERP — Acesso</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+:root {
+  --laranja: #ff7300;
+  --laranja-claro: #ff9a3d;
+  --fundo: #090909;
+  --painel: #141414;
+  --borda: #303030;
+  --texto: #f5f5f5;
+  --cinza: #a5a5a5;
+  --erro: #ff6262;
+  --sucesso: #53d68a;
 }
 
-html,
-body{
-    width:100%;
-    min-height:100%;
+* {
+  box-sizing: border-box;
 }
 
-body{
-
-    min-height:100vh;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    color:#fff;
-
-    background:
-        radial-gradient(
-            circle at top,
-            #351300 0%,
-            #180900 30%,
-            #080808 72%
-        );
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 22px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at top, #241407 0%, transparent 55%),
+    var(--fundo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.login-container{
-
-    width:100%;
-    max-width:430px;
-
-    margin:auto;
+.container {
+  width: 100%;
+  max-width: 420px;
 }
 
-.logo-area{
-
-    text-align:center;
-
-    margin-bottom:24px;
+.logo {
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-.logo-icon{
-
-    width:78px;
-    height:78px;
-
-    margin:0 auto 10px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff7300,
-            #b94700
-        );
-
-    border:1px solid #ff9a3d;
-
-    font-size:44px;
-
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.55),
-        0 0 28px rgba(255,115,0,.20);
+.logo-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  color: #fff;
+  font-size: 35px;
+  font-weight: 900;
+  background: linear-gradient(145deg, var(--laranja-claro), #c94c00);
+  box-shadow: 0 0 32px #ff730033;
 }
 
-.logo-area h1{
-
-    font-size:38px;
-
-    line-height:1;
-
-    color:#ff8a1f;
-
-    letter-spacing:1px;
-
-    text-shadow:
-        0 2px 12px rgba(0,0,0,.7);
+.logo h1 {
+  margin: 0;
+  font-size: 29px;
+  letter-spacing: 1px;
 }
 
-.logo-area h2{
-
-    margin-top:8px;
-
-    color:#fff;
-
-    font-size:13px;
-
-    font-weight:bold;
-
-    letter-spacing:3px;
-
-    opacity:.9;
+.logo h1 span {
+  color: var(--laranja);
 }
 
-.login-card{
-
-    width:100%;
-
-    padding:28px 24px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(27,15,8,.98),
-            rgba(10,10,10,.98)
-        );
-
-    border:1px solid rgba(255,115,0,.38);
-
-    border-radius:24px;
-
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.65),
-        0 0 30px rgba(255,115,0,.05),
-        inset 0 1px 0 rgba(255,255,255,.05);
+.logo p {
+  color: var(--cinza);
+  margin: 8px 0 0;
+  font-size: 13px;
 }
 
-.login-title{
-
-    text-align:center;
-
-    margin-bottom:25px;
-
-    color:#ff9a3d;
-
-    font-size:22px;
-
-    font-weight:bold;
+.card {
+  padding: 27px 23px;
+  background: var(--painel);
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  box-shadow: 0 20px 70px #0008;
 }
 
-.form-group{
-
-    margin-bottom:17px;
+.card h2 {
+  font-size: 22px;
+  margin: 0 0 8px;
 }
 
-label{
-
-    display:block;
-
-    margin-bottom:7px;
-
-    color:#ddd;
-
-    font-size:14px;
-
-    font-weight:bold;
+.subtitulo {
+  margin: 0 0 25px;
+  color: var(--cinza);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.input-wrapper{
-
-    position:relative;
+.form-group {
+  margin-bottom: 18px;
 }
 
-input{
-
-    width:100%;
-
-    min-height:52px;
-
-    padding:15px;
-
-    border-radius:12px;
-
-    border:1px solid #49301b;
-
-    background:#0b0b0b;
-
-    color:#fff;
-
-    font-size:16px;
-
-    outline:none;
-
-    transition:
-        border-color .2s,
-        box-shadow .2s;
+label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
-input:focus{
-
-    border-color:#ff7300;
-
-    box-shadow:
-        0 0 0 2px rgba(255,115,0,.12);
+.input-wrap {
+  position: relative;
 }
 
-input::placeholder{
-
-    color:#777;
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  min-height: 49px;
+  padding: 13px 14px;
+  color: #fff;
+  background: #0b0b0b;
+  border: 1px solid #383838;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
 }
 
-#senha{
-
-    padding-right:52px;
+input:focus {
+  border-color: var(--laranja);
+  box-shadow: 0 0 0 3px #ff730018;
 }
 
-.btn-senha{
-
-    position:absolute;
-
-    right:5px;
-    top:5px;
-
-    width:42px;
-    height:42px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:none;
-
-    border-radius:9px;
-
-    background:transparent;
-
-    color:#ff8a1f;
-
-    font-size:19px;
-
-    cursor:pointer;
+.senha-input {
+  padding-right: 75px !important;
 }
 
-.btn-senha:hover{
-
-    background:#241207;
+.mostrar-senha {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--laranja-claro);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 4px;
 }
 
-.opcoes-login{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:10px;
-
-    margin-top:-5px;
-
-    margin-bottom:16px;
+.opcoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0 22px;
+  color: var(--cinza);
+  font-size: 12px;
 }
 
-.checkbox-area{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    color:#aaa;
-
-    font-size:13px;
-
-    cursor:pointer;
+.opcoes input {
+  accent-color: var(--laranja);
+  width: 16px;
+  height: 16px;
 }
 
-.checkbox-area input{
-
-    width:17px;
-    height:17px;
-
-    min-height:auto;
-
-    padding:0;
-
-    accent-color:#ff7300;
-
-    cursor:pointer;
+.btn-principal {
+  width: 100%;
+  min-height: 51px;
+  border: none;
+  border-radius: 11px;
+  background: linear-gradient(100deg, #ff7300, #ff922e);
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  transition: opacity .2s;
 }
 
-.status-login{
-
-    display:none;
-
-    margin-bottom:15px;
-
-    padding:11px;
-
-    border-radius:10px;
-
-    text-align:center;
-
-    background:#16100b;
-
-    border:1px solid rgba(255,115,0,.25);
-
-    color:#ffb56f;
-
-    font-size:13px;
+.btn-principal:disabled {
+  opacity: .55;
+  cursor: not-allowed;
 }
 
-.btn-entrar{
-
-    width:100%;
-
-    min-height:54px;
-
-    margin-top:7px;
-
-    border:none;
-
-    border-radius:13px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff8a1f,
-            #d95700
-        );
-
-    color:#120900;
-
-    font-size:16px;
-
-    font-weight:900;
-
-    letter-spacing:.4px;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.4);
-
-    transition:
-        transform .15s,
-        opacity .2s;
+.status {
+  display: none;
+  margin-bottom: 17px;
+  padding: 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.btn-entrar:active{
-
-    transform:scale(.98);
+.status.erro {
+  display: block;
+  background: #ff303018;
+  border: 1px solid #ff626244;
+  color: #ff8c8c;
 }
 
-.btn-entrar:disabled{
-
-    opacity:.7;
-
-    cursor:wait;
+.status.sucesso {
+  display: block;
+  background: #25c76f16;
+  border: 1px solid #53d68a44;
+  color: #72e7a0;
 }
 
-.erro{
-
-    display:none;
-
-    margin-top:15px;
-
-    padding:13px;
-
-    border-radius:10px;
-
-    text-align:center;
-
-    background:#3d1208;
-
-    border:1px solid #9d3515;
-
-    color:#ff9a7a;
-
-    font-size:14px;
-
-    line-height:1.4;
+.status.info {
+  display: block;
+  background: #ff730014;
+  border: 1px solid #ff730044;
+  color: #ffb16e;
 }
 
-.acoes-login{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:18px;
-
-    margin-top:20px;
+.links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 17px;
+  flex-wrap: wrap;
 }
 
-.acoes-login button{
-
-    width:auto;
-
-    margin:0;
-
-    padding:5px;
-
-    border:none;
-
-    background:transparent;
-
-    color:#ff9a3d;
-
-    font-size:13px;
-
-    cursor:pointer;
+.links button {
+  border: none;
+  background: transparent;
+  color: var(--laranja-claro);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px;
 }
 
-.acoes-login button:hover{
-
-    color:#ffb56f;
-
-    text-decoration:underline;
+.rodape {
+  margin-top: 22px;
+  text-align: center;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.8;
 }
 
-.divisor{
-
-    height:1px;
-
-    margin:23px 0 18px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,115,0,.35),
-            transparent
-        );
+.seguro {
+  color: #aaa;
+  margin-top: 12px;
+  font-size: 11px;
+  text-align: center;
 }
 
-.admin-info{
+@media (max-width: 360px) {
+  .card {
+    padding: 22px 17px;
+  }
 
-    text-align:center;
-
-    color:#777;
-
-    font-size:12px;
-
-    line-height:1.5;
+  .logo h1 {
+    font-size: 25px;
+  }
 }
-
-.admin-info strong{
-
-    color:#ff8a1f;
-}
-
-.ultimo-acesso{
-
-    display:none;
-
-    margin-top:13px;
-
-    text-align:center;
-
-    color:#777;
-
-    font-size:11px;
-
-    line-height:1.5;
-}
-
-.info{
-
-    text-align:center;
-
-    margin-top:20px;
-
-    color:#777;
-
-    font-size:11px;
-}
-
-.info span{
-
-    color:#ff7300;
-}
-
-@media(max-width:480px){
-
-    body{
-        padding:15px;
-    }
-
-    .login-card{
-        padding:25px 18px;
-        border-radius:20px;
-    }
-
-    .logo-area h1{
-        font-size:34px;
-    }
-
-}
-
-@media(max-width:350px){
-
-    .acoes-login{
-
-        flex-direction:column;
-
-        gap:7px;
-
-    }
-
-    .opcoes-login{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-
-    }
-
-}
-
 </style>
-
 </head>
 
 <body>
+<main class="container">
 
-<div class="login-container">
+  <header class="logo">
+    <div class="logo-icon">GC</div>
+    <h1>GRILL<span>CORE</span></h1>
+    <p>Sistema de Gestão Empresarial</p>
+  </header>
 
-    <div class="logo-area">
+  <section class="card">
+    <h2>Bem-vindo de volta!</h2>
+    <p class="subtitulo">
+      Entre com seu e-mail e sua senha para acessar o sistema.
+    </p>
 
-        <div class="logo-icon">
-            🍔
-        </div>
+    <div id="statusLogin" class="status" role="status" aria-live="polite"></div>
 
-        <h1>
-            GrillCore
-        </h1>
+    <form id="formLogin">
+      <div class="form-group">
+        <label for="usuario">📧 E-mail</label>
+        <input
+          id="usuario"
+          type="email"
+          placeholder="Digite seu e-mail"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          required
+        >
+      </div>
 
-        <h2>
-            ERP • HAMBÚRGUERIA
-        </h2>
-
-    </div>
-
-
-    <div class="login-card">
-
-        <div class="login-title">
-            🔐 Acesso ao Sistema
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="usuario">
-                👤 Usuário
-            </label>
-
-            <input
-                id="usuario"
-                type="text"
-                placeholder="Digite seu usuário"
-                autocomplete="username"
-                autocapitalize="none"
-                spellcheck="false">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="senha">
-                🔑 Senha
-            </label>
-
-            <div class="input-wrapper">
-
-                <input
-                    id="senha"
-                    type="password"
-                    placeholder="Digite sua senha"
-                    autocomplete="current-password">
-
-                <button
-                    type="button"
-                    class="btn-senha"
-                    id="btnMostrarSenha"
-                    onclick="alternarSenha()"
-                    aria-label="Mostrar senha">
-
-                    👁️
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="opcoes-login">
-
-            <label class="checkbox-area">
-
-                <input
-                    type="checkbox"
-                    id="lembrarUsuario">
-
-                <span>
-                    Lembrar usuário
-                </span>
-
-            </label>
-
-        </div>
-
-
-        <div
-            id="statusLogin"
-            class="status-login">
-
-            ⏳ Verificando acesso...
-
-        </div>
-
-
-        <button
+      <div class="form-group">
+        <label for="senha">🔒 Senha</label>
+        <div class="input-wrap">
+          <input
+            id="senha"
+            class="senha-input"
+            type="password"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+          >
+          <button
             type="button"
-            class="btn-entrar"
-            id="btnEntrar"
-            onclick="entrar()">
-
-            🔓 ENTRAR NO GRILLCORE
-
-        </button>
-
-
-        <div
-            id="erro"
-            class="erro"
-            role="alert">
-
-            ❌ Usuário ou senha incorretos.
-
+            class="mostrar-senha"
+            id="btnMostrarSenha"
+          >Mostrar</button>
         </div>
+      </div>
 
+      <label class="opcoes">
+        <input type="checkbox" id="lembrarUsuario">
+        Lembrar meu e-mail neste dispositivo
+      </label>
 
-        <div class="acoes-login">
+      <button type="submit" class="btn-principal" id="btnEntrar">
+        ENTRAR NO GRILLCORE
+      </button>
+    </form>
 
-            <button
-                type="button"
-                onclick="recuperarAcesso()">
-
-                🔑 Esqueci minha senha
-
-            </button>
-
-
-            <button
-                type="button"
-                onclick="falarComAdministrador()">
-
-                💬 Falar com administrador
-
-            </button>
-
-        </div>
-
-
-        <div class="divisor"></div>
-
-
-        <div class="admin-info">
-
-            🔒 <strong>Acesso protegido</strong><br>
-
-            Entre com suas credenciais para acessar
-            o painel de gestão.
-
-        </div>
-
-
-        <div
-            id="ultimoAcesso"
-            class="ultimo-acesso">
-
-        </div>
-
+    <div class="links">
+      <button type="button" id="btnRecuperar">Esqueci minha senha</button>
+      <button type="button" id="btnAjuda">Preciso de ajuda</button>
     </div>
 
+    <div class="seguro">🔐 Autenticação pelo Supabase</div>
+  </section>
 
-    <div class="info">
+  <footer class="rodape">
+    <div>GrillCore ERP</div>
+    <div>Gestão inteligente para o seu negócio</div>
+    <div id="ultimoAcesso"></div>
+  </footer>
 
-        GrillCore ERP • Gestão profissional<br>
-
-        <span>© 2026 GrillCore</span>
-
-    </div>
-
-</div>
-
+</main>
 
 <script>
+"use strict";
 
-/* =====================================================
-   GRILLCORE ERP
-   LOGIN — VERSÃO CORRIGIDA
-===================================================== */
+/* =========================================
+   CONFIGURAÇÃO DO SUPABASE
+   Use somente a chave pública sb_publishable.
+   Nunca coloque service_role neste arquivo.
+========================================= */
 
+const SUPABASE_URL =
+  "https://vtdfdqtjcyqbtfskwnun.supabase.co";
 
-/* =====================================================
-   CHAVES
-===================================================== */
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
 
-const CHAVE_USUARIOS =
-    "grillcore_usuarios";
-
-const CHAVE_USUARIO_ANTIGA =
-    "grillcore_usuario_login";
-
-const CHAVE_SENHA_ANTIGA =
-    "grillcore_senha_login";
-
-const CHAVE_LEMBRAR =
-    "grillcore_lembrar_usuario";
-
-const CHAVE_ULTIMO_ACESSO =
-    "grillcore_ultimo_acesso";
-
-const CHAVE_HISTORICO =
-    "grillcore_historico_acessos";
-
-const CHAVE_TENTATIVAS =
-    "grillcore_tentativas_login";
-
-const CHAVE_BLOQUEIO =
-    "grillcore_bloqueio_login";
-
-
-/* =====================================================
-   CONFIGURAÇÕES
-===================================================== */
+const CHAVE_LEMBRAR = "grillcore_lembrar_usuario";
+const CHAVE_ULTIMO_ACESSO = "grillcore_ultimo_acesso";
+const CHAVE_HISTORICO = "grillcore_historico_acessos";
+const CHAVE_TENTATIVAS = "grillcore_tentativas_login";
+const CHAVE_BLOQUEIO = "grillcore_bloqueio_login";
 
 const MAX_TENTATIVAS = 5;
-
 const TEMPO_BLOQUEIO = 60 * 1000;
 
-
-/* =====================================================
-   INICIALIZAR SISTEMA
-===================================================== */
-
-function inicializarUsuarios(){
-
-    let usuarios = [];
-
-    try{
-
-        const salvo =
-            localStorage.getItem(
-                CHAVE_USUARIOS
-            );
-
-        if(salvo){
-
-            usuarios = JSON.parse(salvo);
-
-        }
-
-    }
-    catch(e){
-
-        usuarios = [];
-
-    }
-
-
-    if(!Array.isArray(usuarios)){
-
-        usuarios = [];
-
-    }
-
-
-    /*
-       -------------------------------------------------
-       MIGRAÇÃO DO LOGIN ANTIGO
-       -------------------------------------------------
-
-       Se existia um usuário antigo, tentamos
-       aproveitá-lo sem apagar nada.
-    */
-
-    const usuarioAntigo =
-        localStorage.getItem(
-            CHAVE_USUARIO_ANTIGA
-        );
-
-    const senhaAntiga =
-        localStorage.getItem(
-            CHAVE_SENHA_ANTIGA
-        );
-
-
-    if(
-        usuarioAntigo &&
-        senhaAntiga
-    ){
-
-        const existeAntigo =
-            usuarios.some(
-                function(item){
-
-                    if(!item){
-                        return false;
-                    }
-
-                    return String(
-                        item.usuario || ""
-                    )
-                    .trim()
-                    .toLowerCase()
-                    ===
-                    String(
-                        usuarioAntigo
-                    )
-                    .trim()
-                    .toLowerCase();
-
-                }
-            );
-
-
-        if(!existeAntigo){
-
-            usuarios.push({
-
-                id:
-                    "migrado-" +
-                    Date.now(),
-
-                usuario:
-                    usuarioAntigo,
-
-                senha:
-                    senhaAntiga,
-
-                nome:
-                    usuarioAntigo,
-
-                tipo:
-                    "usuario",
-
-                ativo:
-                    true
-
-            });
-
-        }
-
-    }
-
-
-    /*
-       -------------------------------------------------
-       ADMIN PADRÃO
-       -------------------------------------------------
-
-       Só cria admin / 1234 se NÃO existir admin.
-
-       Se já existir, sua senha permanece intacta.
-    */
-
-    const indiceAdmin =
-        usuarios.findIndex(
-            function(item){
-
-                return (
-                    item &&
-                    String(
-                        item.usuario || ""
-                    )
-                    .trim()
-                    .toLowerCase()
-                    ===
-                    "admin"
-                );
-
-            }
-        );
-
-
-    if(indiceAdmin === -1){
-
-        usuarios.push({
-
-            id:
-                "admin-" +
-                Date.now(),
-
-            usuario:
-                "admin",
-
-            senha:
-                "1234",
-
-            nome:
-                "Administrador",
-
-            tipo:
-                "admin",
-
-            ativo:
-                true
-
-        });
-
-    }
-    else{
-
-        usuarios[indiceAdmin].nome =
-            usuarios[indiceAdmin].nome ||
-            "Administrador";
-
-        usuarios[indiceAdmin].tipo =
-            usuarios[indiceAdmin].tipo ||
-            "admin";
-
-        if(
-            typeof usuarios[indiceAdmin].ativo
-            ===
-            "undefined"
-        ){
-
-            usuarios[indiceAdmin].ativo =
-                true;
-
-        }
-
-    }
-
-
-    /*
-       Salva somente a estrutura atualizada.
-       Não apaga usuários existentes.
-    */
-
-    try{
-
-        localStorage.setItem(
-            CHAVE_USUARIOS,
-            JSON.stringify(
-                usuarios
-            )
-        );
-
-    }
-    catch(e){
-
-        console.error(
-            "Erro ao salvar usuários:",
-            e
-        );
-
-    }
-
+const campoEmail = document.getElementById("usuario");
+const campoSenha = document.getElementById("senha");
+const checkboxLembrar = document.getElementById("lembrarUsuario");
+const botaoEntrar = document.getElementById("btnEntrar");
+const statusLogin = document.getElementById("statusLogin");
+const formLogin = document.getElementById("formLogin");
+
+let supabaseClient = null;
+let temporizadorBloqueio = null;
+
+function mostrarStatus(mensagem, tipo = "info") {
+  statusLogin.textContent = mensagem;
+  statusLogin.className = "status " + tipo;
 }
 
-
-/* =====================================================
-   OBTER USUÁRIOS
-===================================================== */
-
-function obterUsuarios(){
-
-    try{
-
-        const dados =
-            localStorage.getItem(
-                CHAVE_USUARIOS
-            );
-
-
-        if(!dados){
-
-            inicializarUsuarios();
-
-            return obterUsuarios();
-
-        }
-
-
-        const usuarios =
-            JSON.parse(
-                dados
-            );
-
-
-        if(!Array.isArray(usuarios)){
-
-            inicializarUsuarios();
-
-            return obterUsuarios();
-
-        }
-
-
-        return usuarios;
-
-    }
-    catch(e){
-
-        console.error(
-            "Erro ao obter usuários:",
-            e
-        );
-
-        return [];
-
-    }
-
+function esconderStatus() {
+  statusLogin.textContent = "";
+  statusLogin.className = "status";
 }
 
+function inicializarSupabase() {
+  if (!window.supabase || !window.supabase.createClient) {
+    mostrarStatus(
+      "Não foi possível carregar o Supabase. Verifique sua internet e recarregue a página.",
+      "erro"
+    );
+    botaoEntrar.disabled = true;
+    return false;
+  }
 
-/* =====================================================
-   MOSTRAR / OCULTAR SENHA
-===================================================== */
-
-function alternarSenha(){
-
-    const campo =
-        document.getElementById(
-            "senha"
-        );
-
-    const botao =
-        document.getElementById(
-            "btnMostrarSenha"
-        );
-
-
-    if(
-        campo.type ===
-        "password"
-    ){
-
-        campo.type =
-            "text";
-
-        botao.textContent =
-            "😎";
-
-        botao.setAttribute(
-            "aria-label",
-            "Ocultar senha"
-        );
-
-    }
-    else{
-
-        campo.type =
-            "password";
-
-        botao.textContent =
-            "👁️";
-
-        botao.setAttribute(
-            "aria-label",
-            "Mostrar senha"
-        );
-
-    }
-
+  try {
+    supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      }
+    );
+    return true;
+  } catch (erro) {
+    console.error("Falha ao iniciar Supabase:", erro);
+    mostrarStatus(
+      "Não foi possível iniciar a conexão de autenticação.",
+      "erro"
+    );
+    botaoEntrar.disabled = true;
+    return false;
+  }
 }
 
+function carregarUsuarioLembrado() {
+  try {
+    const emailSalvo = localStorage.getItem(CHAVE_LEMBRAR);
 
-/* =====================================================
-   LEMBRAR USUÁRIO
-===================================================== */
-
-function carregarUsuarioLembrado(){
-
-    try{
-
-        const lembrar =
-            localStorage.getItem(
-                CHAVE_LEMBRAR
-            );
-
-        const usuarioSalvo =
-            localStorage.getItem(
-                CHAVE_USUARIO_ANTIGA
-            );
-
-
-        if(
-            lembrar === "true" &&
-            usuarioSalvo
-        ){
-
-            document.getElementById(
-                "usuario"
-            ).value =
-                usuarioSalvo;
-
-            document.getElementById(
-                "lembrarUsuario"
-            ).checked =
-                true;
-
-            document.getElementById(
-                "senha"
-            ).focus();
-
-        }
-
+    if (emailSalvo) {
+      campoEmail.value = emailSalvo;
+      checkboxLembrar.checked = true;
     }
-    catch(e){
-
-        console.warn(e);
-
-    }
-
+  } catch (erro) {
+    console.warn("Não foi possível carregar o e-mail lembrado.");
+  }
 }
 
-
-/* =====================================================
-   SALVAR PREFERÊNCIA
-===================================================== */
-
-function salvarPreferenciaUsuario(
-    usuario
-){
-
-    const lembrar =
-        document.getElementById(
-            "lembrarUsuario"
-        ).checked;
-
-
-    try{
-
-        if(lembrar){
-
-            localStorage.setItem(
-                CHAVE_LEMBRAR,
-                "true"
-            );
-
-            localStorage.setItem(
-                CHAVE_USUARIO_ANTIGA,
-                usuario
-            );
-
-        }
-        else{
-
-            localStorage.removeItem(
-                CHAVE_LEMBRAR
-            );
-
-            localStorage.removeItem(
-                CHAVE_USUARIO_ANTIGA
-            );
-
-        }
-
+function salvarPreferenciaUsuario(email) {
+  try {
+    if (checkboxLembrar.checked) {
+      localStorage.setItem(CHAVE_LEMBRAR, email);
+    } else {
+      localStorage.removeItem(CHAVE_LEMBRAR);
     }
-    catch(e){
-
-        console.warn(e);
-
-    }
-
+  } catch (erro) {
+    console.warn("Não foi possível salvar a preferência.");
+  }
 }
 
-
-/* =====================================================
-   VERIFICAR BLOQUEIO
-===================================================== */
-
-function verificarBloqueio(){
-
-    try{
-
-        const bloqueio =
-            Number(
-                localStorage.getItem(
-                    CHAVE_BLOQUEIO
-                )
-            ) || 0;
-
-
-        if(!bloqueio){
-
-            return false;
-
-        }
-
-
-        const restante =
-            bloqueio -
-            Date.now();
-
-
-        if(restante <= 0){
-
-            limparTentativas();
-
-            return false;
-
-        }
-
-
-        mostrarBloqueio(
-            restante
-        );
-
-        return true;
-
-    }
-    catch(e){
-
-        return false;
-
-    }
-
+function obterTentativas() {
+  try {
+    return Number(sessionStorage.getItem(CHAVE_TENTATIVAS)) || 0;
+  } catch (erro) {
+    return 0;
+  }
 }
 
-
-/* =====================================================
-   MOSTRAR BLOQUEIO
-===================================================== */
-
-function mostrarBloqueio(
-    restante
-){
-
-    const erro =
-        document.getElementById(
-            "erro"
-        );
-
-    const botao =
-        document.getElementById(
-            "btnEntrar"
-        );
-
-
-    botao.disabled =
-        true;
-
-
-    function atualizar(){
-
-        const bloqueio =
-            Number(
-                localStorage.getItem(
-                    CHAVE_BLOQUEIO
-                )
-            ) || 0;
-
-
-        const tempo =
-            bloqueio -
-            Date.now();
-
-
-        if(tempo <= 0){
-
-            botao.disabled =
-                false;
-
-            botao.textContent =
-                "🔓 ENTRAR NO GRILLCORE";
-
-            erro.style.display =
-                "none";
-
-            localStorage.removeItem(
-                CHAVE_BLOQUEIO
-            );
-
-            localStorage.removeItem(
-                CHAVE_TENTATIVAS
-            );
-
-            return;
-
-        }
-
-
-        const segundos =
-            Math.ceil(
-                tempo / 1000
-            );
-
-
-        erro.textContent =
-            "🔒 Muitas tentativas incorretas. Aguarde " +
-            segundos +
-            " segundos.";
-
-        erro.style.display =
-            "block";
-
-        botao.textContent =
-            "🔒 AGUARDE " +
-            segundos +
-            "s";
-
-
-        setTimeout(
-            atualizar,
-            1000
-        );
-
-    }
-
-
-    atualizar();
-
+function obterFimBloqueio() {
+  try {
+    return Number(sessionStorage.getItem(CHAVE_BLOQUEIO)) || 0;
+  } catch (erro) {
+    return 0;
+  }
 }
 
+function limparTentativas() {
+  try {
+    sessionStorage.removeItem(CHAVE_TENTATIVAS);
+    sessionStorage.removeItem(CHAVE_BLOQUEIO);
+  } catch (erro) {
+    console.warn("Não foi possível limpar as tentativas.");
+  }
 
-/* =====================================================
-   REGISTRAR ERRO
-===================================================== */
+  if (temporizadorBloqueio) {
+    clearInterval(temporizadorBloqueio);
+    temporizadorBloqueio = null;
+  }
 
-function registrarTentativaErrada(){
+  botaoEntrar.disabled = false;
+  botaoEntrar.textContent = "ENTRAR NO GRILLCORE";
+}
 
-    let tentativas =
-        Number(
-            localStorage.getItem(
-                CHAVE_TENTATIVAS
-            )
-        ) || 0;
+function verificarBloqueio() {
+  const fimBloqueio = obterFimBloqueio();
+  const restante = fimBloqueio - Date.now();
 
+  if (restante > 0) {
+    mostrarBloqueio();
+    return true;
+  }
 
-    tentativas++;
+  if (fimBloqueio > 0) {
+    limparTentativas();
+  }
 
+  return false;
+}
+
+function mostrarBloqueio() {
+  if (temporizadorBloqueio) {
+    clearInterval(temporizadorBloqueio);
+  }
+
+  botaoEntrar.disabled = true;
+
+  function atualizar() {
+    const restante = obterFimBloqueio() - Date.now();
+
+    if (restante <= 0) {
+      limparTentativas();
+      mostrarStatus(
+        "Bloqueio encerrado. Você pode tentar entrar novamente.",
+        "info"
+      );
+      return;
+    }
+
+    const segundos = Math.ceil(restante / 1000);
+
+    botaoEntrar.textContent = "AGUARDE " + segundos + "s";
+
+    mostrarStatus(
+      "Muitas tentativas de acesso. Aguarde " +
+      segundos +
+      " segundos antes de tentar novamente.",
+      "erro"
+    );
+  }
+
+  atualizar();
+
+  temporizadorBloqueio = setInterval(atualizar, 1000);
+}
+
+function registrarTentativaErrada() {
+  const tentativas = obterTentativas() + 1;
+
+  try {
+    sessionStorage.setItem(CHAVE_TENTATIVAS, String(tentativas));
+  } catch (erro) {
+    console.warn("Não foi possível registrar as tentativas.");
+  }
+
+  if (tentativas >= MAX_TENTATIVAS) {
+    try {
+      sessionStorage.setItem(
+        CHAVE_BLOQUEIO,
+        String(Date.now() + TEMPO_BLOQUEIO)
+      );
+    } catch (erro) {
+      console.warn("Não foi possível registrar o bloqueio.");
+    }
+
+    mostrarBloqueio();
+    return;
+  }
+
+  const restantes = MAX_TENTATIVAS - tentativas;
+
+  mostrarStatus(
+    "E-mail ou senha incorretos. Tentativas restantes: " +
+    restantes +
+    ".",
+    "erro"
+  );
+}
+
+function registrarAcesso(email) {
+  const agora = new Date().toLocaleString("pt-BR");
+
+  try {
+    localStorage.setItem(CHAVE_ULTIMO_ACESSO, agora);
+
+    const historico = JSON.parse(
+      localStorage.getItem(CHAVE_HISTORICO) || "[]"
+    );
+
+    historico.unshift({
+      email: email,
+      data: agora
+    });
 
     localStorage.setItem(
-        CHAVE_TENTATIVAS,
-        String(tentativas)
+      CHAVE_HISTORICO,
+      JSON.stringify(historico.slice(0, 20))
     );
-
-
-    if(
-        tentativas >=
-        MAX_TENTATIVAS
-    ){
-
-        const bloqueio =
-            Date.now() +
-            TEMPO_BLOQUEIO;
-
-
-        localStorage.setItem(
-            CHAVE_BLOQUEIO,
-            String(bloqueio)
-        );
-
-
-        mostrarBloqueio(
-            TEMPO_BLOQUEIO
-        );
-
-
-        return true;
-
-    }
-
-
-    return false;
-
+  } catch (erro) {
+    console.warn("Não foi possível registrar o histórico local.");
+  }
 }
 
+function mostrarUltimoAcesso() {
+  try {
+    const ultimo = localStorage.getItem(CHAVE_ULTIMO_ACESSO);
 
-/* =====================================================
-   LIMPAR TENTATIVAS
-===================================================== */
+    if (ultimo) {
+      document.getElementById("ultimoAcesso").textContent =
+        "Último acesso registrado neste dispositivo: " + ultimo;
+    }
+  } catch (erro) {
+    console.warn("Não foi possível consultar o último acesso.");
+  }
+}
 
-function limparTentativas(){
+document.getElementById("btnMostrarSenha").addEventListener("click", () => {
+  const mostrar = campoSenha.type === "password";
 
-    localStorage.removeItem(
-        CHAVE_TENTATIVAS
+  campoSenha.type = mostrar ? "text" : "password";
+
+  document.getElementById("btnMostrarSenha").textContent =
+    mostrar ? "Ocultar" : "Mostrar";
+});
+
+document.getElementById("btnRecuperar").addEventListener("click", () => {
+  const email = campoEmail.value.trim();
+
+  if (!email) {
+    mostrarStatus(
+      "Digite seu e-mail primeiro para solicitar a recuperação da senha.",
+      "info"
     );
+    campoEmail.focus();
+    return;
+  }
 
-    localStorage.removeItem(
-        CHAVE_BLOQUEIO
+  if (!supabaseClient) {
+    mostrarStatus("A conexão de autenticação não está disponível.", "erro");
+    return;
+  }
+
+  mostrarStatus("Enviando solicitação de recuperação...", "info");
+
+  supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin +
+      window.location.pathname.replace(/[^/]*$/, "redefinir-senha.html")
+  }).then(({ error }) => {
+    if (error) {
+      console.error("Erro de recuperação:", error);
+      mostrarStatus(
+        "Não foi possível solicitar a recuperação. Confira o e-mail e as configurações de URL no Supabase.",
+        "erro"
+      );
+      return;
+    }
+
+    mostrarStatus(
+      "Se o e-mail estiver cadastrado e a recuperação estiver configurada, você receberá as instruções. Confira também o spam.",
+      "sucesso"
     );
+  }).catch((erro) => {
+    console.error(erro);
+    mostrarStatus("Erro de conexão ao solicitar a recuperação.", "erro");
+  });
+});
 
+document.getElementById("btnAjuda").addEventListener("click", () => {
+  mostrarStatus(
+    "Confira se o usuário está cadastrado em Supabase → Authentication → Users. Se necessário, peça ao administrador para verificar o acesso.",
+    "info"
+  );
+});
+
+async function entrar(evento) {
+  if (evento) evento.preventDefault();
+
+  esconderStatus();
+
+  if (verificarBloqueio()) return;
+
+  if (!supabaseClient && !inicializarSupabase()) return;
+
+  const email = campoEmail.value.trim().toLowerCase();
+  const senha = campoSenha.value;
+  
+  if (!email || !senha) {
+    mostrarStatus("Preencha o e-mail e a senha.", "erro");
+    return;
+  }
+  if (email !== "grillcorerochaforte@gmail.com") { mostrarStatus( "Acesso permitido somente para o e-mail oficial da Rocha Forte.", "erro" ); campoEmail.focus(); return; }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    mostrarStatus("Digite um endereço de e-mail válido.", "erro");
+    campoEmail.focus();
+    return;
+  }
+
+  botaoEntrar.disabled = true;
+  botaoEntrar.textContent = "VERIFICANDO ACESSO...";
+
+  let loginConcluido = false;
+
+  try {
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: senha
+      });
+
+    if (error) {
+      console.warn("Falha de autenticação:", error.message);
+      registrarTentativaErrada();
+
+      if (!verificarBloqueio()) {
+        botaoEntrar.disabled = false;
+        botaoEntrar.textContent = "ENTRAR NO GRILLCORE";
+      }
+
+      return;
+    }
+
+    if (!data || !data.session || !data.user) {
+      mostrarStatus(
+        "O Supabase não confirmou uma sessão válida. Tente novamente.",
+        "erro"
+      );
+      botaoEntrar.disabled = false;
+      botaoEntrar.textContent = "ENTRAR NO GRILLCORE";
+      return;
+    }
+
+    limparTentativas();
+    salvarPreferenciaUsuario(email);
+    registrarAcesso(email);
+
+    /*
+      Este sinalizador mantém compatibilidade com páginas antigas.
+      Ele NÃO substitui a validação da sessão do Supabase.
+    */
+    try {
+      localStorage.setItem("grillcore_login", "true");
+      localStorage.setItem("grillcore_usuario_atual", email);
+      localStorage.setItem("grillcore_nome_usuario", email);
+    } catch (erro) {
+      console.warn("Não foi possível salvar os dados locais.");
+    }
+
+    loginConcluido = true;
+
+    mostrarStatus("Acesso confirmado! Abrindo o GrillCore...", "sucesso");
+    botaoEntrar.textContent = "ACESSO CONFIRMADO...";
+
+    setTimeout(() => {
+      window.location.replace("index.html");
+    }, 600);
+
+  } catch (erro) {
+    console.error("Erro ao entrar:", erro);
+
+    mostrarStatus(
+      "Não foi possível conectar ao serviço de autenticação. Verifique a internet e tente novamente.",
+      "erro"
+    );
+  } finally {
+    if (!loginConcluido && !verificarBloqueio()) {
+      botaoEntrar.disabled = false;
+      botaoEntrar.textContent = "ENTRAR NO GRILLCORE";
+    }
+  }
 }
 
-
-/* =====================================================
-   REGISTRAR ACESSO
-===================================================== */
-
-function registrarAcesso(
-    usuario
-){
-
-    try{
-
-        const agora =
-            new Date();
-
-
-        const registro = {
-
-            usuario:
-                usuario.usuario,
-
-            nome:
-                usuario.nome ||
-                usuario.usuario,
-
-            tipo:
-                usuario.tipo ||
-                "usuario",
-
-            data:
-                agora.toLocaleDateString(
-                    "pt-BR"
-                ),
-
-            hora:
-                agora.toLocaleTimeString(
-                    "pt-BR"
-                ),
-
-            timestamp:
-                agora.getTime()
-
-        };
-
-
-        let historico = [];
-
-
-        const salvo =
-            localStorage.getItem(
-                CHAVE_HISTORICO
-            );
-
-
-        if(salvo){
-
-            historico =
-                JSON.parse(
-                    salvo
-                );
-
-        }
-
-
-        if(!Array.isArray(historico)){
-
-            historico = [];
-
-        }
-
-
-        historico.unshift(
-            registro
-        );
-
-
-        historico =
-            historico.slice(
-                0,
-                50
-            );
-
-
-        localStorage.setItem(
-            CHAVE_HISTORICO,
-            JSON.stringify(
-                historico
-            )
-        );
-
-
-        localStorage.setItem(
-            CHAVE_ULTIMO_ACESSO,
-            JSON.stringify(
-                registro
-            )
-        );
-
-    }
-    catch(e){
-
-        console.warn(
-            "Erro ao registrar acesso:",
-            e
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   ÚLTIMO ACESSO
-===================================================== */
-
-function mostrarUltimoAcesso(){
-
-    const elemento =
-        document.getElementById(
-            "ultimoAcesso"
-        );
-
-
-    try{
-
-        const salvo =
-            localStorage.getItem(
-                CHAVE_ULTIMO_ACESSO
-            );
-
-
-        if(!salvo){
-
-            return;
-
-        }
-
-
-        const acesso =
-            JSON.parse(
-                salvo
-            );
-
-
-        if(!acesso){
-
-            return;
-
-        }
-
-
-        elemento.innerHTML =
-            "🕐 Último acesso registrado: " +
-            acesso.data +
-            " às " +
-            acesso.hora;
-
-
-        elemento.style.display =
-            "block";
-
-    }
-    catch(e){
-
-        console.warn(e);
-
-    }
-
-}
-
-
-/* =====================================================
-   STATUS
-===================================================== */
-
-function mostrarStatus(
-    mensagem
-){
-
-    const status =
-        document.getElementById(
-            "statusLogin"
-        );
-
-
-    status.textContent =
-        mensagem;
-
-    status.style.display =
-        "block";
-
-}
-
-
-function esconderStatus(){
-
-    const status =
-        document.getElementById(
-            "statusLogin"
-        );
-
-
-    status.style.display =
-        "none";
-
-}
-
-
-/* =====================================================
-   ENTRAR
-===================================================== */
-
-function entrar(){
-
-    if(verificarBloqueio()){
-
-        return;
-
-    }
-
-
-    const campoUsuario =
-        document.getElementById(
-            "usuario"
-        );
-
-    const campoSenha =
-        document.getElementById(
-            "senha"
-        );
-
-    const erro =
-        document.getElementById(
-            "erro"
-        );
-
-    const botao =
-        document.getElementById(
-            "btnEntrar"
-        );
-
-
-    const usuario =
-        campoUsuario.value.trim();
-
-    const senha =
-        campoSenha.value;
-
-
-    erro.style.display =
-        "none";
-
-    esconderStatus();
-
-
-    /* -----------------------------------------------
-       USUÁRIO
-    ------------------------------------------------ */
-
-    if(!usuario){
-
-        erro.textContent =
-            "⚠️ Digite seu usuário.";
-
-        erro.style.display =
-            "block";
-
-        campoUsuario.focus();
-
-        return;
-
-    }
-
-
-    /* -----------------------------------------------
-       SENHA
-    ------------------------------------------------ */
-
-    if(!senha){
-
-        erro.textContent =
-            "⚠️ Digite sua senha.";
-
-        erro.style.display =
-            "block";
-
-        campoSenha.focus();
-
-        return;
-
-    }
-
-
-    /* -----------------------------------------------
-       USUÁRIOS
-    ------------------------------------------------ */
-
-    const usuarios =
-        obterUsuarios();
-
-
-    /* -----------------------------------------------
-       PROCURAR
-    ------------------------------------------------ */
-
-    const encontrado =
-        usuarios.find(
-            function(item){
-
-                if(!item){
-
-                    return false;
-
-                }
-
-
-                const usuarioBanco =
-                    String(
-                        item.usuario || ""
-                    )
-                    .trim()
-                    .toLowerCase();
-
-
-                const usuarioDigitado =
-                    usuario
-                    .trim()
-                    .toLowerCase();
-
-
-                const senhaBanco =
-                    String(
-                        item.senha || ""
-                    );
-
-
-                return (
-
-                    usuarioBanco ===
-                    usuarioDigitado
-
-                    &&
-
-                    senhaBanco ===
-                    String(
-                        senha
-                    )
-
-                    &&
-
-                    item.ativo !== false
-
-                );
-
-            }
-        );
-
-
-    /* -----------------------------------------------
-       LOGIN CORRETO
-    ------------------------------------------------ */
-
-    if(encontrado){
-
-        limparTentativas();
-
-
-        try{
-
-            salvarPreferenciaUsuario(
-                encontrado.usuario
-            );
-
-
-            localStorage.setItem(
-                "grillcore_login",
-                "true"
-            );
-
-
-            localStorage.setItem(
-                "grillcore_usuario",
-                encontrado.usuario
-            );
-
-
-            localStorage.setItem(
-                "grillcore_nome_usuario",
-                encontrado.nome ||
-                encontrado.usuario
-            );
-
-
-            localStorage.setItem(
-                "grillcore_tipo_usuario",
-                encontrado.tipo ||
-                "usuario"
-            );
-
-
-            localStorage.setItem(
-                "grillcore_usuario_id",
-                String(
-                    encontrado.id || ""
-                )
-            );
-
-
-            localStorage.setItem(
-                "grillcore_sessao_inicio",
-                String(
-                    Date.now()
-                )
-            );
-
-
-            registrarAcesso(
-                encontrado
-            );
-
-        }
-        catch(erroStorage){
-
-            console.error(
-                erroStorage
-            );
-
-            erro.textContent =
-                "❌ Não foi possível salvar o acesso neste aparelho.";
-
-            erro.style.display =
-                "block";
-
-            return;
-
-        }
-
-
-        mostrarStatus(
-            "✅ Acesso autorizado. Bem-vindo, " +
-            (
-                encontrado.nome ||
-                encontrado.usuario
-            ) +
-            "!"
-        );
-
-
-        botao.disabled =
-            true;
-
-        botao.textContent =
-            "✅ ACESSANDO GRILLCORE...";
-
-
-        campoSenha.value =
-            "";
-
-
-        setTimeout(
-            function(){
-
-                window.location.replace(
-                    "index.html"
-                );
-
-            },
-            500
-        );
-
-
-        return;
-
-    }
-
-
-    /* -----------------------------------------------
-       LOGIN INCORRETO
-    ------------------------------------------------ */
-
-    const bloqueou =
-        registrarTentativaErrada();
-
-
-    if(bloqueou){
-
-        return;
-
-    }
-
-
-    const tentativas =
-        Number(
-            localStorage.getItem(
-                CHAVE_TENTATIVAS
-            )
-        ) || 0;
-
-
-    const restantes =
-        MAX_TENTATIVAS -
-        tentativas;
-
-
-    erro.textContent =
-        "❌ Usuário ou senha incorretos.";
-
-
-    if(restantes > 0){
-
-        erro.textContent +=
-            " Restam " +
-            restantes +
-            " tentativa(s).";
-
-    }
-
-
-    erro.style.display =
-        "block";
-
-
-    campoSenha.value =
-        "";
-
+formLogin.addEventListener("submit", entrar);
+
+campoSenha.addEventListener("keydown", (evento) => {
+  if (evento.key === "Enter") {
+    evento.preventDefault();
+    entrar();
+  }
+});
+
+campoEmail.addEventListener("input", esconderStatus);
+campoSenha.addEventListener("input", esconderStatus);
+
+document.addEventListener("DOMContentLoaded", () => {
+  inicializarSupabase();
+  carregarUsuarioLembrado();
+  mostrarUltimoAcesso();
+  verificarBloqueio();
+
+  if (!campoEmail.value) {
+    campoEmail.focus();
+  } else {
     campoSenha.focus();
-
-}
-
-
-/* =====================================================
-   RECUPERAR ACESSO
-===================================================== */
-
-function recuperarAcesso(){
-
-    window.location.href =
-        "./recuperar-acesso.html";
-
-}
-
-
-/* =====================================================
-   ADMINISTRADOR
-===================================================== */
-
-function falarComAdministrador(){
-
-    alert(
-        "Para alterar ou adicionar usuários, entre com uma conta de administrador e acesse Usuários e Acessos."
-    );
-
-}
-
-
-/* =====================================================
-   ENTER
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event){
-
-        if(
-            event.key === "Enter"
-            &&
-            !event.repeat
-        ){
-
-            event.preventDefault();
-
-            entrar();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
-
-inicializarUsuarios();
-
-carregarUsuarioLembrado();
-
-mostrarUltimoAcesso();
-
-verificarBloqueio();
-
-
-/*
-   IMPORTANTE:
-
-   NÃO fazemos mais isto:
-
-   if(grillcore_login === "true"){
-       window.location.replace("index.html");
-   }
-
-   Assim você consegue abrir o login
-   normalmente para testar ou trocar
-   de usuário.
-
-   O próprio index.html continua sendo
-   responsável por impedir acesso ao
-   sistema quando não houver login.
-*/
-
-
-/* =====================================================
-   FOCO
-===================================================== */
-
-window.addEventListener(
-    "load",
-    function(){
-
-        const usuario =
-            document.getElementById(
-                "usuario"
-            );
-
-        const senha =
-            document.getElementById(
-                "senha"
-            );
-
-
-        if(
-            usuario &&
-            usuario.value
-        ){
-
-            senha.focus();
-
-        }
-        else if(usuario){
-
-            usuario.focus();
-
-        }
-
-    }
-);
-
+  }
+});
 </script>
 
 </body>
-
 </html>

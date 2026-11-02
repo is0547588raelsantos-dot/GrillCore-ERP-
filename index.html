@@ -2,12 +2,83 @@
 <html lang="pt-BR">
 
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-if(localStorage.getItem("grillcore_login") !== "true"){
-    window.location.replace("login.html");
-}
-</script>
+"use strict";
+
+// Mantém o painel oculto até validar a sessão.
+document.documentElement.style.visibility = "hidden";
+
+const SUPABASE_URL =
+    "https://vtdfdqtjcyqbtfskwnun.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
+    }
+);
+
+(async function validarAcessoGrillCore() {
+
+    try {
+
+        const { data, error } =
+            await supabaseClient.auth.getSession();
+
+        if (error) {
+            throw error;
+        }
+
+        const sessao = data.session;
+
+        if (!sessao || !sessao.user) {
+            localStorage.removeItem("grillcore_login");
+            window.location.replace("login.html");
+            return;
+        }
+
+        const email = (
+            sessao.user.email || ""
+        ).trim().toLowerCase();
+
+        if (email !== "grillcorerochaforte@gmail.com") {
+
+            await supabaseClient.auth.signOut();
+
+            localStorage.removeItem("grillcore_login");
+
+            window.location.replace("login.html");
+            return;
+        }
+
+        // Sessão válida e e-mail autorizado.
+        document.documentElement.style.visibility = "visible";
+
+    } catch (erro) {
+
+        console.error(
+            "Falha ao validar sessão do GrillCore:",
+            erro
+        );
+
+        localStorage.removeItem("grillcore_login");
+        window.location.replace("login.html");
+
+    }
+
+})();
+              </script>
+
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1251,6 +1322,27 @@ button:focus-visible{
         </p>
 
     </a>
+  
+    <!-- PEDIDOS ONLINE -->
+
+    <a
+        href="pedidos-online.html"
+        class="card destaque">
+
+        <div class="icone-card">
+            🌐
+        </div>
+
+        <h3>
+            Pedidos Online
+        </h3>
+
+        <p>
+            Receber e acompanhar pedidos da internet
+        </p>
+
+    </a>
+
 
 
     <!-- 2 -->
@@ -2816,32 +2908,60 @@ function esconderMensagem(){
 
 
 /* =====================================================
-   SAIR
+   SAIR DO GRILLCORE COM SUPABASE
 ===================================================== */
 
-function sairSistema(){
+async function sairSistema(){
 
-    const confirmar =
-        confirm(
-            "Deseja sair do GrillCore?"
-        );
-
+    const confirmar = confirm(
+        "Deseja sair do GrillCore?"
+    );
 
     if(!confirmar){
         return;
     }
 
+    try {
 
-    localStorage.removeItem(
-        "grillcore_login"
-    );
+        const { error } =
+            await supabaseClient.auth.signOut();
 
+        if(error){
+            console.error(
+                "Erro ao encerrar sessão:",
+                error
+            );
 
-    window.location.href =
-        "login.html";
+            alert(
+                "Não foi possível encerrar a sessão. Verifique sua conexão e tente novamente."
+            );
 
+            return;
+        }
+
+        localStorage.removeItem(
+            "grillcore_login"
+        );
+
+        localStorage.removeItem(
+            "grillcore_usuario"
+        );
+
+        window.location.replace("login.html");
+
+    } catch(erro) {
+
+        console.error(
+            "Erro ao sair do GrillCore:",
+            erro
+        );
+
+        alert(
+            "Erro ao sair. Verifique sua conexão e tente novamente."
+        );
+
+    }
 }
-
 
 /* =====================================================
    INICIAR

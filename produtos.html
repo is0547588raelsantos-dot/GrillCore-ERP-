@@ -231,7 +231,7 @@ return {nome:p.nome,preco:Number(p.preco)||0,disponivel:p.disponivel!==false,cat
  try{
   listaProdutos.innerHTML='<div class="lista-vazia"><strong>☁️ Conectando ao Supabase...</strong>Carregando produtos online.</div>';
   const r=await supabaseClient.from("produtos").select("*").order("created_at",{ascending:false});
-  if(error)throw r.error;
+  if(r.error)throw r.error;
   produtos=(r.data||[]).map(normalizarProduto);salvarProdutosLocal();renderizarProdutos();mostrarSucessoProduto("☁️ Produtos carregados do Supabase.");
  }catch(e){
   console.error(e);try{const d=localStorage.getItem("produtos");produtos=d?JSON.parse(d).map(normalizarProduto):[]}catch(x){produtos=[]}

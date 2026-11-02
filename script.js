@@ -453,36 +453,58 @@ function usuarioLogado(){
    🚪 SAIR
 ===================================================== */
 
-function sairDoSistema(){
 
-    const confirmar =
-        confirm(
-            "🚪 Deseja realmente sair do GrillCore?"
-        );
+async function sairDoSistema(){
 
+    const confirmar = confirm(
+        "🚪 Deseja realmente sair do GrillCore?"
+    );
 
     if(!confirmar){
-
         return;
-
     }
 
+    try {
+        if (
+            typeof window.supabase !== "undefined" &&
+            window.supabase.createClient
+        ) {
+            const SUPABASE_URL =
+                "https://vtdfdqtjcyqbtfskwnun.supabase.co";
 
-    localStorage.removeItem(
-        "grillcore_login"
-    );
+            const SUPABASE_PUBLISHABLE_KEY =
+                "sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
 
-    localStorage.removeItem(
-        "grillcore_usuario"
-    );
+            const clienteAuth =
+                window.supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_PUBLISHABLE_KEY
+                );
 
+            const { error } =
+                await clienteAuth.auth.signOut();
 
-    window.location.replace(
-        "login.html"
-    );
+            if(error){
+                console.error(
+                    "Erro ao encerrar sessão:",
+                    error
+                );
+            }
+        }
+    } catch(erro) {
+        console.error(
+            "Erro ao sair do GrillCore:",
+            erro
+        );
+    }
 
+    localStorage.removeItem("grillcore_login");
+    localStorage.removeItem("grillcore_usuario");
+    localStorage.removeItem("grillcore_usuario_atual");
+    localStorage.removeItem("grillcore_nome_usuario");
+
+    window.location.replace("login.html");
 }
-
 
 /* =====================================================
    🔐 PROTEGER PÁGINA

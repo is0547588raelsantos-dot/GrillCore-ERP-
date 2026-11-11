@@ -27,6 +27,7 @@ input:focus{border-color:#ff7300;box-shadow:0 0 0 2px #ff73001f}input::placehold
 .message{display:none;padding:13px;margin:0 0 17px;border-radius:11px;text-align:center;font-size:13px;line-height:1.5}
 .message.error{background:#3d1208;border:1px solid #9d3515;color:#ff9a7a}
 .message.ok{background:#0b2c1b;border:1px solid #247849;color:#8bf0b4}
+.message.info{display:block;background:#241507;border:1px solid #7a3c12;color:#ffbd83}
 .btn{width:100%;min-height:53px;border:0;border-radius:13px;background:linear-gradient(145deg,#ff8a1f,#d95700);color:#120900;font-weight:900;font-size:14px;letter-spacing:.4px;cursor:pointer}
 .btn:disabled{opacity:.65;cursor:wait}
 .back{display:block;margin-top:18px;text-align:center;color:#ff9a3d;text-decoration:none;font-size:13px}
@@ -60,9 +61,14 @@ input:focus{border-color:#ff7300;box-shadow:0 0 0 2px #ff73001f}input::placehold
   <div class="foot"><strong>GrillCore ERP</strong><br>Sistema profissional de gestão</div>
 </div>
 <script>
+"use strict";
 const SUPABASE_URL = "https://vtdfdqtjcyqbtfskwnun.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_HZB_Bu780JSCXWLzb7pRoA_aKNwmfls";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+});
+let recuperacaoConfirmada = false;
+let verificacaoConcluida = false;
 
 function toggle(id,button){
   const input=document.getElementById(id);
@@ -76,6 +82,31 @@ function showMessage(text,type){
   box.textContent=text;
   box.style.display="block";
 }
+
+// O Supabase sinaliza quando o link de recuperação é reconhecido.
+supabaseClient.auth.onAuthStateChange((event, session)=>{
+  if(event==="PASSWORD_RECOVERY" && session){
+    recuperacaoConfirmada=true;
+    verificacaoConcluida=true;
+    showMessage("Link de recuperação validado. Você já pode criar sua nova senha.","info");
+  }
+  if(event==="SIGNED_IN" && session && !verificacaoConcluida){
+    // Também permite o fluxo por sessão/código PKCE quando o Supabase já restaurou a sessão.
+    verificacaoConcluida=true;
+  }
+});
+
+async function validarSessaoRecuperacao(){
+  // Aguarda a leitura da sessão restaurada pelo Supabase após abrir o link.
+  const {data,error}=await supabaseClient.auth.getSession();
+  if(error) throw error;
+  if(data.session){
+    verificacaoConcluida=true;
+    return true;
+  }
+  return recuperacaoConfirmada;
+}
+
 async function redefinirSenha(){
   const senha=document.getElementById("nova").value;
   const confirmacao=document.getElementById("confirmar").value;
@@ -85,11 +116,10 @@ async function redefinirSenha(){
   if(senha!==confirmacao){showMessage("As senhas não coincidem. Confira e tente novamente.","error");return;}
   button.disabled=true;button.textContent="SALVANDO...";
   try{
-    const {data,error}=await supabaseClient.auth.getSession();
-    if(error)throw error;
-    if(!data.session)throw new Error("O link de recuperação expirou ou não foi validado. Solicite um novo e-mail de recuperação.");
+    const sessaoValida=await validarSessaoRecuperacao();
+    if(!sessaoValida) throw new Error("O link de recuperação expirou ou não foi validado. Solicite um novo e-mail de recuperação e abra o link mais recente.");
     const {error:updateError}=await supabaseClient.auth.updateUser({password:senha});
-    if(updateError)throw updateError;
+    if(updateError) throw updateError;
     showMessage("Senha atualizada com sucesso! Você será redirecionado ao login.","ok");
     button.textContent="✅ SENHA ALTERADA";
     setTimeout(async()=>{
